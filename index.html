@@ -440,13 +440,13 @@ h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,7vw,36px);line-
   border:none;border-radius:999px;overflow:hidden;
   min-height:66px;min-width:0;padding:10px 6px 8px;text-align:center;cursor:pointer;position:relative;
   transition:transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease;color:var(--ink);font-family:var(--serif);
-  animation:lavaLampFlow 3.4s ease-in-out infinite alternate;
+  animation:lavaLampFlow 3.8s ease-in-out infinite alternate;
   box-shadow:inset 0 1px 2px rgba(255,255,255,0.42), 0 8px 16px -10px rgba(0,0,0,0.24);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
 }
-.habit-item:nth-child(2n){animation-duration:4.1s;animation-direction:alternate-reverse;animation-delay:-1.4s}
-.habit-item:nth-child(3n){animation-duration:2.9s;animation-direction:normal;animation-delay:-2.3s}
-.habit-item:nth-child(4n){animation-duration:3.7s;animation-direction:reverse;animation-delay:-0.9s}
+.habit-item:nth-child(2n){animation-duration:4.5s;animation-direction:alternate-reverse;animation-delay:-1.4s}
+.habit-item:nth-child(3n){animation-duration:3.2s;animation-direction:normal;animation-delay:-2.3s}
+.habit-item:nth-child(4n){animation-duration:4.1s;animation-direction:reverse;animation-delay:-0.9s}
 .habit-item.add-habit-card{
   background-image:none;background-color:transparent;
   border:1px dashed color-mix(in srgb, var(--ink) 24%, transparent);
@@ -1030,12 +1030,12 @@ body.coast-fullscreen > #seab .coast-fs-dock{bottom:max(18px, env(safe-area-inse
     radial-gradient(circle at 76% 74%, var(--aura-on, rgba(58,144,212,.96)) 0%, transparent 52%),
     radial-gradient(circle at 46% 54%, var(--aura-c, rgba(84,156,214,.92)) 0%, transparent 58%),
     linear-gradient(135deg, var(--aura-c, rgba(84,156,214,.92)), var(--aura-c2, rgba(84,156,214,.72)));
-  animation:lavaLampFlow 3.5s ease-in-out infinite alternate;
+  animation:lavaLampFlow 3.9s ease-in-out infinite alternate;
   box-shadow:inset 0 1px 2px rgba(255,255,255,0.40), 0 8px 16px -10px rgba(0,0,0,0.22);
 }
-.mo:nth-child(2n){animation-duration:4.1s;animation-direction:alternate-reverse;animation-delay:-1.4s}
-.mo:nth-child(3n){animation-duration:2.9s;animation-direction:normal;animation-delay:-2.3s}
-.mo:nth-child(4n){animation-duration:3.7s;animation-direction:reverse;animation-delay:-0.9s}
+.mo:nth-child(2n){animation-duration:4.5s;animation-direction:alternate-reverse;animation-delay:-1.4s}
+.mo:nth-child(3n){animation-duration:3.2s;animation-direction:normal;animation-delay:-2.3s}
+.mo:nth-child(4n){animation-duration:4.1s;animation-direction:reverse;animation-delay:-0.9s}
 .mo:hover{transform:translateY(-2px) scale(1.03)}
 .mo i{display:block;font-style:normal;font-size:21px;line-height:1.1;color:var(--ink)}
 .mo span{font-size:12px;font-weight:500;display:block;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px;letter-spacing:.01em}
@@ -1104,13 +1104,13 @@ body.coast-fullscreen > #seab .coast-fs-dock{bottom:max(18px, env(safe-area-inse
     radial-gradient(circle at 78% 76%, var(--care-bar, #1f6feb) 0%, transparent 52%),
     radial-gradient(circle at 46% 52%, var(--care-on, rgba(56,128,196,.94)) 0%, transparent 58%),
     linear-gradient(135deg, var(--care-c, rgba(84,154,212,.92)), var(--care-c2, rgba(64,126,184,.82)));
-  animation:lavaLampFlow 3.4s ease-in-out infinite alternate;
+  animation:lavaLampFlow 3.8s ease-in-out infinite alternate;
   box-shadow:inset 0 1px 2px rgba(255,255,255,0.40), 0 8px 16px -10px rgba(0,0,0,0.22);
 }
 #loss .chip i{display:block;font-style:normal;font-size:21px;line-height:1.1;color:var(--ink)}
 #loss .chip span{font-size:12px;font-weight:500;display:block;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;padding:0 4px;letter-spacing:.01em;line-height:1.15}
-#loss .chip:nth-child(2n){animation-duration:4.1s;animation-direction:alternate-reverse;animation-delay:-1.3s}
-#loss .chip:nth-child(3n){animation-duration:2.9s;animation-direction:normal;animation-delay:-2.5s}
+#loss .chip:nth-child(2n){animation-duration:4.5s;animation-direction:alternate-reverse;animation-delay:-1.3s}
+#loss .chip:nth-child(3n){animation-duration:3.2s;animation-direction:normal;animation-delay:-2.5s}
 #loss .chip.on{
   transform:scale(1.05);
   box-shadow:0 10px 22px -10px rgba(0,0,0,0.28);
@@ -1469,24 +1469,29 @@ body.public-view .pub-view.on{display:block}
   font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:var(--muted);
 }
 
-/* Reacciones minimalistas en 1 sola línea, sin caja ni marco beige */
-.react-bar{display:flex;gap:10px;align-items:center;flex-wrap:nowrap;overflow:hidden}
+/* Reacciones minimalistas centradas: solo símbolos visibles; etiqueta abajo al pasar/tocar */
+.react-bar{display:flex;gap:34px;align-items:center;justify-content:center;flex-wrap:nowrap;overflow:visible;padding-bottom:6px;position:relative}
 .react-btn{
-  display:inline-flex;align-items:center;gap:4px;
-  background:transparent;
-  border:none;
-  border-radius:0;
-  min-height:32px;padding:4px 0;
-  font-family:var(--sans);font-size:11.5px;font-weight:500;color:var(--muted);
-  white-space:nowrap;flex-shrink:0;
-  cursor:pointer;transition:color .18s ease, transform .15s ease;
+  position:relative;display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;border:none;border-radius:999px;
+  min-width:34px;min-height:30px;padding:4px 8px;
+  color:var(--muted);cursor:pointer;transition:color .18s ease, transform .15s ease;
+}
+.react-btn span{
+  position:absolute;top:calc(100% + 1px);left:50%;transform:translateX(-50%) translateY(2px);
+  font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.02em;
+  color:var(--ink);white-space:nowrap;opacity:0;pointer-events:none;
+  transition:opacity .16s ease, transform .16s ease;
+}
+.react-btn:hover span,.react-btn:active span,.react-btn:focus-visible span,.react-btn.peek span{
+  opacity:0.92;transform:translateX(-50%) translateY(0);
 }
 [data-theme="dark"] .react-btn{
   background:transparent;
 }
-.react-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5}
+.react-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.6}
 .react-btn.on{
-  background:transparent;color:var(--ink);font-weight:700;
+  background:transparent;color:var(--ink);transform:scale(1.1);
 }
 @media(hover:hover){
   .react-btn:hover{
@@ -1945,11 +1950,11 @@ summary::-webkit-details-marker{display:none}
   box-shadow:inset 0 1px 2px rgba(255,255,255,0.40), 0 8px 16px -10px rgba(0,0,0,0.22);
   display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:66px;
   color:var(--ink);font-family:var(--serif);-webkit-appearance:none;appearance:none;min-width:0;
-  animation:lavaLampFlow 3.5s ease-in-out infinite alternate;
+  animation:lavaLampFlow 3.9s ease-in-out infinite alternate;
 }
-.bento-card:nth-child(2n){animation-duration:4.2s;animation-direction:alternate-reverse;animation-delay:-1.5s}
-.bento-card:nth-child(3n){animation-duration:3.0s;animation-direction:normal;animation-delay:-2.4s}
-.bento-card:nth-child(4n){animation-duration:3.8s;animation-direction:reverse;animation-delay:-0.8s}
+.bento-card:nth-child(2n){animation-duration:4.6s;animation-direction:alternate-reverse;animation-delay:-1.5s}
+.bento-card:nth-child(3n){animation-duration:3.3s;animation-direction:normal;animation-delay:-2.4s}
+.bento-card:nth-child(4n){animation-duration:4.2s;animation-direction:reverse;animation-delay:-0.8s}
 .bento-card:hover{transform:translateY(-2px) scale(1.03)}
 .bento-card.open,.bento-card.active,.bento-card.has{
   transform:scale(1.05);
@@ -2432,11 +2437,6 @@ summary::-webkit-details-marker{display:none}
 
     <!-- SUB-PANEL 1B: DIARIO BIOPSICOSOCIAL Y CICLO -->
     <section class="panel card" id="sub-journal">
-      <div class="hd">
-        <span>Tu bienestar</span>
-      </div>
-
-
       <!-- REGISTRO DEL DÍA (semana, emociones, línea y guardar) -->
       <div class="retract-body" id="wkRetractBody">
         <div class="wk" id="wk"></div>
@@ -2495,14 +2495,6 @@ summary::-webkit-details-marker{display:none}
         <div class="bento-drawer" id="bentoActiveDrawer" hidden></div>
       </div>
       <div hidden><div id="ffuerza"></div><div id="ffuerzaExtra"></div><div id="fcuerpo"></div><div id="fcuerpoExtra"></div><div id="fsl"></div><div id="fslExtra"></div><div id="fsoc"></div><div id="fsocExtra"></div></div>
-
-      <div class="bio-sec" id="bioModulesOptSec" style="margin-top:16px">
-        <div class="bio-sec-hd"><span>Módulos opcionales</span><span>Actívalos si los usas</span></div>
-        <div class="chips" id="bioModulesChips">
-          <button type="button" class="chip" data-mod="cycle">+ Seguimiento de ciclo</button>
-          <button type="button" class="chip" data-mod="training">+ Movimiento antiansiedad</button>
-        </div>
-      </div>
 
       <div class="bio-sec" id="femaleBioBlock" hidden>
         <div class="bio-sec-hd">
@@ -3038,24 +3030,24 @@ summary::-webkit-details-marker{display:none}
       <div class="sl" style="margin-top:0;padding-top:0;border-top:none;margin-bottom:14px">
         <label><span>Atmósfera</span><span>elige tu fondo</span></label>
         <div class="chips" id="themePick" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px">
-          <button type="button" class="chip" data-th="pulcritud" style="padding:6px 4px;font-size:12.5px">Pulcritud</button>
-          <button type="button" class="chip" data-th="light" style="padding:6px 4px;font-size:12.5px">Editorial</button>
-          <button type="button" class="chip" data-th="dark" style="padding:6px 4px;font-size:12.5px">Nocturno</button>
-          <button type="button" class="chip" data-th="auto" style="padding:6px 4px;font-size:12.5px">Sistema</button>
+          <button type="button" class="chip" data-th="pulcritud" style="min-height:36px;height:36px;padding:6px 4px;font-size:12.5px">Pulcritud</button>
+          <button type="button" class="chip" data-th="light" style="min-height:36px;height:36px;padding:6px 4px;font-size:12.5px">Editorial</button>
+          <button type="button" class="chip" data-th="dark" style="min-height:36px;height:36px;padding:6px 4px;font-size:12.5px">Nocturno</button>
+          <button type="button" class="chip" data-th="auto" style="min-height:36px;height:36px;padding:6px 4px;font-size:12.5px">Sistema</button>
         </div>
       </div>
       <div class="sl" style="margin-top:0;padding-top:10px;border-top:1px solid var(--rule);margin-bottom:14px">
         <label><span>Terminado de cajas</span><span>cromático o blanco</span></label>
         <div class="chips" id="finishPick" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px">
-          <button type="button" class="chip" data-fin="chromatic" style="padding:6px 8px;font-size:13px">Cromático</button>
-          <button type="button" class="chip" data-fin="minimal" style="padding:6px 8px;font-size:13px">Minimalista</button>
+          <button type="button" class="chip" data-fin="chromatic" style="min-height:36px;height:36px;padding:6px 8px;font-size:12.5px">Cromático</button>
+          <button type="button" class="chip" data-fin="minimal" style="min-height:36px;height:36px;padding:6px 8px;font-size:12.5px">Minimalista</button>
         </div>
       </div>
       <div class="sl" style="margin-top:0;padding-top:10px;border-top:1px solid var(--rule);margin-bottom:14px">
-        <label><span>Perfil biológico</span><span>personaliza tus módulos y llamas</span></label>
+        <label><span>Género</span></label>
         <div class="chips" id="profileBioPick" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px">
-          <button type="button" class="chip" data-bm="female" style="padding:6px 8px;font-size:13px">Mujer</button>
-          <button type="button" class="chip" data-bm="male" style="padding:6px 8px;font-size:13px">Hombre</button>
+          <button type="button" class="chip" data-bm="female" style="min-height:36px;height:36px;padding:6px 8px;font-size:12.5px">Mujer</button>
+          <button type="button" class="chip" data-bm="male" style="min-height:36px;height:36px;padding:6px 8px;font-size:12.5px">Hombre</button>
         </div>
       </div>
 
@@ -3202,22 +3194,6 @@ summary::-webkit-details-marker{display:none}
       </div>
 
       <div class="sl">
-        <label><span>Módulos opcionales en Bienestar</span><span>tú decides qué ver</span></label>
-        <div class="chips" id="profModulesChips">
-          <button type="button" class="chip" data-mod="cycle">Seguimiento de ciclo</button>
-          <button type="button" class="chip" data-mod="training">Movimiento antiansiedad</button>
-        </div>
-      </div>
-
-      <div class="sl">
-        <label><span>Tu enfoque de bienestar</span><span>personalizado</span></label>
-        <div class="chips" id="profileBioPick">
-          <button type="button" class="chip" data-pbm="female">Mujer · Ciclo, energía y calma</button>
-          <button type="button" class="chip" data-pbm="male">Hombre · Ritmo, fuerza y calma</button>
-        </div>
-      </div>
-
-      <div class="sl">
         <label><span>Privacidad en tu círculo</span><span>visibilidad</span></label>
         <div class="chips" id="privToggles">
           <button type="button" class="chip on" data-p="showSea">Mostrar estado de mi mar</button>
@@ -3341,29 +3317,12 @@ summary::-webkit-details-marker{display:none}
 
 <!-- TUTORIAL MODAL (SIEMPRE DISPONIBLE EN ?) -->
 <div class="modal-backdrop" id="tutorialModal" hidden>
-  <div class="ext-card" style="padding:18px 16px 16px">
+  <div class="ext-card" style="padding:18px 16px 16px;max-height:82vh;overflow-y:auto">
     <button type="button" class="ext-close" id="tutorialXBtn" aria-label="Cerrar tutorial">×</button>
-    <div style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Guía rápida</div>
-    <h2 style="font-family:var(--serif);font-size:23px;font-weight:500;margin-bottom:10px">Cómo usar Wavy</h2>
-    <div style="display:flex;flex-direction:column;gap:7px">
-      <div style="padding:8px 10px;border-radius:12px;background:var(--wash);display:flex;align-items:center;gap:10px">
-        <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0"><path d="M12 20V9"/><path d="M12 14c-4.5 0-7.5-3-7.5-7.5 4.5 0 7.5 3 7.5 7.5Z"/><path d="M12 11c4-0.5 6.8-3.2 6.8-7.2-4 0.5-6.8 3.2-6.8 7.2Z"/><path d="M8.5 20h7"/></svg>
-        <div><div style="font-size:12.5px;font-weight:700;color:var(--ink)">Hoy</div><div style="font-size:11.5px;color:var(--muted);line-height:1.3">Elige tu hábito (ocúltalo con el ojo), registra emociones y aviva tu llama.</div></div>
-      </div>
-      <div style="padding:8px 10px;border-radius:12px;background:var(--wash);display:flex;align-items:center;gap:10px">
-        <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0"><path d="M6.5 13.5a5.5 5.5 0 0 1 11 0"/><path d="M2.5 14h19"/><path d="M4 18c2.5-1.8 5.2-1.8 8 0s5.5 1.8 8 0"/></svg>
-        <div><div style="font-size:12.5px;font-weight:700;color:var(--ink)">Costa</div><div style="font-size:11.5px;color:var(--muted);line-height:1.3">Respira con el mar en vivo, solo o en sintonía con tu círculo.</div></div>
-      </div>
-      <div style="padding:8px 10px;border-radius:12px;background:var(--wash);display:flex;align-items:center;gap:10px">
-        <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0"><circle cx="12" cy="12" r="2.6"/><path d="M7.2 15a5.8 5.8 0 1 1 9.6 0"/><path d="M4.2 17.6a9.4 9.4 0 1 1 15.6 0"/></svg>
-        <div><div style="font-size:12.5px;font-weight:700;color:var(--ink)">Círculo</div><div style="font-size:11.5px;color:var(--muted);line-height:1.3">Publica notas, escribe ensayos largos y mira la presencia de tus aliados.</div></div>
-      </div>
-      <div style="padding:8px 10px;border-radius:12px;background:var(--wash);display:flex;align-items:center;gap:10px">
-        <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0"><circle cx="12" cy="12" r="8.5"/><polygon points="15.4 8.6 13.3 13.3 8.6 15.4 10.7 10.7 15.4 8.6"/><circle cx="12" cy="12" r="1"/></svg>
-        <div><div style="font-size:12.5px;font-weight:700;color:var(--ink)">Pulso</div><div style="font-size:11.5px;color:var(--muted);line-height:1.3">Consulta tu avance real de 90 días, gráficas y reporte PDF.</div></div>
-      </div>
-    </div>
-    <button type="button" class="btn" id="tutorialCloseBtn" style="width:100%;margin-top:11px">Entendido, empezar</button>
+    <div style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px" id="tutorialEyebrow">Guía de esta vista</div>
+    <h2 style="font-family:var(--serif);font-size:23px;font-weight:500;margin-bottom:10px" id="tutorialTitle">Cómo usar Wavy</h2>
+    <div id="tutorialBody" style="display:flex;flex-direction:column;gap:8px"></div>
+    <button type="button" class="btn" id="tutorialCloseBtn" style="width:100%;margin-top:12px">Entendido</button>
   </div>
 </div>
 
@@ -5207,31 +5166,36 @@ function renderCircleFriends(){
   }
   grid.innerHTML='';
   const auras=[
-    ['rgba(232,108,82,.92)','rgba(248,176,120,.58)'],
-    ['rgba(52,148,218,.92)','rgba(116,204,244,.58)'],
-    ['rgba(224,92,148,.92)','rgba(246,162,198,.58)'],
-    ['rgba(68,174,118,.92)','rgba(136,222,168,.58)'],
-    ['rgba(236,168,54,.92)','rgba(250,214,118,.58)'],
-    ['rgba(136,96,212,.92)','rgba(192,164,244,.58)']
+    ['rgba(232,108,82,.88)','rgba(248,176,120,.58)','rgba(216,74,48,.96)','#c43d25'],
+    ['rgba(52,148,218,.88)','rgba(116,204,244,.58)','rgba(32,124,196,.96)','#1a64a6'],
+    ['rgba(224,92,148,.88)','rgba(246,162,198,.58)','rgba(202,62,122,.96)','#a6265c'],
+    ['rgba(68,174,118,.88)','rgba(136,222,168,.58)','rgba(44,148,94,.96)','#1f7d4b'],
+    ['rgba(236,168,54,.88)','rgba(250,214,118,.58)','rgba(214,142,26,.96)','#a86c0d'],
+    ['rgba(136,96,212,.88)','rgba(192,164,244,.58)','rgba(110,68,192,.96)','#5830ab']
   ];
-  const liveStates=['en calma','en costa','llama activa','presente'];
+  const liveStates=['en calma','en costa','llama viva','presente','matcha','pilates'];
+  grid.className='moods';
+  grid.style.cssText='display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px;text-align:left';
   list.forEach((handle,idx)=>{
     const u=(typeof findUser==='function'?findUser(handle):null)||((typeof getAllyProfile==='function')?getAllyProfile(handle):null);
     const name=(u&&u.name)?u.name:('@'+handle);
-    const pal=(u&&u.aura)?u.aura:auras[idx%auras.length];
-    const stText=liveStates[idx%liveStates.length];
-    const dur=(3.4+(idx%4)*0.65).toFixed(2)+'s';
+    const avKey=(u&&u.av)?u.av:'coast';
+    const svg=(typeof AVATARS!=='undefined'&&AVATARS[avKey])?AVATARS[avKey]:'<svg class="w-ico sm" viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5 19.5c1.5-3.2 4-4.8 7-4.8s5.5 1.6 7 4.8"/></svg>';
+    const pal=(u&&u.aura)?[u.aura[0],u.aura[1],u.aura[0],u.aura[0]]:auras[idx%auras.length];
+    const stText=(u&&u.word)?u.word:liveStates[idx%liveStates.length];
     const card=document.createElement('button');
     card.type='button';
-    card.className='circle-aura-btn';
-    card.style.cssText='animation:auraCellFloat '+dur+' ease-in-out '+(-idx*0.9)+'s infinite alternate;';
+    card.className='mo';
+    card.style.cssText='display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:7px;padding:8px 10px;text-align:left;min-height:66px';
+    card.style.setProperty('--aura-c',pal[0]);
+    card.style.setProperty('--aura-c2',pal[1]);
+    card.style.setProperty('--aura-on',pal[2]);
     card.innerHTML=
-      '<div style="position:relative;width:62px;height:62px;display:grid;place-items:center">'+
-        '<div style="position:absolute;inset:-4px;background:radial-gradient(circle at 32% 30%, '+pal[1]+' 0%, '+pal[0]+' 54%, transparent 82%);filter:blur(7px);opacity:.94;animation:orbMorph '+(4.2+idx*0.5).toFixed(1)+'s ease-in-out infinite alternate"></div>'+
-        '<div style="position:relative;width:48px;height:48px;background:radial-gradient(circle at 35% 32%, #fff 0%, '+pal[1]+' 38%, '+pal[0]+' 78%, transparent 100%);filter:blur(1.5px);animation:orbMorph '+(3.6+idx*0.4).toFixed(1)+'s ease-in-out infinite alternate-reverse"></div>'+
-      '</div>'+
-      '<div style="font-size:12.5px;font-weight:700;letter-spacing:.02em;color:var(--ink);max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(name)+'</div>'+
-      '<div style="font-size:11px;font-family:var(--serif);font-style:italic;color:var(--ink);opacity:.78">'+esc(stText)+'</div>';
+      '<div style="width:32px;height:32px;border-radius:50%;overflow:hidden;flex-shrink:0;display:grid;place-items:center;background:rgba(255,255,255,0.65);color:var(--ink)">'+svg+'</div>'+
+      '<div style="min-width:0;flex:1">'+
+        '<div style="font-size:11.5px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.15">'+esc(name)+'</div>'+
+        '<div style="font-size:10px;font-family:var(--serif);font-style:italic;color:var(--ink);opacity:.82;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px">'+esc(stText)+'</div>'+
+      '</div>';
     card.onclick=()=>{if(typeof openExternalProfile==='function')openExternalProfile(handle);};
     grid.appendChild(card);
   });
@@ -6872,7 +6836,7 @@ function stats(){
   drawSpark('cspark');
 }
 
-const CARE_OPTS=['Claridad mental','Tranquilidad','Energía','Autoestima','Concentración','Tiempo','Descanso','Cuerpo en paz'];
+const CARE_OPTS=['Claridad mental','Tranquilidad','Energía','Autoestima','Concentración','Tiempo','Descanso','Cuerpo en paz','Presencia'];
 const CARE_COLORS={
   'Claridad mental':['rgba(66,148,214,.76)','rgba(46,118,184,.50)','rgba(54,136,204,.92)','#1e6bb8'],
   'Tranquilidad':['rgba(132,116,206,.76)','rgba(102,86,174,.50)','rgba(118,102,194,.92)','#5943b5'],
@@ -6881,7 +6845,8 @@ const CARE_COLORS={
   'Concentración':['rgba(72,166,104,.76)','rgba(48,136,78,.50)','rgba(60,152,92,.92)','#228244'],
   'Tiempo':['rgba(202,150,86,.76)','rgba(170,120,60,.50)','rgba(188,136,74,.92)','#9c6621'],
   'Descanso':['rgba(76,102,174,.76)','rgba(52,76,142,.50)','rgba(64,88,160,.92)','#2d4799'],
-  'Cuerpo en paz':['rgba(62,174,158,.76)','rgba(42,140,126,.50)','rgba(52,160,144,.92)','#1d8777']
+  'Cuerpo en paz':['rgba(62,174,158,.76)','rgba(42,140,126,.50)','rgba(52,160,144,.92)','#1d8777'],
+  'Presencia':['rgba(186,114,202,.76)','rgba(154,84,170,.50)','rgba(170,98,186,.92)','#8c39a3']
 };
 const CARE_ICONS={
   'Claridad mental':'<svg class="w-ico sm" viewBox="0 0 24 24"><polygon points="12 3 20 10 12 21 4 10 12 3"/></svg>',
@@ -6891,7 +6856,8 @@ const CARE_ICONS={
   'Concentración':'<svg class="w-ico sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>',
   'Tiempo':'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12M8 3v4l4 5-4 5v4M16 3v4l-4 5 4 5v4"/></svg>',
   'Descanso':'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M6 15a4 4 0 0 1 .8-7.9A5.5 5.5 0 0 1 17.5 9a3.5 3.5 0 0 1 .5 6.9H6Z"/></svg>',
-  'Cuerpo en paz':'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M19 4C11 4 6 9 6 17c8 0 13-5 13-13Z"/><path d="M5 19l9-9"/></svg>'
+  'Cuerpo en paz':'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M19 4C11 4 6 9 6 17c8 0 13-5 13-13Z"/><path d="M5 19l9-9"/></svg>',
+  'Presencia':'<svg class="w-ico sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/></svg>'
 };
 function lossView(){
   const el=$('loss');if(!el)return;el.innerHTML='';if(!Array.isArray(S.loss))S.loss=[];
@@ -8339,21 +8305,49 @@ $('clueCalToggleBtn').onclick=()=>{S.clueCalOpen=!S.clueCalOpen;save();syncRetra
 $('caliToggleBtn').onclick=()=>{S.caliOpen=!S.caliOpen;save();syncRetractUI();if(S.caliOpen){renderCaliCalendar();renderCaliDetail()}};
 
 const CLUE_CATEGORIES=[
-  {id:'water',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 3c4.2 5.4 6.2 8.8 6.2 11.8a6.2 6.2 0 1 1-12.4 0C5.8 11.8 7.8 8.4 12 3Z"/></svg>',name:'Hidratación',sub:'Agua del día',multi:false,opts:['8+ vasos de agua','5–7 vasos','Poca agua (<4 vasos)','Agua + Matcha / Té','Agua con electrolitos']},
-  {id:'nutrition',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 5c4.5 0 7.5 3 7.5 7.5 0 4.5-3.5 7.5-7.5 7.5s-7.5-3-7.5-7.5C4.5 8 7.5 5 12 5Z"/><path d="M12 5c1-2.2 3-3 4.5-2.5"/><path d="M12 2.5v2.5"/></svg>',name:'Alimentación',sub:'Comida real vs procesada',multi:true,opts:['Comida limpia (verduras, pollo, arroz, carne)','Proteína y fruta fresca','Comida casera balanceada','Ultraprocesados / Fast food','Exceso de azúcar / Postres','Mucho café / Irritantes']},
-  {id:'sleep',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>',name:'Sueño',sub:'Descanso de anoche',multi:false,opts:['Dormí 8+ h','Dormí 7–8 h','Menos de 6 h','Me costó dormir','Despertares nocturnos']},
-  {id:'movement',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M3 12h4l3-7 4 14 3-7h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',name:'Movimiento',sub:'¿Te moviste hoy?',multi:true,opts:['Pilates / Pádel / Entreno','Caminata larga','Calistenia / Fuerza','Estiramiento suave','Hoy no me moví']},
-  {id:'energy',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M3 19l6.5-10 4.5 6.5 3-4.5 4 8H3Z"/></svg>',name:'Cuerpo y Energía',sub:'Sensación física hoy',multi:true,opts:['Cuerpo en calma y ligero','Energía alta','Tensión cuello / mandíbula','Inflamación / Pesadez','Cansada/o · Sin pila']},
-  {id:'bodypain',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-width="2.2"/></svg>',name:'Dolor',sub:'¿Te duele algo hoy?',multi:true,opts:['Sin dolor','Dolor de cabeza','Tensión / Dolor muscular','Espalda / Cuello','Malestar general']},
-  {id:'mood',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 14s1.5 2 4 2 4-2 4-2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="10" r=".9" fill="currentColor"/><circle cx="15" cy="10" r=".9" fill="currentColor"/></svg>',name:'Ánimo',sub:'¿Cómo está tu ánimo hoy?',multi:false,opts:['En calma','Bien','Regular','Bajo','Muy bajo']},
-  {id:'anxiety',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 12a1.5 1.5 0 1 0 1.5 1.5A3 3 0 0 0 9 10.5a4.5 4.5 0 0 0 6 4.5 6 6 0 0 0-3-10.5"/></svg>',name:'Ansiedad',sub:'¿Cuánta ansiedad sientes hoy?',multi:false,opts:['Casi nada','Un poco','Moderada','Alta','Muy alta']},
-  {id:'craving',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 3c2.5 3 4 5.5 4 8.5a4 4 0 1 1-8 0c0-1.5.5-3 1.5-4.5 0 1.5 1 2.2 1.8 2.2-.3-2.2.3-4.2.7-6.2Z"/></svg>',name:'Antojo / Impulso',sub:'¿Sentiste el impulso hoy?',multi:false,opts:['No lo sentí','Lo sentí y lo resistí','Lo sentí y cedí','Lo sentí varias veces']},
-  {id:'meaning',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><polygon points="15.5 8.5 13 13 8.5 15.5 11 11 15.5 8.5"/></svg>',name:'Sentido',sub:'¿Hoy tu día tuvo sentido?',multi:false,opts:['Sí, con propósito','Un día normal','Vacío / Sin sentido']},
-  {id:'connection',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="2.5"/><circle cx="15.5" cy="9" r="2"/><path d="M4.5 18c0-3 2-4.5 4.5-4.5s4.5 1.5 4.5 4.5"/><path d="M14 18c0-2.2 1.4-3.5 3.5-3.5 1.5 0 2.5.8 3 2.5"/></svg>',name:'Conexión',sub:'¿Con quién estuviste hoy?',multi:true,opts:['Con alguien cercano','En mi círculo','Con mi familia / amigos','En comunidad / grupo']},
-  {id:'loneliness',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/></svg>',name:'Soledad',sub:'¿Te sentiste sola/o hoy?',multi:false,opts:['Acompañada/o','Sola/o pero bien','Sola/o y me pesó','Necesito compañía']},
-  {id:'soc',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 21v-8"/><path d="M12 4l-5.5 9h11L12 4Z"/></svg>',name:'Entorno y Día',sub:'Contexto del día',multi:true,opts:['Tiempo a solas nutritivo','Mucho trabajo / Pantalla','Límites sanos hoy']},
-  {id:'bleeding',femaleOnly:true,hideNoPeriod:true,dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5"/></svg>',name:'Periodo y Flujo',sub:'Sangrado o manchado',multi:false,opts:['Ligero','Medio','Abundante','Manchado']},
-  {id:'pain',femaleOnly:true,dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 12C9 7 4 7 4 11c0 3 4 4 8 1 4 3 8 2 8-1 0-4-5-4-8 1Z"/></svg>',name:'Bienestar Hormonal',sub:'Síntomas o confort',multi:true,opts:['Sin molestias','Cólicos leves','Sensibilidad emocional','Piel luminosa','Retención de líquidos','Cabeza / Migraña']}
+  /* CUERPO: 12 tarjetas exactas (3x4) */
+  {id:'water',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 3c4.2 5.4 6.2 8.8 6.2 11.8a6.2 6.2 0 1 1-12.4 0C5.8 11.8 7.8 8.4 12 3Z"/></svg>',name:'Hidratación',multi:false,opts:['8+ vasos de agua','5–7 vasos','Poca agua (<4 vasos)','Agua + Matcha / Té','Agua con electrolitos']},
+  {id:'nutrition',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 5c4.5 0 7.5 3 7.5 7.5 0 4.5-3.5 7.5-7.5 7.5s-7.5-3-7.5-7.5C4.5 8 7.5 5 12 5Z"/><path d="M12 5c1-2.2 3-3 4.5-2.5"/><path d="M12 2.5v2.5"/></svg>',name:'Alimentación',multi:true,opts:['Comida limpia','Proteína y fruta fresca','Comida casera balanceada','Ultraprocesados','Exceso de azúcar']},
+  {id:'sleep',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>',name:'Sueño',multi:false,opts:['Dormí 8+ h','Dormí 7–8 h','Menos de 6 h','Me costó dormir','Despertares nocturnos']},
+  {id:'movement',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M3 12h4l3-7 4 14 3-7h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',name:'Movimiento',multi:true,opts:['Pilates / Pádel / Entreno','Caminata larga','Calistenia / Fuerza','Estiramiento suave','Hoy no me moví']},
+  {id:'energy',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M3 19l6.5-10 4.5 6.5 3-4.5 4 8H3Z"/></svg>',name:'Vitalidad',multi:true,opts:['Cuerpo ligero','Energía alta','Cansancio moderado','Sin pila']},
+  {id:'bodypain',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-width="2.2"/></svg>',name:'Dolor físico',multi:true,opts:['Sin dolor','Cabeza','Tensión muscular','Espalda / Cuello']},
+  {id:'digestion',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M6 12c0-4 3-7 6-7s6 3 6 7-3 7-6 7"/><path d="M9 12a3 3 0 0 0 6 0"/></svg>',name:'Digestión',multi:false,opts:['Ligera y bien','Inflamación','Pesadez','Reflujo / Malestar']},
+  {id:'posture',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 4v16"/><path d="M7 9l5-5 5 5"/><path d="M7 15h10"/></svg>',name:'Postura',multi:false,opts:['Espalda suelta','Cuello tenso','Mandíbula apretada','Hombros cargados']},
+  {id:'sunlight',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>',name:'Luz solar',multi:false,opts:['15+ min al sol','Poca luz natural','Todo el día adentro']},
+  {id:'recovery',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3L20 9"/><path d="M20 4v5h-5"/><path d="M20 12a8 8 0 0 1-14 5.3L4 15"/></svg>',name:'Recuperación',multi:false,opts:['Descansado','Aún fatigado','Necesito siesta']},
+  {id:'bleeding',femaleOnly:true,dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5"/></svg>',name:'Periodo',multi:false,opts:['Sin sangrado','Ligero','Medio','Abundante','Manchado']},
+  {id:'pain',femaleOnly:true,dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 12C9 7 4 7 4 11c0 3 4 4 8 1 4 3 8 2 8-1 0-4-5-4-8 1Z"/></svg>',name:'Ciclo hormonal',multi:true,opts:['Sin molestias','Cólicos leves','Piel luminosa','Retención']},
+  {id:'strength',maleOnly:true,dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M6 7v10M18 7v10M3 9v6M21 9v6M6 12h12"/></svg>',name:'Fuerza física',multi:false,opts:['Fuerza plena','Media','Fatiga muscular']},
+  {id:'cold',maleOnly:true,dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 2v20M4.9 6.9l14.2 10.2M19.1 6.9L4.9 17.1"/></svg>',name:'Térmico / Frío',multi:false,opts:['Ducha fría','Agua templada','Sauna / Calor']},
+
+  /* MENTE: 12 tarjetas cognitivas/conductuales sin chocar con Emociones (3x4) */
+  {id:'mind_clarity',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M4 12h16M4 7h10M4 17h13"/></svg>',name:'Claridad mental',multi:false,opts:['Mente despejada','Un poco nublada','Niebla mental']},
+  {id:'rumination',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 12a1.5 1.5 0 1 0 1.5 1.5A3 3 0 0 0 9 10.5a4.5 4.5 0 0 0 6 4.5 6 6 0 0 0-3-10.5"/></svg>',name:'Rumiación',multi:false,opts:['Sin bucles','Pensamientos repetitivos','Sobreanálisis alto']},
+  {id:'focus_flow',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="12" cy="12" r="2.5"/></svg>',name:'Foco y flujo',multi:false,opts:['Bloques profundos','Disperso','Multitarea excesiva']},
+  {id:'mental_load',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M4 17h16M6 13h12M8 9h8"/></svg>',name:'Carga mental',multi:false,opts:['Ligera','Moderada','Saturada']},
+  {id:'self_talk',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M4 6h16v10H8l-4 4V6Z"/></svg>',name:'Autocrítica',multi:false,opts:['Amable conmigo','Exigente','Dura / Culpa']},
+  {id:'craving',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 3c2.5 3 4 5.5 4 8.5a4 4 0 1 1-8 0c0-1.5.5-3 1.5-4.5 0 1.5 1 2.2 1.8 2.2-.3-2.2.3-4.2.7-6.2Z"/></svg>',name:'Impulso digital',multi:false,opts:['No lo sentí','Lo resistí','Cedí un poco']},
+  {id:'stress',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M3 12l4-5 4 10 4-8 3 3h3"/></svg>',name:'Estrés del día',multi:false,opts:['Bajo','Manejable','Alto']},
+  {id:'patience',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M5 12h14"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/></svg>',name:'Paciencia',multi:false,opts:['Sereno','Impaciente','Reactivo']},
+  {id:'creativity',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3 11.2V16h6v-1.8A6 6 0 0 0 12 3Z"/></svg>',name:'Creatividad',multi:false,opts:['Ideas fluidas','Normal','Bloqueado']},
+  {id:'meaning',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><polygon points="15.5 8.5 13 13 8.5 15.5 11 11 15.5 8.5"/></svg>',name:'Propósito',multi:false,opts:['Con dirección','Rutina normal','Sin rumbo']},
+  {id:'decisions',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 20V10M12 10L6 4M12 10l6-6"/></svg>',name:'Decisiones',multi:false,opts:['Decidido','Dudando','Postergando']},
+  {id:'screen_fatigue',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/></svg>',name:'Pantallas',multi:false,opts:['Poco tiempo','Moderado','Exceso de pantallas']},
+
+  /* VÍNCULO: 12 tarjetas relacionales (3x4) */
+  {id:'connection',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="2.5"/><circle cx="15.5" cy="9" r="2"/><path d="M4.5 18c0-3 2-4.5 4.5-4.5s4.5 1.5 4.5 4.5"/><path d="M14 18c0-2.2 1.4-3.5 3.5-3.5 1.5 0 2.5.8 3 2.5"/></svg>',name:'Conexión',multi:true,opts:['Con alguien cercano','En mi círculo','En comunidad']},
+  {id:'loneliness',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/></svg>',name:'Soledad',multi:false,opts:['Acompañada/o','Sola/o en paz','Necesito compañía']},
+  {id:'soc',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 21v-8"/><path d="M12 4l-5.5 9h11L12 4Z"/></svg>',name:'Entorno',multi:true,opts:['Espacio ordenado','Ruido / Caos','Aire libre']},
+  {id:'boundaries',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M4 4v16M20 4v16M9 12h6"/></svg>',name:'Límites sanos',multi:false,opts:['Dije que no a tiempo','Me costó poner límite','Cedí por agradar']},
+  {id:'listening',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M6 12a6 6 0 0 1 12 0c0 4-3 6-4 8"/><circle cx="12" cy="12" r="2"/></svg>',name:'Escucha real',multi:false,opts:['Escuché presente','Me escucharon bien','Conversación superficial']},
+  {id:'family',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9H3v-9Z"/></svg>',name:'Familia',multi:false,opts:['En armonía','Contacto breve','Tensión familiar']},
+  {id:'partner',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="9.5" cy="12" r="4.5"/><circle cx="14.5" cy="12" r="4.5"/></svg>',name:'Afecto / Pareja',multi:false,opts:['Cercanía cálida','Distancia','Soltero/a en paz']},
+  {id:'friends',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M8 15l4-4 4 4"/><path d="M6 19h12"/></svg>',name:'Amistades',multi:false,opts:['Risa compartida','Mensaje sincero','Sin contacto hoy']},
+  {id:'support_ask',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>',name:'Pedir apoyo',multi:false,opts:['Pedí ayuda hoy','Lo resolví solo','Me cuesta pedirlo']},
+  {id:'solitude_good',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M5 19h14M8 19v-5a4 4 0 0 1 8 0v5"/></svg>',name:'Tiempo a solas',multi:false,opts:['Nutritivo','Breve','Sin espacio propio']},
+  {id:'nature',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M4 18c4-6 12-6 16 0"/><path d="M12 12V4"/></svg>',name:'Naturaleza',multi:false,opts:['Caminé afuera','Vi el cielo / árboles','Nada hoy']},
+  {id:'community',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="12" cy="6" r="2"/><circle cx="6" cy="16" r="2"/><circle cx="18" cy="16" r="2"/><path d="M12 8l-5 6M12 8l5 6M8 16h8"/></svg>',name:'Comunidad',multi:false,opts:['Aporté al grupo','Me sentí parte','Aislado del entorno']}
 ];
 
 function getTodayClueLog(){
@@ -8381,7 +8375,7 @@ function renderClueTrackList(){
 
   const visibleCats=CLUE_CATEGORIES.filter(cat=>{
     if(isMale && cat.femaleOnly)return false;
-    if(!isMale && isNoPeriod && cat.hideNoPeriod)return false;
+    if(!isMale && cat.maleOnly)return false;
     return true;
   });
 
@@ -8419,15 +8413,38 @@ function renderClueTrackList(){
     movement:['rgba(236,144,58,.76)','rgba(204,114,38,.50)','rgba(222,130,46,.90)','#c46312'],
     energy:['rgba(238,186,64,.76)','rgba(206,154,42,.50)','rgba(224,172,52,.90)','#bd8b11'],
     bodypain:['rgba(212,92,102,.74)','rgba(178,66,76,.48)','rgba(198,78,88,.90)','#ab2e3a'],
-    mood:['rgba(138,116,208,.74)','rgba(108,86,176,.48)','rgba(124,102,194,.90)','#5e42b8'],
-    anxiety:['rgba(218,108,74,.74)','rgba(186,80,50,.48)','rgba(204,94,62,.90)','#b3401f'],
+    digestion:['rgba(116,184,78,.74)','rgba(86,150,52,.48)','rgba(100,168,64,.90)','#448a20'],
+    posture:['rgba(64,178,162,.74)','rgba(42,144,130,.48)','rgba(52,162,146,.90)','#198a7a'],
+    sunlight:['rgba(244,166,48,.76)','rgba(214,134,26,.50)','rgba(232,150,36,.90)','#cc770a'],
+    recovery:['rgba(104,158,214,.74)','rgba(76,126,182,.48)','rgba(90,142,198,.90)','#366eb0'],
+    strength:['rgba(214,104,68,.76)','rgba(182,76,44,.50)','rgba(198,90,56,.90)','#b83c18'],
+    cold:['rgba(68,188,218,.74)','rgba(44,154,186,.48)','rgba(56,172,202,.90)','#1a89a8'],
+    bleeding:['rgba(196,76,94,.74)','rgba(162,52,70,.48)','rgba(182,64,82,.90)','#9e2438'],
+    pain:['rgba(174,112,188,.74)','rgba(142,84,156,.48)','rgba(160,98,174,.90)','#7e3b91'],
+    mind_clarity:['rgba(72,166,222,.74)','rgba(48,132,190,.48)','rgba(60,150,206,.90)','#1d78b5'],
+    rumination:['rgba(148,112,204,.74)','rgba(116,82,172,.48)','rgba(132,96,188,.90)','#663aa8'],
+    focus_flow:['rgba(58,176,144,.74)','rgba(38,142,114,.48)','rgba(48,160,128,.90)','#178767'],
+    mental_load:['rgba(118,128,196,.74)','rgba(88,98,164,.48)','rgba(102,112,180,.90)','#4652a3'],
     craving:['rgba(202,74,112,.74)','rgba(168,52,86,.48)','rgba(188,62,98,.90)','#a32248'],
+    self_talk:['rgba(218,126,154,.74)','rgba(186,94,122,.48)','rgba(202,110,138,.90)','#b53d64'],
+    stress:['rgba(222,102,68,.76)','rgba(190,74,44,.50)','rgba(206,88,56,.90)','#ba3a18'],
+    patience:['rgba(94,168,128,.74)','rgba(68,136,100,.48)','rgba(80,152,114,.90)','#2e8254'],
+    creativity:['rgba(232,148,62,.76)','rgba(200,118,38,.50)','rgba(216,132,48,.90)','#bf6412'],
+    decisions:['rgba(84,132,198,.74)','rgba(58,102,166,.48)','rgba(70,118,182,.90)','#2d5ca3'],
+    screen_fatigue:['rgba(128,146,178,.74)','rgba(98,116,148,.48)','rgba(112,130,162,.90)','#4d6287'],
     meaning:['rgba(196,154,84,.74)','rgba(164,124,58,.48)','rgba(182,140,70,.90)','#996c22'],
     connection:['rgba(224,114,148,.74)','rgba(190,84,118,.48)','rgba(210,98,134,.90)','#b3345e'],
     loneliness:['rgba(106,128,168,.74)','rgba(80,100,138,.48)','rgba(92,114,154,.90)','#3d5685'],
     soc:['rgba(68,168,154,.74)','rgba(46,136,124,.48)','rgba(56,154,140,.90)','#1c8576'],
-    bleeding:['rgba(196,76,94,.74)','rgba(162,52,70,.48)','rgba(182,64,82,.90)','#9e2438'],
-    pain:['rgba(174,112,188,.74)','rgba(142,84,156,.48)','rgba(160,98,174,.90)','#7e3b91']
+    boundaries:['rgba(188,104,136,.74)','rgba(156,74,106,.48)','rgba(172,88,120,.90)','#993259'],
+    listening:['rgba(82,158,196,.74)','rgba(56,126,164,.48)','rgba(68,142,180,.90)','#26729e'],
+    family:['rgba(222,138,88,.76)','rgba(190,108,62,.50)','rgba(206,122,74,.90)','#b85822'],
+    partner:['rgba(214,96,126,.74)','rgba(182,68,98,.48)','rgba(198,82,112,.90)','#ad2b4e'],
+    friends:['rgba(232,168,72,.76)','rgba(200,136,46,.50)','rgba(216,152,58,.90)','#ba7616'],
+    support_ask:['rgba(144,122,202,.74)','rgba(112,92,170,.48)','rgba(128,106,186,.90)','#6242ad'],
+    solitude_good:['rgba(88,154,146,.74)','rgba(62,122,116,.48)','rgba(74,138,130,.90)','#2a7870'],
+    nature:['rgba(78,172,102,.74)','rgba(52,140,74,.48)','rgba(64,156,88,.90)','#23853c'],
+    community:['rgba(172,136,78,.74)','rgba(140,106,54,.48)','rgba(156,120,64,.90)','#875e1c']
   };
   const buildBentoCard=cat=>{
     const cur=log[cat.id];
@@ -10395,7 +10412,61 @@ if($('mastheadProfileTrigger')){
   $('mastheadProfileTrigger').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleProfileView();}};
 }
 if($('mastheadMenuBtn'))$('mastheadMenuBtn').onclick=()=>toggleProfileView();
+const HELP_GUIDES={
+  'v-today':{
+    eyebrow:'Guía de Hoy',
+    title:'Tu base diaria',
+    items:[
+      ['Mi hábito · Mi hábito por construir','Elige el hábito que estás regulando hoy. Usa el ícono del ojo si quieres ocultarlo en lugares públicos.'],
+      ['Mi razón de cuidado hoy','Recuerda por qué elegiste cuidarte. Toca una o más cápsulas para anclar tu propósito.'],
+      ['Siento un impulso ahora','Botón de pausa inmediata: te guía paso a paso para observar el impulso antes de actuar.'],
+      ['Mi bienestar · Emociones y Hábitos de cuidado','Registra hasta 3 emociones (y voltea para ver tu mapa), anota cómo va tu día y marca las 12 áreas de Cuerpo, Mente y Vínculo.'],
+      ['Mi constancia','Tu llama viva (nunca baja de 5%). Se aviva cuando respiras en Costa, escribes en tu diario o haces una práctica de 60 s.']
+    ]
+  },
+  'v-breathe':{
+    eyebrow:'Guía de Costa',
+    title:'Respira con el mar',
+    items:[
+      ['El mar y la marea','El oleaje y los colores reflejan tu nivel de calma o tensión y la hora del día.'],
+      ['Controles inferiores','Desde abajo puedes iniciar o pausar la respiración, elegir modo Automático o Táctil, cambiar entre Olas, Ruido rosa, Ruido blanco o Cuencos, elegir el ritmo (4·6, 4·4, 4·7·8) y la duración.'],
+      ['Salir (×) y Pantalla completa','En pausa sigues viendo el círculo respirar; toca × para terminar y volver al mar, o expande a pantalla completa arriba a la derecha.']
+    ]
+  },
+  'v-circle':{
+    eyebrow:'Guía de Círculo',
+    title:'Presencia compartida',
+    items:[
+      ['Círculo (Muro)','Lee notas breves de quienes te acompañan. Si aún no cumples una práctica hoy, las notas se muestran difuminadas hasta que enciendas tu día.'],
+      ['Reacciones minimalistas','Toca o pasa el dedo sobre los símbolos debajo de cada nota para acompañar, celebrar o sentir con esa persona.'],
+      ['Escritos y Tu círculo','En Escritos puedes redactar reflexiones largas tipo diario; en Tu círculo ves las tarjetas de tus aliados y puedes invitar a más personas.']
+    ]
+  },
+  'v-clinic':{
+    eyebrow:'Guía de Pulso',
+    title:'Tu progreso real',
+    items:[
+      ['Tu energía de hoy','Un resumen vivo de tu equilibrio entre descanso, pausas en Costa y registros recientes.'],
+      ['Tu flujo del día y Gráficas','Descubre en qué horarios sientes mayor calma o cuándo conviene hacer una pausa preventiva.'],
+      ['Exportar reporte','Genera un resumen limpio de tus registros para ti o para compartir en terapia.']
+    ]
+  }
+};
 if($('mastheadHelpBtn'))$('mastheadHelpBtn').onclick=()=>{
+  const activePage=document.querySelector('.vpage.on');
+  const vid=(activePage && HELP_GUIDES[activePage.id])?activePage.id:'v-today';
+  const g=HELP_GUIDES[vid];
+  if($('tutorialEyebrow'))$('tutorialEyebrow').textContent=g.eyebrow;
+  if($('tutorialTitle'))$('tutorialTitle').textContent=g.title;
+  const body=$('tutorialBody');
+  if(body){
+    body.innerHTML=g.items.map(([hd,desc])=>
+      '<div style="padding:10px 12px;border-radius:14px;background:var(--wash)">'+
+        '<div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:3px">'+esc(hd)+'</div>'+
+        '<div style="font-size:12px;color:var(--muted);line-height:1.4">'+esc(desc)+'</div>'+
+      '</div>'
+    ).join('');
+  }
   const m=$('tutorialModal');if(m)m.hidden=false;
 };
 if($('tutorialCloseBtn'))$('tutorialCloseBtn').onclick=()=>{if($('tutorialModal'))$('tutorialModal').hidden=true;};
