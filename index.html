@@ -41,8 +41,8 @@
   --paper-grad:none;
   --card:#F4EFE6;
   --card-solid:#F4EFE6;
-  --glass-border:rgba(36,33,30,0.09);
-  --glass-spec:inset 0 1.5px 0 rgba(255,255,255,0.90),inset 0 -1px 0 rgba(36,33,30,0.04);
+  --glass-border:rgba(36,33,30,0.08);
+  --glass-spec:none;
   --ink:#24201D;
   --muted:#736B63;
   --rule:rgba(36,33,30,0.09);
@@ -50,7 +50,7 @@
   --gold:#BA965C;
   --ok:#5B7A5C;
   --spotify:#1DB954;
-  --wash:rgba(236,228,216,0.74);
+  --wash:#EFE9DE;
   --shadow:none;
   color-scheme:light;
 }
@@ -309,7 +309,7 @@ h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,7vw,36px);line-
   margin-bottom:14px;
 }
 @media(max-width:480px){
-  .card,.stories-bar,.me-pill{
+  .stories-bar,.me-pill{
     backdrop-filter:blur(16px) saturate(160%);
     -webkit-backdrop-filter:blur(16px) saturate(160%);
   }
@@ -384,25 +384,28 @@ h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,7vw,36px);line-
   50%{transform:translateX(-50%) scaleX(1.04);opacity:1}
 }
 @keyframes lavaLampFlow{
-  0%{background-position:15% 20%, 85% 80%, 50% 50%}
-  33%{background-position:78% 18%, 22% 74%, 60% 35%}
-  66%{background-position:35% 84%, 72% 24%, 25% 65%}
-  100%{background-position:15% 20%, 85% 80%, 50% 50%}
+  0%{background-position:8% 12%, 92% 88%, 50% 50%}
+  33%{background-position:86% 14%, 14% 78%, 65% 30%}
+  66%{background-position:28% 88%, 78% 18%, 20% 70%}
+  100%{background-position:8% 12%, 92% 88%, 50% 50%}
 }
 /* Cuadrícula 3x3 Hábitos */
 .habit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
 .habit-item{
   background-color:var(--hab-base, var(--paper));
   background-image:
-    radial-gradient(circle at 22% 24%, var(--hab-c, rgba(76,148,204,.86)) 0%, transparent 64%),
-    radial-gradient(circle at 78% 76%, var(--hab-on, rgba(52,126,188,.84)) 0%, transparent 66%),
-    linear-gradient(135deg, var(--hab-c, rgba(76,148,204,.82)), var(--hab-c2, rgba(54,116,172,.68)));
-  background-size:210% 210%, 210% 210%, 100% 100%;
+    radial-gradient(circle at 20% 22%, rgba(255,255,255,0.34) 0%, transparent 46%),
+    radial-gradient(circle at 78% 76%, var(--hab-on, rgba(52,126,188,.94)) 0%, transparent 56%),
+    linear-gradient(135deg, var(--hab-c, rgba(76,148,204,.86)), var(--hab-c2, rgba(54,116,172,.74)));
+  background-size:250% 250%, 250% 250%, 100% 100%;
   border:none;border-radius:16px;overflow:hidden;
   min-height:66px;padding:10px 6px 11px;text-align:center;cursor:pointer;position:relative;
   transition:transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease;color:var(--ink);font-family:var(--serif);
-  animation:lavaLampFlow 7.5s ease-in-out infinite;
+  animation:lavaLampFlow 6.2s ease-in-out infinite;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,0.36), 0 6px 14px -10px rgba(0,0,0,0.22);
 }
+.habit-item:nth-child(3n){animation-duration:7.8s;animation-delay:-2.1s}
+.habit-item:nth-child(3n+1){animation-duration:5.6s;animation-delay:-3.7s}
 .habit-item.add-habit-card{
   background-image:radial-gradient(circle at 50% 45%, rgba(168,162,154,.24) 0%, rgba(168,162,154,.10) 80%);
   border:none;
@@ -411,9 +414,13 @@ h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,7vw,36px);line-
 .habit-item i{display:block;font-style:normal;font-size:21px;color:var(--ink);margin-bottom:3px;line-height:1}
 .habit-item span{font-size:12.5px;display:block;line-height:1.15;font-weight:500}
 .habit-item.on{
-  color:var(--ink);font-weight:700;
-  background-image:radial-gradient(circle at 30% 28%, var(--hab-on, rgba(52,126,188,.94)) 0%, var(--hab-c, rgba(76,148,204,.78)) 84%);
-  box-shadow:0 10px 22px -12px rgba(0,0,0,0.28);
+  color:#fff;font-weight:700;
+  text-shadow:0 1px 2px rgba(0,0,0,0.22);
+  background-image:
+    radial-gradient(circle at 24% 24%, rgba(255,255,255,0.28) 0%, transparent 48%),
+    radial-gradient(circle at 72% 72%, var(--hab-bar, #1f6feb) 0%, transparent 60%),
+    linear-gradient(135deg, var(--hab-on, rgba(52,126,188,.94)), var(--hab-bar, #1f6feb));
+  box-shadow:0 10px 22px -12px rgba(0,0,0,0.32);
   transform:translateY(-1px) scale(1.025);
 }
 .habit-item.on::after{
@@ -422,7 +429,7 @@ h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,7vw,36px);line-
   box-shadow:0 0 8px var(--hab-bar, rgba(31,111,235,0.55));
   animation:barTideFlow 3.2s ease-in-out infinite;
 }
-.habit-item.on i{color:var(--ink)}
+.habit-item.on i{color:#fff}
 .habit-item.pro-glow,.mo.pro-glow,.pal-btn.pro-glow{
   border-color:rgba(194,160,104,0.68);
   box-shadow:0 0 12px rgba(194,160,104,0.28),inset 0 0 6px rgba(194,160,104,0.10);
@@ -732,10 +739,10 @@ input[type=range]{width:100%;accent-color:var(--crimson);cursor:pointer;min-heig
 }
 .pattern-pill:hover{background:rgba(15,23,36,0.75);transform:scale(1.02)}
 .sea .gauge{
-  position:absolute;left:14px;bottom:14px;font-family:var(--serif);
-  font-size:38px;font-weight:400;color:#fff;line-height:1;text-shadow:0 1px 14px rgba(40,50,62,0.32);pointer-events:none;
+  position:absolute;left:14px;top:14px;font-family:var(--serif);
+  font-size:34px;font-weight:400;color:#fff;line-height:1;text-shadow:0 1px 14px rgba(40,50,62,0.32);pointer-events:none;
 }
-.sea .gauge small{display:block;font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.01em;text-transform:none;opacity:.94;margin-top:5px}
+.sea .gauge small{display:block;font-family:var(--serif);font-style:italic;font-size:14px;letter-spacing:.01em;text-transform:none;opacity:.94;margin-top:4px}
 .sea-fs-btn{
   position:absolute;top:12px;right:12px;z-index:5;
   width:34px;height:34px;border-radius:50%;
@@ -757,19 +764,22 @@ body.coast-fullscreen > #seab{
 body.coast-fullscreen > #seab #sea,
 body.coast-fullscreen > #seab #breathLayer{width:100% !important;height:100% !important;display:block}
 body.coast-fullscreen > #seab .sea-fs-btn{top:max(12px, env(safe-area-inset-top, 12px));right:max(12px, env(safe-area-inset-right, 12px))}
-body.coast-fullscreen > #seab .gauge{left:max(16px, env(safe-area-inset-left, 16px));bottom:max(20px, env(safe-area-inset-bottom, 20px))}
+body.coast-fullscreen > #seab .gauge{left:max(16px, env(safe-area-inset-left, 16px));top:max(14px, env(safe-area-inset-top, 14px))}
 .coast-fs-dock{
-  display:flex;position:absolute;top:12px;left:12px;
-  z-index:20;flex-direction:column;align-items:flex-start;gap:8px;max-width:calc(100% - 62px);
+  display:flex;position:absolute;bottom:12px;left:50%;transform:translateX(-50%);
+  z-index:20;flex-direction:column-reverse;align-items:center;gap:8px;width:max-content;max-width:calc(100% - 20px);
 }
-body.coast-fullscreen > #seab .coast-fs-dock{top:max(12px, env(safe-area-inset-top, 12px));left:max(12px, env(safe-area-inset-left, 12px))}
+body.coast-fullscreen > #seab .coast-fs-dock{bottom:max(18px, env(safe-area-inset-bottom, 18px));left:50%;transform:translateX(-50%)}
 .coast-fs-toggle{
-  height:34px;padding:0 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.28);
-  background:rgba(15,23,36,0.34);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  color:#fff;font-family:var(--sans);font-size:11px;letter-spacing:.04em;
-  display:inline-flex;align-items:center;gap:5px;cursor:pointer;white-space:nowrap;
+  width:38px;height:38px;padding:0;border-radius:50%;border:1px solid rgba(255,255,255,0.30);
+  background:rgba(15,23,36,0.36);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  color:#fff;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;
+  transition:transform .16s ease, background .18s ease;
 }
-.coast-fs-toggle.on{background:rgba(255,255,255,0.26);border-color:rgba(255,255,255,0.62)}
+.coast-fs-toggle:active{transform:scale(0.92)}
+.coast-fs-toggle.on{background:rgba(255,255,255,0.28);border-color:rgba(255,255,255,0.68)}
+#coastFsStopBtn{display:none}
+.sea.breathing #coastFsStopBtn{display:inline-flex}
 .coast-fs-panel{
   display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-radius:16px;max-width:min(84vw, 310px);
   background:rgba(15,23,36,0.52);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
@@ -973,24 +983,29 @@ body.coast-fullscreen > #seab .coast-fs-dock{top:max(12px, env(safe-area-inset-t
   border:none;color:var(--ink);
   min-height:66px;min-width:0;overflow:visible;padding:10px 6px 8px;cursor:pointer;font-family:var(--serif);border-radius:999px;
   transition:transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease;position:relative;
-  background-size:200% 200%, 200% 200%;
+  background-size:250% 250%, 250% 250%, 100% 100%;
   background-image:
-    radial-gradient(circle at 28% 30%, var(--aura-on, rgba(58,144,212,.88)) 0%, transparent 62%),
-    radial-gradient(circle at 72% 70%, var(--aura-c, rgba(84,156,214,.78)) 0%, var(--aura-c2, rgba(84,156,214,.40)) 68%, transparent 100%);
-  animation:lavaLampFlow 7s ease-in-out infinite;
+    radial-gradient(circle at 24% 26%, rgba(255,255,255,0.34) 0%, transparent 46%),
+    radial-gradient(circle at 76% 74%, var(--aura-on, rgba(58,144,212,.92)) 0%, transparent 56%),
+    linear-gradient(135deg, var(--aura-c, rgba(84,156,214,.84)), var(--aura-c2, rgba(84,156,214,.58)));
+  animation:lavaLampFlow 6.4s ease-in-out infinite;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,0.32), 0 6px 14px -10px rgba(0,0,0,0.18);
 }
-.mo:nth-child(2n){animation-delay:-2.4s}
-.mo:nth-child(3n){animation-delay:-4.9s}
+.mo:nth-child(2n){animation-duration:7.6s;animation-delay:-2.4s}
+.mo:nth-child(3n){animation-duration:5.8s;animation-delay:-4.9s}
 .mo:hover{transform:translateY(-2px) scale(1.03)}
 .mo i{display:block;font-style:normal;font-size:21px;line-height:1.1;color:var(--ink)}
 .mo span{font-size:12px;font-weight:500;display:block;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px;letter-spacing:.01em}
 .mo.on{
   transform:scale(1.05);
-  box-shadow:0 0 0 1.5px color-mix(in srgb, var(--ink) 58%, transparent), 0 10px 22px -10px rgba(0,0,0,0.20);
-  background-image:radial-gradient(circle at 48% 42%, var(--aura-on, rgba(164,198,224,.66)) 0%, var(--aura-c, rgba(164,198,224,.30)) 74%, transparent 100%);
-  color:var(--ink);font-weight:700;
+  box-shadow:0 10px 22px -10px rgba(0,0,0,0.28);
+  background-image:
+    radial-gradient(circle at 26% 24%, rgba(255,255,255,0.28) 0%, transparent 48%),
+    linear-gradient(135deg, var(--aura-on, rgba(58,144,212,.96)), var(--aura-c, rgba(84,156,214,.88)));
+  color:#fff;font-weight:700;
+  text-shadow:0 1px 2px rgba(0,0,0,0.22);
 }
-.mo.on i{color:var(--ink)}
+.mo.on i{color:#fff}
 .mo.plus-btn{border:1px dashed color-mix(in srgb, var(--ink) 24%, transparent);color:var(--ink);background:transparent;border-radius:999px;animation:none}
 .mo.plus-btn i{color:var(--ink);font-weight:400}
 .mo.extra-mood[hidden]{display:none !important}
@@ -1038,21 +1053,22 @@ body.coast-fullscreen > #seab .coast-fs-dock{top:max(12px, env(safe-area-inset-t
 #loss{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 #loss .chip{
   width:100%;border:none;color:var(--ink);position:relative;overflow:hidden;
-  background-size:210% 210%, 210% 210%, 100% 100%;
+  background-size:250% 250%, 250% 250%, 100% 100%;
   background-image:
-    radial-gradient(circle at 22% 28%, var(--care-on, rgba(56,128,196,.86)) 0%, transparent 64%),
-    radial-gradient(circle at 78% 72%, var(--care-c, rgba(84,154,212,.82)) 0%, transparent 66%),
-    linear-gradient(135deg, var(--care-c, rgba(84,154,212,.76)), var(--care-c2, rgba(64,126,184,.58)));
-  animation:lavaLampFlow 7.5s ease-in-out infinite;
+    radial-gradient(circle at 20% 24%, rgba(255,255,255,0.34) 0%, transparent 46%),
+    radial-gradient(circle at 80% 76%, var(--care-on, rgba(56,128,196,.92)) 0%, transparent 56%),
+    linear-gradient(135deg, var(--care-c, rgba(84,154,212,.84)), var(--care-c2, rgba(64,126,184,.72)));
+  animation:lavaLampFlow 6.5s ease-in-out infinite;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,0.34), 0 6px 14px -10px rgba(0,0,0,0.20);
 }
-#loss .chip:nth-child(2n){animation-delay:-3s}
+#loss .chip:nth-child(2n){animation-duration:7.9s;animation-delay:-3s}
 #loss .chip.on{
-  box-shadow:0 8px 18px -10px rgba(0,0,0,0.24);
+  box-shadow:0 8px 18px -10px rgba(0,0,0,0.30);
   background-image:
-    radial-gradient(circle at 28% 30%, var(--care-on, rgba(56,128,196,.94)) 0%, transparent 64%),
-    radial-gradient(circle at 74% 72%, var(--care-c, rgba(84,154,212,.88)) 0%, transparent 68%),
-    linear-gradient(135deg, var(--care-on, rgba(56,128,196,.92)), var(--care-c, rgba(84,154,212,.78)));
-  color:var(--ink);font-weight:700;
+    radial-gradient(circle at 24% 24%, rgba(255,255,255,0.26) 0%, transparent 48%),
+    linear-gradient(135deg, var(--care-on, rgba(56,128,196,.96)), var(--care-bar, #1f6feb));
+  color:#fff;font-weight:700;
+  text-shadow:0 1px 2px rgba(0,0,0,0.22);
 }
 #loss .chip.on::after{
   content:"";position:absolute;left:50%;bottom:4px;width:46%;height:3px;border-radius:999px;
@@ -1360,12 +1376,12 @@ body.public-view .pub-view.on{display:block}
   font-style:normal;
   font-weight:400;
   font-size:clamp(17.5px, 4.3vw, 19.5px);
-  line-height:1.5;
+  line-height:1.48;
   letter-spacing:-.005em;
   color:var(--ink);
   background:transparent;
   border:none;
-  padding:2px 0 8px;
+  padding:2px 0 3px;
   margin:0;
   border-radius:0;
   white-space:pre-line;
@@ -1849,40 +1865,47 @@ summary::-webkit-details-marker{display:none}
 }
 .cmd-action-btn:hover{border-color:var(--ok);color:var(--ok);transform:translateY(-1px)}
 
-/* Cuadrícula Bento Horizontal para Hábitos de Cuidado: 2 cuadros + [+] por renglón */
+/* Cuadrícula Bento 3 columnas limpias por renglón, sin + gigante ni subtítulos */
 .bento-track-grid{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:10px;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:10px;
 }
 .bento-row-3col{
-  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 54px;gap:8px;margin-bottom:8px;align-items:stretch;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:8px;align-items:stretch;
 }
 .bento-extra-grid{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:10px;animation:fadeUp .18s ease;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:10px;animation:fadeUp .18s ease;
 }
 .bento-extra-grid[hidden]{display:none}
-/* Grupo de tarjetas por dimensión: un renglón con el nombre de la
-   dimensión y abajo las tarjetas de ese aspecto. */
 .bento-dim-group{margin-bottom:14px}
 .bento-dim-group:last-child{margin-bottom:0}
-.bento-dim-hd{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;margin:4px 0 8px}
+.bento-dim-hd{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;margin:4px 0 8px;
+}
+.bento-dim-toggle{
+  background:none;border:none;color:var(--muted);font-size:11px;font-family:var(--sans);font-weight:600;
+  letter-spacing:.03em;cursor:pointer;padding:2px 4px;text-transform:none;
+}
 .bento-card{
   background-color:var(--paper);
   background-image:
-    radial-gradient(circle at 20% 24%, var(--bento-on, rgba(56,128,196,.84)) 0%, transparent 64%),
-    radial-gradient(circle at 80% 76%, var(--bento-c, rgba(84,154,212,.78)) 0%, transparent 66%),
-    linear-gradient(135deg, var(--bento-c, rgba(84,154,212,.72)), var(--bento-c2, rgba(64,126,184,.54)));
-  background-size:210% 210%, 210% 210%, 100% 100%;
+    radial-gradient(circle at 20% 24%, rgba(255,255,255,0.34) 0%, transparent 46%),
+    radial-gradient(circle at 78% 76%, var(--bento-on, rgba(56,128,196,.90)) 0%, transparent 56%),
+    linear-gradient(135deg, var(--bento-c, rgba(84,154,212,.82)), var(--bento-c2, rgba(64,126,184,.68)));
+  background-size:250% 250%, 250% 250%, 100% 100%;
   border:none;border-radius:15px;position:relative;overflow:hidden;
-  padding:11px 12px 13px;text-align:left;cursor:pointer;transition:transform .2s ease, box-shadow .2s ease;
-  box-shadow:0 4px 14px -8px rgba(0,0,0,0.16);display:flex;flex-direction:column;justify-content:space-between;min-height:80px;
+  padding:11px 10px 12px;text-align:left;cursor:pointer;transition:transform .2s ease, box-shadow .2s ease;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,0.34), 0 4px 14px -8px rgba(0,0,0,0.18);
+  display:flex;flex-direction:column;justify-content:space-between;min-height:72px;
   color:var(--ink);-webkit-appearance:none;appearance:none;min-width:0;
-  animation:lavaLampFlow 8s ease-in-out infinite;
+  animation:lavaLampFlow 7s ease-in-out infinite;
 }
-.bento-card:nth-child(2n){animation-delay:-3.5s}
+.bento-card:nth-child(2n){animation-duration:8.4s;animation-delay:-3.5s}
+.bento-card:nth-child(3n){animation-duration:6.1s;animation-delay:-1.7s}
 .bento-card:hover{transform:translateY(-1px)}
 .bento-card.open,.bento-card.active{
   transform:translateY(-1px) scale(1.02);
-  box-shadow:0 10px 20px -10px rgba(0,0,0,0.24);
+  box-shadow:0 10px 20px -10px rgba(0,0,0,0.28);
 }
 .bento-card.active::after,.bento-card.has::after{
   content:"";position:absolute;left:50%;bottom:5px;width:48%;height:3px;border-radius:999px;
@@ -1890,8 +1913,12 @@ summary::-webkit-details-marker{display:none}
   animation:barTideFlow 3.2s ease-in-out infinite;
 }
 .bento-card.has{
-  background-image:radial-gradient(circle at 26% 24%, var(--bento-on, rgba(56,128,196,.86)) 0%, var(--bento-c, rgba(84,154,212,.62)) 84%);
+  background-image:
+    radial-gradient(circle at 24% 24%, rgba(255,255,255,0.26) 0%, transparent 48%),
+    linear-gradient(135deg, var(--bento-on, rgba(56,128,196,.94)), var(--bento-bar, #1f6feb));
+  color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.22);
 }
+.bento-card.has strong{color:#fff}
 .bento-plus-card{
   background:var(--paper);border:1px dashed var(--rule);border-radius:14px;
   display:flex;align-items:center;justify-content:center;cursor:pointer;
@@ -2602,25 +2629,24 @@ summary::-webkit-details-marker{display:none}
         <canvas id="sea" role="img" aria-label="Simulación interactiva del mar y guía de respiración"></canvas>
         <canvas id="breathLayer" aria-hidden="true"></canvas>
         <div class="coast-fs-dock" id="coastFsDock">
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-            <button type="button" class="coast-fs-toggle" id="coastFsBreathBtn" aria-label="Iniciar o pausar respiración" title="Respirar">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
-              <span>Respirar</span>
+          <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:nowrap">
+            <button type="button" class="coast-fs-toggle" id="coastFsBreathBtn" aria-label="Iniciar o pausar respiración" title="Respirar / Pausar">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+            </button>
+            <button type="button" class="coast-fs-toggle" id="coastFsStopBtn" aria-label="Salir de respiración" title="Terminar respiración">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
             </button>
             <button type="button" class="coast-fs-toggle" id="coastFsModeBtn" aria-label="Modo Automático o Táctil" title="Automático / Táctil">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2.5"/></svg>
-              <span id="coastFsModeLbl">Auto</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2.5"/></svg>
             </button>
             <button type="button" class="coast-fs-toggle" id="coastFsAudioQuickBtn" aria-label="Sonido del mar" title="Sonido">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
             </button>
             <button type="button" class="coast-fs-toggle" id="coastFsMenuToggle" aria-expanded="false" aria-label="Ritmo de respiración" title="Ritmo">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 9c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0"/><path d="M3 15c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0"/></svg>
-              <span id="coastFsPatLbl">4·6</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 9c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0"/><path d="M3 15c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0"/></svg>
             </button>
             <button type="button" class="coast-fs-toggle" id="coastFsDurBtn" aria-label="Duración de pausa" title="Tiempo">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 3h6"/></svg>
-              <span id="coastFsDurLbl">5m</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 3h6"/></svg>
             </button>
           </div>
           <div class="coast-fs-panel" id="coastFsPanel" hidden>
@@ -2959,12 +2985,11 @@ summary::-webkit-details-marker{display:none}
     <div class="card">
       <div class="sl" style="margin-top:0;padding-top:0;border-top:none;margin-bottom:14px">
         <label><span>Acabado visual</span><span>elige tu atmósfera</span></label>
-        <div class="chips" id="themePick">
-          <button type="button" class="chip" data-th="white">Cristal Blanco</button>
-          <button type="button" class="chip" data-th="pulcritud">Blanco Pulcritud</button>
-          <button type="button" class="chip" data-th="light">Papel Editorial</button>
-          <button type="button" class="chip" data-th="dark">Modo Nocturno</button>
-          <button type="button" class="chip" data-th="auto">Automático</button>
+        <div class="chips" id="themePick" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px">
+          <button type="button" class="chip" data-th="pulcritud" style="padding:6px 4px;font-size:12.5px">Pulcritud</button>
+          <button type="button" class="chip" data-th="light" style="padding:6px 4px;font-size:12.5px">Editorial</button>
+          <button type="button" class="chip" data-th="dark" style="padding:6px 4px;font-size:12.5px">Nocturno</button>
+          <button type="button" class="chip" data-th="auto" style="padding:6px 4px;font-size:12.5px">Sistema</button>
         </div>
       </div>
 
@@ -3181,11 +3206,12 @@ summary::-webkit-details-marker{display:none}
       <p class="cover-sub">Donde tu calma se encuentra con los tuyos</p>
 
       <div id="onbStep0">
-        <p style="font-family:var(--serif);font-size:17px;line-height:1.45;color:var(--ink);margin:10px 0 14px">Respira con el mar. Hazlo con los tuyos.</p>
-        <div id="onbGiftBox" style="margin:0 auto 16px;padding:16px 12px;border-radius:18px;background:radial-gradient(circle at 50% 40%, rgba(124,186,228,.26), rgba(164,212,240,.08) 78%);display:flex;flex-direction:column;align-items:center;gap:10px">
-          <div id="onbGiftOrb" style="width:78px;height:78px;border-radius:50%;background:radial-gradient(circle at 32% 28%, #fff, rgba(164,212,240,.88) 70%, rgba(92,162,212,.82));box-shadow:0 8px 24px -6px rgba(68,148,214,.42);display:grid;place-items:center;font-family:var(--serif);font-size:15px;color:#181411;transition:transform 4s ease-in-out">Respira</div>
-          <small id="onbGiftHint" style="font-size:12px;color:var(--muted);font-family:var(--serif);font-style:italic">Tu regalo de entrada · 1 respiración guiada aquí</small>
-          <button type="button" class="btn ghost" id="onbGiftPlayBtn" style="padding:7px 14px;font-size:12px">▶ Regálate 1 respiración</button>
+        <p style="font-family:var(--serif);font-size:17px;line-height:1.45;color:var(--ink);margin:10px 0 18px">Respira con el mar. Hazlo con los tuyos.</p>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin:4px 0 20px">
+          <button type="button" id="onbGiftPlayBtn" aria-label="Regálate una respiración aquí" style="width:94px;height:94px;border-radius:50%;border:1px solid var(--rule);background:radial-gradient(circle at 36% 32%, var(--paper) 0%, color-mix(in srgb, var(--ink) 7%, var(--paper)) 100%);display:grid;place-items:center;cursor:pointer;font-family:var(--serif);font-size:16px;color:var(--ink);transition:transform 4s ease-in-out, box-shadow .3s ease;box-shadow:0 8px 22px -12px rgba(0,0,0,0.20)">
+            <span id="onbGiftOrb">Respira</span>
+          </button>
+          <small id="onbGiftHint" style="font-size:12px;color:var(--muted);font-family:var(--serif);font-style:italic">Toca el círculo · 1 respiración guiada aquí</small>
         </div>
         <button type="button" class="btn" id="onbStartFirstBreathBtn" style="width:100%;margin-bottom:10px">Ir al mar a respirar →</button>
         <button type="button" class="btn ghost" id="onbShowIdentityBtn" style="width:100%;font-size:11px">Ya tengo usuario o guardar mi nombre</button>
@@ -4769,8 +4795,9 @@ function applyTheme(th){
   if(th==='light'||th==='dark'||th==='white'||th==='pulcritud')document.documentElement.setAttribute('data-theme',th);
   else document.documentElement.removeAttribute('data-theme');
   document.querySelectorAll('#themePick .chip').forEach(c=>c.classList.toggle('on',c.dataset.th===th));
+  const sysDark=window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches;
   const bgMap={dark:'#121614',light:'#F4EFE6',white:'#FAF7F2',pulcritud:'#FFFFFF'};
-  const resolvedBg=bgMap[th]||'#FFFFFF';
+  const resolvedBg=bgMap[th]||(sysDark?'#121614':'#FFFFFF');
   document.documentElement.style.backgroundColor=resolvedBg;
   if(document.body)document.body.style.backgroundColor=resolvedBg;
   document.querySelectorAll('meta[name="theme-color"]').forEach(tc=>tc.setAttribute('content',resolvedBg));
@@ -5019,7 +5046,15 @@ function closeAllTransientUI(targetVid){
 }
 
 let lastNonProfileView='v-today';
+let wavyTrialBreathOnly=false;
 function switchMainView(vid){
+  if(wavyTrialBreathOnly && vid!=='v-breathe' && (!S.onb || !S.onb.done)){
+    if($('onboardingModal'))$('onboardingModal').hidden=false;
+    if($('onbStep0'))$('onbStep0').hidden=true;
+    if($('onbStep1'))$('onbStep1').hidden=false;
+    toast('Guarda tu nombre para desbloquear toda la app','ok');
+    return;
+  }
   if(vid!=='v-profile')lastNonProfileView=vid;
   window.scrollTo({top:0,behavior:'instant'});
   closeAllTransientUI(vid);
@@ -5198,33 +5233,30 @@ if($('onbGiftPlayBtn') && $('onbGiftOrb') && $('onbGiftHint')){
   $('onbGiftPlayBtn').onclick=()=>{
     if(giftRunning){
       clearTimeout(giftTimer);giftRunning=false;
-      $('onbGiftOrb').style.transform='scale(1)';
+      $('onbGiftPlayBtn').style.transform='scale(1)';
       $('onbGiftOrb').textContent='Respira';
-      $('onbGiftHint').textContent='Tu regalo de entrada · 1 respiración guiada aquí';
-      $('onbGiftPlayBtn').textContent='▶ Regálate 1 respiración';
+      $('onbGiftHint').textContent='Toca el círculo · 1 respiración guiada aquí';
       return;
     }
     giftRunning=true;
-    $('onbGiftPlayBtn').textContent='❚❚ Pausar';
     const runCycle=()=>{
       if(!giftRunning)return;
-      $('onbGiftOrb').style.transition='transform 4s ease-in-out';
-      $('onbGiftOrb').style.transform='scale(1.26)';
+      $('onbGiftPlayBtn').style.transition='transform 4s ease-in-out';
+      $('onbGiftPlayBtn').style.transform='scale(1.24)';
       $('onbGiftOrb').textContent='Inhala';
       $('onbGiftHint').textContent='Inhala lento por la nariz (4s)…';
       giftTimer=setTimeout(()=>{
         if(!giftRunning)return;
-        $('onbGiftOrb').style.transition='transform 6s ease-in-out';
-        $('onbGiftOrb').style.transform='scale(0.94)';
+        $('onbGiftPlayBtn').style.transition='transform 6s ease-in-out';
+        $('onbGiftPlayBtn').style.transform='scale(0.94)';
         $('onbGiftOrb').textContent='Exhala';
         $('onbGiftHint').textContent='Suelta despacio por la boca (6s)…';
         giftTimer=setTimeout(()=>{
           if(!giftRunning)return;
           giftRunning=false;
-          $('onbGiftOrb').style.transform='scale(1)';
+          $('onbGiftPlayBtn').style.transform='scale(1)';
           $('onbGiftOrb').textContent='En calma';
-          $('onbGiftHint').textContent='Así se siente Wavy. Ya estás aquí.';
-          $('onbGiftPlayBtn').textContent='▶ Repetir respiración';
+          $('onbGiftHint').textContent='Así se siente Wavy. Toca para repetir.';
         },6000);
       },4000);
     };
@@ -5234,6 +5266,7 @@ if($('onbGiftPlayBtn') && $('onbGiftOrb') && $('onbGiftHint')){
 if($('onbStartFirstBreathBtn')){
   $('onbStartFirstBreathBtn').onclick=()=>{
     WavyAudio.unlockNow();
+    wavyTrialBreathOnly=(!S.onb || !S.onb.done);
     $('onboardingModal').hidden=true;
     S.audioOn=true;S.bDurMin=2;
     switchMainView('v-breathe');
@@ -7004,13 +7037,29 @@ if($('coastFsMenuToggle') && $('coastFsPanel')){
     };
   }
   if($('coastFsBreathBtn')){
+    const playSvg='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>';
+    const pauseSvg='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
     $('coastFsBreathBtn').onclick=e=>{
       e.stopPropagation();
+      if(typeof br!=='undefined' && br.on){
+        br.paused=!br.paused;
+        br.lastWall=Date.now();
+        if(br.paused)WavyAudio.stopOcean();
+        else WavyAudio.startOcean();
+        $('coastFsBreathBtn').innerHTML=br.paused?playSvg:pauseSvg;
+        $('coastFsBreathBtn').classList.toggle('on',!br.paused);
+        return;
+      }
       if($('bb'))$('bb').click();
       const on=(typeof br!=='undefined'&&br.on);
-      $('coastFsBreathBtn').innerHTML=on
-        ?'<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg><span>Pausar</span>'
-        :'<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg><span>Respirar</span>';
+      $('coastFsBreathBtn').innerHTML=on?pauseSvg:playSvg;
+      $('coastFsBreathBtn').classList.toggle('on',on);
+    };
+  }
+  if($('coastFsStopBtn')){
+    $('coastFsStopBtn').onclick=e=>{
+      e.stopPropagation();
+      if(typeof br!=='undefined' && br.on && typeof endBreath==='function')endBreath(false);
     };
   }
   if($('coastFsAudioBtn')){
@@ -7207,7 +7256,7 @@ let TOTAL_SEC=300; /* duración de la sesión (segundos); la elige el usuario: 2
 const RM=window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const LOW_END=(navigator.hardwareConcurrency && navigator.hardwareConcurrency<=4)||(navigator.deviceMemory && navigator.deviceMemory<=4);
 let arousal=.10,target=.10,isDraggingSlider=false,lastCoastPct=-1;
-let br={on:false,ph:'in',el:0,p:0,phaseProg:0,elapsedTotal:0,sessionStartWall:0,lastWall:0,doubleCued:false,a0:.10,alpha:0,down:false};
+let br={on:false,paused:false,ph:'in',el:0,p:0,phaseProg:0,elapsedTotal:0,sessionStartWall:0,lastWall:0,doubleCued:false,a0:.10,alpha:0,down:false};
 
 /* 44 Puntos de Luz / Luciérnagas doradas-champán (entre 35 y 50 partículas) para 0%-15% Paz Absoluta y Co-Respiración */
 const fireflies=Array.from({length:44},()=>({
@@ -7770,7 +7819,11 @@ function promptPostBreathEvaluation(){
 function endBreath(done){
   const hadCycles=(br.elapsedTotal>=18);
   const wasCoBreath=coBreath.active;
-  br.on=false;br.down=false;
+  br.on=false;br.paused=false;br.down=false;
+  if($('coastFsBreathBtn')){
+    $('coastFsBreathBtn').innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>';
+    $('coastFsBreathBtn').classList.remove('on');
+  }
   coBreath.myInhaling=false;
   syncCoBreathVisualState();
   broadcastLiveEvent('cobreath_touch',{inhaling:false,active:coBreath.active});
@@ -7793,6 +7846,7 @@ function endBreath(done){
 
 function stepBreath(dt){
   if(!br.on)return;
+  if(br.paused){br.lastWall=Date.now();return;}
   const nowWall=Date.now();
   const wallDt=br.lastWall?Math.min(2.0,(nowWall-br.lastWall)/1000):dt;
   br.lastWall=nowWall;
@@ -7859,7 +7913,11 @@ $('bb').onclick=()=>{
   if(br.on){endBreath(false);return}
   window.scrollTo(0,0);
   const now=Date.now();
-  br={on:true,ph:'in',el:0,p:0,phaseProg:0,elapsedTotal:0,sessionStartWall:now,lastWall:now,doubleCued:false,a0:target,alpha:br.alpha||0,down:false};
+  br={on:true,paused:false,ph:'in',el:0,p:0,phaseProg:0,elapsedTotal:0,sessionStartWall:now,lastWall:now,doubleCued:false,a0:target,alpha:br.alpha||0,down:false};
+  if($('coastFsBreathBtn')){
+    $('coastFsBreathBtn').innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+    $('coastFsBreathBtn').classList.add('on');
+  }
   setBreathingFocus(true);
   WavyAudio.startOcean();
   WavyAudio.cuePhase('in');
@@ -8233,14 +8291,12 @@ function renderClueTrackList(){
     card.style.setProperty('--bento-c2',pal[1]);
     card.style.setProperty('--bento-on',pal[2]);
     card.style.setProperty('--bento-bar',pal[3]);
-    const selTxt=arr.length?arr.join(' · '):cat.sub;
     card.innerHTML=
       '<div class="bento-card-top">'+
         '<span class="bento-ic">'+cat.icon+'</span>'+
         '<span class="bento-badge">'+(count>0?(count+' ✓'):'')+'</span>'+
       '</div>'+
-      '<strong>'+esc(cat.name)+'</strong>'+
-      '<small>'+esc(selTxt)+'</small>';
+      '<strong>'+esc(cat.name)+'</strong>';
     card.onclick=()=>{
       openClueCatId=(openClueCatId===cat.id)?'':cat.id;
       renderClueTrackList();
@@ -8253,33 +8309,29 @@ function renderClueTrackList(){
     if(!cats.length)return;
     const group=document.createElement('div');
     group.className='bento-dim-group';
-    const hd=document.createElement('div');
-    hd.className='bento-dim-hd';
-    hd.textContent=dim.toUpperCase();
-    group.appendChild(hd);
 
-    const firstTwo=cats.slice(0,2);
-    const extraCats=cats.slice(2);
-    /* Si el usuario abrió una tarjeta que está en extraCats, mantener expandida esa dimensión */
+    const firstThree=cats.slice(0,3);
+    const extraCats=cats.slice(3);
     if(extraCats.some(c=>c.id===openClueCatId)){
       clueExpandedDims[dim]=true;
     }
     const isExp=!!clueExpandedDims[dim];
 
+    const hd=document.createElement('div');
+    hd.className='bento-dim-hd';
+    hd.innerHTML='<span>'+esc(dim.toUpperCase())+'</span>'+(extraCats.length?('<button type="button" class="bento-dim-toggle">'+(isExp?'Menos ▴':'Ver más ('+extraCats.length+') ▾')+'</button>'):'');
+    const tog=hd.querySelector('.bento-dim-toggle');
+    if(tog){
+      tog.onclick=()=>{
+        clueExpandedDims[dim]=!clueExpandedDims[dim];
+        renderClueTrackList();
+      };
+    }
+    group.appendChild(hd);
+
     const row3=document.createElement('div');
     row3.className='bento-row-3col';
-    firstTwo.forEach(cat=>row3.appendChild(buildBentoCard(cat)));
-
-    const plusBtn=document.createElement('button');
-    plusBtn.type='button';
-    plusBtn.className='bento-plus-card'+(isExp?' on':'');
-    plusBtn.setAttribute('aria-label', (isExp?'Contraer ':'Expandir ')+dim);
-    plusBtn.textContent=isExp?'−':'+';
-    plusBtn.onclick=()=>{
-      clueExpandedDims[dim]=!clueExpandedDims[dim];
-      renderClueTrackList();
-    };
-    row3.appendChild(plusBtn);
+    firstThree.forEach(cat=>row3.appendChild(buildBentoCard(cat)));
     group.appendChild(row3);
 
     if(isExp && extraCats.length){
