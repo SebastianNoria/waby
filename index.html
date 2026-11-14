@@ -390,44 +390,39 @@ h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,7vw,36px);line-
   100%{background-position:8% 12%, 92% 88%, 50% 50%}
 }
 /* Cuadrícula 3x3 Hábitos */
-.habit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.habit-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:16px}
 .habit-item{
   background-color:var(--hab-base, var(--paper));
   background-image:
-    radial-gradient(circle at 20% 22%, rgba(255,255,255,0.34) 0%, transparent 46%),
-    radial-gradient(circle at 78% 76%, var(--hab-on, rgba(52,126,188,.94)) 0%, transparent 56%),
+    radial-gradient(circle at 24% 26%, rgba(255,255,255,0.34) 0%, transparent 46%),
+    radial-gradient(circle at 76% 74%, var(--hab-on, rgba(52,126,188,.94)) 0%, transparent 56%),
     linear-gradient(135deg, var(--hab-c, rgba(76,148,204,.86)), var(--hab-c2, rgba(54,116,172,.74)));
   background-size:250% 250%, 250% 250%, 100% 100%;
-  border:none;border-radius:16px;overflow:hidden;
-  min-height:66px;padding:10px 6px 11px;text-align:center;cursor:pointer;position:relative;
+  border:none;border-radius:999px;overflow:hidden;
+  min-height:66px;min-width:0;padding:10px 6px 8px;text-align:center;cursor:pointer;position:relative;
   transition:transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease;color:var(--ink);font-family:var(--serif);
   animation:lavaLampFlow 6.2s ease-in-out infinite;
-  box-shadow:inset 0 1px 1px rgba(255,255,255,0.36), 0 6px 14px -10px rgba(0,0,0,0.22);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,0.34), 0 6px 14px -10px rgba(0,0,0,0.20);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
 }
 .habit-item:nth-child(3n){animation-duration:7.8s;animation-delay:-2.1s}
 .habit-item:nth-child(3n+1){animation-duration:5.6s;animation-delay:-3.7s}
 .habit-item.add-habit-card{
-  background-image:radial-gradient(circle at 50% 45%, rgba(168,162,154,.24) 0%, rgba(168,162,154,.10) 80%);
-  border:none;
+  background-image:none;background-color:transparent;
+  border:1px dashed color-mix(in srgb, var(--ink) 24%, transparent);
+  color:var(--ink);border-radius:999px;animation:none;box-shadow:none;
 }
 .habit-item:nth-child(2n){animation-delay:-3s}
-.habit-item i{display:block;font-style:normal;font-size:21px;color:var(--ink);margin-bottom:3px;line-height:1}
-.habit-item span{font-size:12.5px;display:block;line-height:1.15;font-weight:500}
+.habit-item i{display:block;font-style:normal;font-size:21px;color:var(--ink);line-height:1.1}
+.habit-item span{font-size:12px;display:block;line-height:1.15;font-weight:500;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;padding:0 4px;letter-spacing:.01em}
 .habit-item.on{
   color:#fff;font-weight:700;
   text-shadow:0 1px 2px rgba(0,0,0,0.22);
   background-image:
-    radial-gradient(circle at 24% 24%, rgba(255,255,255,0.28) 0%, transparent 48%),
-    radial-gradient(circle at 72% 72%, var(--hab-bar, #1f6feb) 0%, transparent 60%),
-    linear-gradient(135deg, var(--hab-on, rgba(52,126,188,.94)), var(--hab-bar, #1f6feb));
-  box-shadow:0 10px 22px -12px rgba(0,0,0,0.32);
-  transform:translateY(-1px) scale(1.025);
-}
-.habit-item.on::after{
-  content:"";position:absolute;left:50%;bottom:5px;width:54%;height:3.2px;border-radius:999px;
-  background:var(--hab-bar, #1f6feb);
-  box-shadow:0 0 8px var(--hab-bar, rgba(31,111,235,0.55));
-  animation:barTideFlow 3.2s ease-in-out infinite;
+    radial-gradient(circle at 26% 24%, rgba(255,255,255,0.28) 0%, transparent 48%),
+    linear-gradient(135deg, var(--hab-on, rgba(52,126,188,.96)), var(--hab-bar, #1f6feb));
+  box-shadow:0 10px 22px -10px rgba(0,0,0,0.28);
+  transform:scale(1.05);
 }
 .habit-item.on i{color:#fff}
 .habit-item.pro-glow,.mo.pro-glow,.pal-btn.pro-glow{
@@ -781,16 +776,22 @@ body.coast-fullscreen > #seab .coast-fs-dock{bottom:max(18px, env(safe-area-inse
 #coastFsStopBtn{display:none}
 .sea.breathing #coastFsStopBtn{display:inline-flex}
 .coast-fs-panel{
-  display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-radius:16px;max-width:min(84vw, 310px);
-  background:rgba(15,23,36,0.52);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border:1px solid rgba(255,255,255,0.20);animation:fadeUp .2s ease;
+  display:flex;flex-wrap:nowrap;align-items:center;gap:6px;padding:6px 8px;border-radius:999px;
+  max-width:calc(100vw - 36px);overflow-x:auto;scrollbar-width:none;
+  background:rgba(16,24,38,0.44);
+  backdrop-filter:blur(22px) saturate(185%);-webkit-backdrop-filter:blur(22px) saturate(185%);
+  border:1px solid rgba(255,255,255,0.42);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.45), 0 10px 26px rgba(0,0,0,0.28);
+  animation:fadeUp .2s ease;
 }
+.coast-fs-panel::-webkit-scrollbar{display:none}
 .coast-fs-panel[hidden]{display:none}
 .coast-fs-pill{
-  border:1px solid rgba(255,255,255,0.22);background:rgba(255,255,255,0.10);color:#fff;
-  border-radius:999px;padding:6px 11px;font-size:11.5px;font-family:var(--sans);cursor:pointer;
+  border:1px solid rgba(255,255,255,0.30);background:rgba(255,255,255,0.14);color:#fff;
+  border-radius:999px;padding:6px 12px;font-size:11.5px;font-family:var(--sans);font-weight:500;
+  cursor:pointer;white-space:nowrap;flex-shrink:0;text-shadow:0 1px 2px rgba(0,0,0,0.3);
 }
-.coast-fs-pill.on{background:rgba(255,255,255,0.28);border-color:rgba(255,255,255,0.58);font-weight:600}
+.coast-fs-pill.on{background:rgba(255,255,255,0.34);border-color:rgba(255,255,255,0.72);font-weight:700}
 .bmode{
   display:grid;grid-template-columns:repeat(4,1fr);gap:6px;align-items:center;
   margin-bottom:10px;background:transparent;padding:4px 0 10px;border-radius:0;
@@ -1050,31 +1051,32 @@ body.coast-fullscreen > #seab .coast-fs-dock{bottom:max(18px, env(safe-area-inse
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 /* Las razones de cuidado van en retícula geométrica: dos columnas iguales,
    cuatro filas, todas las píldoras del mismo ancho y alineadas. */
-#loss{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+#loss{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 #loss .chip{
-  width:100%;border:none;color:var(--ink);position:relative;overflow:hidden;
+  width:100%;min-height:66px;min-width:0;border:none;border-radius:999px;padding:10px 6px 8px;
+  color:var(--ink);font-family:var(--serif);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
   background-size:250% 250%, 250% 250%, 100% 100%;
   background-image:
-    radial-gradient(circle at 20% 24%, rgba(255,255,255,0.34) 0%, transparent 46%),
-    radial-gradient(circle at 80% 76%, var(--care-on, rgba(56,128,196,.92)) 0%, transparent 56%),
+    radial-gradient(circle at 24% 26%, rgba(255,255,255,0.34) 0%, transparent 46%),
+    radial-gradient(circle at 76% 74%, var(--care-on, rgba(56,128,196,.92)) 0%, transparent 56%),
     linear-gradient(135deg, var(--care-c, rgba(84,154,212,.84)), var(--care-c2, rgba(64,126,184,.72)));
   animation:lavaLampFlow 6.5s ease-in-out infinite;
   box-shadow:inset 0 1px 1px rgba(255,255,255,0.34), 0 6px 14px -10px rgba(0,0,0,0.20);
 }
+#loss .chip i{display:block;font-style:normal;font-size:21px;line-height:1.1;color:var(--ink)}
+#loss .chip span{font-size:12px;font-weight:500;display:block;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;padding:0 4px;letter-spacing:.01em;line-height:1.15}
 #loss .chip:nth-child(2n){animation-duration:7.9s;animation-delay:-3s}
 #loss .chip.on{
-  box-shadow:0 8px 18px -10px rgba(0,0,0,0.30);
+  transform:scale(1.05);
+  box-shadow:0 10px 22px -10px rgba(0,0,0,0.28);
   background-image:
-    radial-gradient(circle at 24% 24%, rgba(255,255,255,0.26) 0%, transparent 48%),
+    radial-gradient(circle at 26% 24%, rgba(255,255,255,0.28) 0%, transparent 48%),
     linear-gradient(135deg, var(--care-on, rgba(56,128,196,.96)), var(--care-bar, #1f6feb));
   color:#fff;font-weight:700;
   text-shadow:0 1px 2px rgba(0,0,0,0.22);
 }
-#loss .chip.on::after{
-  content:"";position:absolute;left:50%;bottom:4px;width:46%;height:3px;border-radius:999px;
-  background:var(--care-bar, #1f6feb);
-  animation:barTideFlow 3.2s ease-in-out infinite;
-}
+#loss .chip.on i{color:#fff}
 .chip{
   border:1px solid var(--rule);background:var(--paper);color:var(--muted);
   font-family:var(--serif);font-size:15px;min-height:44px;padding:6px 14px;border-radius:22px;
@@ -1889,36 +1891,32 @@ summary::-webkit-details-marker{display:none}
 .bento-card{
   background-color:var(--paper);
   background-image:
-    radial-gradient(circle at 20% 24%, rgba(255,255,255,0.34) 0%, transparent 46%),
-    radial-gradient(circle at 78% 76%, var(--bento-on, rgba(56,128,196,.90)) 0%, transparent 56%),
+    radial-gradient(circle at 24% 26%, rgba(255,255,255,0.34) 0%, transparent 46%),
+    radial-gradient(circle at 76% 74%, var(--bento-on, rgba(56,128,196,.90)) 0%, transparent 56%),
     linear-gradient(135deg, var(--bento-c, rgba(84,154,212,.82)), var(--bento-c2, rgba(64,126,184,.68)));
   background-size:250% 250%, 250% 250%, 100% 100%;
-  border:none;border-radius:15px;position:relative;overflow:hidden;
-  padding:11px 10px 12px;text-align:left;cursor:pointer;transition:transform .2s ease, box-shadow .2s ease;
-  box-shadow:inset 0 1px 1px rgba(255,255,255,0.34), 0 4px 14px -8px rgba(0,0,0,0.18);
-  display:flex;flex-direction:column;justify-content:space-between;min-height:72px;
-  color:var(--ink);-webkit-appearance:none;appearance:none;min-width:0;
+  border:none;border-radius:999px;position:relative;overflow:hidden;
+  padding:10px 6px 8px;text-align:center;cursor:pointer;transition:transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,0.34), 0 6px 14px -10px rgba(0,0,0,0.20);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:66px;
+  color:var(--ink);font-family:var(--serif);-webkit-appearance:none;appearance:none;min-width:0;
   animation:lavaLampFlow 7s ease-in-out infinite;
 }
 .bento-card:nth-child(2n){animation-duration:8.4s;animation-delay:-3.5s}
 .bento-card:nth-child(3n){animation-duration:6.1s;animation-delay:-1.7s}
-.bento-card:hover{transform:translateY(-1px)}
-.bento-card.open,.bento-card.active{
-  transform:translateY(-1px) scale(1.02);
-  box-shadow:0 10px 20px -10px rgba(0,0,0,0.28);
-}
-.bento-card.active::after,.bento-card.has::after{
-  content:"";position:absolute;left:50%;bottom:5px;width:48%;height:3px;border-radius:999px;
-  background:var(--bento-bar, #1f6feb);
-  animation:barTideFlow 3.2s ease-in-out infinite;
-}
-.bento-card.has{
+.bento-card:hover{transform:translateY(-2px) scale(1.03)}
+.bento-card.open,.bento-card.active,.bento-card.has{
+  transform:scale(1.05);
+  box-shadow:0 10px 22px -10px rgba(0,0,0,0.28);
   background-image:
-    radial-gradient(circle at 24% 24%, rgba(255,255,255,0.26) 0%, transparent 48%),
-    linear-gradient(135deg, var(--bento-on, rgba(56,128,196,.94)), var(--bento-bar, #1f6feb));
-  color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.22);
+    radial-gradient(circle at 26% 24%, rgba(255,255,255,0.28) 0%, transparent 48%),
+    linear-gradient(135deg, var(--bento-on, rgba(56,128,196,.96)), var(--bento-bar, #1f6feb));
+  color:#fff;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,0.22);
 }
-.bento-card.has strong{color:#fff}
+.bento-card i{display:block;font-style:normal;font-size:21px;line-height:1.1;color:var(--ink)}
+.bento-card span.bento-lbl{font-size:12px;font-weight:500;display:block;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;padding:0 4px;letter-spacing:.01em;line-height:1.15}
+.bento-card.open i,.bento-card.active i,.bento-card.has i{color:#fff}
+.bento-card.open span.bento-lbl,.bento-card.active span.bento-lbl,.bento-card.has span.bento-lbl{font-weight:700}
 .bento-plus-card{
   background:var(--paper);border:1px dashed var(--rule);border-radius:14px;
   display:flex;align-items:center;justify-content:center;cursor:pointer;
@@ -2608,6 +2606,20 @@ summary::-webkit-details-marker{display:none}
         </div>
       </div>
 
+      <div id="devFlameBar" style="margin:10px 0 16px;padding:10px 12px;border:1px dashed var(--rule);border-radius:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600">
+          <span>Vista desarrollador · 6 llamas</span>
+          <span id="devFlamePctLbl" style="color:var(--ink)">65%</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <input type="range" id="devFlameSlider" min="5" max="100" value="65" style="flex:1;accent-color:var(--ink)">
+          <button type="button" class="chip" data-dev-pct="5" style="min-height:28px;padding:2px 8px;font-size:11px">5%</button>
+          <button type="button" class="chip" data-dev-pct="50" style="min-height:28px;padding:2px 8px;font-size:11px">50%</button>
+          <button type="button" class="chip" data-dev-pct="100" style="min-height:28px;padding:2px 8px;font-size:11px">100%</button>
+        </div>
+        <div id="devFlameGrid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px"></div>
+      </div>
+
       <div class="hd" style="margin-top:8px"><span>Prácticas breves con cronómetro (60 s)</span><span>Encienden tu llama</span></div>
       <button class="q" data-q="g"><div><strong>Arraigo corporal (Grounding)</strong><small>Pies firmes en el piso, rodillas suaves y respiración abdominal durante 60 s.</small></div><span id="qBadge_g">Iniciar 60s</span></button>
       <button class="q" data-q="c"><div><strong>Cambio térmico consciente</strong><small>Agua fresca en rostro o muñecas durante 60 s para bajar la reactividad.</small></div><span id="qBadge_c">Iniciar 60s</span></button>
@@ -2631,30 +2643,25 @@ summary::-webkit-details-marker{display:none}
         <div class="coast-fs-dock" id="coastFsDock">
           <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:nowrap">
             <button type="button" class="coast-fs-toggle" id="coastFsBreathBtn" aria-label="Iniciar o pausar respiración" title="Respirar / Pausar">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="7 5 19 12 7 19 7 5"/></svg>
             </button>
             <button type="button" class="coast-fs-toggle" id="coastFsStopBtn" aria-label="Salir de respiración" title="Terminar respiración">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
             </button>
-            <button type="button" class="coast-fs-toggle" id="coastFsModeBtn" aria-label="Modo Automático o Táctil" title="Automático / Táctil">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2.5"/></svg>
+            <button type="button" class="coast-fs-toggle" id="coastFsModeBtn" aria-expanded="false" aria-label="Modo Automático o Táctil" title="Modo">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11V6a1.5 1.5 0 0 1 3 0v5"/><path d="M9 11V7.5a1.5 1.5 0 0 1 3 0"/><path d="M15 11.5a1.5 1.5 0 0 1 3 0v3.5a6 6 0 0 1-12 0v-2.5a1.5 1.5 0 0 1 3 0"/></svg>
             </button>
             <button type="button" class="coast-fs-toggle" id="coastFsAudioQuickBtn" aria-label="Sonido del mar" title="Sonido">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
             </button>
             <button type="button" class="coast-fs-toggle" id="coastFsMenuToggle" aria-expanded="false" aria-label="Ritmo de respiración" title="Ritmo">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 9c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0"/><path d="M3 15c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 8c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0"/><path d="M3 13c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0"/><path d="M3 18c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0"/></svg>
             </button>
-            <button type="button" class="coast-fs-toggle" id="coastFsDurBtn" aria-label="Duración de pausa" title="Tiempo">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 3h6"/></svg>
+            <button type="button" class="coast-fs-toggle" id="coastFsDurBtn" aria-expanded="false" aria-label="Duración de pausa" title="Tiempo">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="13" r="7.5"/><path d="M12 9.5V13l2.5 1.8"/><path d="M9.5 3h5"/></svg>
             </button>
           </div>
-          <div class="coast-fs-panel" id="coastFsPanel" hidden>
-            <button type="button" class="coast-fs-pill" data-fs-pat="4-6">Calma 4·6</button>
-            <button type="button" class="coast-fs-pill" data-fs-pat="4-4-4-4">Cuadrada 4·4</button>
-            <button type="button" class="coast-fs-pill" data-fs-pat="4-7-8">Profunda 4·7·8</button>
-            <button type="button" class="coast-fs-pill" id="coastFsAudioBtn">Sonido</button>
-          </div>
+          <div class="coast-fs-panel" id="coastFsPanel" hidden></div>
         </div>
         <button type="button" class="sea-fs-btn" id="coastFsBtn" aria-label="Pantalla completa del mar" title="Pantalla completa">
           <svg class="w-ico sm" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
@@ -2768,7 +2775,6 @@ summary::-webkit-details-marker{display:none}
       <button type="button" class="chip" id="circleTabFriendsBtn" style="flex:1;justify-content:center;min-height:38px">Tu círculo</button>
     </div>
     <div id="circleFeedPane">
-    <div class="stories-bar" id="storiesBar"></div>
     <span id="p2pPeerIdLabel" hidden></span>
 
     <div class="notif-tray" id="notifTray" hidden>
@@ -2840,7 +2846,8 @@ summary::-webkit-details-marker{display:none}
     <div id="circleFriendsPane" hidden>
       <section class="panel card on" style="text-align:center;padding-bottom:8px">
         <div style="font-family:var(--serif);font-size:21px;font-weight:500;margin-bottom:4px">Tu círculo</div>
-        <p style="font-size:12.5px;color:var(--muted);margin:0 0 18px">— las personas en sintonía contigo —</p>
+        <p style="font-size:12.5px;color:var(--muted);margin:0 0 14px">— las personas en sintonía contigo —</p>
+        <div class="stories-bar" id="storiesBar" style="margin-bottom:14px"></div>
         <div id="circleFriendsGrid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 12px;justify-items:center;margin-bottom:20px"></div>
         <button type="button" class="btn ghost" id="friendsInviteBtn" style="min-height:38px;font-size:11.5px;border-radius:999px;padding:8px 18px">+ Invitar o buscar amigo</button>
       </section>
@@ -5930,9 +5937,9 @@ function renderCircleFeed(){
         (hasSong?'<div id="'+drawerId+'" hidden style="margin:8px 0;animation:fadeUp .22s ease">'+renderSoundCapsuleHTML(u.soundCapsule,true)+'</div>':'')+
         syncSignalHtml+
         '<div class="react-bar" style="margin-top:8px">'+
-          '<button type="button" class="react-btn'+(u.myRx==='Te acompaño'?' on':'')+'" data-erx="Te acompaño"><svg viewBox="0 0 24 24"><path d="M12 20.5c-4.5-3.2-7.5-6.4-7.5-9.8A4.2 4.2 0 0 1 8.7 6.5c1.4 0 2.6.7 3.3 1.8.7-1.1 1.9-1.8 3.3-1.8a4.2 4.2 0 0 1 4.2 4.2c0 3.4-3 6.6-7.5 9.8Z"/><path d="M8.5 11.5l2.2 2.2 1.3-1.3 1.3 1.3 2.2-2.2"/></svg><span>Te acompaño</span></button>'+
-          '<button type="button" class="react-btn'+(u.myRx==='Te celebro'?' on':'')+'" data-erx="Te celebro"><svg viewBox="0 0 24 24"><path d="M12 3l1.6 5.2L19 10l-5.4 1.8L12 17l-1.6-5.2L5 10l5.4-1.8L12 3Z"/></svg><span>Te celebro</span></button>'+
-          '<button type="button" class="react-btn'+(u.myRx==='Te siento'?' on':'')+'" data-erx="Te siento"><svg viewBox="0 0 24 24"><circle cx="12" cy="6.5" r="2.5"/><path d="M5.5 14c0-3 2.8-5 6.5-5s6.5 2 6.5 5"/><path d="M5.5 14c1.8 2.2 4 3.5 6.5 3.5s4.7-1.3 6.5-3.5"/><path d="M8 17.5c1.2 1.2 2.5 2 4 2s2.8-.8 4-2"/></svg><span>Te siento</span></button>'+
+          '<button type="button" class="react-btn'+(u.myRx==='Te acompaño'?' on':'')+'" data-erx="Te acompaño"><svg viewBox="0 0 24 24"><path d="M7.5 13.5L4.8 10.8a3.2 3.2 0 0 1 4.5-4.5L12 9l2.7-2.7a3.2 3.2 0 0 1 4.5 4.5l-2.7 2.7"/><path d="M7.5 13.5L12 18l4.5-4.5"/><path d="M9.5 11.5L12 14l2.5-2.5"/></svg><span>Te acompaño</span></button>'+
+          '<button type="button" class="react-btn'+(u.myRx==='Te celebro'?' on':'')+'" data-erx="Te celebro"><svg viewBox="0 0 24 24"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3Z"/><path d="M18.5 3.5l.6 1.9 1.9.6-1.9.6-.6 1.9-.6-1.9-1.9-.6 1.9-.6.6-1.9Z"/></svg><span>Te celebro</span></button>'+
+          '<button type="button" class="react-btn'+(u.myRx==='Te siento'?' on':'')+'" data-erx="Te siento"><svg viewBox="0 0 24 24"><circle cx="8.5" cy="7" r="2.2"/><circle cx="15.5" cy="7" r="2.2"/><path d="M4.5 17.5c0-3.2 2.4-5.2 5.2-5.2 1 0 1.8.3 2.3.8.5-.5 1.3-.8 2.3-.8 2.8 0 5.2 2 5.2 5.2"/><path d="M6.8 15.2c1.8 1.6 3.5 2.3 5.2 2.3s3.4-.7 5.2-2.3"/></svg><span>Te siento</span></button>'+
         '</div>'+
       '</div>';
 
@@ -6777,11 +6784,22 @@ const CARE_COLORS={
   'Descanso':['rgba(76,102,174,.76)','rgba(52,76,142,.50)','rgba(64,88,160,.92)','#2d4799'],
   'Cuerpo en paz':['rgba(62,174,158,.76)','rgba(42,140,126,.50)','rgba(52,160,144,.92)','#1d8777']
 };
+const CARE_ICONS={
+  'Claridad mental':'<svg class="w-ico sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>',
+  'Tranquilidad':'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M3 12c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0 2.5 2 3 1.5"/><path d="M3 16.5c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0"/></svg>',
+  'Energía':'<svg class="w-ico sm" viewBox="0 0 24 24"><polygon points="13 2 4 14 11 14 10 22 20 10 13 10 13 2"/></svg>',
+  'Autoestima':'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-9.5A4 4 0 0 1 12 8a4 4 0 0 1 7 2.5C19 15.5 12 20 12 20Z"/></svg>',
+  'Concentración':'<svg class="w-ico sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>',
+  'Tiempo':'<svg class="w-ico sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>',
+  'Descanso':'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg>',
+  'Cuerpo en paz':'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M12 4c-2 3-5 4.5-5 8a5 5 0 0 0 10 0c0-3.5-3-5-5-8Z"/></svg>'
+};
 function lossView(){
   const el=$('loss');if(!el)return;el.innerHTML='';if(!Array.isArray(S.loss))S.loss=[];
   S.loss=S.loss.map(x=>String(x).replace(/^Mi\s+/i,''));
   CARE_OPTS.forEach(o=>{
-    const b=document.createElement('button');b.className='chip'+(S.loss.includes(o)?' on':'');b.textContent=o;
+    const b=document.createElement('button');b.className='chip'+(S.loss.includes(o)?' on':'');
+    b.innerHTML='<i>'+(CARE_ICONS[o]||'')+'</i><span>'+esc(o)+'</span>';
     const pal=CARE_COLORS[o]||['rgba(84,154,212,.76)','rgba(64,126,184,.50)','rgba(56,128,196,.92)','#1e6bb8'];
     b.style.setProperty('--care-c',pal[0]);
     b.style.setProperty('--care-c2',pal[1]);
@@ -6991,33 +7009,69 @@ if($('coastFsBtn')){
   };
 }
 if($('coastFsMenuToggle') && $('coastFsPanel')){
-  $('coastFsMenuToggle').onclick=e=>{
-    e.stopPropagation();
-    const p=$('coastFsPanel');
-    p.hidden=!p.hidden;
-    $('coastFsMenuToggle').setAttribute('aria-expanded',String(!p.hidden));
-  };
-  document.querySelectorAll('[data-fs-pat]').forEach(btn=>{
-    btn.onclick=e=>{
-      e.stopPropagation();
-      const pid=btn.dataset.fsPat;
-      if(typeof S!=='undefined'){S.pat=pid;if(typeof save==='function')save();}
-      document.querySelectorAll('[data-fs-pat]').forEach(x=>x.classList.toggle('on',x===btn));
-      if($('coastFsPatLbl'))$('coastFsPatLbl').textContent=pid.replace(/-/g,'·');
-      if($('coastFsPanel'))$('coastFsPanel').hidden=true;
-      if(typeof renderPat==='function')renderPat();
-    };
-  });
-  if($('coastFsModeBtn')){
-    $('coastFsModeBtn').onclick=e=>{
-      e.stopPropagation();
-      const nextMode=(typeof S!=='undefined' && S.bmode==='touch')?'auto':'touch';
-      const targetBtn=document.querySelector('#bmode [data-m="'+nextMode+'"]');
-      if(targetBtn)targetBtn.click();
-      if($('coastFsModeLbl'))$('coastFsModeLbl').textContent=(nextMode==='touch'?'Táctil':'Auto');
-      $('coastFsModeBtn').classList.toggle('on',nextMode==='touch');
-    };
+  let coastOpenMenu='';
+  function openCoastMenu(kind){
+    const p=$('coastFsPanel');if(!p)return;
+    if(!p.hidden && coastOpenMenu===kind){
+      p.hidden=true;coastOpenMenu='';
+      $('coastFsMenuToggle').setAttribute('aria-expanded','false');
+      if($('coastFsModeBtn'))$('coastFsModeBtn').setAttribute('aria-expanded','false');
+      if($('coastFsDurBtn'))$('coastFsDurBtn').setAttribute('aria-expanded','false');
+      return;
+    }
+    coastOpenMenu=kind;
+    p.innerHTML='';
+    if(kind==='pat'){
+      const pats=[['4-6','Calma 4·6'],['4-4-4-4','Cuadrada 4·4'],['4-7-8','Profunda 4·7·8']];
+      pats.forEach(([id,lbl])=>{
+        const b=document.createElement('button');
+        b.type='button';b.className='coast-fs-pill'+(typeof S!=='undefined'&&S.pat===id?' on':'');
+        b.textContent=lbl;
+        b.onclick=ev=>{
+          ev.stopPropagation();
+          if(typeof S!=='undefined'){S.pat=id;if(typeof save==='function')save();}
+          if(typeof renderPat==='function')renderPat();
+          p.hidden=true;coastOpenMenu='';
+        };
+        p.appendChild(b);
+      });
+    }else if(kind==='mode'){
+      [['auto','Automático'],['touch','Táctil']].forEach(([m,lbl])=>{
+        const b=document.createElement('button');
+        b.type='button';b.className='coast-fs-pill'+(typeof S!=='undefined'&&S.bmode===m?' on':'');
+        b.textContent=lbl;
+        b.onclick=ev=>{
+          ev.stopPropagation();
+          const targetBtn=document.querySelector('#bmode [data-m="'+m+'"]');
+          if(targetBtn)targetBtn.click();
+          $('coastFsModeBtn').classList.toggle('on',m==='touch');
+          p.hidden=true;coastOpenMenu='';
+        };
+        p.appendChild(b);
+      });
+    }else if(kind==='dur'){
+      [2,5,10].forEach(min=>{
+        const cur=(typeof S!=='undefined'&&S.breathMin)?Number(S.breathMin):5;
+        const b=document.createElement('button');
+        b.type='button';b.className='coast-fs-pill'+(cur===min?' on':'');
+        b.textContent=min+' min';
+        b.onclick=ev=>{
+          ev.stopPropagation();
+          const opt=document.querySelector('.bb-dur-opt[data-min="'+min+'"]');
+          if(opt)opt.click();
+          p.hidden=true;coastOpenMenu='';
+        };
+        p.appendChild(b);
+      });
+    }
+    p.hidden=false;
+    $('coastFsMenuToggle').setAttribute('aria-expanded',String(kind==='pat'));
+    if($('coastFsModeBtn'))$('coastFsModeBtn').setAttribute('aria-expanded',String(kind==='mode'));
+    if($('coastFsDurBtn'))$('coastFsDurBtn').setAttribute('aria-expanded',String(kind==='dur'));
   }
+  $('coastFsMenuToggle').onclick=e=>{e.stopPropagation();openCoastMenu('pat');};
+  if($('coastFsModeBtn'))$('coastFsModeBtn').onclick=e=>{e.stopPropagation();openCoastMenu('mode');};
+  if($('coastFsDurBtn'))$('coastFsDurBtn').onclick=e=>{e.stopPropagation();openCoastMenu('dur');};
   if($('coastFsAudioQuickBtn')){
     $('coastFsAudioQuickBtn').onclick=e=>{
       e.stopPropagation();
@@ -7025,19 +7079,8 @@ if($('coastFsMenuToggle') && $('coastFsPanel')){
       $('coastFsAudioQuickBtn').classList.toggle('on',typeof S!=='undefined'&&S.audioOn);
     };
   }
-  if($('coastFsDurBtn')){
-    const durs=[2,5,10];
-    $('coastFsDurBtn').onclick=e=>{
-      e.stopPropagation();
-      const cur=(typeof S!=='undefined'&&S.bDurMin)?Number(S.bDurMin):5;
-      const next=durs[(durs.indexOf(cur)+1)%durs.length];
-      const opt=document.querySelector('.bb-dur-opt[data-min="'+next+'"]');
-      if(opt)opt.click();
-      if($('coastFsDurLbl'))$('coastFsDurLbl').textContent=next+'m';
-    };
-  }
   if($('coastFsBreathBtn')){
-    const playSvg='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>';
+    const playSvg='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="7 5 19 12 7 19 7 5"/></svg>';
     const pauseSvg='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
     $('coastFsBreathBtn').onclick=e=>{
       e.stopPropagation();
@@ -7060,12 +7103,6 @@ if($('coastFsMenuToggle') && $('coastFsPanel')){
     $('coastFsStopBtn').onclick=e=>{
       e.stopPropagation();
       if(typeof br!=='undefined' && br.on && typeof endBreath==='function')endBreath(false);
-    };
-  }
-  if($('coastFsAudioBtn')){
-    $('coastFsAudioBtn').onclick=e=>{
-      e.stopPropagation();
-      if($('audioMuteBtn'))$('audioMuteBtn').click();
     };
   }
 }
@@ -8292,11 +8329,8 @@ function renderClueTrackList(){
     card.style.setProperty('--bento-on',pal[2]);
     card.style.setProperty('--bento-bar',pal[3]);
     card.innerHTML=
-      '<div class="bento-card-top">'+
-        '<span class="bento-ic">'+cat.icon+'</span>'+
-        '<span class="bento-badge">'+(count>0?(count+' ✓'):'')+'</span>'+
-      '</div>'+
-      '<strong>'+esc(cat.name)+'</strong>';
+      '<i>'+cat.icon+'</i>'+
+      '<span class="bento-lbl">'+esc(cat.name)+(count>0?' · '+count:'')+'</span>';
     card.onclick=()=>{
       openClueCatId=(openClueCatId===cat.id)?'':cat.id;
       renderClueTrackList();
@@ -9751,34 +9785,34 @@ function addFuel(n){S.fuel={v:Math.min(100,fuel()+n),t:Date.now()};save();flameV
 const PEB_LEGACY_MAP={fuente:'cuarzo',musa:'lavanda',nido:'ororosa',piedra:'ambar',horizonte:'cobalto',brasa:'aurora'};
 const PEB_VESSELS={
   cuarzo:{
-    title:'Cuarzo',mode:'female',short:'Cuarzo',pro:false,relic:'#C87A88',
-    motion:{freq:1.45,amp:9,wScale:1.12,hScale:0.94,tongues:2,sparkMode:'spiral',breathAmp:0.05},
-    pal:{glow:'rgba(244,172,188,',outerTop:'#FFF3F6',outerBot:'#D86B82',midTop:'#FFFFFF',midBot:'#FFD6E0',core:'#FFFFFF',spark:'#FFE2EA',ember:'#E88FA0'}
+    title:'Brisa de Cuarzo',mode:'female',short:'Cuarzo',pro:false,relic:'#E06C88',
+    motion:{freq:1.65,amp:12,wScale:1.10,hScale:0.96,tongues:2,blobs:3,sparkMode:'spiral',breathAmp:0.055},
+    pal:{glow:'rgba(242,126,158,',outerTop:'#FFE5EC',outerMid:'#F27E9E',outerBot:'#D1496E',lava2:'#FFB27A',midTop:'#FFFFFF',midBot:'#FFD0DF',core:'#FFF9FB',spark:'#FFE2EC',ember:'#E06C88'}
   },
   lavanda:{
-    title:'Lavanda',mode:'female',short:'Lavanda',pro:true,relic:'#9F82D6',
-    motion:{freq:2.15,amp:15,wScale:0.95,hScale:1.06,tongues:3,sparkMode:'zigzag',breathAmp:0.045},
-    pal:{glow:'rgba(186,154,244,',outerTop:'#FFF6FF',outerBot:'#916AD8',midTop:'#FFFFFF',midBot:'#E4D4FF',core:'#FFFFFF',spark:'#F2D8FF',ember:'#B596EA'}
+    title:'Eclipse Violeta',mode:'female',short:'Eclipse',pro:true,relic:'#8E5CE6',
+    motion:{freq:2.45,amp:18,wScale:1.00,hScale:1.06,tongues:3,blobs:5,sparkMode:'halo',breathAmp:0.065},
+    pal:{glow:'rgba(156,104,244,',outerTop:'#F5E8FF',outerMid:'#A468F2',outerBot:'#6330C2',lava2:'#FF7EB6',midTop:'#FFFFFF',midBot:'#DFC7FF',core:'#FFF7FF',spark:'#8CF4FF',ember:'#B57DF5'}
   },
   ororosa:{
-    title:'Oro rosa',mode:'female',short:'Oro rosa',pro:true,relic:'#D49474',
-    motion:{freq:2.65,amp:12,wScale:1.05,hScale:1.02,tongues:3,sparkMode:'halo',breathAmp:0.06},
-    pal:{glow:'rgba(246,188,154,',outerTop:'#FFF8EE',outerBot:'#D67E5C',midTop:'#FFFFFF',midBot:'#FFE0CC',core:'#FFFFFF',spark:'#FFF0DC',ember:'#E4A07E'}
+    title:'Sol de Ámbar Rosa',mode:'female',short:'Sol Rosa',pro:true,relic:'#E88A5A',
+    motion:{freq:2.85,amp:15,wScale:1.08,hScale:1.04,tongues:3,blobs:5,sparkMode:'burst',breathAmp:0.07},
+    pal:{glow:'rgba(248,162,102,',outerTop:'#FFF6DB',outerMid:'#F79F64',outerBot:'#D95B43',lava2:'#FFD666',midTop:'#FFFFFF',midBot:'#FFE2B8',core:'#FFFFF8',spark:'#FFE875',ember:'#F08A54'}
   },
   ambar:{
-    title:'Ámbar',mode:'male',short:'Ámbar',pro:false,relic:'#D68232',
-    motion:{freq:2.25,amp:11,wScale:1.15,hScale:0.98,tongues:2,sparkMode:'rise',breathAmp:0.035},
-    pal:{glow:'rgba(244,158,64,',outerTop:'#FFF7DC',outerBot:'#D86018',midTop:'#FFFFFF',midBot:'#FFD584',core:'#FFFFFF',spark:'#FFEAB4',ember:'#EA9038'}
+    title:'Forja de Ámbar',mode:'male',short:'Ámbar',pro:false,relic:'#DE7E26',
+    motion:{freq:2.10,amp:13,wScale:1.14,hScale:1.00,tongues:2,blobs:3,sparkMode:'rise',breathAmp:0.045},
+    pal:{glow:'rgba(244,146,52,',outerTop:'#FFF1C2',outerMid:'#F49234',outerBot:'#C94A14',lava2:'#FFC857',midTop:'#FFFFFF',midBot:'#FFD17A',core:'#FFFDF2',spark:'#FFE699',ember:'#E67A22'}
   },
   cobalto:{
-    title:'Cobalto',mode:'male',short:'Cobalto',pro:true,relic:'#4D7FD6',
-    motion:{freq:3.2,amp:6.5,wScale:0.82,hScale:1.14,tongues:2,sparkMode:'fast',breathAmp:0.025},
-    pal:{glow:'rgba(104,162,248,',outerTop:'#F0FAFF',outerBot:'#2F66D0',midTop:'#FFFFFF',midBot:'#B8DCFF',core:'#FFFFFF',spark:'#DCF0FF',ember:'#689AE8'}
+    title:'Marea Cobalto',mode:'male',short:'Cobalto',pro:true,relic:'#2E6FE6',
+    motion:{freq:3.10,amp:14,wScale:0.96,hScale:1.10,tongues:3,blobs:5,sparkMode:'fast',breathAmp:0.05},
+    pal:{glow:'rgba(58,136,246,',outerTop:'#E0F6FF',outerMid:'#3A88F6',outerBot:'#1644B8',lava2:'#36E2D0',midTop:'#FFFFFF',midBot:'#A6DCFF',core:'#F4FCFF',spark:'#9EF6FF',ember:'#2E6FE6'}
   },
   aurora:{
-    title:'Aurora',mode:'male',short:'Aurora',pro:true,relic:'#C43A4E',
-    motion:{freq:3.55,amp:17,wScale:1.08,hScale:1.05,tongues:3,sparkMode:'burst',breathAmp:0.055},
-    pal:{glow:'rgba(232,86,104,',outerTop:'#FFF2EC',outerBot:'#B8283E',midTop:'#FFFFFF',midBot:'#FFC2AE',core:'#FFFFFF',spark:'#FFE0C8',ember:'#DE5A6A'}
+    title:'Pulso Aurora',mode:'male',short:'Aurora',pro:true,relic:'#D63447',
+    motion:{freq:3.45,amp:19,wScale:1.12,hScale:1.06,tongues:3,blobs:6,sparkMode:'burst',breathAmp:0.068},
+    pal:{glow:'rgba(232,68,88,',outerTop:'#FFE9D6',outerMid:'#E84458',outerBot:'#9E1932',lava2:'#FF9E44',midTop:'#FFFFFF',midBot:'#FFB8A8',core:'#FFF8F2',spark:'#FFD470',ember:'#D63447'}
   }
 };
 
@@ -9799,7 +9833,7 @@ function renderPebVesselBar(){
   });
 }
 
-let activeFlamePal=PEB_VESSELS.ambar.pal,activeFlameMotion=PEB_VESSELS.ambar.motion,flameSparks=[],flameRaf=0,flamePctSmooth=65;
+let activeFlamePal=PEB_VESSELS.ambar.pal,activeFlameMotion=PEB_VESSELS.ambar.motion,flameSparks=[],flameRaf=0,flamePctSmooth=65,devFlameOverridePct=null;
 function resolveFlameVesselKey(){
   let vKey=PEB_LEGACY_MAP[S.pebVessel]||S.pebVessel;
   if(!PEB_VESSELS[vKey] || PEB_VESSELS[vKey].mode!==S.bioMode)vKey=pebDefaultVessel();
@@ -9817,6 +9851,9 @@ function renderPebVesselArt(){
   document.querySelectorAll('#pebVesselBar .peb-vessel-btn').forEach(b=>{
     b.classList.toggle('on',b.dataset.vessel===vKey);
   });
+  document.querySelectorAll('#devFlameGrid [data-dev-flame]').forEach(b=>{
+    b.classList.toggle('on',b.dataset.devFlame===vKey);
+  });
 }
 
 function drawLivingFlame(ts){
@@ -9825,90 +9862,111 @@ function drawLivingFlame(ts){
   const sub=$('sub-flame');
   if(!cv || document.hidden || (sub && !sub.classList.contains('on')))return;
   const ctx=cv.getContext('2d');if(!ctx)return;
-  const w=cv.width,h=cv.height,cx=w*0.5,baseY=h*0.84;
-  const targetPct=fuel();
-  flamePctSmooth+=(targetPct-flamePctSmooth)*0.08;
-  const p=Math.max(0.08,Math.min(1,flamePctSmooth/100));
+  const w=cv.width,h=cv.height,cx=w*0.5,baseY=h*0.86;
+  const targetPct=(devFlameOverridePct!==null)?devFlameOverridePct:fuel();
+  flamePctSmooth+=(targetPct-flamePctSmooth)*0.12;
+  const p=Math.max(0.05,Math.min(1,flamePctSmooth/100));
+  const isFull=(p>=0.97);
   const t=(ts||0)*0.001;
   const pal=activeFlamePal;
   const mot=activeFlameMotion||PEB_VESSELS.ambar.motion;
 
   ctx.clearRect(0,0,w,h);
 
-  // 1. Halo atmosférico con textura risográfica
-  const haloR=115+175*p+Math.sin(t*mot.freq)*7;
-  const haloY=baseY-72-70*p;
-  const hg=ctx.createRadialGradient(cx,haloY,12,cx,haloY,haloR);
-  hg.addColorStop(0,pal.glow+(0.44+0.34*p).toFixed(2)+')');
-  hg.addColorStop(0.5,pal.glow+(0.18+0.16*p).toFixed(2)+')');
+  // 1. Halo atmosférico tipo lámpara de lava que llena el recuadro al 100%
+  const haloR=isFull ? Math.max(w,h)*0.72 : (85+220*p+Math.sin(t*mot.freq)*8);
+  const haloY=baseY-(50+110*p);
+  const hg=ctx.createRadialGradient(cx,haloY,10,cx,haloY,haloR);
+  hg.addColorStop(0,pal.glow+(0.42+0.48*p).toFixed(2)+')');
+  hg.addColorStop(0.55,pal.glow+(0.16+0.28*p).toFixed(2)+')');
   hg.addColorStop(1,pal.glow+'0)');
   ctx.fillStyle=hg;
   ctx.beginPath();ctx.arc(cx,haloY,haloR,0,Math.PI*2);ctx.fill();
 
-  // 2. Brasa base viva (nunca desaparece)
-  const embW=(52+36*p)*mot.wScale;
-  const eg=ctx.createRadialGradient(cx,baseY+6,4,cx,baseY+6,embW);
+  // 2. Brasa base viva (desde 5% respira con luz)
+  const embW=(38+88*p)*mot.wScale;
+  const eg=ctx.createRadialGradient(cx,baseY+4,4,cx,baseY+4,embW);
   eg.addColorStop(0,'#FFFFFF');
-  eg.addColorStop(0.45,pal.ember);
+  eg.addColorStop(0.42,pal.ember);
   eg.addColorStop(1,'rgba(0,0,0,0)');
-  ctx.save();ctx.globalAlpha=0.65+0.3*p;ctx.fillStyle=eg;
-  ctx.beginPath();ctx.ellipse(cx,baseY+6,embW,15+6*p,0,0,Math.PI*2);ctx.fill();ctx.restore();
+  ctx.save();ctx.globalAlpha=0.58+0.40*p;ctx.fillStyle=eg;
+  ctx.beginPath();ctx.ellipse(cx,baseY+4,embW,13+12*p,0,0,Math.PI*2);ctx.fill();ctx.restore();
 
-  // 3. Lenguas orgánicas con identidad propia por llama + pincelada gouache
-  const flameH=(110+235*p)*mot.hScale;
-  const flameW=(44+70*p)*mot.wScale;
-  const sway1=Math.sin(t*mot.freq)*mot.amp*p + Math.sin(t*mot.freq*2.15)*(mot.amp*0.36)*p;
-  const sway2=Math.cos(t*mot.freq*1.32)*(mot.amp*0.75)*p + Math.sin(t*mot.freq*2.6)*(mot.amp*0.26)*p;
-  const breath=1+Math.sin(t*(mot.freq*1.25))*mot.breathAmp;
+  // 3. Lóbulos orgánicos estilo lámpara de lava + animación japonesa
+  const flameH=(54+330*p)*(isFull?1.12:mot.hScale);
+  const flameW=(26+126*p)*(isFull?1.18:mot.wScale);
+  const sway1=Math.sin(t*mot.freq)*mot.amp*p + Math.sin(t*mot.freq*2.15)*(mot.amp*0.38)*p;
+  const sway2=Math.cos(t*mot.freq*1.32)*(mot.amp*0.78)*p + Math.sin(t*mot.freq*2.6)*(mot.amp*0.28)*p;
+  const breath=1+Math.sin(t*(mot.freq*1.25))*mot.breathAmp*(0.6+0.4*p);
 
-  function drawTongue(scaleW,scaleH,sway,topCol,botCol,alpha,offsetX){
+  function drawLavaLobe(rx,ry,rSize,col1,col2,alpha){
+    const lg=ctx.createRadialGradient(rx-rSize*0.2,ry-rSize*0.2,rSize*0.08,rx,ry,rSize);
+    lg.addColorStop(0,col1);
+    lg.addColorStop(0.62,col2);
+    lg.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle=lg;
+    ctx.beginPath();ctx.arc(rx,ry,rSize,0,Math.PI*2);ctx.fill();ctx.restore();
+  }
+
+  function drawTongue(scaleW,scaleH,sway,topCol,midCol,botCol,alpha,offsetX){
     const ox=cx+(offsetX||0);
     const fh=flameH*scaleH*breath,fw=flameW*scaleW;
-    const tipX=ox+sway,tipY=baseY-fh;
+    const tipX=ox+sway,tipY=Math.max(12,baseY-fh);
     const g=ctx.createLinearGradient(ox,tipY,ox,baseY);
-    g.addColorStop(0,topCol);g.addColorStop(1,botCol);
+    g.addColorStop(0,topCol);
+    g.addColorStop(0.45,midCol||botCol);
+    g.addColorStop(1,botCol);
     ctx.save();
     ctx.globalAlpha=alpha;
     ctx.fillStyle=g;
     ctx.beginPath();
     ctx.moveTo(ox,baseY+4);
-    ctx.bezierCurveTo(ox-fw*1.12,baseY-fh*0.16, ox-fw*0.74+sway*0.45,baseY-fh*0.65, tipX,tipY);
-    ctx.bezierCurveTo(ox+fw*0.74+sway*0.45,baseY-fh*0.65, ox+fw*1.12,baseY-fh*0.16, ox,baseY+4);
+    ctx.bezierCurveTo(ox-fw*1.22,baseY-fh*0.18, ox-fw*0.78+sway*0.45,baseY-fh*0.66, tipX,tipY);
+    ctx.bezierCurveTo(ox+fw*0.78+sway*0.45,baseY-fh*0.66, ox+fw*1.22,baseY-fh*0.18, ox,baseY+4);
     ctx.closePath();
     ctx.fill();
-    /* Trazo gouache sutil en el contorno izquierdo/derecho */
-    ctx.strokeStyle=botCol;
-    ctx.lineWidth=1.8;
-    ctx.globalAlpha=alpha*0.28;
+    ctx.strokeStyle=topCol;
+    ctx.lineWidth=1.6;
+    ctx.globalAlpha=alpha*0.35;
     ctx.stroke();
     ctx.restore();
   }
 
-  // Lenguas laterales según personalidad de cada llama
-  if(p>0.16){
-    const sideA=Math.min(0.84,(p-0.16)*1.15);
+  // Lóbulos ascendentes de lámpara de lava (más abundantes en Pro y al 100%)
+  const blobCount=Math.max(2,Math.round((mot.blobs||3)*(0.4+0.8*p)));
+  for(let i=0;i<blobCount;i++){
+    const phase=(t*(0.55+i*0.14)+i*1.7)%1;
+    const bx=cx+Math.sin(t*mot.freq*0.9+i*2.1)*(flameW*0.72);
+    const by=baseY-(phase*flameH*1.05);
+    const br=(14+34*p)*(1-phase*0.42);
+    drawLavaLobe(bx,by,br,i%2===0?(pal.lava2||pal.outerMid):pal.outerMid,pal.outerBot,0.52*(1-phase*0.65));
+  }
+
+  // Lenguas laterales + cuerpo japonés fluido
+  if(p>0.14){
+    const sideA=Math.min(0.90,(p-0.14)*1.15);
     const ls=Math.sin(t*(mot.freq*1.65))*(mot.amp*1.1)*p;
-    drawTongue(0.62,0.68, -18*p+ls, pal.outerTop, pal.outerBot, sideA*0.68, -24*p*mot.wScale);
-    drawTongue(0.62,0.64, 18*p-ls*0.8, pal.outerTop, pal.outerBot, sideA*0.68, 24*p*mot.wScale);
+    drawTongue(0.68,0.72, -22*p+ls, pal.outerTop, pal.lava2||pal.outerMid, pal.outerBot, sideA*0.72, -28*p*mot.wScale);
+    drawTongue(0.68,0.68, 22*p-ls*0.8, pal.outerTop, pal.outerMid, pal.outerBot, sideA*0.72, 28*p*mot.wScale);
     if(mot.tongues>=3){
-      const ls3=Math.cos(t*(mot.freq*1.9))*(mot.amp*0.8)*p;
-      drawTongue(0.46,0.82, ls3, pal.midTop, pal.outerBot, sideA*0.52, Math.sin(t*1.2)*10*p);
+      const ls3=Math.cos(t*(mot.freq*1.9))*(mot.amp*0.85)*p;
+      drawTongue(0.52,0.88, ls3, pal.midTop, pal.lava2||pal.outerMid, pal.outerBot, sideA*0.58, Math.sin(t*1.2)*14*p);
     }
   }
-  drawTongue(1.06,1.0,sway1,pal.outerTop,pal.outerBot,0.92,0);
-  drawTongue(0.72,0.80,sway2*0.78,pal.midTop,pal.midBot,0.96,0);
-  drawTongue(0.42,0.52,sway1*0.35,pal.core,pal.midBot,0.98,0);
+  drawTongue(1.08,1.0,sway1,pal.outerTop,pal.outerMid,pal.outerBot,0.94,0);
+  drawTongue(0.74,0.80,sway2*0.78,pal.midTop,pal.midBot,pal.outerMid,0.96,0);
+  drawTongue(0.42,0.52,sway1*0.35,pal.core,pal.midTop,pal.midBot,0.98,0);
 
-  // 4. Chispas según sparkMode (spiral, zigzag, halo, rise, fast, burst)
-  const maxSparks=Math.round(5+28*p);
-  const spdMult=mot.sparkMode==='fast'||mot.sparkMode==='burst'?1.45:0.95;
+  // 4. Chispas vivas (al 100% explota en chispas luminosas por todo el recuadro)
+  const maxSparks=isFull?54:Math.round(4+30*p);
+  const spdMult=(mot.sparkMode==='fast'||mot.sparkMode==='burst'||isFull)?1.55:0.95;
   while(flameSparks.length<maxSparks){
     flameSparks.push({
-      x:cx+(Math.random()-0.5)*flameW*0.95,
-      y:baseY-Math.random()*flameH*0.55,
-      vy:(0.9+Math.random()*(1.5+1.9*p))*spdMult,
-      vx:(Math.random()-0.5)*(mot.sparkMode==='burst'?1.35:0.65),
-      r:1.8+Math.random()*3.2,
+      x:cx+(Math.random()-0.5)*flameW*(isFull?1.65:0.95),
+      y:baseY-Math.random()*flameH*(isFull?0.9:0.55),
+      vy:(0.9+Math.random()*(1.6+2.2*p))*spdMult,
+      vx:(Math.random()-0.5)*(mot.sparkMode==='burst'||isFull?1.75:0.65),
+      r:(isFull?2.4:1.8)+Math.random()*3.4,
       life:Math.random()
     });
   }
@@ -9916,30 +9974,28 @@ function drawLivingFlame(ts){
   flameSparks.forEach((sp,idx)=>{
     sp.y-=sp.vy;
     if(mot.sparkMode==='spiral'){
-      sp.x+=Math.cos(t*3.2+idx)*1.15;
-    }else if(mot.sparkMode==='zigzag'){
-      sp.x+=Math.sin(t*5.5+sp.y*0.05)*1.3;
+      sp.x+=Math.cos(t*3.2+idx)*1.25;
     }else if(mot.sparkMode==='halo'){
-      sp.x+=sp.vx+Math.sin(t*2.4+idx)*0.85;
+      sp.x+=sp.vx+Math.sin(t*2.6+idx)*1.05;
     }else{
-      sp.x+=sp.vx+Math.sin(t*mot.freq*1.6+sp.y*0.03)*0.55;
+      sp.x+=sp.vx+Math.sin(t*mot.freq*1.6+sp.y*0.03)*0.65;
     }
     sp.life-=0.007+0.005*(1-p);
-    if(sp.life<=0 || sp.y<baseY-flameH-76){
-      sp.x=cx+(Math.random()-0.5)*flameW*0.8;
-      sp.y=baseY-flameH*(0.18+Math.random()*0.55);
-      sp.vy=(0.9+Math.random()*(1.5+1.9*p))*spdMult;
-      sp.vx=(Math.random()-0.5)*(mot.sparkMode==='burst'?1.35:0.65);
+    if(sp.life<=0 || sp.y<10){
+      sp.x=cx+(Math.random()-0.5)*flameW*(isFull?1.5:0.85);
+      sp.y=baseY-flameH*(0.12+Math.random()*0.62);
+      sp.vy=(0.9+Math.random()*(1.6+2.2*p))*spdMult;
+      sp.vx=(Math.random()-0.5)*(mot.sparkMode==='burst'||isFull?1.75:0.65);
       sp.life=0.85+Math.random()*0.15;
     }
     ctx.save();
-    ctx.globalAlpha=Math.max(0,sp.life*(0.5+0.5*p));
+    ctx.globalAlpha=Math.max(0,sp.life*(0.55+0.45*p));
     ctx.fillStyle=pal.spark;
     ctx.beginPath();ctx.arc(sp.x,sp.y,sp.r,0,Math.PI*2);ctx.fill();
     ctx.restore();
   });
 
-  // 5. Grano sutil tipo papel / risografía sobre la llama
+  // 5. Grano risográfico orgánico
   if(window._wavyGrainPat){
     ctx.save();
     ctx.globalAlpha=0.14;
@@ -9972,14 +10028,58 @@ if($('pebVesselBar')){
   });
 }
 
+function initDevFlameBar(){
+  const grid=$('devFlameGrid');
+  if(grid && !grid.children.length){
+    Object.entries(PEB_VESSELS).forEach(([k,cfg])=>{
+      const b=document.createElement('button');
+      b.type='button';b.className='chip';b.dataset.devFlame=k;
+      b.style.cssText='min-height:32px;padding:4px 6px;font-size:11px;justify-content:center;border-radius:12px';
+      b.textContent=(cfg.mode==='female'?'♀ ':'♂ ')+cfg.short+(cfg.pro?' ★':'');
+      b.onclick=()=>{
+        S.bioMode=cfg.mode;
+        S.pebVessel=k;
+        activeFlamePal=cfg.pal;
+        activeFlameMotion=cfg.motion;
+        if($('pd'))$('pd').style.setProperty('--relic',cfg.relic);
+        if($('pebVesselTitle'))$('pebVesselTitle').textContent=cfg.title;
+        renderPebVesselArt();
+        startFlameAnim();
+      };
+      grid.appendChild(b);
+    });
+  }
+  const sl=$('devFlameSlider');
+  if(sl && !sl._bound){
+    sl._bound=true;
+    sl.oninput=()=>{
+      devFlameOverridePct=Number(sl.value);
+      if($('devFlamePctLbl'))$('devFlamePctLbl').textContent=devFlameOverridePct+'%';
+      flameView();
+    };
+  }
+  document.querySelectorAll('[data-dev-pct]').forEach(btn=>{
+    if(btn._bound)return;
+    btn._bound=true;
+    btn.onclick=()=>{
+      const pct=Number(btn.dataset.devPct);
+      devFlameOverridePct=pct;
+      if($('devFlameSlider'))$('devFlameSlider').value=pct;
+      if($('devFlamePctLbl'))$('devFlamePctLbl').textContent=pct+'%';
+      flameView();
+    };
+  });
+}
+
 function flameView(){
   if(document.hidden)return;
-  const v=fuel(),p=$('pd'),kept=isPebeteroMaintained();if(!p)return;
+  initDevFlameBar();
+  const v=(devFlameOverridePct!==null)?devFlameOverridePct:fuel(),p=$('pd'),kept=isPebeteroMaintained()||(v>=97);if(!p)return;
   renderPebVesselArt();
   startFlameAnim();
   p.classList.toggle('kept',kept);
   p.classList.toggle('low',!kept && v<35);
-  $('fv').textContent=v<=8?'Brasa viva (mínimo 5%) · Tu capacidad de volver sigue intacta':(kept?'Llama encendida y vibrante hoy':(v>35?'Llama cálida y estable':'Brasa suave · Avívala con tu presencia'));
+  $('fv').textContent=v>=97?'¡100% plenitud! Tu hábito está vivo y brillando':(v<=8?'Brasa viva (mínimo 5%) · Tu capacidad de volver sigue intacta':(kept?'Llama encendida y vibrante hoy':(v>35?'Llama cálida y estable':'Brasa suave · Avívala con tu presencia')));
   $('fp').textContent=Math.round(v);
   if($('pebFill'))$('pebFill').style.width=Math.round(v)+'%';
 
