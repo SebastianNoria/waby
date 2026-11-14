@@ -259,7 +259,7 @@ body{
   -webkit-background-clip:text;
   background-clip:text;
   -webkit-text-fill-color:transparent;
-  animation:wavyShimmer 30s ease-in-out infinite;
+  animation:wavyShimmer 10s ease-in-out infinite;
 }
 [data-theme="dark"] .masthead h1{
   background:linear-gradient(112deg, #ffffff 0%, #ffffff 43%, var(--gold) 50%, #ffffff 57%, #ffffff 100%);
@@ -384,29 +384,69 @@ h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,7vw,36px);line-
   50%{transform:translateX(-50%) scaleX(1.04);opacity:1}
 }
 @keyframes lavaLampFlow{
-  0%{background-position:8% 12%, 92% 88%, 50% 50%}
-  33%{background-position:86% 14%, 14% 78%, 65% 30%}
-  66%{background-position:28% 88%, 78% 18%, 20% 70%}
-  100%{background-position:8% 12%, 92% 88%, 50% 50%}
+  0%{background-position:0% 10%, 100% 90%, 20% 80%, 50% 50%}
+  25%{background-position:95% 20%, 12% 75%, 82% 15%, 70% 30%}
+  50%{background-position:75% 92%, 28% 12%, 15% 40%, 30% 75%}
+  75%{background-position:18% 60%, 88% 35%, 90% 85%, 65% 45%}
+  100%{background-position:0% 10%, 100% 90%, 20% 80%, 50% 50%}
 }
+@keyframes auraCellFloat{
+  0%,100%{transform:translate3d(0,0,0) scale(1)}
+  33%{transform:translate3d(6px,-7px,0) scale(1.06)}
+  66%{transform:translate3d(-6px,5px,0) scale(0.96)}
+}
+@keyframes orbMorph{
+  0%,100%{border-radius:58% 42% 52% 48% / 48% 58% 42% 52%}
+  33%{border-radius:42% 58% 46% 54% / 58% 42% 56% 44%}
+  66%{border-radius:52% 48% 60% 40% / 44% 52% 48% 56%}
+}
+:root[data-finish="minimal"] .habit-item,
+:root[data-finish="minimal"] .mo,
+:root[data-finish="minimal"] #loss .chip,
+:root[data-finish="minimal"] .bento-card{
+  background:var(--card-solid) !important;
+  background-image:none !important;
+  border:1px solid var(--rule) !important;
+  box-shadow:none !important;
+  animation:none !important;
+  color:var(--ink) !important;
+}
+:root[data-finish="minimal"] .habit-item.on,
+:root[data-finish="minimal"] .mo.on,
+:root[data-finish="minimal"] #loss .chip.on,
+:root[data-finish="minimal"] .bento-card.active,
+:root[data-finish="minimal"] .bento-card.has{
+  background:var(--ink) !important;
+  background-image:none !important;
+  border-color:var(--ink) !important;
+  color:var(--paper) !important;
+  text-shadow:none !important;
+}
+:root[data-finish="minimal"] .habit-item.on i,
+:root[data-finish="minimal"] .mo.on i,
+:root[data-finish="minimal"] #loss .chip.on i,
+:root[data-finish="minimal"] .bento-card.active i,
+:root[data-finish="minimal"] .bento-card.has i{color:var(--paper) !important}
 /* Cuadrícula 3x3 Hábitos */
 .habit-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:16px}
 .habit-item{
   background-color:var(--hab-base, var(--paper));
   background-image:
-    radial-gradient(circle at 24% 26%, rgba(255,255,255,0.34) 0%, transparent 46%),
-    radial-gradient(circle at 76% 74%, var(--hab-on, rgba(52,126,188,.94)) 0%, transparent 56%),
-    linear-gradient(135deg, var(--hab-c, rgba(76,148,204,.86)), var(--hab-c2, rgba(54,116,172,.74)));
-  background-size:250% 250%, 250% 250%, 100% 100%;
+    radial-gradient(circle at 22% 24%, rgba(255,255,255,0.42) 0%, transparent 42%),
+    radial-gradient(circle at 78% 76%, var(--hab-bar, #1f6feb) 0%, transparent 52%),
+    radial-gradient(circle at 46% 52%, var(--hab-on, rgba(52,126,188,.94)) 0%, transparent 58%),
+    linear-gradient(135deg, var(--hab-c, rgba(76,148,204,.92)), var(--hab-c2, rgba(54,116,172,.84)));
+  background-size:290% 290%, 270% 270%, 260% 260%, 100% 100%;
   border:none;border-radius:999px;overflow:hidden;
   min-height:66px;min-width:0;padding:10px 6px 8px;text-align:center;cursor:pointer;position:relative;
   transition:transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease;color:var(--ink);font-family:var(--serif);
-  animation:lavaLampFlow 6.2s ease-in-out infinite;
-  box-shadow:inset 0 1px 1px rgba(255,255,255,0.34), 0 6px 14px -10px rgba(0,0,0,0.20);
+  animation:lavaLampFlow 3.4s ease-in-out infinite alternate;
+  box-shadow:inset 0 1px 2px rgba(255,255,255,0.42), 0 8px 16px -10px rgba(0,0,0,0.24);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
 }
-.habit-item:nth-child(3n){animation-duration:7.8s;animation-delay:-2.1s}
-.habit-item:nth-child(3n+1){animation-duration:5.6s;animation-delay:-3.7s}
+.habit-item:nth-child(2n){animation-duration:4.1s;animation-direction:alternate-reverse;animation-delay:-1.4s}
+.habit-item:nth-child(3n){animation-duration:2.9s;animation-direction:normal;animation-delay:-2.3s}
+.habit-item:nth-child(4n){animation-duration:3.7s;animation-direction:reverse;animation-delay:-0.9s}
 .habit-item.add-habit-card{
   background-image:none;background-color:transparent;
   border:1px dashed color-mix(in srgb, var(--ink) 24%, transparent);
@@ -984,16 +1024,18 @@ body.coast-fullscreen > #seab .coast-fs-dock{bottom:max(18px, env(safe-area-inse
   border:none;color:var(--ink);
   min-height:66px;min-width:0;overflow:visible;padding:10px 6px 8px;cursor:pointer;font-family:var(--serif);border-radius:999px;
   transition:transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease;position:relative;
-  background-size:250% 250%, 250% 250%, 100% 100%;
+  background-size:290% 290%, 270% 270%, 260% 260%, 100% 100%;
   background-image:
-    radial-gradient(circle at 24% 26%, rgba(255,255,255,0.34) 0%, transparent 46%),
-    radial-gradient(circle at 76% 74%, var(--aura-on, rgba(58,144,212,.92)) 0%, transparent 56%),
-    linear-gradient(135deg, var(--aura-c, rgba(84,156,214,.84)), var(--aura-c2, rgba(84,156,214,.58)));
-  animation:lavaLampFlow 6.4s ease-in-out infinite;
-  box-shadow:inset 0 1px 1px rgba(255,255,255,0.32), 0 6px 14px -10px rgba(0,0,0,0.18);
+    radial-gradient(circle at 22% 24%, rgba(255,255,255,0.42) 0%, transparent 42%),
+    radial-gradient(circle at 76% 74%, var(--aura-on, rgba(58,144,212,.96)) 0%, transparent 52%),
+    radial-gradient(circle at 46% 54%, var(--aura-c, rgba(84,156,214,.92)) 0%, transparent 58%),
+    linear-gradient(135deg, var(--aura-c, rgba(84,156,214,.92)), var(--aura-c2, rgba(84,156,214,.72)));
+  animation:lavaLampFlow 3.5s ease-in-out infinite alternate;
+  box-shadow:inset 0 1px 2px rgba(255,255,255,0.40), 0 8px 16px -10px rgba(0,0,0,0.22);
 }
-.mo:nth-child(2n){animation-duration:7.6s;animation-delay:-2.4s}
-.mo:nth-child(3n){animation-duration:5.8s;animation-delay:-4.9s}
+.mo:nth-child(2n){animation-duration:4.1s;animation-direction:alternate-reverse;animation-delay:-1.4s}
+.mo:nth-child(3n){animation-duration:2.9s;animation-direction:normal;animation-delay:-2.3s}
+.mo:nth-child(4n){animation-duration:3.7s;animation-direction:reverse;animation-delay:-0.9s}
 .mo:hover{transform:translateY(-2px) scale(1.03)}
 .mo i{display:block;font-style:normal;font-size:21px;line-height:1.1;color:var(--ink)}
 .mo span{font-size:12px;font-weight:500;display:block;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px;letter-spacing:.01em}
@@ -1056,17 +1098,19 @@ body.coast-fullscreen > #seab .coast-fs-dock{bottom:max(18px, env(safe-area-inse
   width:100%;min-height:66px;min-width:0;border:none;border-radius:999px;padding:10px 6px 8px;
   color:var(--ink);font-family:var(--serif);position:relative;overflow:hidden;
   display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-  background-size:250% 250%, 250% 250%, 100% 100%;
+  background-size:290% 290%, 270% 270%, 260% 260%, 100% 100%;
   background-image:
-    radial-gradient(circle at 24% 26%, rgba(255,255,255,0.34) 0%, transparent 46%),
-    radial-gradient(circle at 76% 74%, var(--care-on, rgba(56,128,196,.92)) 0%, transparent 56%),
-    linear-gradient(135deg, var(--care-c, rgba(84,154,212,.84)), var(--care-c2, rgba(64,126,184,.72)));
-  animation:lavaLampFlow 6.5s ease-in-out infinite;
-  box-shadow:inset 0 1px 1px rgba(255,255,255,0.34), 0 6px 14px -10px rgba(0,0,0,0.20);
+    radial-gradient(circle at 22% 24%, rgba(255,255,255,0.42) 0%, transparent 42%),
+    radial-gradient(circle at 78% 76%, var(--care-bar, #1f6feb) 0%, transparent 52%),
+    radial-gradient(circle at 46% 52%, var(--care-on, rgba(56,128,196,.94)) 0%, transparent 58%),
+    linear-gradient(135deg, var(--care-c, rgba(84,154,212,.92)), var(--care-c2, rgba(64,126,184,.82)));
+  animation:lavaLampFlow 3.4s ease-in-out infinite alternate;
+  box-shadow:inset 0 1px 2px rgba(255,255,255,0.40), 0 8px 16px -10px rgba(0,0,0,0.22);
 }
 #loss .chip i{display:block;font-style:normal;font-size:21px;line-height:1.1;color:var(--ink)}
 #loss .chip span{font-size:12px;font-weight:500;display:block;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;padding:0 4px;letter-spacing:.01em;line-height:1.15}
-#loss .chip:nth-child(2n){animation-duration:7.9s;animation-delay:-3s}
+#loss .chip:nth-child(2n){animation-duration:4.1s;animation-direction:alternate-reverse;animation-delay:-1.3s}
+#loss .chip:nth-child(3n){animation-duration:2.9s;animation-direction:normal;animation-delay:-2.5s}
 #loss .chip.on{
   transform:scale(1.05);
   box-shadow:0 10px 22px -10px rgba(0,0,0,0.28);
@@ -1891,19 +1935,21 @@ summary::-webkit-details-marker{display:none}
 .bento-card{
   background-color:var(--paper);
   background-image:
-    radial-gradient(circle at 24% 26%, rgba(255,255,255,0.34) 0%, transparent 46%),
-    radial-gradient(circle at 76% 74%, var(--bento-on, rgba(56,128,196,.90)) 0%, transparent 56%),
-    linear-gradient(135deg, var(--bento-c, rgba(84,154,212,.82)), var(--bento-c2, rgba(64,126,184,.68)));
-  background-size:250% 250%, 250% 250%, 100% 100%;
+    radial-gradient(circle at 22% 24%, rgba(255,255,255,0.42) 0%, transparent 42%),
+    radial-gradient(circle at 78% 76%, var(--bento-bar, #1f6feb) 0%, transparent 52%),
+    radial-gradient(circle at 46% 52%, var(--bento-on, rgba(56,128,196,.94)) 0%, transparent 58%),
+    linear-gradient(135deg, var(--bento-c, rgba(84,154,212,.92)), var(--bento-c2, rgba(64,126,184,.80)));
+  background-size:290% 290%, 270% 270%, 260% 260%, 100% 100%;
   border:none;border-radius:999px;position:relative;overflow:hidden;
   padding:10px 6px 8px;text-align:center;cursor:pointer;transition:transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease;
-  box-shadow:inset 0 1px 1px rgba(255,255,255,0.34), 0 6px 14px -10px rgba(0,0,0,0.20);
+  box-shadow:inset 0 1px 2px rgba(255,255,255,0.40), 0 8px 16px -10px rgba(0,0,0,0.22);
   display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:66px;
   color:var(--ink);font-family:var(--serif);-webkit-appearance:none;appearance:none;min-width:0;
-  animation:lavaLampFlow 7s ease-in-out infinite;
+  animation:lavaLampFlow 3.5s ease-in-out infinite alternate;
 }
-.bento-card:nth-child(2n){animation-duration:8.4s;animation-delay:-3.5s}
-.bento-card:nth-child(3n){animation-duration:6.1s;animation-delay:-1.7s}
+.bento-card:nth-child(2n){animation-duration:4.2s;animation-direction:alternate-reverse;animation-delay:-1.5s}
+.bento-card:nth-child(3n){animation-duration:3.0s;animation-direction:normal;animation-delay:-2.4s}
+.bento-card:nth-child(4n){animation-duration:3.8s;animation-direction:reverse;animation-delay:-0.8s}
 .bento-card:hover{transform:translateY(-2px) scale(1.03)}
 .bento-card.open,.bento-card.active,.bento-card.has{
   transform:scale(1.05);
@@ -2388,10 +2434,6 @@ summary::-webkit-details-marker{display:none}
     <section class="panel card" id="sub-journal">
       <div class="hd">
         <span>Tu bienestar</span>
-        <div class="chips" id="bioTrackMode">
-          <button type="button" class="chip on" data-bm="female" style="min-height:36px;padding:4px 13px;font-size:13px">Mujer</button>
-          <button type="button" class="chip" data-bm="male" style="min-height:36px;padding:4px 13px;font-size:13px">Hombre</button>
-        </div>
       </div>
 
 
@@ -2401,7 +2443,13 @@ summary::-webkit-details-marker{display:none}
       </div>
 
       <div class="bio-sec">
-        <div class="bio-sec-hd"><span>Emociones de hoy</span><span id="moodCounterLbl">Elige hasta 3 (0/3)</span></div>
+        <div class="bio-sec-hd">
+          <span>Emociones de hoy</span>
+          <span style="display:inline-flex;align-items:center;gap:10px">
+            <span id="moodCounterLbl">Elige hasta 3 (0/3)</span>
+            <button type="button" class="bento-dim-toggle" id="moodMaticesToggleBtn">Más (10) ▾</button>
+          </span>
+        </div>
         <div class="mood-flip-wrap" id="moodFlipWrap">
           <div class="mood-flip-inner" id="moodFlipInner">
             <div class="mood-flip-front">
@@ -2585,8 +2633,6 @@ summary::-webkit-details-marker{display:none}
       </div>
       <div class="help-tip" id="helpPeb" hidden>Tu llama representa tu presencia diaria y nunca se apaga (su mínimo es 5% porque tu capacidad de volver siempre sigue viva). Se aviva al respirar en Costa, guardar tu día o hacer una práctica de 60 s.</div>
 
-      <div class="peb-vessels" id="pebVesselBar"></div>
-
       <div class="pd" id="pd">
         <div class="peb-top">
           <span id="pebVesselTitle">Ámbar</span>
@@ -2651,8 +2697,8 @@ summary::-webkit-details-marker{display:none}
             <button type="button" class="coast-fs-toggle" id="coastFsModeBtn" aria-expanded="false" aria-label="Modo Automático o Táctil" title="Modo">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11V6a1.5 1.5 0 0 1 3 0v5"/><path d="M9 11V7.5a1.5 1.5 0 0 1 3 0"/><path d="M15 11.5a1.5 1.5 0 0 1 3 0v3.5a6 6 0 0 1-12 0v-2.5a1.5 1.5 0 0 1 3 0"/></svg>
             </button>
-            <button type="button" class="coast-fs-toggle" id="coastFsAudioQuickBtn" aria-label="Sonido del mar" title="Sonido">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+            <button type="button" class="coast-fs-toggle" id="coastFsAudioQuickBtn" aria-expanded="false" aria-label="Sonidos de Costa" title="Sonido">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M4 12h2M8 8v8M12 5v14M16 9v6M20 11v2"/></svg>
             </button>
             <button type="button" class="coast-fs-toggle" id="coastFsMenuToggle" aria-expanded="false" aria-label="Ritmo de respiración" title="Ritmo">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 8c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0"/><path d="M3 13c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0"/><path d="M3 18c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0"/></svg>
@@ -2846,8 +2892,7 @@ summary::-webkit-details-marker{display:none}
     <div id="circleFriendsPane" hidden>
       <section class="panel card on" style="text-align:center;padding-bottom:8px">
         <div style="font-family:var(--serif);font-size:21px;font-weight:500;margin-bottom:4px">Tu círculo</div>
-        <p style="font-size:12.5px;color:var(--muted);margin:0 0 14px">— las personas en sintonía contigo —</p>
-        <div class="stories-bar" id="storiesBar" style="margin-bottom:14px"></div>
+        <p style="font-size:12.5px;color:var(--muted);margin:0 0 18px">— las personas en sintonía contigo —</p>
         <div id="circleFriendsGrid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 12px;justify-items:center;margin-bottom:20px"></div>
         <button type="button" class="btn ghost" id="friendsInviteBtn" style="min-height:38px;font-size:11.5px;border-radius:999px;padding:8px 18px">+ Invitar o buscar amigo</button>
       </section>
@@ -2991,12 +3036,26 @@ summary::-webkit-details-marker{display:none}
   <div class="vpage" id="v-profile">
     <div class="card">
       <div class="sl" style="margin-top:0;padding-top:0;border-top:none;margin-bottom:14px">
-        <label><span>Acabado visual</span><span>elige tu atmósfera</span></label>
+        <label><span>Atmósfera</span><span>elige tu fondo</span></label>
         <div class="chips" id="themePick" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px">
           <button type="button" class="chip" data-th="pulcritud" style="padding:6px 4px;font-size:12.5px">Pulcritud</button>
           <button type="button" class="chip" data-th="light" style="padding:6px 4px;font-size:12.5px">Editorial</button>
           <button type="button" class="chip" data-th="dark" style="padding:6px 4px;font-size:12.5px">Nocturno</button>
           <button type="button" class="chip" data-th="auto" style="padding:6px 4px;font-size:12.5px">Sistema</button>
+        </div>
+      </div>
+      <div class="sl" style="margin-top:0;padding-top:10px;border-top:1px solid var(--rule);margin-bottom:14px">
+        <label><span>Terminado de cajas</span><span>cromático o blanco</span></label>
+        <div class="chips" id="finishPick" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px">
+          <button type="button" class="chip" data-fin="chromatic" style="padding:6px 8px;font-size:13px">Cromático</button>
+          <button type="button" class="chip" data-fin="minimal" style="padding:6px 8px;font-size:13px">Minimalista</button>
+        </div>
+      </div>
+      <div class="sl" style="margin-top:0;padding-top:10px;border-top:1px solid var(--rule);margin-bottom:14px">
+        <label><span>Perfil biológico</span><span>personaliza tus módulos y llamas</span></label>
+        <div class="chips" id="profileBioPick" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px">
+          <button type="button" class="chip" data-bm="female" style="padding:6px 8px;font-size:13px">Mujer</button>
+          <button type="button" class="chip" data-bm="male" style="padding:6px 8px;font-size:13px">Hombre</button>
         </div>
       </div>
 
@@ -3755,10 +3814,10 @@ const OLD_KEY='wavy_v17';
    - Cuencos tibetanos armónicos (432Hz, 528Hz, 648Hz, 864Hz y acorde de cierre)
    ========================================================= */
 const WavyAudio=(()=>{
-  let ctx=null,unlocked=false,running=false,stopTimer=null;
+  let ctx=null,unlocked=false,running=false,stopTimer=null,bowlLoop=null;
   let oceanGain=null,oceanFilter=null,oceanSource=null;
   let rainGain=null,rainFilter=null,rainSource=null;
-  let keepAliveEl=null;
+  let keepAliveEl=null,soundMode='ocean';
 
   function ensureKeepAliveAudio(){
     if(keepAliveEl)return keepAliveEl;
@@ -3824,7 +3883,7 @@ const WavyAudio=(()=>{
     const bufSize=c.sampleRate*durSec;
     const oceanBuf=c.createBuffer(1,bufSize,c.sampleRate);
     const out=oceanBuf.getChannelData(0);
-    /* Mezcla cálida de Ruido Rosa (Paul Kellet) + Ruido Marrón con envolvente de ola */
+    /* Mezcla adaptable según sonido elegido: olas, ruido rosa, ruido blanco o cuencos */
     let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0,brown=0;
     for(let i=0;i<bufSize;i++){
       const w=Math.random()*2-1;
@@ -3838,7 +3897,10 @@ const WavyAudio=(()=>{
       b6=w*0.115926;
       brown=(brown+0.02*w)/1.02;
       const brownNorm=brown*0.18;
-      out[i]=pink*0.65+brownNorm*0.35;
+      if(soundMode==='white')out[i]=w*0.09;
+      else if(soundMode==='pink')out[i]=pink*0.88;
+      else if(soundMode==='bowls')out[i]=pink*0.18;
+      else out[i]=pink*0.65+brownNorm*0.35;
     }
 
     oceanSource=c.createBufferSource();
@@ -3848,7 +3910,7 @@ const WavyAudio=(()=>{
     oceanFilter=c.createBiquadFilter();
     oceanFilter.type='lowpass';
     oceanFilter.Q.value=1.15;
-    oceanFilter.frequency.setValueAtTime(340,c.currentTime);
+    oceanFilter.frequency.setValueAtTime(soundMode==='white'?2200:(soundMode==='pink'?950:340),c.currentTime);
 
     oceanGain=c.createGain();
     oceanGain.gain.setValueAtTime(0.001,c.currentTime);
@@ -3884,11 +3946,21 @@ const WavyAudio=(()=>{
     rainSource.start(0);
 
     running=true;
+    if(bowlLoop){clearInterval(bowlLoop);bowlLoop=null;}
+    if(soundMode==='bowls'){
+      playBowl([432,648],3.2,0.22);
+      bowlLoop=setInterval(()=>{if(running && S.audioOn && soundMode==='bowls')playBowl([432,528,648],3.4,0.20);},4200);
+    }
   }
 
   function modulateOcean(aVal,ts){
     if(!running||!oceanFilter||!ctx)return;
     const now=ctx.currentTime;
+    if(soundMode==='white'||soundMode==='pink'){
+      oceanFilter.frequency.setTargetAtTime(soundMode==='white'?2200:950,now,0.12);
+      if(oceanGain)oceanGain.gain.setTargetAtTime(0.32,now,0.14);
+      return;
+    }
     /* Modulación orgánica entre 220 Hz y 950 Hz según el romper de cada ola */
     const waveCrest=0.5+0.5*Math.sin(ts/1750)+0.22*Math.sin(ts/820);
     const clampedCrest=Math.max(0,Math.min(1,waveCrest));
@@ -3896,7 +3968,7 @@ const WavyAudio=(()=>{
     oceanFilter.frequency.setTargetAtTime(Math.min(950,Math.max(220,targetFreq)),now,0.10);
 
     if(oceanGain){
-      const swellGain=0.26+clampedCrest*0.24+aVal*0.10;
+      const swellGain=soundMode==='bowls'?0.14:(0.26+clampedCrest*0.24+aVal*0.10);
       oceanGain.gain.setTargetAtTime(swellGain,now,0.14);
     }
     if(rainGain){
@@ -3906,6 +3978,7 @@ const WavyAudio=(()=>{
   }
 
   function stopOcean(){
+    if(bowlLoop){clearInterval(bowlLoop);bowlLoop=null;}
     if(!running||!ctx)return;
     const srcToStop=oceanSource;
     const rainToStop=rainSource;
@@ -3966,7 +4039,12 @@ const WavyAudio=(()=>{
     document.addEventListener(ev,()=>{if(!unlocked)unlockNow()},{passive:true,once:true});
   });
 
-  return{unlockNow,startOcean,modulateOcean,stopOcean,cuePhase,playBowl};
+  function setSoundMode(m){
+    soundMode=m||'ocean';
+    if(running){stopOcean();setTimeout(()=>{if(S.audioOn)startOcean();},300);}
+  }
+  function getSoundMode(){return soundMode;}
+  return{unlockNow,startOcean,modulateOcean,stopOcean,cuePhase,playBowl,setSoundMode,getSoundMode};
 })();
 
 const AVATARS=[
@@ -4794,8 +4872,29 @@ function load(){
   }catch(e){}
   save(false);
   applyTheme(S.theme||'pulcritud');
+  applyFinish(S.finish||'chromatic');
+  syncProfileBioUI();
   renderAccountSwitcherUI();
 }
+
+function applyFinish(fin){
+  S.finish=(fin==='minimal')?'minimal':'chromatic';
+  document.documentElement.setAttribute('data-finish',S.finish);
+  document.querySelectorAll('#finishPick .chip').forEach(c=>c.classList.toggle('on',c.dataset.fin===S.finish));
+}
+function syncProfileBioUI(){
+  const mode=(S.bioMode==='female')?'female':'male';
+  document.querySelectorAll('#profileBioPick .chip').forEach(c=>c.classList.toggle('on',c.dataset.bm===mode));
+}
+document.querySelectorAll('#finishPick .chip').forEach(c=>{
+  c.onclick=()=>{applyFinish(c.dataset.fin);if(typeof save==='function')save();};
+});
+document.querySelectorAll('#profileBioPick .chip').forEach(c=>{
+  c.onclick=()=>{
+    if(typeof applyBioTrackMode==='function')applyBioTrackMode(c.dataset.bm);
+    syncProfileBioUI();
+  };
+});
 
 function applyTheme(th){
   S.theme=th;
@@ -5108,35 +5207,35 @@ function renderCircleFriends(){
   }
   grid.innerHTML='';
   const auras=[
-    ['rgba(228,118,86,.78)','rgba(228,118,86,.24)'],
-    ['rgba(62,148,208,.78)','rgba(62,148,208,.24)'],
-    ['rgba(218,108,152,.78)','rgba(218,108,152,.24)'],
-    ['rgba(82,168,124,.78)','rgba(82,168,124,.24)'],
-    ['rgba(232,172,72,.78)','rgba(232,172,72,.24)'],
-    ['rgba(138,112,202,.78)','rgba(138,112,202,.24)']
+    ['rgba(232,108,82,.92)','rgba(248,176,120,.58)'],
+    ['rgba(52,148,218,.92)','rgba(116,204,244,.58)'],
+    ['rgba(224,92,148,.92)','rgba(246,162,198,.58)'],
+    ['rgba(68,174,118,.92)','rgba(136,222,168,.58)'],
+    ['rgba(236,168,54,.92)','rgba(250,214,118,.58)'],
+    ['rgba(136,96,212,.92)','rgba(192,164,244,.58)']
   ];
   const liveStates=['en calma','en costa','llama activa','presente'];
-  const spots=[[18,24],[52,18],[84,26],[22,76],[54,80],[82,72]];
-  const grads=[];
   list.forEach((handle,idx)=>{
     const u=(typeof findUser==='function'?findUser(handle):null)||((typeof getAllyProfile==='function')?getAllyProfile(handle):null);
     const name=(u&&u.name)?u.name:('@'+handle);
-    const avKey=(u&&u.av)?u.av:'coast';
-    const svg=(typeof AVATARS!=='undefined'&&AVATARS[avKey])?AVATARS[avKey]:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5 19.5c1.5-3.2 4-4.8 7-4.8s5.5 1.6 7 4.8"/></svg>';
     const pal=(u&&u.aura)?u.aura:auras[idx%auras.length];
     const stText=liveStates[idx%liveStates.length];
-    const pt=spots[idx%spots.length];
-    grads.push('radial-gradient(circle at '+pt[0]+'% '+pt[1]+'%, '+pal[0]+' 0%, '+pal[1]+' 32%, transparent 56%)');
+    const dur=(3.4+(idx%4)*0.65).toFixed(2)+'s';
     const card=document.createElement('button');
     card.type='button';
     card.className='circle-aura-btn';
-    card.innerHTML='<div style="width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.72);backdrop-filter:blur(6px);display:grid;place-items:center;color:var(--ink);box-shadow:0 6px 14px -8px rgba(0,0,0,.22)">'+svg+'</div>'
-      +'<div style="font-size:12.5px;font-weight:700;letter-spacing:.02em;color:var(--ink);max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(name)+'</div>'
-      +'<div style="font-size:11px;font-family:var(--serif);font-style:italic;color:var(--ink);opacity:.78">'+esc(stText)+'</div>';
+    card.style.cssText='animation:auraCellFloat '+dur+' ease-in-out '+(-idx*0.9)+'s infinite alternate;';
+    card.innerHTML=
+      '<div style="position:relative;width:62px;height:62px;display:grid;place-items:center">'+
+        '<div style="position:absolute;inset:-4px;background:radial-gradient(circle at 32% 30%, '+pal[1]+' 0%, '+pal[0]+' 54%, transparent 82%);filter:blur(7px);opacity:.94;animation:orbMorph '+(4.2+idx*0.5).toFixed(1)+'s ease-in-out infinite alternate"></div>'+
+        '<div style="position:relative;width:48px;height:48px;background:radial-gradient(circle at 35% 32%, #fff 0%, '+pal[1]+' 38%, '+pal[0]+' 78%, transparent 100%);filter:blur(1.5px);animation:orbMorph '+(3.6+idx*0.4).toFixed(1)+'s ease-in-out infinite alternate-reverse"></div>'+
+      '</div>'+
+      '<div style="font-size:12.5px;font-weight:700;letter-spacing:.02em;color:var(--ink);max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(name)+'</div>'+
+      '<div style="font-size:11px;font-family:var(--serif);font-style:italic;color:var(--ink);opacity:.78">'+esc(stText)+'</div>';
     card.onclick=()=>{if(typeof openExternalProfile==='function')openExternalProfile(handle);};
     grid.appendChild(card);
   });
-  if(blend)blend.style.background=grads.join(',');
+  if(blend)blend.style.background='none';
 }
 function switchCircleTab(tab){
   const t=(tab==='diary'||tab==='friends')?tab:'feed';
@@ -6785,14 +6884,14 @@ const CARE_COLORS={
   'Cuerpo en paz':['rgba(62,174,158,.76)','rgba(42,140,126,.50)','rgba(52,160,144,.92)','#1d8777']
 };
 const CARE_ICONS={
-  'Claridad mental':'<svg class="w-ico sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>',
-  'Tranquilidad':'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M3 12c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0 2.5 2 3 1.5"/><path d="M3 16.5c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0"/></svg>',
-  'Energía':'<svg class="w-ico sm" viewBox="0 0 24 24"><polygon points="13 2 4 14 11 14 10 22 20 10 13 10 13 2"/></svg>',
-  'Autoestima':'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-9.5A4 4 0 0 1 12 8a4 4 0 0 1 7 2.5C19 15.5 12 20 12 20Z"/></svg>',
-  'Concentración':'<svg class="w-ico sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>',
-  'Tiempo':'<svg class="w-ico sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>',
-  'Descanso':'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg>',
-  'Cuerpo en paz':'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M12 4c-2 3-5 4.5-5 8a5 5 0 0 0 10 0c0-3.5-3-5-5-8Z"/></svg>'
+  'Claridad mental':'<svg class="w-ico sm" viewBox="0 0 24 24"><polygon points="12 3 20 10 12 21 4 10 12 3"/></svg>',
+  'Tranquilidad':'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M3 16h18"/><path d="M7 16a5 5 0 0 1 10 0"/></svg>',
+  'Energía':'<svg class="w-ico sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M5 19l2-2"/></svg>',
+  'Autoestima':'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M12 3l7 3.5v5.5c0 4.5-3 7.8-7 9-4-1.2-7-4.5-7-9V6.5L12 3Z"/></svg>',
+  'Concentración':'<svg class="w-ico sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>',
+  'Tiempo':'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12M8 3v4l4 5-4 5v4M16 3v4l-4 5 4 5v4"/></svg>',
+  'Descanso':'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M6 15a4 4 0 0 1 .8-7.9A5.5 5.5 0 0 1 17.5 9a3.5 3.5 0 0 1 .5 6.9H6Z"/></svg>',
+  'Cuerpo en paz':'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M19 4C11 4 6 9 6 17c8 0 13-5 13-13Z"/><path d="M5 19l9-9"/></svg>'
 };
 function lossView(){
   const el=$('loss');if(!el)return;el.innerHTML='';if(!Array.isArray(S.loss))S.loss=[];
@@ -7063,22 +7162,38 @@ if($('coastFsMenuToggle') && $('coastFsPanel')){
         };
         p.appendChild(b);
       });
+    }else if(kind==='sound'){
+      const curSound=(typeof WavyAudio!=='undefined'&&WavyAudio.getSoundMode)?WavyAudio.getSoundMode():'ocean';
+      [['ocean','Olas'],['pink','Ruido rosa'],['white','Ruido blanco'],['bowls','Cuencos'],['off','Silencio']].forEach(([sm,lbl])=>{
+        const isActive=(sm==='off' ? !(typeof S!=='undefined'&&S.audioOn) : (typeof S!=='undefined'&&S.audioOn && curSound===sm));
+        const b=document.createElement('button');
+        b.type='button';b.className='coast-fs-pill'+(isActive?' on':'');
+        b.textContent=lbl;
+        b.onclick=ev=>{
+          ev.stopPropagation();
+          if(sm==='off'){
+            if(typeof S!=='undefined' && S.audioOn && $('audioMuteBtn'))$('audioMuteBtn').click();
+          }else{
+            if(typeof WavyAudio!=='undefined' && WavyAudio.setSoundMode)WavyAudio.setSoundMode(sm);
+            if(typeof S!=='undefined' && !S.audioOn && $('audioMuteBtn'))$('audioMuteBtn').click();
+            else if(typeof WavyAudio!=='undefined')WavyAudio.startOcean();
+          }
+          $('coastFsAudioQuickBtn').classList.toggle('on',typeof S!=='undefined'&&S.audioOn);
+          p.hidden=true;coastOpenMenu='';
+        };
+        p.appendChild(b);
+      });
     }
     p.hidden=false;
     $('coastFsMenuToggle').setAttribute('aria-expanded',String(kind==='pat'));
     if($('coastFsModeBtn'))$('coastFsModeBtn').setAttribute('aria-expanded',String(kind==='mode'));
     if($('coastFsDurBtn'))$('coastFsDurBtn').setAttribute('aria-expanded',String(kind==='dur'));
+    if($('coastFsAudioQuickBtn'))$('coastFsAudioQuickBtn').setAttribute('aria-expanded',String(kind==='sound'));
   }
   $('coastFsMenuToggle').onclick=e=>{e.stopPropagation();openCoastMenu('pat');};
   if($('coastFsModeBtn'))$('coastFsModeBtn').onclick=e=>{e.stopPropagation();openCoastMenu('mode');};
   if($('coastFsDurBtn'))$('coastFsDurBtn').onclick=e=>{e.stopPropagation();openCoastMenu('dur');};
-  if($('coastFsAudioQuickBtn')){
-    $('coastFsAudioQuickBtn').onclick=e=>{
-      e.stopPropagation();
-      if($('audioMuteBtn'))$('audioMuteBtn').click();
-      $('coastFsAudioQuickBtn').classList.toggle('on',typeof S!=='undefined'&&S.audioOn);
-    };
-  }
+  if($('coastFsAudioQuickBtn'))$('coastFsAudioQuickBtn').onclick=e=>{e.stopPropagation();openCoastMenu('sound');};
   if($('coastFsBreathBtn')){
     const playSvg='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="7 5 19 12 7 19 7 5"/></svg>';
     const pauseSvg='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
@@ -8225,20 +8340,20 @@ $('caliToggleBtn').onclick=()=>{S.caliOpen=!S.caliOpen;save();syncRetractUI();if
 
 const CLUE_CATEGORIES=[
   {id:'water',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 3c4.2 5.4 6.2 8.8 6.2 11.8a6.2 6.2 0 1 1-12.4 0C5.8 11.8 7.8 8.4 12 3Z"/></svg>',name:'Hidratación',sub:'Agua del día',multi:false,opts:['8+ vasos de agua','5–7 vasos','Poca agua (<4 vasos)','Agua + Matcha / Té','Agua con electrolitos']},
-  {id:'nutrition',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 4c4.5 0 8 3.5 8 8 0 5-4 8-8 8s-8-3-8-8c0-4.5 3.5-8 8-8Z"/><path d="M12 4c0 5 3 8 8 8"/><path d="M12 2v3"/></svg>',name:'Alimentación',sub:'Comida real vs procesada',multi:true,opts:['Comida limpia (verduras, pollo, arroz, carne)','Proteína y fruta fresca','Comida casera balanceada','Ultraprocesados / Fast food','Exceso de azúcar / Postres','Mucho café / Irritantes']},
+  {id:'nutrition',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 5c4.5 0 7.5 3 7.5 7.5 0 4.5-3.5 7.5-7.5 7.5s-7.5-3-7.5-7.5C4.5 8 7.5 5 12 5Z"/><path d="M12 5c1-2.2 3-3 4.5-2.5"/><path d="M12 2.5v2.5"/></svg>',name:'Alimentación',sub:'Comida real vs procesada',multi:true,opts:['Comida limpia (verduras, pollo, arroz, carne)','Proteína y fruta fresca','Comida casera balanceada','Ultraprocesados / Fast food','Exceso de azúcar / Postres','Mucho café / Irritantes']},
   {id:'sleep',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>',name:'Sueño',sub:'Descanso de anoche',multi:false,opts:['Dormí 8+ h','Dormí 7–8 h','Menos de 6 h','Me costó dormir','Despertares nocturnos']},
   {id:'movement',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M3 12h4l3-7 4 14 3-7h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',name:'Movimiento',sub:'¿Te moviste hoy?',multi:true,opts:['Pilates / Pádel / Entreno','Caminata larga','Calistenia / Fuerza','Estiramiento suave','Hoy no me moví']},
-  {id:'energy',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1"/></svg>',name:'Cuerpo y Energía',sub:'Sensación física hoy',multi:true,opts:['Cuerpo en calma y ligero','Energía alta','Tensión cuello / mandíbula','Inflamación / Pesadez','Cansada/o · Sin pila']},
-  {id:'bodypain',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a7 7 0 1 1 14 0c0 5.5-7 10-7 10Z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="11" r="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>',name:'Dolor',sub:'¿Te duele algo hoy?',multi:true,opts:['Sin dolor','Dolor de cabeza','Tensión / Dolor muscular','Espalda / Cuello','Malestar general']},
+  {id:'energy',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M3 19l6.5-10 4.5 6.5 3-4.5 4 8H3Z"/></svg>',name:'Cuerpo y Energía',sub:'Sensación física hoy',multi:true,opts:['Cuerpo en calma y ligero','Energía alta','Tensión cuello / mandíbula','Inflamación / Pesadez','Cansada/o · Sin pila']},
+  {id:'bodypain',dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-width="2.2"/></svg>',name:'Dolor',sub:'¿Te duele algo hoy?',multi:true,opts:['Sin dolor','Dolor de cabeza','Tensión / Dolor muscular','Espalda / Cuello','Malestar general']},
   {id:'mood',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 14s1.5 2 4 2 4-2 4-2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="10" r=".9" fill="currentColor"/><circle cx="15" cy="10" r=".9" fill="currentColor"/></svg>',name:'Ánimo',sub:'¿Cómo está tu ánimo hoy?',multi:false,opts:['En calma','Bien','Regular','Bajo','Muy bajo']},
-  {id:'anxiety',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M3 12c2-4 4-4 6 0s4 4 6 0 4-4 6 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',name:'Ansiedad',sub:'¿Cuánta ansiedad sientes hoy?',multi:false,opts:['Casi nada','Un poco','Moderada','Alta','Muy alta']},
-  {id:'craving',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 3c3 4 5 6 5 9a5 5 0 1 1-10 0c0-3 2-5 5-9Z"/></svg>',name:'Antojo / Impulso',sub:'¿Sentiste el impulso hoy?',multi:false,opts:['No lo sentí','Lo sentí y lo resistí','Lo sentí y cedí','Lo sentí varias veces']},
-  {id:'meaning',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',name:'Sentido',sub:'¿Hoy tu día tuvo sentido?',multi:false,opts:['Sí, con propósito','Un día normal','Vacío / Sin sentido']},
-  {id:'connection',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-9a4 4 0 0 1 7-2.5A4 4 0 0 1 19 11c0 4.5-7 9-7 9Z"/></svg>',name:'Conexión',sub:'¿Con quién estuviste hoy?',multi:true,opts:['Con alguien cercano','En mi círculo','Con mi familia / amigos','En comunidad / grupo']},
-  {id:'loneliness',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v4M12 16v.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',name:'Soledad',sub:'¿Te sentiste sola/o hoy?',multi:false,opts:['Acompañada/o','Sola/o pero bien','Sola/o y me pesó','Necesito compañía']},
-  {id:'soc',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/></svg>',name:'Entorno y Día',sub:'Contexto del día',multi:true,opts:['Tiempo a solas nutritivo','Mucho trabajo / Pantalla','Límites sanos hoy']},
+  {id:'anxiety',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 12a1.5 1.5 0 1 0 1.5 1.5A3 3 0 0 0 9 10.5a4.5 4.5 0 0 0 6 4.5 6 6 0 0 0-3-10.5"/></svg>',name:'Ansiedad',sub:'¿Cuánta ansiedad sientes hoy?',multi:false,opts:['Casi nada','Un poco','Moderada','Alta','Muy alta']},
+  {id:'craving',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 3c2.5 3 4 5.5 4 8.5a4 4 0 1 1-8 0c0-1.5.5-3 1.5-4.5 0 1.5 1 2.2 1.8 2.2-.3-2.2.3-4.2.7-6.2Z"/></svg>',name:'Antojo / Impulso',sub:'¿Sentiste el impulso hoy?',multi:false,opts:['No lo sentí','Lo sentí y lo resistí','Lo sentí y cedí','Lo sentí varias veces']},
+  {id:'meaning',dim:'Mente',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><polygon points="15.5 8.5 13 13 8.5 15.5 11 11 15.5 8.5"/></svg>',name:'Sentido',sub:'¿Hoy tu día tuvo sentido?',multi:false,opts:['Sí, con propósito','Un día normal','Vacío / Sin sentido']},
+  {id:'connection',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="2.5"/><circle cx="15.5" cy="9" r="2"/><path d="M4.5 18c0-3 2-4.5 4.5-4.5s4.5 1.5 4.5 4.5"/><path d="M14 18c0-2.2 1.4-3.5 3.5-3.5 1.5 0 2.5.8 3 2.5"/></svg>',name:'Conexión',sub:'¿Con quién estuviste hoy?',multi:true,opts:['Con alguien cercano','En mi círculo','Con mi familia / amigos','En comunidad / grupo']},
+  {id:'loneliness',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/></svg>',name:'Soledad',sub:'¿Te sentiste sola/o hoy?',multi:false,opts:['Acompañada/o','Sola/o pero bien','Sola/o y me pesó','Necesito compañía']},
+  {id:'soc',dim:'Vínculo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 21v-8"/><path d="M12 4l-5.5 9h11L12 4Z"/></svg>',name:'Entorno y Día',sub:'Contexto del día',multi:true,opts:['Tiempo a solas nutritivo','Mucho trabajo / Pantalla','Límites sanos hoy']},
   {id:'bleeding',femaleOnly:true,hideNoPeriod:true,dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5"/></svg>',name:'Periodo y Flujo',sub:'Sangrado o manchado',multi:false,opts:['Ligero','Medio','Abundante','Manchado']},
-  {id:'pain',femaleOnly:true,dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2L12 3Z"/></svg>',name:'Bienestar Hormonal',sub:'Síntomas o confort',multi:true,opts:['Sin molestias','Cólicos leves','Sensibilidad emocional','Piel luminosa','Retención de líquidos','Cabeza / Migraña']}
+  {id:'pain',femaleOnly:true,dim:'Cuerpo',icon:'<svg class="w-ico" viewBox="0 0 24 24"><path d="M12 12C9 7 4 7 4 11c0 3 4 4 8 1 4 3 8 2 8-1 0-4-5-4-8 1Z"/></svg>',name:'Bienestar Hormonal',sub:'Síntomas o confort',multi:true,opts:['Sin molestias','Cólicos leves','Sensibilidad emocional','Piel luminosa','Retención de líquidos','Cabeza / Migraña']}
 ];
 
 function getTodayClueLog(){
@@ -8955,7 +9070,7 @@ function applyBioTrackMode(mode){
   syncModulesUI();
   const bioTab=document.querySelector('#todaySubTabs .tab[data-sub="sub-journal"]');
   if(bioTab)bioTab.textContent='Mi bienestar';
-  if(!PEB_VESSELS[S.pebVessel] || PEB_VESSELS[S.pebVessel].mode!==S.bioMode){
+  if(typeof PEB_VESSELS!=='undefined' && (!PEB_VESSELS[S.pebVessel] || PEB_VESSELS[S.pebVessel].mode!==S.bioMode)){
     S.pebVessel=pebDefaultVessel();
     pebBarMode='';
     renderPebVesselArt();
@@ -8963,10 +9078,12 @@ function applyBioTrackMode(mode){
   renderClueTrackList();
   save();
 }
-$('bioTrackMode').addEventListener('click',e=>{
-  const b=e.target.closest('.chip');if(!b)return;
-  applyBioTrackMode(b.dataset.bm);
-});
+if($('bioTrackMode')){
+  $('bioTrackMode').addEventListener('click',e=>{
+    const b=e.target.closest('.chip');if(!b)return;
+    applyBioTrackMode(b.dataset.bm);
+  });
+}
 
 const C={
  tristeza:[['triste','deprim','solo','soledad','vacío','vacio','llorar','melancol','desanim','sin ganas','nostalg'],'Tristeza / soledad','Acompañar la tristeza con presencia suave durante 15 minutos evita que se convierta en impulso de evasión.'],
@@ -9215,25 +9332,25 @@ if($('moodFlipToBackBtn'))$('moodFlipToBackBtn').onclick=()=>{if($('moodFlipInne
 if($('moodFlipToFrontBtn'))$('moodFlipToFrontBtn').onclick=()=>{if($('moodFlipInner'))$('moodFlipInner').classList.remove('flipped');};
 
 const MOOD_SVGS={
-  'Plenitud':'<svg class="w-ico lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg>',
+  'Plenitud':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M19.1 4.9l-2.8 2.8M7.7 16.3l-2.8 2.8"/><circle cx="12" cy="12" r="2.2"/></svg>',
   'Gratitud':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M12 4C9.5 8 8.5 11.5 12 16c3.5-4.5 2.5-8 0-12Z"/><path d="M12 16c-4.5-.5-7.5-3.5-8.5-7.5 4 0 6.8 2 8.5 7.5Z"/><path d="M12 16c4.5-.5 7.5-3.5 8.5-7.5-4 0-6.8 2-8.5 7.5Z"/></svg>',
-  'Quietud':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M19.5 14.5A7.5 7.5 0 1 1 10.5 5.5a6 6 0 0 0 9 9Z"/><path d="M4 19.5h16"/></svg>',
+  'Quietud':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M4 10h16"/><path d="M6 14h12"/><path d="M9 18h6"/></svg>',
   'Enfoque':'<svg class="w-ico lg" viewBox="0 0 24 24"><polygon points="12 3 21 12 12 21 3 12 12 3"/><circle cx="12" cy="12" r="2.6"/></svg>',
   'Ternura':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M12 20s-6.5-4.2-8.2-8C2.5 8.8 4.6 5.5 8 5.5c1.9 0 3.2 1 4 2.2.8-1.2 2.1-2.2 4-2.2 3.4 0 5.5 3.3 4.2 6.5-1.7 3.8-8.2 8-8.2 8Z"/></svg>',
-  'Ambivalencia':'<svg class="w-ico lg" viewBox="0 0 24 24"><circle cx="9.5" cy="12" r="5.5"/><circle cx="14.5" cy="12" r="5.5"/></svg>',
-  'Inquietud':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M3 9c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0 3 2.5 3 0"/><path d="M3 15c2.5-2.5 5 2.5 7.5 0s5-2.5 7.5 0 3 2.5 3 0"/></svg>',
+  'Ambivalencia':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M4 10a8 8 0 0 1 16 0"/><path d="M20 14a8 8 0 0 1-16 0"/><circle cx="12" cy="12" r="1.4"/></svg>',
+  'Inquietud':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M3 14l3.5-5 3.5 6 3.5-6 3.5 5 3-3"/></svg>',
   'Impulso':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M13 3L5 13.5h6L10 21l9-10.5h-6L13 3Z"/></svg>',
   'Vacío':'<svg class="w-ico lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5" stroke-dasharray="3.5 3.5"/></svg>',
-  'Ira':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M12 3c3.5 4.5 6 7.5 6 11a6 6 0 1 1-12 0c0-3.5 2.5-6.5 6-11Z"/><path d="M12 10v5"/></svg>',
-  'Alivio':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M4 13c3.5-4 8.5-4 12 0 1.5 1.5 3.5 1.5 4 0"/><path d="M6 17.5c3-2.5 7-2.5 10 0"/></svg>',
-  'Compasión':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M6 14c1.8 3 4 4.5 6 4.5s4.2-1.5 6-4.5"/><circle cx="12" cy="8.5" r="3"/></svg>',
+  'Ira':'<svg class="w-ico lg" viewBox="0 0 24 24"><polygon points="12 4 21 19 3 19 12 4"/><path d="M12 10v4"/></svg>',
+  'Alivio':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M3 10h12a2.5 2.5 0 1 0-2.5-2.5"/><path d="M3 15h15a2 2 0 1 1-2 2"/></svg>',
+  'Compasión':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M6 14c1.8 3 4 4.5 6 4.5s4.2-1.5 6-4.5"/><path d="M5 10c2 1.5 4.5 2 7 2s5-.5 7-2"/></svg>',
   'Claridad':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M12 2.5l2.2 6.8 6.8 2.2-6.8 2.2L12 20.5l-2.2-6.8-6.8-2.2 6.8-2.2L12 2.5Z"/></svg>',
-  'Asombro':'<svg class="w-ico lg" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="8.5" ry="4.2" transform="rotate(-25 12 12)"/><circle cx="12" cy="12" r="2.2"/></svg>',
-  'Nostalgia':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M7 4h10l-3.5 6.5a2 2 0 0 0 0 3L17 20H7l3.5-6.5a2 2 0 0 0 0-3L7 4Z"/></svg>',
-  'Vulnerabilidad':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M12 3.5c3.8 5 5.8 8.2 5.8 11a5.8 5.8 0 1 1-11.6 0c0-2.8 2-6 5.8-11Z"/></svg>',
+  'Asombro':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/></svg>',
+  'Nostalgia':'<svg class="w-ico lg" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4 6.5l8 6 8-6"/></svg>',
+  'Vulnerabilidad':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M12 11c-3-4-7-3-7 0 0 2.5 3.5 3 7 0Z"/><path d="M12 13c3-4 7-3 7 0 0 2.5-3.5 3-7 0Z"/></svg>',
   'Sensibilidad':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M17 4C10 4 5 9 5 16c7 0 12-5 12-12Z"/><path d="M5 19L15 9"/></svg>',
-  'Agotamiento':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M3 16h18"/><path d="M7 16a5 5 0 0 1 10 0"/><path d="M12 7v3"/></svg>',
-  'Desconexión':'<svg class="w-ico lg" viewBox="0 0 24 24"><circle cx="9" cy="12" r="4.5"/><circle cx="15" cy="12" r="4.5" stroke-dasharray="2.5 2.5"/></svg>'
+  'Agotamiento':'<svg class="w-ico lg" viewBox="0 0 24 24"><rect x="3" y="8" width="16" height="8" rx="2"/><path d="M21 10.5v3"/><path d="M7 10.5v3"/></svg>',
+  'Desconexión':'<svg class="w-ico lg" viewBox="0 0 24 24"><path d="M9 15l-2 2a3.5 3.5 0 0 1-5-5l2-2"/><path d="M15 9l2-2a3.5 3.5 0 0 1 5 5l-2 2"/><path d="M8 8l8 8"/></svg>'
 };
 
 const MOOD_AURAS={
@@ -9284,25 +9401,28 @@ function createMoodBtn(o,isVipItem){
 }
 
 let moodExtrasOpen=false;
+function syncMoodMaticesBtn(){
+  const btn=$('moodMaticesToggleBtn');
+  if(btn)btn.textContent=moodExtrasOpen?'Menos ▴':'Más ('+MO_VIP.length+') ▾';
+}
+if($('moodMaticesToggleBtn')){
+  $('moodMaticesToggleBtn').onclick=()=>{
+    moodExtrasOpen=!moodExtrasOpen;
+    const core=$('moodsCore');
+    if(core)core.querySelectorAll('.extra-mood').forEach(x=>{x.hidden=!moodExtrasOpen;});
+    syncMoodMaticesBtn();
+  };
+}
 function renderMoodsGrid(){
   const core=$('moodsCore');if(!core)return;
   core.innerHTML='';
   MO_CORE.forEach(o=>core.appendChild(createMoodBtn(o,false)));
-  const plus=document.createElement('button');
-  plus.type='button';plus.className='mo plus-btn'+(moodExtrasOpen?' on':'');
-  plus.innerHTML='<i>'+(moodExtrasOpen?'−':'+')+'</i><span>Matices</span>';
-  plus.onclick=()=>{
-    moodExtrasOpen=!moodExtrasOpen;
-    plus.classList.toggle('on',moodExtrasOpen);
-    plus.querySelector('i').textContent=moodExtrasOpen?'−':'+';
-    core.querySelectorAll('.extra-mood').forEach(x=>{x.hidden=!moodExtrasOpen;});
-  };
-  core.appendChild(plus);
   MO_VIP.forEach(o=>{
     const el=createMoodBtn(o,true);
     el.hidden=!moodExtrasOpen;
     core.appendChild(el);
   });
+  syncMoodMaticesBtn();
   updateMoodCounter();
   syncProWifiSwitchUI();
 }
@@ -9873,89 +9993,69 @@ function drawLivingFlame(ts){
 
   ctx.clearRect(0,0,w,h);
 
-  // 1. Halo atmosférico tipo lámpara de lava que llena el recuadro al 100%
-  const haloR=isFull ? Math.max(w,h)*0.72 : (85+220*p+Math.sin(t*mot.freq)*8);
-  const haloY=baseY-(50+110*p);
-  const hg=ctx.createRadialGradient(cx,haloY,10,cx,haloY,haloR);
-  hg.addColorStop(0,pal.glow+(0.42+0.48*p).toFixed(2)+')');
-  hg.addColorStop(0.55,pal.glow+(0.16+0.28*p).toFixed(2)+')');
+  // 1. Halo atmosférico suave SIN bordes cortados (desvanece al 100% hacia los bordes)
+  const haloR=isFull ? Math.min(w,h)*0.56 : (76+165*p+Math.sin(t*mot.freq)*8);
+  const haloY=baseY-(44+108*p);
+  const hg=ctx.createRadialGradient(cx,haloY,8,cx,haloY,haloR);
+  hg.addColorStop(0,pal.glow+(0.48+0.44*p).toFixed(2)+')');
+  hg.addColorStop(0.45,pal.glow+(0.20+0.24*p).toFixed(2)+')');
+  hg.addColorStop(0.82,pal.glow+(0.05+0.08*p).toFixed(2)+')');
   hg.addColorStop(1,pal.glow+'0)');
   ctx.fillStyle=hg;
   ctx.beginPath();ctx.arc(cx,haloY,haloR,0,Math.PI*2);ctx.fill();
 
-  // 2. Brasa base viva (desde 5% respira con luz)
-  const embW=(38+88*p)*mot.wScale;
-  const eg=ctx.createRadialGradient(cx,baseY+4,4,cx,baseY+4,embW);
-  eg.addColorStop(0,'#FFFFFF');
-  eg.addColorStop(0.42,pal.ember);
-  eg.addColorStop(1,'rgba(0,0,0,0)');
-  ctx.save();ctx.globalAlpha=0.58+0.40*p;ctx.fillStyle=eg;
-  ctx.beginPath();ctx.ellipse(cx,baseY+4,embW,13+12*p,0,0,Math.PI*2);ctx.fill();ctx.restore();
-
-  // 3. Lóbulos orgánicos estilo lámpara de lava + animación japonesa
-  const flameH=(54+330*p)*(isFull?1.12:mot.hScale);
-  const flameW=(26+126*p)*(isFull?1.18:mot.wScale);
+  // 2. Silueta abstracta tipo lámpara de lava + llamas secundarias (sin líneas ni contornos Paint)
+  const flameH=(38+290*p)*(isFull?1.08:mot.hScale);
+  const flameW=(20+115*p)*(isFull?1.16:mot.wScale);
   const sway1=Math.sin(t*mot.freq)*mot.amp*p + Math.sin(t*mot.freq*2.15)*(mot.amp*0.38)*p;
-  const sway2=Math.cos(t*mot.freq*1.32)*(mot.amp*0.78)*p + Math.sin(t*mot.freq*2.6)*(mot.amp*0.28)*p;
   const breath=1+Math.sin(t*(mot.freq*1.25))*mot.breathAmp*(0.6+0.4*p);
 
-  function drawLavaLobe(rx,ry,rSize,col1,col2,alpha){
-    const lg=ctx.createRadialGradient(rx-rSize*0.2,ry-rSize*0.2,rSize*0.08,rx,ry,rSize);
-    lg.addColorStop(0,col1);
-    lg.addColorStop(0.62,col2);
-    lg.addColorStop(1,'rgba(255,255,255,0)');
-    ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle=lg;
-    ctx.beginPath();ctx.arc(rx,ry,rSize,0,Math.PI*2);ctx.fill();ctx.restore();
-  }
-
-  function drawTongue(scaleW,scaleH,sway,topCol,midCol,botCol,alpha,offsetX){
-    const ox=cx+(offsetX||0);
-    const fh=flameH*scaleH*breath,fw=flameW*scaleW;
-    const tipX=ox+sway,tipY=Math.max(12,baseY-fh);
-    const g=ctx.createLinearGradient(ox,tipY,ox,baseY);
-    g.addColorStop(0,topCol);
-    g.addColorStop(0.45,midCol||botCol);
-    g.addColorStop(1,botCol);
+  function drawLavaOrb(rx,ry,radX,radY,c1,c2,alpha,rot){
     ctx.save();
+    ctx.translate(rx,ry);
+    if(rot)ctx.rotate(rot);
+    ctx.scale(1,radY/Math.max(1,radX));
+    const lg=ctx.createRadialGradient(-radX*0.18,-radX*0.18,radX*0.05,0,0,radX);
+    lg.addColorStop(0,c1);
+    lg.addColorStop(0.48,c2);
+    lg.addColorStop(0.84,pal.glow+'0.18)');
+    lg.addColorStop(1,'rgba(255,255,255,0)');
     ctx.globalAlpha=alpha;
-    ctx.fillStyle=g;
-    ctx.beginPath();
-    ctx.moveTo(ox,baseY+4);
-    ctx.bezierCurveTo(ox-fw*1.22,baseY-fh*0.18, ox-fw*0.78+sway*0.45,baseY-fh*0.66, tipX,tipY);
-    ctx.bezierCurveTo(ox+fw*0.78+sway*0.45,baseY-fh*0.66, ox+fw*1.22,baseY-fh*0.18, ox,baseY+4);
-    ctx.closePath();
-    ctx.fill();
-    ctx.strokeStyle=topCol;
-    ctx.lineWidth=1.6;
-    ctx.globalAlpha=alpha*0.35;
-    ctx.stroke();
+    ctx.fillStyle=lg;
+    ctx.beginPath();ctx.arc(0,0,radX,0,Math.PI*2);ctx.fill();
     ctx.restore();
   }
 
-  // Lóbulos ascendentes de lámpara de lava (más abundantes en Pro y al 100%)
-  const blobCount=Math.max(2,Math.round((mot.blobs||3)*(0.4+0.8*p)));
-  for(let i=0;i<blobCount;i++){
-    const phase=(t*(0.55+i*0.14)+i*1.7)%1;
-    const bx=cx+Math.sin(t*mot.freq*0.9+i*2.1)*(flameW*0.72);
-    const by=baseY-(phase*flameH*1.05);
-    const br=(14+34*p)*(1-phase*0.42);
-    drawLavaLobe(bx,by,br,i%2===0?(pal.lava2||pal.outerMid):pal.outerMid,pal.outerBot,0.52*(1-phase*0.65));
+  // Base orgánica difuminada (sin óvalo marrón duro)
+  drawLavaOrb(cx,baseY-8,flameW*0.95,18+16*p,pal.core,pal.ember,0.68+0.28*p,0);
+
+  // Al subir hacia 100%, nacen llamas secundarias esparcidas por todo el recuadro (efecto incendio vivo)
+  const satCount=isFull ? 7 : Math.max(1,Math.round(p*5));
+  for(let s=0;s<satCount;s++){
+    const side=(s%2===0?-1:1)*((Math.floor(s/2)+1)/(satCount*0.55));
+    const sx=cx+side*(flameW*(0.55+0.65*p))+Math.sin(t*(mot.freq*0.85+s*0.4)+s*1.9)*(18*p);
+    const sy=baseY-(16+s*28*p)-Math.abs(Math.cos(t*0.9+s))*36*p;
+    const sRad=(18+46*p)*(1-s*0.07);
+    const sH=sRad*(1.45+0.4*Math.sin(t*mot.freq+s));
+    drawLavaOrb(sx,sy,sRad,sH,s%2===0?(pal.lava2||pal.outerMid):pal.outerTop,pal.outerBot,0.44+0.34*p,side*0.16);
   }
 
-  // Lenguas laterales + cuerpo japonés fluido
-  if(p>0.14){
-    const sideA=Math.min(0.90,(p-0.14)*1.15);
-    const ls=Math.sin(t*(mot.freq*1.65))*(mot.amp*1.1)*p;
-    drawTongue(0.68,0.72, -22*p+ls, pal.outerTop, pal.lava2||pal.outerMid, pal.outerBot, sideA*0.72, -28*p*mot.wScale);
-    drawTongue(0.68,0.68, 22*p-ls*0.8, pal.outerTop, pal.outerMid, pal.outerBot, sideA*0.72, 28*p*mot.wScale);
-    if(mot.tongues>=3){
-      const ls3=Math.cos(t*(mot.freq*1.9))*(mot.amp*0.85)*p;
-      drawTongue(0.52,0.88, ls3, pal.midTop, pal.lava2||pal.outerMid, pal.outerBot, sideA*0.58, Math.sin(t*1.2)*14*p);
-    }
+  // Lóbulos ascendentes de lámpara de lava con identidad propia por llama
+  const blobCount=Math.max(3,Math.round((mot.blobs||3)*(0.55+0.95*p)));
+  for(let i=0;i<blobCount;i++){
+    const phase=(t*(0.42+i*0.11)+i*1.618)%1;
+    const bx=cx+Math.sin(t*mot.freq*0.95+i*2.3)*(flameW*(0.24+0.55*phase));
+    const by=baseY-(phase*flameH*1.02);
+    const br=(14+44*p)*(1-phase*0.48);
+    const bh=br*(1.35+0.35*Math.sin(t*1.8+i));
+    drawLavaOrb(bx,by,br,bh,i%2===0?pal.core:(pal.lava2||pal.outerMid),pal.outerMid,0.62*(1-phase*0.58),Math.sin(t+i)*0.22);
   }
-  drawTongue(1.08,1.0,sway1,pal.outerTop,pal.outerMid,pal.outerBot,0.94,0);
-  drawTongue(0.74,0.80,sway2*0.78,pal.midTop,pal.midBot,pal.outerMid,0.96,0);
-  drawTongue(0.42,0.52,sway1*0.35,pal.core,pal.midTop,pal.midBot,0.98,0);
+
+  // Núcleo fluido sin bordes duros (abstracto, respira y cambia de silueta por arquetipo)
+  const coreH=(28+145*p)*breath;
+  const coreW=(18+68*p);
+  drawLavaOrb(cx+sway1*0.4,baseY-coreH*0.52,coreW,coreH*0.76,pal.outerTop,pal.outerBot,0.88,sway1*0.006);
+  drawLavaOrb(cx+sway1*0.25,baseY-coreH*0.36,coreW*0.64,coreH*0.54,pal.core,pal.midBot,0.92,-sway1*0.004);
 
   // 4. Chispas vivas (al 100% explota en chispas luminosas por todo el recuadro)
   const maxSparks=isFull?54:Math.round(4+30*p);
