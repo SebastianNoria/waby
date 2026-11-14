@@ -1283,9 +1283,9 @@ textarea::placeholder{font-style:normal;color:var(--muted);opacity:.68}
 }
 .pub-tab.on{color:var(--ink);font-weight:500;border-bottom-color:var(--ink)}
 .diary-sticky-trigger{
-  display:flex;align-items:center;width:100%;min-height:46px;padding:0 12px;
+  display:flex;align-items:center;width:100%;min-height:38px;height:38px;padding:8px 10px;
   background:transparent;border:none;text-align:left;cursor:pointer;
-  font-family:var(--serif);font-size:16px;color:var(--muted);opacity:.78;
+  font-family:var(--sans);font-size:15px;line-height:22px;color:var(--muted);opacity:1;
 }
 /* =========================================================
    VISTAS PÚBLICAS (perfil waby/sebas + lectura de un post).
@@ -1348,8 +1348,8 @@ body.public-view .pub-view.on{display:block}
   border:none;
   border-bottom:1px solid var(--rule);
   border-radius:0;
-  padding:15px 0;
-  margin-bottom:2px;
+  padding:10px 0 8px;
+  margin-bottom:0;
   box-shadow:none;
   display:grid;
   grid-template-columns:40px minmax(0,1fr);
@@ -1427,7 +1427,7 @@ body.public-view .pub-view.on{display:block}
   color:var(--ink);
   background:transparent;
   border:none;
-  padding:2px 0 3px;
+  padding:1px 0 0;
   margin:0;
   border-radius:0;
   white-space:pre-line;
@@ -1437,7 +1437,7 @@ body.public-view .pub-view.on{display:block}
 .wavy-echo.bereal-blur{filter:blur(5px);user-select:none}
 .bereal-lock-hint{
   font-size:11.5px;color:var(--crimson);font-family:var(--serif);font-style:italic;
-  margin:2px 0 8px;display:block;
+  margin:2px 0 4px;display:block;
 }
 
 /* Capitular sutil para entradas del diario con reflexión rica */
@@ -1455,8 +1455,8 @@ body.public-view .pub-view.on{display:block}
   background:transparent;
   border:none;
   border-radius:0;
-  padding:4px 0;
-  margin:0 0 8px;
+  padding:2px 0;
+  margin:2px 0;
 }
 .wavy-stats > div{
   display:inline-flex;align-items:baseline;gap:5px;
@@ -1470,7 +1470,7 @@ body.public-view .pub-view.on{display:block}
 }
 
 /* Reacciones minimalistas centradas: solo símbolos visibles; etiqueta abajo al pasar/tocar */
-.react-bar{display:flex;gap:34px;align-items:center;justify-content:center;flex-wrap:nowrap;overflow:visible;padding-bottom:6px;position:relative}
+.react-bar{display:flex;gap:34px;align-items:center;justify-content:center;flex-wrap:nowrap;overflow:visible;padding:2px 0 0;margin-top:2px;position:relative}
 .react-btn{
   position:relative;display:inline-flex;align-items:center;justify-content:center;
   background:transparent;border:none;border-radius:999px;
@@ -2231,19 +2231,19 @@ summary::-webkit-details-marker{display:none}
 }
 .echo-send-btn:disabled{opacity:.28;cursor:default}
 .echo-send-btn:not(:disabled):active{transform:scale(.92)}
-#circleComposer #echoInput{
+.circle-composer .echo-input{
   border:none;
   border-radius:16px;
   background:transparent;
   box-shadow:none;
   padding:8px 10px;
-  min-height:38px;height:38px;
+  min-height:38px!important;height:38px!important;box-sizing:border-box;
   font-family:var(--sans);
   font-size:16px;line-height:22px;font-style:normal;color:var(--ink);
   overflow:hidden;cursor:text;resize:none;margin:0;
 }
-#circleComposer #echoInput::placeholder{
-  color:var(--muted);font-style:normal;font-family:var(--sans);font-size:15px;
+.circle-composer .echo-input::placeholder{
+  color:var(--muted);font-style:normal;font-family:var(--sans);font-size:15px;opacity:1;
 }
 .circle-composer-drawer{
   padding:10px 4px 2px;margin-top:6px;
@@ -2409,7 +2409,7 @@ summary::-webkit-details-marker{display:none}
 
       <button class="btn sos-cta" id="sosb">
         <svg class="w-ico lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.3a4.3 4.3 0 0 1 7.5-2.8 4.3 4.3 0 0 1 7.5 2.8c0 5.7-7.5 10.3-7.5 10.3Z"/><path d="M7.5 12.2h2.2l1.4-2.8 2 5.4 1.5-2.6h2"/></svg>
-        <span>Siento un impulso ahora · Acompañarme</span>
+        <span>Mi hábito está en riesgo · Acompañarme</span>
       </button>
       <div class="sos" id="sos" hidden>
         <div class="eyebrow">Léelo con calma antes de decidir</div>
@@ -2420,11 +2420,11 @@ summary::-webkit-details-marker{display:none}
           <div class="chips" id="sosTrigEmo" style="margin-bottom:12px"></div>
           <div class="bio-sec-hd" style="margin-bottom:6px"><span>2. ¿De dónde viene?</span><span>Origen relacional</span></div>
           <div class="chips" id="sosTrigCtx" style="margin-bottom:12px"></div>
-          <div class="bio-sec-hd" style="margin-bottom:6px"><span>3. Intensidad del impulso ahora</span><span id="sosPreValLbl" style="color:var(--crimson);font-weight:700">7 / 10</span></div>
-          <input type="range" id="sosPreRange" min="1" max="10" value="7" aria-label="Intensidad del impulso de 1 a 10">
+          <div class="bio-sec-hd" style="margin-bottom:6px"><span>3. Intensidad del momento</span><span id="sosPreValLbl" style="color:var(--crimson);font-weight:700">7 / 10</span></div>
+          <input type="range" id="sosPreRange" min="1" max="10" value="7" aria-label="Intensidad del momento de 1 a 10">
         </div>
 
-        <p>Un impulso suele alcanzar su pico y descender en unos 10 a 15 minutos. Vamos a respirar con audio guiado para que el oleaje baje.</p>
+        <p>Respirar lento con exhalación larga activa el nervio vago, reduce la respuesta de estrés de la amígdala y devuelve control a tu corteza prefrontal para sostener tu meta.</p>
         <button class="btn" id="sosgo" style="width:100%">Registrar detonante e ir a respirar con audio</button>
 
         <div class="crisis-box">
@@ -2437,17 +2437,17 @@ summary::-webkit-details-marker{display:none}
 
     <!-- SUB-PANEL 1B: DIARIO BIOPSICOSOCIAL Y CICLO -->
     <section class="panel card" id="sub-journal">
-      <!-- REGISTRO DEL DÍA (semana, emociones, línea y guardar) -->
-      <div class="retract-body" id="wkRetractBody">
-        <div class="wk" id="wk"></div>
+      <!-- REGISTRO DEL DÍA (semana, emociones, hábitos y check-in) -->
+      <div class="retract-body" id="wkRetractBody" style="margin-bottom:0">
+        <div class="wk" id="wk" style="margin-bottom:0;padding:4px 2px 8px"></div>
       </div>
 
-      <div class="bio-sec">
+      <div class="bio-sec" style="margin-top:8px;padding-top:10px;border-top:none">
         <div class="bio-sec-hd">
           <span>Emociones de hoy</span>
           <span style="display:inline-flex;align-items:center;gap:10px">
             <span id="moodCounterLbl">Elige hasta 3 (0/3)</span>
-            <button type="button" class="bento-dim-toggle" id="moodMaticesToggleBtn">Más (10) ▾</button>
+            <button type="button" class="bento-dim-toggle" id="moodMaticesToggleBtn">Más (16) ▾</button>
           </span>
         </div>
         <div class="mood-flip-wrap" id="moodFlipWrap">
@@ -2476,23 +2476,26 @@ summary::-webkit-details-marker{display:none}
         </div>
       </div>
 
-      <div style="display:flex;gap:8px;align-items:flex-end;margin-bottom:10px">
-        <textarea id="ni" class="echo-input" placeholder="Nota breve de tu check-in (opcional)" style="margin-bottom:0;flex:1"></textarea>
-        <button type="button" class="echo-music-btn" id="diaryGemBtn" aria-label="Agregar gema cristal" title="Pegatinas de gemas" style="flex-shrink:0">✦</button>
-      </div>
-      <button class="btn" style="width:100%" id="na">Guardar check-in del día</button>
-      <p class="ins" id="ins"></p>
-      <div id="nb"></div>
-      <button class="btn ghost" id="more" style="width:100%;margin-top:10px" hidden>Ver registros anteriores</button>
-
       <!-- HÁBITOS DE CUIDADO AGRUPADOS POR DIMENSIÓN (CUERPO, MENTE, VÍNCULO) -->
-      <div class="bio-sec" style="margin-top:24px">
+      <div class="bio-sec" style="margin-top:16px">
         <div class="bio-sec-hd">
           <span>Hábitos de cuidado</span>
           <span id="clueTrackCount">Toca una tarjeta</span>
         </div>
         <div id="clueTrackList"></div>
         <div class="bento-drawer" id="bentoActiveDrawer" hidden></div>
+      </div>
+
+      <div class="bio-sec" style="margin-top:16px;padding-top:14px">
+        <div class="circle-composer" style="margin-bottom:10px">
+          <div class="circle-composer-row">
+            <textarea id="ni" class="echo-input" rows="1" placeholder="Nota breve de tu check-in (opcional)" style="flex:1;min-width:0"></textarea>
+          </div>
+        </div>
+        <button class="btn" style="width:100%" id="na">Guardar check-in del día</button>
+        <p class="ins" id="ins"></p>
+        <div id="nb"></div>
+        <button class="btn ghost" id="more" style="width:100%;margin-top:10px" hidden>Ver registros anteriores</button>
       </div>
       <div hidden><div id="ffuerza"></div><div id="ffuerzaExtra"></div><div id="fcuerpo"></div><div id="fcuerpoExtra"></div><div id="fsl"></div><div id="fslExtra"></div><div id="fsoc"></div><div id="fsocExtra"></div></div>
 
@@ -2885,13 +2888,15 @@ summary::-webkit-details-marker{display:none}
       <section class="panel card on" style="text-align:center;padding-bottom:8px">
         <div style="font-family:var(--serif);font-size:21px;font-weight:500;margin-bottom:4px">Tu círculo</div>
         <p style="font-size:12.5px;color:var(--muted);margin:0 0 18px">— las personas en sintonía contigo —</p>
-        <div id="circleFriendsGrid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 12px;justify-items:center;margin-bottom:20px"></div>
+        <div id="circleFriendsGrid" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:20px"></div>
         <button type="button" class="btn ghost" id="friendsInviteBtn" style="min-height:38px;font-size:11.5px;border-radius:999px;padding:8px 18px">+ Invitar o buscar amigo</button>
       </section>
     </div>
     <div class="circle-sticky-wrap" id="diaryStickyBar" hidden>
-      <div class="circle-composer" style="padding:0 16px">
-        <button type="button" class="diary-sticky-trigger" id="openBlankSheetBtn">Escribir un artículo…</button>
+      <div class="circle-composer">
+        <div class="circle-composer-row">
+          <button type="button" class="diary-sticky-trigger" id="openBlankSheetBtn">Escribir un artículo…</button>
+        </div>
       </div>
     </div>
   </div>
@@ -3051,16 +3056,21 @@ summary::-webkit-details-marker{display:none}
         </div>
       </div>
 
-      <details style="margin-bottom:12px">
-        <summary><span>Tu Suscripción y Acceso</span><span id="profilePlanBadge" style="color:var(--gold);font-weight:700">Plan Básico</span></summary>
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 0 8px">
-          <div>
-            <strong id="subCardTitle" style="font-family:var(--serif);font-size:18px;display:block">Wavy Básico (Gratuito)</strong>
-            <span id="subCardDesc" style="font-size:12.5px;color:var(--muted)">Desbloquea los 10 hábitos, todos los ritmos con audio, 19 emociones, 11 paletas y exportación clínica con Wavy Pro.</span>
-          </div>
-          <button type="button" class="btn gold" id="openPaywallBtn">Ver Planes Wavy Pro</button>
+      <div class="sl">
+        <label><span>Tu suscripción y acceso</span><span id="profilePlanBadge" style="color:var(--gold);font-weight:700">Plan Básico</span></label>
+        <div class="chips" id="subPlanPick" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px">
+          <button type="button" class="chip on" data-plan-btn="basic" style="min-height:36px;height:36px;padding:6px 8px;font-size:12.5px">Básico</button>
+          <button type="button" class="chip" data-plan-btn="pro" id="openPaywallBtn" style="min-height:36px;height:36px;padding:6px 8px;font-size:12.5px">Wavy Pro</button>
         </div>
-      </details>
+      </div>
+
+      <div class="sl">
+        <label><span>Privacidad en tu círculo</span><span>visibilidad</span></label>
+        <div class="chips" id="privToggles" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px">
+          <button type="button" class="chip on" data-p="showSea" style="min-height:36px;height:36px;padding:6px 8px;font-size:12px">Estado de mi mar</button>
+          <button type="button" class="chip on" data-p="showStreak" style="min-height:36px;height:36px;padding:6px 8px;font-size:12px">Día de racha</button>
+        </div>
+      </div>
 
       <details style="margin-bottom:12px">
         <summary><span>Tarjeta de Presencia</span><span>Instagram &amp; Pinterest ▾</span></summary>
@@ -3193,14 +3203,6 @@ summary::-webkit-details-marker{display:none}
         <div class="avpick" id="myAvPick"></div>
       </div>
 
-      <div class="sl">
-        <label><span>Privacidad en tu círculo</span><span>visibilidad</span></label>
-        <div class="chips" id="privToggles">
-          <button type="button" class="chip on" data-p="showSea">Mostrar estado de mi mar</button>
-          <button type="button" class="chip on" data-p="showStreak">Mostrar día de racha</button>
-        </div>
-      </div>
-
       <button class="btn" id="saveProfileBtn" style="width:100%;margin-top:10px">Guardar cambios de perfil</button>
 
       <div class="sl">
@@ -3255,8 +3257,7 @@ summary::-webkit-details-marker{display:none}
           </button>
           <small id="onbGiftHint" style="font-size:12px;color:var(--muted);font-family:var(--serif);font-style:italic">Toca el círculo · 1 respiración guiada aquí</small>
         </div>
-        <button type="button" class="btn" id="onbStartFirstBreathBtn" style="width:100%;margin-bottom:10px">Ir al mar a respirar →</button>
-        <button type="button" class="btn ghost" id="onbShowIdentityBtn" style="width:100%;font-size:11px">Ya tengo usuario o guardar mi nombre</button>
+        <button type="button" class="btn" id="onbShowIdentityBtn" style="width:100%;font-size:11px">Ya tengo usuario o guardar mi nombre</button>
       </div>
 
       <!-- PASO 1: IDENTIDAD DESPUÉS DEL PRIMER LOGRO -->
@@ -5036,7 +5037,10 @@ function syncProWifiSwitchUI(){
   if(pBadge)pBadge.textContent=proActive?(S.vip?'Modo Desarrollador':(tLeft>0?'Prueba Gratis ('+tLeft+' días)':'Wavy Pro Activo')):'Plan Básico';
   if(sTitle)sTitle.textContent=proActive?(S.vip?'Wavy Pro · Modo Desarrollador Activo':(tLeft>0?'Prueba Gratuita Wavy Pro ('+tLeft+' días restantes)':'Suscripción Wavy Pro Activa')):'Wavy Básico (Gratuito)';
   if(sDesc)sDesc.textContent=proActive?'Tienes acceso ilimitado a los 10 hábitos, audio psicoacústico, 19 emociones, 11 paletas y exportación clínica en PDF.':'Desbloquea los 10 hábitos, todos los ritmos con audio, 19 emociones, 11 paletas y exportación clínica con Wavy Pro.';
-  if(pwBtn)pwBtn.textContent=proActive?'Cambiar plan':'Ver Planes Wavy Pro';
+  document.querySelectorAll('#subPlanPick .chip').forEach(c=>{
+    const isProBtn=c.dataset.planBtn==='pro';
+    c.classList.toggle('on',proActive?isProBtn:!isProBtn);
+  });
   if($('retentionMetricLbl'))$('retentionMetricLbl').textContent='Días activos registrados: '+S.opens.length;
 }
 
@@ -5175,7 +5179,7 @@ function renderCircleFriends(){
   ];
   const liveStates=['en calma','en costa','llama viva','presente','matcha','pilates'];
   grid.className='moods';
-  grid.style.cssText='display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px;text-align:left';
+  grid.style.cssText='display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:18px;text-align:left';
   list.forEach((handle,idx)=>{
     const u=(typeof findUser==='function'?findUser(handle):null)||((typeof getAllyProfile==='function')?getAllyProfile(handle):null);
     const name=(u&&u.name)?u.name:('@'+handle);
@@ -5331,18 +5335,6 @@ if($('onbGiftPlayBtn') && $('onbGiftOrb') && $('onbGiftHint')){
       },4000);
     };
     runCycle();
-  };
-}
-if($('onbStartFirstBreathBtn')){
-  $('onbStartFirstBreathBtn').onclick=()=>{
-    WavyAudio.unlockNow();
-    wavyTrialBreathOnly=(!S.onb || !S.onb.done);
-    $('onboardingModal').hidden=true;
-    S.audioOn=true;S.bDurMin=2;
-    switchMainView('v-breathe');
-    const dur2=document.querySelector('.bb-dur-opt[data-min="2"]');
-    if(dur2)dur2.click();
-    if(typeof br!=='undefined' && !br.on && $('bb'))$('bb').click();
   };
 }
 if($('onbShowIdentityBtn')){
@@ -6368,6 +6360,9 @@ const SPIRIT_LINES=[
   {id:'cristianismo',name:'Cristianismo',sub:'Biblia · Fe evangélica'},
   {id:'budismo',name:'Budismo',sub:'Enseñanzas de Buda · Mindfulness'},
   {id:'estoicismo',name:'Estoicismo',sub:'Marco Aurelio · Epicteto · Séneca'},
+  {id:'feminismo',name:'Feminismo',sub:'Simone de Beauvoir · Virginia Woolf · Audre Lorde'},
+  {id:'literatura',name:'Literatura',sub:'Borges · Cortázar · Clarice Lispector'},
+  {id:'grandes_personas',name:'Grandes personas',sub:'Nelson Mandela · Marie Curie · Viktor Frankl'},
 ];
 const SPIRIT_PHRASES={
   catolicismo:[
@@ -6401,6 +6396,30 @@ const SPIRIT_PHRASES={
     {t:'No te preocupes por lo que no puedes controlar; ocúpate de lo que sí puedes: tu juicio, tu impulso, tu deseo.',s:'Epicteto'},
     {t:'No es que tengamos poco tiempo, es que perdemos mucho.',s:'Séneca'},
     {t:'Acepta las cosas a las que el destino te ata.',s:'Marco Aurelio · Meditaciones'},
+  ],
+  feminismo:[
+    {t:'Cuidarme a mí misma no es autocomplacencia, es autopreservación, y eso es un acto de guerra política.',s:'Audre Lorde'},
+    {t:'No hay barrera, cerradura ni cerrojo que puedas imponer a la libertad de mi mente.',s:'Virginia Woolf'},
+    {t:'Que tu vida sea un proyecto propio, no la repetición de lo que otros esperaron de ti.',s:'Simone de Beauvoir'},
+    {t:'No deseo que las mujeres tengan poder sobre los hombres, sino sobre sí mismas.',s:'Mary Wollstonecraft'},
+    {t:'Donde hay escucha mutua sin jerarquía, la vulnerabilidad deja de ser debilidad y se vuelve raíz.',s:'bell hooks'},
+    {t:'Una habitación propia empieza por el derecho a tu propio silencio.',s:'Virginia Woolf'},
+  ],
+  literatura:[
+    {t:'Cualquier destino, por largo y complicado que sea, consta en realidad de un solo momento.',s:'Jorge Luis Borges'},
+    {t:'Andábamos sin buscarnos, pero sabiendo que andábamos para encontrarnos.',s:'Julio Cortázar · Rayuela'},
+    {t:'Hasta cortar los propios defectos puede ser peligroso. Nunca se sabe cuál es el defecto que sostiene todo nuestro edificio.',s:'Clarice Lispector'},
+    {t:'En medio del invierno aprendí por fin que había en mí un verano invencible.',s:'Albert Camus'},
+    {t:'Lo que se da no se pierde; solo cambia de orilla.',s:'Elena Garro'},
+    {t:'Hay que haber tenido un caos dentro de sí para dar a luz una estrella danzante.',s:'Friedrich Nietzsche'},
+  ],
+  grandes_personas:[
+    {t:'Entre el estímulo y la respuesta hay un espacio. En ese espacio reside nuestra libertad de elegir.',s:'Viktor Frankl'},
+    {t:'Nada en la vida debe ser temido, solamente comprendido. Ahora es momento de comprender más.',s:'Marie Curie'},
+    {t:'Nunca pierdo: o gano o aprendo.',s:'Nelson Mandela'},
+    {t:'La paciencia y la perseverancia tienen un efecto mágico ante el cual las dificultades desaparecen.',s:'John Quincy Adams'},
+    {t:'El privilegio de una vida es convertirte en quien realmente eres.',s:'Carl Jung'},
+    {t:'La calma no es ausencia de tormenta, sino saber permanecer en el centro mientras pasa.',s:'Dalai Lama'},
   ],
 };
 let sigOrig=null,sigShowingSpirit=false,sigTouchX=null,sigTouchY=null;
@@ -8489,7 +8508,16 @@ function renderClueTrackList(){
     const tog=hd.querySelector('.bento-dim-toggle');
     if(tog){
       tog.onclick=()=>{
-        clueExpandedDims[dim]=!clueExpandedDims[dim];
+        const next=!clueExpandedDims[dim];
+        Object.keys(clueExpandedDims).forEach(k=>{clueExpandedDims[k]=false;});
+        clueExpandedDims[dim]=next;
+        if(openClueCatId){
+          const activeCatObj=visibleCats.find(c=>c.id===openClueCatId);
+          if(activeCatObj && activeCatObj.dim!==dim){
+            const activeExtra=groups[activeCatObj.dim]?groups[activeCatObj.dim].slice(3):[];
+            if(activeExtra.some(c=>c.id===openClueCatId))openClueCatId='';
+          }
+        }
         renderClueTrackList();
       };
     }
@@ -9122,10 +9150,10 @@ function analyze(txt){
 }
 
 const MO_CORE=[
-  ['✧','Plenitud'],['❋','Gratitud'],['☾','Quietud'],['❖','Enfoque'],['⚘','Ternura'],
-  ['◐','Ambivalencia'],['❈','Inquietud'],['✺','Impulso']
+  ['✧','Plenitud'],['❋','Gratitud'],['☾','Quietud']
 ];
 const MO_VIP=[
+  ['❖','Enfoque'],['⚘','Ternura'],['◐','Ambivalencia'],['❈','Inquietud'],['✺','Impulso'],
   ['◌','Vacío'],['✶','Ira'],['✧','Alivio'],['❀','Compasión'],['◈','Claridad'],['❂','Asombro'],
   ['◒','Nostalgia'],['❁','Vulnerabilidad'],['◓','Sensibilidad'],['◊','Agotamiento'],['○','Desconexión']
 ];
@@ -10413,49 +10441,93 @@ if($('mastheadProfileTrigger')){
 }
 if($('mastheadMenuBtn'))$('mastheadMenuBtn').onclick=()=>toggleProfileView();
 const HELP_GUIDES={
-  'v-today':{
-    eyebrow:'Guía de Hoy',
-    title:'Tu base diaria',
+  'v-today:habit':{
+    eyebrow:'Hoy · Mi hábito',
+    title:'Tu práctica diaria',
     items:[
-      ['Mi hábito · Mi hábito por construir','Elige el hábito que estás regulando hoy. Usa el ícono del ojo si quieres ocultarlo en lugares públicos.'],
-      ['Mi razón de cuidado hoy','Recuerda por qué elegiste cuidarte. Toca una o más cápsulas para anclar tu propósito.'],
-      ['Siento un impulso ahora','Botón de pausa inmediata: te guía paso a paso para observar el impulso antes de actuar.'],
-      ['Mi bienestar · Emociones y Hábitos de cuidado','Registra hasta 3 emociones (y voltea para ver tu mapa), anota cómo va tu día y marca las 12 áreas de Cuerpo, Mente y Vínculo.'],
-      ['Mi constancia','Tu llama viva (nunca baja de 5%). Se aviva cuando respiras en Costa, escribes en tu diario o haces una práctica de 60 s.']
+      ['Mi hábito por construir','Elige o agrega el hábito que estás regulando o construyendo hoy. Usa el ícono del ojo si quieres ocultarlo en público.'],
+      ['Barra 90 días y reloj','Muestra tu avance diario hacia tus hitos (7, 14, 21, 30, 45, 60, 75, 90 días) y el tiempo restante de tu día.'],
+      ['Frases guía (desliza ← / →)','Desliza la tarjeta de frase para leer líneas de Estoicismo, Budismo, Feminismo, Literatura o Grandes personas según tu perfil.'],
+      ['Mi razón de cuidado hoy','Ancla tu propósito tocando una o más cápsulas de cuidado y usa «Mi hábito está en riesgo · Acompañarme» si necesitas una pausa guiada.']
+    ]
+  },
+  'v-today:journal':{
+    eyebrow:'Hoy · Mi bienestar',
+    title:'Emociones y hábitos',
+    items:[
+      ['Calendario semanal','Cada letra muestra la primera emoción registrada ese día para ver tu semana de un vistazo.'],
+      ['Emociones de hoy (hasta 3)','Elige entre las 3 emociones base o toca «Más» para abrir los 16 matices extra. Con 3 elegidas puedes voltear tu mapa cromático.'],
+      ['Hábitos de cuidado (Cuerpo, Mente, Vínculo)','Toca cualquier tarjeta para registrar cómo va tu día en esa área. Solo se expande una sección «Ver más» a la vez.'],
+      ['Check-in del día','Al final de la página puedes escribir una nota breve opcional y guardar tu registro diario.']
+    ]
+  },
+  'v-today:constancy':{
+    eyebrow:'Hoy · Mi constancia',
+    title:'Tu llama viva',
+    items:[
+      ['Selector de llama','Elige el estilo visual de tu llama (1 libre y 2 Pro por género) que refleja tu constancia diaria.'],
+      ['Porcentaje vivo (5% a 100%)','Tu llama nunca baja de 5%. Sube cuando completas prácticas de respiración en Costa, check-in diario o escritos.'],
+      ['Vínculos y racha','Al encender tu día mantienes abierta la sintonía con tu círculo y sumas días reales de cuidado.']
     ]
   },
   'v-breathe':{
     eyebrow:'Guía de Costa',
     title:'Respira con el mar',
     items:[
-      ['El mar y la marea','El oleaje y los colores reflejan tu nivel de calma o tensión y la hora del día.'],
-      ['Controles inferiores','Desde abajo puedes iniciar o pausar la respiración, elegir modo Automático o Táctil, cambiar entre Olas, Ruido rosa, Ruido blanco o Cuencos, elegir el ritmo (4·6, 4·4, 4·7·8) y la duración.'],
-      ['Salir (×) y Pantalla completa','En pausa sigues viendo el círculo respirar; toca × para terminar y volver al mar, o expande a pantalla completa arriba a la derecha.']
+      ['El mar y la marea','Los colores y el movimiento del océano responden en vivo a tu nivel de tensión y a la hora del día.'],
+      ['Controles inferiores','Desde abajo puedes iniciar o pausar, alternar Automático/Táctil, elegir sonido (Olas, Ruido rosa, Ruido blanco o Cuencos), ritmo (4·6, 4·4, 4·7·8) y duración.'],
+      ['Pausa, salir (×) y pantalla completa','En pausa sigues viendo el círculo respirar; toca × para terminar la sesión o el botón superior derecho para pantalla completa.']
     ]
   },
-  'v-circle':{
-    eyebrow:'Guía de Círculo',
+  'v-circle:feed':{
+    eyebrow:'Círculo · Feed',
     title:'Presencia compartida',
     items:[
-      ['Círculo (Muro)','Lee notas breves de quienes te acompañan. Si aún no cumples una práctica hoy, las notas se muestran difuminadas hasta que enciendas tu día.'],
-      ['Reacciones minimalistas','Toca o pasa el dedo sobre los símbolos debajo de cada nota para acompañar, celebrar o sentir con esa persona.'],
-      ['Escritos y Tu círculo','En Escritos puedes redactar reflexiones largas tipo diario; en Tu círculo ves las tarjetas de tus aliados y puedes invitar a más personas.']
+      ['Notas de tu círculo','Lee pensamientos breves de tus aliados. Si aún no cumples una práctica hoy, las notas se difuminan hasta que enciendas tu día.'],
+      ['Reacciones minimalistas','Toca o pasa el dedo sobre los 3 símbolos debajo de cada nota para acompañar, celebrar o sentir con esa persona.'],
+      ['Publicar una nota','Usa la barra inferior para compartir cómo te sientes, agregar gemas o vincular una canción.']
+    ]
+  },
+  'v-circle:diary':{
+    eyebrow:'Círculo · Escritos',
+    title:'Tu diario editorial',
+    items:[
+      ['Lecturas y reflexiones','Guarda artículos o reflexiones más extensas con formato editorial limpio, separados de las notas cortas del feed.'],
+      ['Escribir un artículo','Toca la barra inferior «Escribir un artículo…» para abrir el lienzo completo de escritura.']
+    ]
+  },
+  'v-circle:friends':{
+    eyebrow:'Círculo · Tu círculo',
+    title:'Tus aliados cercanos',
+    items:[
+      ['Tarjetas de sintonía','Visualiza en filas de dos a las personas de tu círculo junto con su estado actual en tiempo real.'],
+      ['Invitar o buscar amigo','Toca «+ Invitar o buscar amigo» debajo de las tarjetas para sumar nuevas personas de confianza.']
     ]
   },
   'v-clinic':{
     eyebrow:'Guía de Pulso',
     title:'Tu progreso real',
     items:[
-      ['Tu energía de hoy','Un resumen vivo de tu equilibrio entre descanso, pausas en Costa y registros recientes.'],
-      ['Tu flujo del día y Gráficas','Descubre en qué horarios sientes mayor calma o cuándo conviene hacer una pausa preventiva.'],
+      ['Tu energía de hoy','Resume tu equilibrio entre descanso, pausas en Costa y registros recientes.'],
+      ['Flujo del día y gráficas','Identifica en qué horarios aparece más tensión o calma para anticipar pausas preventivas.'],
       ['Exportar reporte','Genera un resumen limpio de tus registros para ti o para compartir en terapia.']
     ]
   }
 };
 if($('mastheadHelpBtn'))$('mastheadHelpBtn').onclick=()=>{
   const activePage=document.querySelector('.vpage.on');
-  const vid=(activePage && HELP_GUIDES[activePage.id])?activePage.id:'v-today';
-  const g=HELP_GUIDES[vid];
+  const pid=activePage?activePage.id:'v-today';
+  let key=pid;
+  if(pid==='v-today'){
+    const sub=document.querySelector('#v-today .tab.on');
+    const ds=sub&&sub.dataset.sub?sub.dataset.sub:'sub-habit';
+    key=(ds==='sub-journal')?'v-today:journal':(ds==='sub-flame')?'v-today:constancy':'v-today:habit';
+  }else if(pid==='v-circle'){
+    if($('circleTabDiaryBtn')&&$('circleTabDiaryBtn').classList.contains('on'))key='v-circle:diary';
+    else if($('circleTabFriendsBtn')&&$('circleTabFriendsBtn').classList.contains('on'))key='v-circle:friends';
+    else key='v-circle:feed';
+  }
+  const g=HELP_GUIDES[key]||HELP_GUIDES[pid]||HELP_GUIDES['v-today:habit'];
   if($('tutorialEyebrow'))$('tutorialEyebrow').textContent=g.eyebrow;
   if($('tutorialTitle'))$('tutorialTitle').textContent=g.title;
   const body=$('tutorialBody');
