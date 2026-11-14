@@ -259,7 +259,7 @@ body{
   -webkit-background-clip:text;
   background-clip:text;
   -webkit-text-fill-color:transparent;
-  animation:wavyShimmer 10s ease-in-out infinite;
+  animation:wavyShimmer 20s ease-in-out infinite;
 }
 [data-theme="dark"] .masthead h1{
   background:linear-gradient(112deg, #ffffff 0%, #ffffff 43%, var(--gold) 50%, #ffffff 57%, #ffffff 100%);
@@ -359,7 +359,7 @@ h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,7vw,36px);line-
 .tabs{
   display:grid;grid-template-columns:repeat(3,1fr);gap:6px;
   background:transparent;border:none;border-bottom:none;
-  border-radius:0;padding:0;margin-bottom:14px;box-shadow:none;
+  border-radius:0;padding:0;margin-bottom:2px;box-shadow:none;
 }
 .tab{
   background:transparent;border:none;min-height:44px;padding:6px 4px;
@@ -1155,8 +1155,8 @@ textarea::placeholder{font-style:normal;color:var(--muted);opacity:.68}
 .jtag{font-size:12px;font-family:var(--serif);background:var(--paper);border:1px solid var(--rule);padding:3px 10px;border-radius:12px;color:var(--ink)}
 .journal-theory{font-size:12.5px;line-height:1.5;color:var(--muted);border-top:none;padding-top:4px;margin-top:2px}
 
-.wk{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;margin-bottom:8px;font-size:11px;letter-spacing:.12em;color:var(--muted);background:transparent;padding:10px 2px;border-radius:0;border:none;border-bottom:1px solid var(--rule)}
-.wk b{display:block;font-family:var(--serif);font-size:22px;color:var(--crimson);font-weight:400;height:28px}
+.wk{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;margin-bottom:0;font-size:11px;letter-spacing:.12em;color:var(--muted);background:transparent;padding:2px 2px 6px;border-radius:0;border:none;border-bottom:1px solid var(--rule)}
+.wk b{display:block;font-family:var(--serif);font-size:19px;color:var(--crimson);font-weight:400;height:22px;line-height:22px}
 .wk .td b{border-bottom:2px solid var(--crimson)}.wk .fu{opacity:.35}
 .ins{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:14.5px;text-align:center;margin:12px 0;line-height:1.45}
 .empty{text-align:center;color:var(--muted);font-family:var(--serif);font-style:italic;padding:18px;font-size:15px}
@@ -1348,7 +1348,7 @@ body.public-view .pub-view.on{display:block}
   border:none;
   border-bottom:1px solid var(--rule);
   border-radius:0;
-  padding:10px 0 8px;
+  padding:8px 0 6px;
   margin-bottom:0;
   box-shadow:none;
   display:grid;
@@ -1386,7 +1386,7 @@ body.public-view .pub-view.on{display:block}
   gap:8px;
   flex-wrap:nowrap;
   padding-bottom:0;
-  margin-bottom:6px;
+  margin-bottom:3px;
   border-bottom:none;
   min-width:0;
 }
@@ -1422,12 +1422,12 @@ body.public-view .pub-view.on{display:block}
   font-style:normal;
   font-weight:400;
   font-size:clamp(17.5px, 4.3vw, 19.5px);
-  line-height:1.48;
+  line-height:1.42;
   letter-spacing:-.005em;
   color:var(--ink);
   background:transparent;
   border:none;
-  padding:1px 0 0;
+  padding:0;
   margin:0;
   border-radius:0;
   white-space:pre-line;
@@ -1470,11 +1470,11 @@ body.public-view .pub-view.on{display:block}
 }
 
 /* Reacciones minimalistas centradas: solo símbolos visibles; etiqueta abajo al pasar/tocar */
-.react-bar{display:flex;gap:34px;align-items:center;justify-content:center;flex-wrap:nowrap;overflow:visible;padding:2px 0 0;margin-top:2px;position:relative}
+.react-bar{display:flex;gap:34px;align-items:center;justify-content:center;flex-wrap:nowrap;overflow:visible;padding:0;margin-top:2px;position:relative}
 .react-btn{
   position:relative;display:inline-flex;align-items:center;justify-content:center;
   background:transparent;border:none;border-radius:999px;
-  min-width:34px;min-height:30px;padding:4px 8px;
+  min-width:34px;min-height:24px;padding:2px 8px;
   color:var(--muted);cursor:pointer;transition:color .18s ease, transform .15s ease;
 }
 .react-btn span{
@@ -2436,13 +2436,13 @@ summary::-webkit-details-marker{display:none}
     </section>
 
     <!-- SUB-PANEL 1B: DIARIO BIOPSICOSOCIAL Y CICLO -->
-    <section class="panel card" id="sub-journal">
+    <section class="panel card" id="sub-journal" style="padding-top:2px">
       <!-- REGISTRO DEL DÍA (semana, emociones, hábitos y check-in) -->
       <div class="retract-body" id="wkRetractBody" style="margin-bottom:0">
-        <div class="wk" id="wk" style="margin-bottom:0;padding:4px 2px 8px"></div>
+        <div class="wk" id="wk" style="margin-bottom:0;padding:0 2px 6px"></div>
       </div>
 
-      <div class="bio-sec" style="margin-top:8px;padding-top:10px;border-top:none">
+      <div class="bio-sec" style="margin-top:4px;padding-top:6px;border-top:none">
         <div class="bio-sec-hd">
           <span>Emociones de hoy</span>
           <span style="display:inline-flex;align-items:center;gap:10px">
@@ -2487,12 +2487,12 @@ summary::-webkit-details-marker{display:none}
       </div>
 
       <div class="bio-sec" style="margin-top:16px;padding-top:14px">
-        <div class="circle-composer" style="margin-bottom:10px">
+        <div class="circle-composer" style="margin-bottom:8px">
           <div class="circle-composer-row">
             <textarea id="ni" class="echo-input" rows="1" placeholder="Nota breve de tu check-in (opcional)" style="flex:1;min-width:0"></textarea>
+            <button type="button" class="echo-send-btn" id="na" aria-label="Guardar check-in del día">↑</button>
           </div>
         </div>
-        <button class="btn" style="width:100%" id="na">Guardar check-in del día</button>
         <p class="ins" id="ins"></p>
         <div id="nb"></div>
         <button class="btn ghost" id="more" style="width:100%;margin-top:10px" hidden>Ver registros anteriores</button>
@@ -2895,7 +2895,7 @@ summary::-webkit-details-marker{display:none}
     <div class="circle-sticky-wrap" id="diaryStickyBar" hidden>
       <div class="circle-composer">
         <div class="circle-composer-row">
-          <button type="button" class="diary-sticky-trigger" id="openBlankSheetBtn">Escribir un artículo…</button>
+          <button type="button" class="diary-sticky-trigger" id="openBlankSheetBtn">Escribir un artículo</button>
         </div>
       </div>
     </div>
@@ -5991,7 +5991,7 @@ function renderCircleFeed(){
         (maintained?'':'<span class="bereal-lock-hint">'+WavyIcons.lock+' Cumple 1 práctica hoy (respirar, diario o 60s) para desbloquear y leer las notas de tu círculo.</span>')+
         (hasSong?'<div id="'+drawerId+'" hidden style="margin:8px 0;animation:fadeUp .22s ease">'+renderSoundCapsuleHTML(u.soundCapsule,true)+'</div>':'')+
         syncSignalHtml+
-        '<div class="react-bar" style="margin-top:8px">'+
+        '<div class="react-bar">'+
           '<button type="button" class="react-btn'+(u.myRx==='Te acompaño'?' on':'')+'" data-erx="Te acompaño"><svg viewBox="0 0 24 24"><path d="M7.5 13.5L4.8 10.8a3.2 3.2 0 0 1 4.5-4.5L12 9l2.7-2.7a3.2 3.2 0 0 1 4.5 4.5l-2.7 2.7"/><path d="M7.5 13.5L12 18l4.5-4.5"/><path d="M9.5 11.5L12 14l2.5-2.5"/></svg><span>Te acompaño</span></button>'+
           '<button type="button" class="react-btn'+(u.myRx==='Te celebro'?' on':'')+'" data-erx="Te celebro"><svg viewBox="0 0 24 24"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3Z"/><path d="M18.5 3.5l.6 1.9 1.9.6-1.9.6-.6 1.9-.6-1.9-1.9-.6 1.9-.6.6-1.9Z"/></svg><span>Te celebro</span></button>'+
           '<button type="button" class="react-btn'+(u.myRx==='Te siento'?' on':'')+'" data-erx="Te siento"><svg viewBox="0 0 24 24"><circle cx="8.5" cy="7" r="2.2"/><circle cx="15.5" cy="7" r="2.2"/><path d="M4.5 17.5c0-3.2 2.4-5.2 5.2-5.2 1 0 1.8.3 2.3.8.5-.5 1.3-.8 2.3-.8 2.8 0 5.2 2 5.2 5.2"/><path d="M6.8 15.2c1.8 1.6 3.5 2.3 5.2 2.3s3.4-.7 5.2-2.3"/></svg><span>Te siento</span></button>'+
@@ -10035,83 +10035,152 @@ function drawLivingFlame(ts){
   const t=(ts||0)*0.001;
   const pal=activeFlamePal;
   const mot=activeFlameMotion||PEB_VESSELS.ambar.motion;
+  const vKey=S.pebVessel||'ambar';
 
   ctx.clearRect(0,0,w,h);
 
-  // 1. Halo atmosférico suave SIN bordes cortados (desvanece al 100% hacia los bordes)
-  const haloR=isFull ? Math.min(w,h)*0.56 : (76+165*p+Math.sin(t*mot.freq)*8);
-  const haloY=baseY-(44+108*p);
+  // 1. Brasa cálida y halo atmosférico estilo acuarela Ghibli (cero bordes duros)
+  const haloR=isFull?Math.min(w,h)*0.56:(72+165*p+Math.sin(t*mot.freq)*8);
+  const haloY=baseY-(42+108*p);
   const hg=ctx.createRadialGradient(cx,haloY,8,cx,haloY,haloR);
-  hg.addColorStop(0,pal.glow+(0.48+0.44*p).toFixed(2)+')');
-  hg.addColorStop(0.45,pal.glow+(0.20+0.24*p).toFixed(2)+')');
-  hg.addColorStop(0.82,pal.glow+(0.05+0.08*p).toFixed(2)+')');
+  hg.addColorStop(0,pal.glow+(0.42+0.44*p).toFixed(2)+')');
+  hg.addColorStop(0.50,pal.glow+(0.18+0.22*p).toFixed(2)+')');
+  hg.addColorStop(0.84,pal.glow+(0.04+0.07*p).toFixed(2)+')');
   hg.addColorStop(1,pal.glow+'0)');
   ctx.fillStyle=hg;
   ctx.beginPath();ctx.arc(cx,haloY,haloR,0,Math.PI*2);ctx.fill();
 
-  // 2. Silueta abstracta tipo lámpara de lava + llamas secundarias (sin líneas ni contornos Paint)
-  const flameH=(38+290*p)*(isFull?1.08:mot.hScale);
-  const flameW=(20+115*p)*(isFull?1.16:mot.wScale);
-  const sway1=Math.sin(t*mot.freq)*mot.amp*p + Math.sin(t*mot.freq*2.15)*(mot.amp*0.38)*p;
-  const breath=1+Math.sin(t*(mot.freq*1.25))*mot.breathAmp*(0.6+0.4*p);
-
-  function drawLavaOrb(rx,ry,radX,radY,c1,c2,alpha,rot){
+  // Helper pictórico: dibuja una lengua de fuego orgánica ondulante con bordes difuminados
+  function drawPainterlyTongue(ox,oy,width,height,topColor,botColor,alpha,blurPx,phase,lean){
     ctx.save();
-    ctx.translate(rx,ry);
-    if(rot)ctx.rotate(rot);
-    ctx.scale(1,radY/Math.max(1,radX));
-    const lg=ctx.createRadialGradient(-radX*0.18,-radX*0.18,radX*0.05,0,0,radX);
-    lg.addColorStop(0,c1);
-    lg.addColorStop(0.48,c2);
-    lg.addColorStop(0.84,pal.glow+'0.18)');
-    lg.addColorStop(1,'rgba(255,255,255,0)');
+    if(blurPx>0 && 'filter' in ctx)ctx.filter='blur('+blurPx+'px)';
+    const steps=16;
+    const ptsL=[],ptsR=[];
+    for(let i=0;i<=steps;i++){
+      const u=i/steps; // 0 = base, 1 = punta
+      const y=oy-u*height;
+      // Perfil orgánico de llama (más ancha abajo-medio, se afina en punta ondulante)
+      const env=Math.sin(Math.pow(u,0.68)*Math.PI)*(1-u*0.28);
+      const halfW=Math.max(1.5,width*0.5*(u<0.18?(0.55+u*2.5):env));
+      const wave=Math.sin(t*mot.freq*1.15 - u*4.2 + phase)*(mot.amp*0.55*u*p)
+               + Math.cos(t*mot.freq*2.1 - u*7.0 + phase*1.4)*(mot.amp*0.22*u*p)
+               + lean*u*width*0.5;
+      ptsL.push([ox+wave-halfW,y]);
+      ptsR.push([ox+wave+halfW,y]);
+    }
+    const grad=ctx.createLinearGradient(ox,oy-height,ox,oy);
+    grad.addColorStop(0,topColor);
+    grad.addColorStop(0.55,botColor);
+    grad.addColorStop(1,pal.ember||botColor);
     ctx.globalAlpha=alpha;
-    ctx.fillStyle=lg;
-    ctx.beginPath();ctx.arc(0,0,radX,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=grad;
+    ctx.beginPath();
+    ctx.moveTo(ptsL[0][0],ptsL[0][1]);
+    for(let i=1;i<ptsL.length;i++){
+      const px=(ptsL[i-1][0]+ptsL[i][0])*0.5;
+      const py=(ptsL[i-1][1]+ptsL[i][1])*0.5;
+      ctx.quadraticCurveTo(ptsL[i-1][0],ptsL[i-1][1],px,py);
+    }
+    const tip=ptsL[ptsL.length-1];
+    ctx.lineTo((tip[0]+ptsR[ptsR.length-1][0])*0.5,tip[1]-4);
+    for(let i=ptsR.length-1;i>0;i--){
+      const px=(ptsR[i][0]+ptsR[i-1][0])*0.5;
+      const py=(ptsR[i][1]+ptsR[i-1][1])*0.5;
+      ctx.quadraticCurveTo(ptsR[i][0],ptsR[i][1],px,py);
+    }
+    ctx.closePath();
+    ctx.fill();
     ctx.restore();
   }
 
-  // Base orgánica difuminada (sin óvalo marrón duro)
-  drawLavaOrb(cx,baseY-8,flameW*0.95,18+16*p,pal.core,pal.ember,0.68+0.28*p,0);
+  const flameH=(42+255*p)*(isFull?1.10:mot.hScale);
+  const flameW=(30+125*p)*(isFull?1.22:mot.wScale);
 
-  // Al subir hacia 100%, nacen llamas secundarias esparcidas por todo el recuadro (efecto incendio vivo)
-  const satCount=isFull ? 7 : Math.max(1,Math.round(p*5));
-  for(let s=0;s<satCount;s++){
-    const side=(s%2===0?-1:1)*((Math.floor(s/2)+1)/(satCount*0.55));
-    const sx=cx+side*(flameW*(0.55+0.65*p))+Math.sin(t*(mot.freq*0.85+s*0.4)+s*1.9)*(18*p);
-    const sy=baseY-(16+s*28*p)-Math.abs(Math.cos(t*0.9+s))*36*p;
-    const sRad=(18+46*p)*(1-s*0.07);
-    const sH=sRad*(1.45+0.4*Math.sin(t*mot.freq+s));
-    drawLavaOrb(sx,sy,sRad,sH,s%2===0?(pal.lava2||pal.outerMid):pal.outerTop,pal.outerBot,0.44+0.34*p,side*0.16);
+  // 2. Lecho de brasas vivas en la base (como la chimenea de Calcifer)
+  ctx.save();
+  if('filter' in ctx)ctx.filter='blur(10px)';
+  const bedG=ctx.createRadialGradient(cx,baseY,4,cx,baseY,flameW*1.05);
+  bedG.addColorStop(0,pal.core);
+  bedG.addColorStop(0.45,pal.outerMid);
+  bedG.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.globalAlpha=0.55+0.35*p;
+  ctx.fillStyle=bedG;
+  ctx.beginPath();ctx.ellipse(cx,baseY+2,flameW*(isFull?1.25:0.9),16+18*p,0,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+
+  // 3. Muro pictórico de lenguas secundarias (al 100% se esparcen por todo el recuadro estilo El niño y la garza)
+  const tongueCount=isFull?9:Math.max(2,Math.round(2+p*6));
+  for(let i=0;i<tongueCount;i++){
+    const norm=(i/(Math.max(1,tongueCount-1)))-0.5; // -0.5 a +0.5
+    const spread=norm*flameW*(isFull?1.65:0.95);
+    const tH=flameH*(0.48+0.46*(1-Math.abs(norm)*1.3)+0.14*Math.sin(t*1.7+i));
+    const tW=flameW*(0.36+0.18*(1-Math.abs(norm)));
+    drawPainterlyTongue(
+      cx+spread,
+      baseY+4,
+      tW,
+      tH,
+      i%2===0?(pal.lava2||pal.outerMid):pal.outerTop,
+      pal.outerBot,
+      0.42+0.28*p,
+      11,
+      i*1.35,
+      norm*0.75
+    );
   }
 
-  // Lóbulos ascendentes de lámpara de lava con identidad propia por llama
-  const blobCount=Math.max(3,Math.round((mot.blobs||3)*(0.55+0.95*p)));
-  for(let i=0;i<blobCount;i++){
-    const phase=(t*(0.42+i*0.11)+i*1.618)%1;
-    const bx=cx+Math.sin(t*mot.freq*0.95+i*2.3)*(flameW*(0.24+0.55*phase));
-    const by=baseY-(phase*flameH*1.02);
-    const br=(14+44*p)*(1-phase*0.48);
-    const bh=br*(1.35+0.35*Math.sin(t*1.8+i));
-    drawLavaOrb(bx,by,br,bh,i%2===0?pal.core:(pal.lava2||pal.outerMid),pal.outerMid,0.62*(1-phase*0.58),Math.sin(t+i)*0.22);
+  // 4. Cuerpo principal fluido (capas de acuarela superpuestas sin contorno duro)
+  drawPainterlyTongue(cx,baseY+2,flameW*0.92,flameH*0.96,pal.outerTop,pal.outerBot,0.74,7,0.4,0);
+  drawPainterlyTongue(cx+Math.sin(t*mot.freq)*4*p,baseY,flameW*0.64,flameH*0.76,pal.core,pal.midBot||pal.outerMid,0.84,4,1.9,0.12);
+  drawPainterlyTongue(cx-Math.cos(t*mot.freq*0.9)*3*p,baseY-2,flameW*0.42,flameH*0.52,'#FFFFFF',pal.core,0.90,2,3.1,-0.08);
+
+  // 5. Personalidad sutil tipo Calcifer en el núcleo (ojitos expresivos que parpadean y cobran vida)
+  if(p>=0.12){
+    const blinkCycle=(t*0.32)%1;
+    const isBlink=(blinkCycle>0.94);
+    const eyeScaleY=isBlink?0.12:1;
+    const swayEye=Math.sin(t*mot.freq*1.15)*mot.amp*0.18*p;
+    const eyeY=baseY-flameH*0.22;
+    const eyeSep=Math.max(8,flameW*(isFull?0.18:0.20));
+    const eyeR=Math.max(2.6,Math.min(7.2,3.0+4.2*p));
+    ctx.save();
+    ctx.globalAlpha=0.72+0.22*p;
+    [-1,1].forEach(side=>{
+      const ex=cx+swayEye+side*eyeSep;
+      ctx.save();
+      ctx.translate(ex,eyeY);
+      ctx.scale(1,eyeScaleY);
+      // Blanco cálido de ojo Calcifer
+      ctx.fillStyle='rgba(255,253,246,0.92)';
+      ctx.beginPath();ctx.ellipse(0,0,eyeR*1.15,eyeR*1.28,0,0,Math.PI*2);ctx.fill();
+      // Pupila expresiva (más tranquila en mujer/cuarzo, más traviesa en ámbar/aurora)
+      ctx.fillStyle=(vKey==='cobalto'||vKey==='lavanda')?'#1f2438':'#2a1a12';
+      const lookX=Math.sin(t*0.7)*eyeR*0.18;
+      ctx.beginPath();ctx.arc(lookX,-eyeR*0.05,eyeR*0.48,0,Math.PI*2);ctx.fill();
+      ctx.restore();
+    });
+    // Sonrisa cálida al alcanzar plenitud (>=75%)
+    if(p>=0.70){
+      ctx.strokeStyle='rgba(210,72,38,0.65)';
+      ctx.lineWidth=Math.max(1.4,2.2*p);
+      ctx.lineCap='round';
+      ctx.beginPath();
+      ctx.arc(cx+swayEye,eyeY+eyeR*1.35,eyeR*1.15,0.18*Math.PI,0.82*Math.PI);
+      ctx.stroke();
+    }
+    ctx.restore();
   }
 
-  // Núcleo fluido sin bordes duros (abstracto, respira y cambia de silueta por arquetipo)
-  const coreH=(28+145*p)*breath;
-  const coreW=(18+68*p);
-  drawLavaOrb(cx+sway1*0.4,baseY-coreH*0.52,coreW,coreH*0.76,pal.outerTop,pal.outerBot,0.88,sway1*0.006);
-  drawLavaOrb(cx+sway1*0.25,baseY-coreH*0.36,coreW*0.64,coreH*0.54,pal.core,pal.midBot,0.92,-sway1*0.004);
-
-  // 4. Chispas vivas (al 100% explota en chispas luminosas por todo el recuadro)
-  const maxSparks=isFull?54:Math.round(4+30*p);
-  const spdMult=(mot.sparkMode==='fast'||mot.sparkMode==='burst'||isFull)?1.55:0.95;
+  // 6. Chispas luminosas ascendentes (en 100% llenan el aire con ligereza)
+  const maxSparks=isFull?54:Math.round(5+28*p);
+  const spdMult=(mot.sparkMode==='fast'||mot.sparkMode==='burst'||isFull)?1.45:0.9;
   while(flameSparks.length<maxSparks){
     flameSparks.push({
-      x:cx+(Math.random()-0.5)*flameW*(isFull?1.65:0.95),
-      y:baseY-Math.random()*flameH*(isFull?0.9:0.55),
+      x:cx+(Math.random()-0.5)*flameW*(isFull?1.75:1.05),
+      y:baseY-Math.random()*flameH*(isFull?0.95:0.55),
       vy:(0.9+Math.random()*(1.6+2.2*p))*spdMult,
-      vx:(Math.random()-0.5)*(mot.sparkMode==='burst'||isFull?1.75:0.65),
-      r:(isFull?2.4:1.8)+Math.random()*3.4,
+      vx:(Math.random()-0.5)*(mot.sparkMode==='burst'||isFull?1.65:0.6),
+      r:(isFull?2.2:1.6)+Math.random()*3.0,
       life:Math.random()
     });
   }
