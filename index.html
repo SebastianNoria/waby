@@ -2195,12 +2195,12 @@ summary::-webkit-details-marker{display:none}
 #sub-flame{padding-bottom:8px}
 #sub-flame .peb-actions .btn{white-space:nowrap;font-size:11px;padding:11px 10px}
 /* Colores de gema para cada estilo de Llama */
-[data-vessel="cuarzo"] .v-gem{--g1:#FFFDF4;--g2:#E8D9A8;--g3:#B89A5A}
+[data-vessel="cuarzo"] .v-gem{--g1:#FFFDF6;--g2:#F2E3B8;--g3:#C4A35E}
 [data-vessel="lavanda"] .v-gem{--g1:#FFFBE0;--g2:#F5C84B;--g3:#A87608}
-[data-vessel="ororosa"] .v-gem{--g1:#FFF6D6;--g2:#E8A93B;--g3:#8A5A10}
-[data-vessel="ambar"] .v-gem{--g1:#FFEFC0;--g2:#E07E1A;--g3:#7A3A06}
-[data-vessel="cobalto"] .v-gem{--g1:#FFF8DC;--g2:#D4A017;--g3:#7A5A08}
-[data-vessel="aurora"] .v-gem{--g1:#FFF3C8;--g2:#C88C14;--g3:#6E4A08}
+[data-vessel="ororosa"] .v-gem{--g1:#FFF3E2;--g2:#E8A87C;--g3:#9A5A30}
+[data-vessel="ambar"] .v-gem{--g1:#FFF8DC;--g2:#F0B429;--g3:#8A5A10}
+[data-vessel="cobalto"] .v-gem{--g1:#FFF8DC;--g2:#D4A017;--g3:#7A1A10}
+[data-vessel="aurora"] .v-gem{--g1:#FFF3E0;--g2:#E07A4A;--g3:#8A1A10}
 @keyframes gemShine{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.v-gem::after{animation:none}}
 .peb-decay-pill{
@@ -2706,23 +2706,8 @@ summary::-webkit-details-marker{display:none}
       <div class="pd" id="pd">
         <div class="flame-stage" id="flameStage">
           <canvas id="flameCanvas" width="700" height="860" aria-label="Tu sol vivo"></canvas>
-          <div class="sun-stage-pct" id="sunStagePct">65%</div>
         </div>
-        <div class="hd" style="margin-bottom:8px">
-          <span>Mi constancia <button type="button" class="help-q" data-help="helpPeb" aria-label="Ayuda sobre tu sol">?</button></span>
-          <span id="pebEvolutionBadge" style="color:var(--gold);font-weight:600">Nivel I · Chispa</span>
-        </div>
-        <div class="help-tip" id="helpPeb" hidden>Tu sol es tu presencia diaria y nunca se apaga (mínimo 5%). Elige entre 6 soles — Alba, Lucero y Marea Dorada para ella; Forja, Medalla de Oro y Emblema para él — y crece de forma continua al respirar en Costa, guardar tu día o practicar 60 s. La máxima euforia solo llega al 100%.</div>
-        <div class="peb-top" style="margin-bottom:8px">
-          <span id="pebVesselTitle">Forja</span>
-          <span class="peb-chip"><i></i><span id="as">Vínculos · 0</span></span>
-        </div>
-        <div class="peb-read">
-          <b><span id="fp">65</span><small>%</small></b>
-          <span id="fv">Sol encendido y radiante hoy</span>
-          <div><span class="peb-decay-pill" id="pebDecayCountdown">-2% / h · Mínimo 5%</span></div>
-          <p id="pebHint" style="margin-top:6px">Tu sol se aviva cuando cumples una práctica hoy.</p>
-        </div>
+        <div id="pebVesselBar" class="peb-vessels" role="group" aria-label="Elige tu sol"></div>
         <div class="peb-bar"><i id="pebFill"></i></div>
         <div class="peb-actions">
           <button class="btn" id="pb">Avivar sol</button>
@@ -3414,7 +3399,7 @@ summary::-webkit-details-marker{display:none}
       </div>
       <!-- Versión de la app: sube una por ronda (v18, v19, v20…) para saber
            de un vistazo si la versión publicada ya trae los últimos cambios. -->
-      <div class="cover-version">v30</div>
+      <div class="cover-version">v31</div>
     </div>
   </div>
 </div>
@@ -10119,40 +10104,40 @@ function addFuel(n){S.fuel={v:Math.min(100,fuel()+n),t:Date.now()};save();flameV
 const PEB_LEGACY_MAP={fuente:'cuarzo',musa:'lavanda',nido:'ororosa',piedra:'ambar',horizonte:'cobalto',brasa:'aurora'};
 const PEB_VESSELS={
   cuarzo:{
-    title:'Alba',mode:'female',short:'Alba',pro:false,relic:'#D9B36A',
-    shape:'alba',rotSpeed:0.10,rays:14,
-    motion:{freq:1.45,amp:10,wScale:1.04,hScale:1.04,tongues:2,blobs:3,sparkMode:'spiral',breathAmp:0.05},
-    pal:{glow:'rgba(244,214,150,',bgTop:'#171208',bgBot:'#2c1f10',outerTop:'#FFF9E8',outerMid:'#EFD491',outerBot:'#A8823C',lava2:'#FFE9A8',midTop:'#FFFFFF',midBot:'#FBE8B0',core:'#FFFDF4',spark:'#FFE9A8',ember:'#D9B36A'}
+    title:'Seda',mode:'female',short:'Seda',pro:false,relic:'#C9A86A',
+    shape:'seda',archetype:'serene',rotSpeed:0.05,rays:28,
+    motion:{freq:1.10,amp:6,wScale:1.03,hScale:1.03,tongues:1,blobs:2,sparkMode:'drift',breathAmp:0.04},
+    pal:{glow:'rgba(226,196,130,',bgTop:'#f4ecda',bgBot:'#e0cfa8',outerTop:'#FFFDF6',outerMid:'#F2DFB0',outerBot:'#C9A86A',lava2:'#FFE9A8',midTop:'#FFFFFF',midBot:'#FBEEC8',core:'#FFFDF4',spark:'#D9B36A',ember:'#C9A86A'}
   },
   lavanda:{
     title:'Lucero',mode:'female',short:'Lucero',pro:true,relic:'#E8B84B',
-    shape:'lucero',rotSpeed:0.14,rays:8,
+    shape:'lucero',archetype:'serene',rotSpeed:0.14,rays:8,
     motion:{freq:1.85,amp:12,wScale:1.06,hScale:1.06,tongues:2,blobs:3,sparkMode:'halo',breathAmp:0.055},
     pal:{glow:'rgba(252,206,90,',bgTop:'#171204',bgBot:'#2e2408',outerTop:'#FFFBE0',outerMid:'#F5C84B',outerBot:'#9A6E08',lava2:'#FFE27A',midTop:'#FFFFFF',midBot:'#FFE89E',core:'#FFFDF6',spark:'#FFE27A',ember:'#E8B84B'}
   },
   ororosa:{
-    title:'Marea Dorada',mode:'female',short:'Marea',pro:true,relic:'#D9A441',
-    shape:'marea',rotSpeed:-0.12,rays:18,
-    motion:{freq:2.15,amp:14,wScale:1.08,hScale:1.08,tongues:3,blobs:4,sparkMode:'burst',breathAmp:0.06},
-    pal:{glow:'rgba(240,180,70,',bgTop:'#140f06',bgBot:'#2c1f0c',outerTop:'#FFF6D6',outerMid:'#E8A93B',outerBot:'#7A4E10',lava2:'#FFD166',midTop:'#FFFFFF',midBot:'#FFDF8A',core:'#FFFDF2',spark:'#FFD166',ember:'#D9A441'}
+    title:'Áurea',mode:'female',short:'Áurea',pro:true,relic:'#D98A5A',
+    shape:'aurea',archetype:'serene',rotSpeed:-0.10,rays:20,
+    motion:{freq:2.0,amp:14,wScale:1.08,hScale:1.08,tongues:3,blobs:4,sparkMode:'burst',breathAmp:0.05},
+    pal:{glow:'rgba(232,150,90,',bgTop:'#1e0f0c',bgBot:'#3a1e16',outerTop:'#FFF3E2',outerMid:'#E8A87C',outerBot:'#8A4A28',lava2:'#FFB84D',midTop:'#FFFFFF',midBot:'#FFD9B0',core:'#FFF9F0',spark:'#FFB84D',ember:'#D98A5A'}
   },
   ambar:{
-    title:'Forja',mode:'male',short:'Forja',pro:false,relic:'#C8761E',
-    shape:'forja',rotSpeed:0.08,rays:16,
-    motion:{freq:2.0,amp:12,wScale:1.10,hScale:1.10,tongues:2,blobs:3,sparkMode:'rise',breathAmp:0.045},
-    pal:{glow:'rgba(232,130,30,',bgTop:'#120a04',bgBot:'#2a1608',outerTop:'#FFEFC0',outerMid:'#E07E1A',outerBot:'#6E3406',lava2:'#FFB84D',midTop:'#FFFDF0',midBot:'#FFB84D',core:'#FFF8E0',spark:'#FFB84D',ember:'#C8761E'}
+    title:'Corona',mode:'male',short:'Corona',pro:false,relic:'#D9A441',
+    shape:'corona',archetype:'boil',rotSpeed:0.12,rays:24,
+    motion:{freq:2.2,amp:16,wScale:1.10,hScale:1.10,tongues:3,blobs:4,sparkMode:'rise',breathAmp:0.05},
+    pal:{glow:'rgba(240,180,70,',bgTop:'#160e04',bgBot:'#33200a',outerTop:'#FFF8DC',outerMid:'#F0B429',outerBot:'#7A4E10',lava2:'#FFD166',midTop:'#FFFFFF',midBot:'#FFDF8A',core:'#FFFDF2',spark:'#FFD166',ember:'#D9A441'}
   },
   cobalto:{
     title:'Medalla de Oro',mode:'male',short:'Medalla',pro:true,relic:'#D4A017',
-    shape:'medalla',rotSpeed:0.16,rays:22,
-    motion:{freq:2.6,amp:14,wScale:1.06,hScale:1.06,tongues:3,blobs:5,sparkMode:'fast',breathAmp:0.05},
+    shape:'medalla',archetype:'boil',rotSpeed:0.08,rays:22,
+    motion:{freq:1.6,amp:10,wScale:1.06,hScale:1.06,tongues:3,blobs:5,sparkMode:'fast',breathAmp:0.05},
     pal:{glow:'rgba(212,160,23,',bgTop:'#1a0808',bgBot:'#3a1210',outerTop:'#FFF8DC',outerMid:'#D4A017',outerBot:'#6E4E08',lava2:'#F2C94C',midTop:'#FFFFFF',midBot:'#F2D67A',core:'#FFFDF5',spark:'#F2C94C',ember:'#D4A017'}
   },
   aurora:{
-    title:'Emblema',mode:'male',short:'Emblema',pro:true,relic:'#B8860B',
-    shape:'emblema',rotSpeed:-0.20,rays:20,
-    motion:{freq:2.9,amp:16,wScale:1.12,hScale:1.12,tongues:3,blobs:5,sparkMode:'burst',breathAmp:0.06},
-    pal:{glow:'rgba(200,140,20,',bgTop:'#140d04',bgBot:'#2e1e08',outerTop:'#FFF3C8',outerMid:'#C88C14',outerBot:'#5E3E06',lava2:'#E8B84B',midTop:'#FFFFFF',midBot:'#F2CE6B',core:'#FFFBE8',spark:'#E8B84B',ember:'#B8860B'}
+    title:'Emblema',mode:'male',short:'Emblema',pro:true,relic:'#C0392B',
+    shape:'emblema',archetype:'boil',rotSpeed:-0.18,rays:20,
+    motion:{freq:2.6,amp:14,wScale:1.12,hScale:1.12,tongues:3,blobs:5,sparkMode:'burst',breathAmp:0.06},
+    pal:{glow:'rgba(220,90,50,',bgTop:'#160a0a',bgBot:'#2e1210',outerTop:'#FFF3E0',outerMid:'#E07A4A',outerBot:'#7A1A10',lava2:'#F2A05A',midTop:'#FFFFFF',midBot:'#F2B88A',core:'#FFF8EC',spark:'#F2A05A',ember:'#C0392B'}
   }
 };
 
@@ -10211,6 +10196,35 @@ function getGrainPattern(ctx){
   if(!__grainPat)__grainPat=ctx.createPattern(__grainCv,'repeat');
   return __grainPat;
 }
+/* Textura real (anti-paint): la superficie del sol se construye con motas
+   de pigmento y claroscuro, no con un degradado liso. */
+function mottleDisc(ctx,r,pal,seed,count,alpha){
+  ctx.save();
+  for(let d=0;d<count;d++){
+    const a=(d*2.39996+seed)%(Math.PI*2);
+    const dd=r*(0.08+0.80*Math.abs(Math.sin(d*12.9898+seed*78.233)));
+    const rr=Math.max(0.8,r*(0.02+0.05*Math.abs(Math.sin(d*39.346+seed))));
+    ctx.globalAlpha=alpha*(0.25+0.35*Math.abs(Math.sin(d*7.7+seed)));
+    ctx.fillStyle=(d%3===0)?'rgba(255,255,255,0.55)':((d%3===1)?(pal.lava2||pal.outerMid):(pal.outerBot||pal.outerMid));
+    ctx.beginPath();ctx.arc(Math.cos(a)*dd,Math.sin(a)*dd,rr,0,Math.PI*2);ctx.fill();
+  }
+  ctx.restore();
+}
+function shadeDisc(ctx,r,pal){
+  /* Claroscuro: sombra suave abajo-derecha, luz arriba-izquierda. Volumen 3D. */
+  ctx.save();
+  let sh=ctx.createRadialGradient(r*0.55,r*0.55,r*0.1,r*0.55,r*0.55,r*1.05);
+  sh.addColorStop(0,'rgba(60,20,0,0.20)');
+  sh.addColorStop(0.6,'rgba(60,20,0,0.05)');
+  sh.addColorStop(1,'rgba(60,20,0,0)');
+  ctx.fillStyle=sh;ctx.beginPath();ctx.arc(0,0,r,0,Math.PI*2);ctx.fill();
+  let hl=ctx.createRadialGradient(-r*0.45,-r*0.45,r*0.05,-r*0.45,-r*0.45,r*0.9);
+  hl.addColorStop(0,'rgba(255,255,255,0.35)');
+  hl.addColorStop(0.5,'rgba(255,255,255,0.08)');
+  hl.addColorStop(1,'rgba(255,255,255,0)');
+  ctx.fillStyle=hl;ctx.beginPath();ctx.arc(0,0,r,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+}
 function drawLivingFlame(ts){
   flameRaf=0;
   const cv=$('flameCanvas');
@@ -10222,13 +10236,14 @@ function drawLivingFlame(ts){
   flamePctSmooth+=(targetPct-flamePctSmooth)*0.12;
   const p=Math.max(0.05,Math.min(1,flamePctSmooth/100));
   const u=Math.max(0,Math.min(1,(p-0.05)/0.95)); /* continuo 0.00 (5%) -> 1.00 (100%) */
-  const euphoria=Math.max(0,(u-0.88)/0.12); /* éxtasis final exclusivo al acercarse a 100% */
+  const euphoria=Math.max(0,(u-0.80)/0.20); /* éxtasis final: la digievolución vive de 80% a 100% */
   const isLowSpark=(p<=0.068);
   const t=(ts||0)*0.001;
   const cfg=PEB_VESSELS[resolveFlameVesselKey()]||PEB_VESSELS.ambar;
   const pal=cfg.pal||activeFlamePal;
   const mot=cfg.motion||activeFlameMotion||PEB_VESSELS.ambar.motion;
-  const shape=cfg.shape||'forja';
+  const shape=cfg.shape||'emblema';
+  const archetype=cfg.archetype||'boil';
   const rot=t*(cfg.rotSpeed||0.10);
 
   if($('sunStagePct'))$('sunStagePct').textContent=Math.round(p*100)+'%';
@@ -10293,7 +10308,7 @@ function drawLivingFlame(ts){
     }
   }
 
-  /* 3. Evolución continua 5% -> 100% · 6 soles nuevos (Alba, Lucero, Marea, Forja, Medalla, Emblema) */
+  /* 3. Evolución continua 5% -> 100% · 6 soles nuevos (Seda, Lucero, Áurea, Corona, Medalla, Emblema) */
   const rnd=i=>{const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x);};
   const wavyRay=(baseR,len,baseW,phase,waves,amp)=>{
     const N=7;
@@ -10315,10 +10330,11 @@ function drawLivingFlame(ts){
     ctx.closePath();
   };
   const breath=1+Math.sin(t*mot.freq)*(mot.breathAmp||0.045)*(0.25+0.75*u);
-  const sunR=(6+104*Math.pow(u,0.85)+55*euphoria+30*euphoria*euphoria)*breath;
+  const sunR=(45+203*Math.pow(u,0.4)+12*euphoria)*breath;
 
   ctx.save();
-  ctx.translate(cx,cy);
+  const vib=(archetype==='boil')?euphoria*euphoria*3.2:0;
+  ctx.translate(cx+(vib?(Math.random()-0.5)*vib*2:0),cy+(vib?(Math.random()-0.5)*vib*2:0));
 
   /* Núcleo chispa inicial que se funde suavemente hacia la silueta */
   const sparkFade=Math.max(0,1-u*3.2);
@@ -10334,44 +10350,47 @@ function drawLivingFlame(ts){
     ctx.restore();
   }
 
-  const shapeAlpha=Math.min(1,u*2.6);
+  const shapeAlpha=Math.min(1,0.55+u*2.2);
   if(shapeAlpha>0.01){
     ctx.globalAlpha=shapeAlpha;
     ctx.rotate(rot);
 
-    if(shape==='alba'){
-      /* MUJER 1 · Alba — sol mínimo de rayos finos, tiza pálida */
-      const rays=14;
+    if(shape==='seda'){
+      /* MUJER 1 · Seda — sol de hilos finos como seda, delicado y sereno */
+      const rays=cfg.rays||28;
       ctx.save();
-      ctx.shadowColor=pal.lava2||pal.outerMid;ctx.shadowBlur=6+10*u;
+      ctx.shadowColor=pal.lava2||pal.outerMid;ctx.shadowBlur=4+8*u;
       for(let i=0;i<rays;i++){
-        const gate=i*0.045;
-        const vis=Math.max(0,Math.min(1,(u-gate)/0.30));
+        const gate=i*0.028;
+        const vis=Math.max(0,Math.min(1,(u-gate)/0.28));
         if(vis<=0.01)continue;
-        const a=(i*Math.PI*2)/rays;
-        const rLen=sunR*(0.72+0.55*u+0.28*euphoria)*(0.82+0.36*rnd(i+3));
-        const baseW=Math.max(0.9,sunR*(0.016+0.010*rnd(i+11)));
-        const sway=Math.sin(t*1.3+i*1.7)*sunR*0.05;
-        ctx.save();ctx.rotate(a);ctx.globalAlpha*=vis*(0.75+0.25*u);
+        const a=(i*Math.PI*2)/rays+rnd(i+9)*0.06;
+        const kind=i%5;
+        const rLen=sunR*(kind===0?(1.55+0.75*u):(kind===1?(0.95+0.55*u):(kind===2?(1.25+0.65*u):(kind===3?(0.80+0.45*u):(1.45+0.70*u)))))*(0.85+0.30*rnd(i+3));
+        const baseW=Math.max(0.7,sunR*(0.006+0.006*rnd(i+11)));
+        const sway=Math.sin(t*0.9+i*1.9)*sunR*0.06;
+        ctx.save();ctx.rotate(a);ctx.globalAlpha*=vis*(0.55+0.45*u);
         const rg=ctx.createLinearGradient(sunR*0.30,0,rLen,0);
-        rg.addColorStop(0,pal.core||'#FFF9E8');rg.addColorStop(0.55,pal.outerMid);rg.addColorStop(1,'rgba(240,212,145,0)');
+        rg.addColorStop(0,pal.core||'#FFF9E8');rg.addColorStop(0.55,pal.outerMid);rg.addColorStop(1,'rgba(201,168,106,0)');
         ctx.strokeStyle=rg;ctx.lineWidth=baseW;ctx.lineCap='round';
-        ctx.beginPath();ctx.moveTo(sunR*0.34,0);
-        ctx.quadraticCurveTo(sunR*0.34+rLen*0.45,sway,sunR*0.34+rLen,sway*0.4);
+        ctx.beginPath();ctx.moveTo(sunR*0.30,0);
+        if(kind===4){
+          ctx.quadraticCurveTo(sunR*0.30+rLen*0.28,sway,sunR*0.30+rLen*0.45,sway*0.5);
+          ctx.moveTo(sunR*0.30+rLen*0.62,sway*0.35);
+          ctx.quadraticCurveTo(sunR*0.30+rLen*0.85,sway*0.2,sunR*0.30+rLen,sway*0.1);
+        }else{
+          ctx.quadraticCurveTo(sunR*0.30+rLen*0.45,sway,sunR*0.30+rLen,sway*0.4);
+        }
         ctx.stroke();
         ctx.restore();
       }
       const dg=ctx.createRadialGradient(-sunR*0.06,-sunR*0.06,sunR*0.03,0,0,sunR*0.46);
-      dg.addColorStop(0,'#FFFFFF');dg.addColorStop(0.45,pal.core);dg.addColorStop(1,pal.outerMid);
+      dg.addColorStop(0,'#FFF8DC');dg.addColorStop(0.45,pal.core);dg.addColorStop(1,pal.outerMid);
       ctx.fillStyle=dg;ctx.beginPath();ctx.arc(0,0,sunR*0.44,0,Math.PI*2);ctx.fill();
-      ctx.strokeStyle='rgba(255,250,240,0.75)';ctx.lineWidth=Math.max(1,sunR*0.018);
-      ctx.beginPath();ctx.arc(0,0,sunR*0.58,0,Math.PI*2);ctx.stroke();
-      if(euphoria>0.05){
-        ctx.globalAlpha=shapeAlpha*euphoria*0.8;
-        ctx.strokeStyle='#FFFFFF';ctx.lineWidth=1.4;
-        ctx.beginPath();ctx.arc(0,0,sunR*(1.02+0.10*euphoria),0,Math.PI*2);ctx.stroke();
-        ctx.globalAlpha=shapeAlpha;
-      }
+      mottleDisc(ctx,sunR*0.44,pal,3,22,0.35);
+      shadeDisc(ctx,sunR*0.44,pal);
+      ctx.strokeStyle='rgba(201,168,106,0.65)';ctx.lineWidth=Math.max(1,sunR*0.014);
+      ctx.beginPath();ctx.arc(0,0,sunR*0.44,0,Math.PI*2);ctx.stroke();
       ctx.restore();
     }else if(shape==='lucero'){
       /* MUJER 2 · Lucero — estrella de 4 puntas, pan de oro suave, centro de anillos */
@@ -10411,71 +10430,76 @@ function drawLivingFlame(ts){
       const cg=ctx.createRadialGradient(-sunR*0.05,-sunR*0.05,sunR*0.03,0,0,sunR*0.40);
       cg.addColorStop(0,'#FFFFFF');cg.addColorStop(0.5,pal.core);cg.addColorStop(1,pal.outerMid);
       ctx.fillStyle=cg;ctx.beginPath();ctx.arc(0,0,sunR*0.38,0,Math.PI*2);ctx.fill();
+      mottleDisc(ctx,sunR*0.38,pal,5,26,0.45);
+      shadeDisc(ctx,sunR*0.38,pal);
       ctx.strokeStyle='rgba(255,252,240,0.9)';ctx.lineWidth=Math.max(1.2,sunR*0.028);
       ctx.beginPath();ctx.arc(0,0,sunR*0.27,0,Math.PI*2);ctx.stroke();
       ctx.beginPath();ctx.arc(0,0,sunR*0.16,0,Math.PI*2);ctx.stroke();
       ctx.restore();
-    }else if(shape==='marea'){
-      /* MUJER 3 · Marea Dorada — rayos largos ondulados, acuarela dorada fluida */
-      const rays=18;
+    }else if(shape==='aurea'){
+      /* MUJER 3 · Áurea — sol plano de rayos alternos (rectos y ondulados), oro rosa delicado */
+      const rays=cfg.rays||20;
       ctx.save();
-      ctx.shadowColor=pal.lava2||pal.outerMid;ctx.shadowBlur=14+26*u;
+      ctx.shadowColor=pal.lava2||pal.outerMid;ctx.shadowBlur=12+22*u;
       for(let i=0;i<rays;i++){
-        const vis=i%2===0?1:Math.max(0,Math.min(1,(u-0.20)/0.38));
+        const vis=i%2===0?1:Math.max(0,Math.min(1,(u-0.18)/0.36));
         if(vis<=0.01)continue;
         const a=(i*Math.PI*2)/rays;
-        const rLen=sunR*(0.85+0.75*u+0.15*euphoria)*(0.72+0.48*rnd(i+7));
-        const baseW=sunR*(0.055+0.03*rnd(i+13));
-        const phase=t*0.9+i*1.35;
+        const isStraight=(i%2===0);
+        const rLen=sunR*(isStraight?(1.05+0.60*u+0.14*euphoria):(0.88+0.55*u+0.12*euphoria))*(0.85+0.30*rnd(i+7));
+        const baseW=sunR*(isStraight?0.075:0.06);
+        const phase=t*0.8+i*1.2;
         ctx.save();ctx.rotate(a);ctx.globalAlpha*=vis*(0.85+0.15*u);
-        const rg=ctx.createLinearGradient(sunR*0.30,0,rLen,0);
-        rg.addColorStop(0,'#FFFFFF');rg.addColorStop(0.30,pal.core);rg.addColorStop(0.70,pal.outerMid);rg.addColorStop(1,'rgba(232,169,59,0)');
+        const rg=ctx.createLinearGradient(sunR*0.34,0,rLen,0);
+        rg.addColorStop(0,'#FFFFFF');rg.addColorStop(0.30,pal.core);rg.addColorStop(0.70,pal.outerMid);rg.addColorStop(1,'rgba(216,138,90,0)');
         ctx.fillStyle=rg;
-        wavyRay(sunR*0.30,rLen,baseW,phase,2.2,sunR*0.11);
-        ctx.fill();
+        if(isStraight){
+          ctx.beginPath();
+          ctx.moveTo(sunR*0.34,-baseW);
+          ctx.quadraticCurveTo(rLen*0.55,-baseW*0.28,rLen,0);
+          ctx.quadraticCurveTo(rLen*0.55,baseW*0.28,sunR*0.34,baseW);
+          ctx.closePath();ctx.fill();
+        }else{
+          wavyRay(sunR*0.34,rLen,baseW,phase,1.8,sunR*0.09);
+          ctx.fill();
+        }
         ctx.restore();
       }
-      const wg=ctx.createRadialGradient(-sunR*0.08,-sunR*0.08,sunR*0.04,0,0,sunR*0.52);
-      wg.addColorStop(0,'#FFFFFF');wg.addColorStop(0.38,pal.core);wg.addColorStop(0.75,pal.lava2||pal.outerMid);wg.addColorStop(1,pal.outerMid);
-      ctx.fillStyle=wg;ctx.beginPath();ctx.arc(0,0,sunR*0.50,0,Math.PI*2);ctx.fill();
-      ctx.strokeStyle='rgba(255,246,220,0.55)';ctx.lineWidth=Math.max(1.2,sunR*0.022);
+      const wg=ctx.createRadialGradient(-sunR*0.08,-sunR*0.08,sunR*0.04,0,0,sunR*0.56);
+      wg.addColorStop(0,'#FFF9F0');wg.addColorStop(0.38,pal.core);wg.addColorStop(0.75,pal.lava2||pal.outerMid);wg.addColorStop(1,pal.outerMid);
+      ctx.fillStyle=wg;ctx.beginPath();ctx.arc(0,0,sunR*0.54,0,Math.PI*2);ctx.fill();
+      mottleDisc(ctx,sunR*0.54,pal,7,30,0.5);
+      shadeDisc(ctx,sunR*0.54,pal);
+      ctx.strokeStyle='rgba(255,243,226,0.6)';ctx.lineWidth=Math.max(1.2,sunR*0.02);
       ctx.beginPath();ctx.arc(0,0,sunR*0.62,0,Math.PI*2);ctx.stroke();
       ctx.restore();
-    }else if(shape==='forja'){
-      /* HOMBRE 1 · Forja — rayos gruesos de latón cepillado, fuerza de fragua */
-      const rays=16;
+    }else if(shape==='corona'){
+      /* HOMBRE 1 · Corona — sol grande de rayos largos ondulados, corona dorada */
+      const rays=cfg.rays||24;
       ctx.save();
       ctx.shadowColor=pal.outerMid;ctx.shadowBlur=16+30*u;
       for(let i=0;i<rays;i++){
-        const vis=i%2===0?1:Math.max(0,Math.min(1,(u-0.16)/0.38));
+        const vis=i%2===0?1:Math.max(0,Math.min(1,(u-0.14)/0.36));
         if(vis<=0.01)continue;
         const a=(i*Math.PI*2)/rays;
-        const rLen=sunR*(0.88+0.68*u+0.14*euphoria)*(0.78+0.42*rnd(i+17));
-        const baseW=sunR*(0.10+0.035*rnd(i+23));
-        const phase=t*0.7+i*1.1;
+        const rLen=sunR*(1.15+0.85*u+0.22*euphoria)*(0.75+0.45*rnd(i+17));
+        const baseW=sunR*(0.055+0.03*rnd(i+23));
+        const phase=t*0.9+i*1.15;
         ctx.save();ctx.rotate(a);ctx.globalAlpha*=vis;
         const rg=ctx.createLinearGradient(sunR*0.40,0,rLen,0);
-        rg.addColorStop(0,pal.core);rg.addColorStop(0.45,pal.lava2||pal.outerMid);rg.addColorStop(0.85,pal.outerMid);rg.addColorStop(1,'rgba(224,126,26,0)');
+        rg.addColorStop(0,pal.core);rg.addColorStop(0.45,pal.lava2||pal.outerMid);rg.addColorStop(0.85,pal.outerMid);rg.addColorStop(1,'rgba(240,180,41,0)');
         ctx.fillStyle=rg;
-        wavyRay(sunR*0.40,rLen,baseW,phase,1.8,sunR*0.09);
+        wavyRay(sunR*0.40,rLen,baseW,phase,2.2,sunR*0.11);
         ctx.fill();
         ctx.restore();
       }
-      const steps=48;
-      ctx.beginPath();
-      for(let i=0;i<=steps;i++){
-        const a=(i/steps)*Math.PI*2;
-        const wob=1+(0.02+0.025*u)*(Math.sin(a*5+t*1.0)+0.6*Math.cos(a*9-t*0.8));
-        const r=sunR*0.86*wob;
-        if(i===0)ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r);
-        else ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);
-      }
-      ctx.closePath();
-      const fg=ctx.createRadialGradient(-sunR*0.20,-sunR*0.20,sunR*0.05,0,0,sunR*0.92);
-      fg.addColorStop(0,'#FFFDF2');fg.addColorStop(0.24,pal.core||'#FFE391');fg.addColorStop(0.58,pal.lava2||pal.outerMid);fg.addColorStop(0.84,pal.outerMid);fg.addColorStop(1,pal.outerBot||'#6E3406');
-      ctx.fillStyle=fg;ctx.fill();
-      ctx.strokeStyle='rgba(255,244,200,0.48)';ctx.lineWidth=Math.max(1.2,sunR*0.028);
-      ctx.beginPath();ctx.arc(0,0,sunR*0.64,0,Math.PI*2);ctx.stroke();
+      const fg=ctx.createRadialGradient(-sunR*0.15,-sunR*0.15,sunR*0.05,0,0,sunR*0.58);
+      fg.addColorStop(0,'#FFFDF2');fg.addColorStop(0.24,pal.core||'#FFE391');fg.addColorStop(0.58,pal.lava2||pal.outerMid);fg.addColorStop(0.84,pal.outerMid);fg.addColorStop(1,pal.outerBot||'#7A4E10');
+      ctx.fillStyle=fg;ctx.beginPath();ctx.arc(0,0,sunR*0.56,0,Math.PI*2);ctx.fill();
+      mottleDisc(ctx,sunR*0.56,pal,11,34,0.55);
+      shadeDisc(ctx,sunR*0.56,pal);
+      ctx.strokeStyle='rgba(255,248,220,0.55)';ctx.lineWidth=Math.max(1.2,sunR*0.025);
+      ctx.beginPath();ctx.arc(0,0,sunR*0.62,0,Math.PI*2);ctx.stroke();
       ctx.restore();
     }else if(shape==='medalla'){
       /* HOMBRE 2 · Medalla de Oro — medallón repujado en oro, relieve 3D, fondo rojo profundo */
@@ -10521,6 +10545,8 @@ function drawLivingFlame(ts){
       const hg=ctx.createRadialGradient(-sunR*0.18,-sunR*0.18,sunR*0.04,0,0,sunR*0.70);
       hg.addColorStop(0,'#FFFDF5');hg.addColorStop(0.30,pal.core);hg.addColorStop(0.68,pal.lava2||pal.outerMid);hg.addColorStop(1,pal.outerBot||'#6E4E08');
       ctx.fillStyle=hg;ctx.beginPath();ctx.arc(0,0,sunR*0.66,0,Math.PI*2);ctx.fill();
+      mottleDisc(ctx,sunR*0.66,pal,13,40,0.6);
+      shadeDisc(ctx,sunR*0.66,pal);
       ctx.save();
       ctx.globalAlpha=0.16+0.10*u;
       ctx.fillStyle='#7A5A08';
@@ -10563,6 +10589,8 @@ function drawLivingFlame(ts){
       const eg=ctx.createRadialGradient(-sunR*0.12,-sunR*0.12,sunR*0.04,0,0,sunR*0.58);
       eg.addColorStop(0,'#FFFFFF');eg.addColorStop(0.36,pal.core);eg.addColorStop(0.76,pal.lava2||pal.outerMid);eg.addColorStop(1,pal.outerBot);
       ctx.fillStyle=eg;ctx.beginPath();ctx.arc(0,0,sunR*0.56,0,Math.PI*2);ctx.fill();
+      mottleDisc(ctx,sunR*0.56,pal,17,32,0.55);
+      shadeDisc(ctx,sunR*0.56,pal);
       const ringR=[0.46,0.36,0.26];
       ringR.forEach((rr,idx)=>{
         const vis=Math.max(0,Math.min(1,(u-0.10-idx*0.12)/0.30));
@@ -10577,14 +10605,60 @@ function drawLivingFlame(ts){
       ctx.fillStyle='#FFFBE8';ctx.beginPath();ctx.arc(0,0,Math.max(2.5,sunR*0.07),0,Math.PI*2);ctx.fill();
       ctx.restore();
     }
+    /* Digievolución del 100%: el arquetipo decide el éxtasis.
+       Hombres (boil): ebullición — el sol hierve, erupciona y vibra.
+       Mujeres (serene): paz — el sol se aquieta, se vuelve pleno y sereno. */
+    if(euphoria>0.05){
+      if(archetype==='boil'){
+        /* Bucles de plasma que erupcionan del borde y caen (prominencias solares) */
+        const loops=3+Math.floor(euphoria*2);
+        for(let l=0;l<loops;l++){
+          const a0=(l*(Math.PI*2)/loops)+t*0.25+Math.sin(t*0.7+l)*0.3;
+          const R0=sunR*(0.92+0.06*Math.sin(t*1.3+l*2.1));
+          const reach=sunR*(0.55+0.75*euphoria)*(0.8+0.4*Math.abs(Math.sin(l*3.7+t*0.5)));
+          const spread=0.55+0.35*euphoria;
+          const x0=Math.cos(a0)*R0,y0=Math.sin(a0)*R0;
+          const x1=Math.cos(a0+spread)*R0,y1=Math.sin(a0+spread)*R0;
+          const mx=Math.cos(a0+spread/2)*(R0+reach),my=Math.sin(a0+spread/2)*(R0+reach);
+          ctx.save();
+          ctx.globalAlpha=shapeAlpha*euphoria*(0.55+0.3*Math.sin(t*2+l));
+          ctx.strokeStyle=pal.lava2||pal.outerMid;ctx.lineWidth=Math.max(2,sunR*0.035);ctx.lineCap='round';
+          ctx.beginPath();ctx.moveTo(x0,y0);ctx.quadraticCurveTo(mx,my,x1,y1);ctx.stroke();
+          ctx.strokeStyle='rgba(255,240,200,0.85)';ctx.lineWidth=Math.max(1,sunR*0.014);
+          ctx.beginPath();ctx.moveTo(x0,y0);ctx.quadraticCurveTo(mx,my,x1,y1);ctx.stroke();
+          ctx.restore();
+        }
+        /* Superficie hirviendo: celdas brillantes que bullen sobre el disco */
+        ctx.save();
+        ctx.globalAlpha=shapeAlpha*euphoria*0.8;
+        for(let b=0;b<26;b++){
+          const ba=(b*2.39996+Math.sin(t*3+b)*0.6)%(Math.PI*2);
+          const bd=sunR*(0.10+0.55*Math.abs(Math.sin(b*12.9898+t*1.7)));
+          const br=Math.max(1.2,sunR*(0.018+0.02*Math.abs(Math.sin(b*7.7+t*2.3))));
+          ctx.fillStyle=(b%3===0)?'rgba(255,255,255,0.9)':(pal.lava2||pal.outerMid);
+          ctx.beginPath();ctx.arc(Math.cos(ba)*bd,Math.sin(ba)*bd,br,0,Math.PI*2);ctx.fill();
+        }
+        ctx.restore();
+      }else{
+        /* Paz y ternura: anillo de luz perfecto y sereno alrededor del sol */
+        ctx.save();
+        ctx.globalAlpha=shapeAlpha*euphoria*0.85;
+        ctx.strokeStyle='rgba(255,252,240,0.9)';ctx.lineWidth=Math.max(1.2,sunR*0.016);
+        ctx.beginPath();ctx.arc(0,0,sunR*(1.18+0.03*euphoria),0,Math.PI*2);ctx.stroke();
+        ctx.globalAlpha=shapeAlpha*euphoria*0.4;
+        ctx.strokeStyle=pal.lava2||pal.outerMid;ctx.lineWidth=Math.max(1,sunR*0.010);
+        ctx.beginPath();ctx.arc(0,0,sunR*(1.34+0.04*euphoria),0,Math.PI*2);ctx.stroke();
+        ctx.restore();
+      }
+    }
     /* Corona de euforia: estrías de luz que solo aparecen cerca del 100% */
     if(euphoria>0.03){
       ctx.save();
-      ctx.globalAlpha=euphoria*0.5;
+      ctx.globalAlpha=euphoria*(archetype==='boil'?0.65:0.35);
       const cRays=28;
       for(let i=0;i<cRays;i++){
         const a=(i*Math.PI*2)/cRays+rot*0.4;
-        const len=sunR*(1.7+0.9*euphoria)*(0.75+0.5*rnd(i+21));
+        const len=sunR*((archetype==='boil'?1.7:1.45)+0.9*euphoria)*(0.75+0.5*rnd(i+21));
         const wdt=Math.max(1,sunR*0.02*(0.6+0.8*rnd(i+33)));
         ctx.save();ctx.rotate(a);
         const cg2=ctx.createLinearGradient(sunR*0.9,0,len,0);
@@ -10608,15 +10682,15 @@ function drawLivingFlame(ts){
 
   /* 4. Partículas solares flotando en la atmósfera (crecen suavemente hasta 100%) */
   if(u>0.06){
-    const maxSparks=Math.round(6+55*Math.pow(u,1.15)+55*euphoria);
+    const maxSparks=Math.round(6+55*Math.pow(u,1.15)+(archetype==='boil'?70:25)*euphoria);
     while(flameSparks.length<maxSparks){
       const a=Math.random()*Math.PI*2;
       const d=sunR*(0.6+Math.random()*1.4);
       flameSparks.push({
         x:cx+Math.cos(a)*d,
         y:cy+Math.sin(a)*d,
-        vy:-0.35-Math.random()*1.05,
-        vx:(Math.random()-0.5)*0.85,
+        vy:(archetype==='serene'?-0.15-Math.random()*0.4:-0.35-Math.random()*1.05),
+        vx:(Math.random()-0.5)*(archetype==='serene'?0.3:0.85),
         r:1.2+Math.random()*2.3+0.8*euphoria,
         life:Math.random()
       });
@@ -10651,7 +10725,7 @@ if($('pebVesselBar')){
     const vk=b.dataset.vessel;
     const cfg=PEB_VESSELS[vk];
     if(cfg && cfg.pro && !isPro()){
-      openPaywall('Desbloquea los soles exclusivos (Lucero, Marea Dorada, Medalla de Oro y Emblema) con Wavy Pro.');
+      openPaywall('Desbloquea los soles exclusivos (Lucero, Áurea, Medalla de Oro y Emblema) con Wavy Pro.');
       return;
     }
     S.pebVessel=vk;
@@ -10712,8 +10786,8 @@ function flameView(){
   startFlameAnim();
   p.classList.toggle('kept',kept);
   p.classList.toggle('low',!kept && v<35);
-  $('fv').textContent=v>=97?'¡100% plenitud! Tu hábito está vivo y brillando':(v<=8?'Brasa viva (mínimo 5%) · Tu capacidad de volver sigue intacta':(kept?'Llama encendida y vibrante hoy':(v>35?'Llama cálida y estable':'Brasa suave · Avívala con tu presencia')));
-  $('fp').textContent=Math.round(v);
+  if($('fv'))$('fv').textContent=v>=97?'¡100% plenitud! Tu hábito está vivo y brillando':(v<=8?'Brasa viva (mínimo 5%) · Tu capacidad de volver sigue intacta':(kept?'Llama encendida y vibrante hoy':(v>35?'Llama cálida y estable':'Brasa suave · Avívala con tu presencia')));
+  if($('fp'))$('fp').textContent=Math.round(v);
   if($('pebFill'))$('pebFill').style.width=Math.round(v)+'%';
 
   const decayEl=$('pebDecayCountdown');
@@ -10744,7 +10818,7 @@ function flameView(){
   $('pb').textContent=cd>0?'Cuidada · '+Math.ceil(cd/6e4)+'m':(kept?'Avivar llama':'Hacer práctica →');
   const wdCd=Math.max(0,15000-(Date.now()-(S.lastKindle||0)));
   $('wd').disabled=(wdCd>0 || !S.following.length);
-  $('as').textContent='Vínculos · '+S.following.length;
+  if($('as'))$('as').textContent='Vínculos · '+S.following.length;
 }
 function flare(){const l=$('pd');if(!l)return;l.classList.remove('flare');void l.getBoundingClientRect();l.classList.add('flare');setTimeout(()=>l.classList.remove('flare'),1200)}
 function pulses(){
@@ -10979,11 +11053,11 @@ const HELP_GUIDES={
     ]
   },
   'v-today:constancy':{
-    eyebrow:'Hoy · Mi constancia',
+    eyebrow:'Hoy · Tu sol',
     title:'Tu sol vivo',
     items:[
-      ['Selector de soles','Elige uno de los 6 soles (1 libre y 2 Pro por género): Alba, Lucero y Marea Dorada para ella; Forja, Medalla de Oro y Emblema para él. Cada uno tiene su propia textura.'],
-      ['De 5% a 100%, sin saltos','Tu sol nunca baja de 5% y crece de forma continua al respirar en Costa, hacer check-in o escribir. La máxima euforia solo llega al 100%.'],
+      ['Selector de soles','Elige uno de los 6 soles (1 libre y 2 Pro por género): Seda, Lucero y Áurea para ella; Corona, Medalla de Oro y Emblema para él. Cada uno tiene su propio fondo, movimiento, halo y digievolución.'],
+      ['De 5% a 100%, sin saltos','Tu sol nunca baja de 5% y crece de forma continua y visible al respirar en Costa, hacer check-in o escribir. Al 100% llega la digievolución: en ellos, ebullición y fuerza total; en ellas, paz y ternura absolutas.'],
       ['Vínculos y racha','Al encender tu día mantienes abierta la sintonía con tu círculo y sumas días reales de cuidado.']
     ]
   },
