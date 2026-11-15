@@ -10132,10 +10132,10 @@ function addFuel(n){S.fuel={v:Math.min(100,fuel()+n),t:Date.now()};save();flameV
 const PEB_LEGACY_MAP={fuente:'cuarzo',musa:'lavanda',nido:'ororosa',piedra:'ambar',horizonte:'cobalto',brasa:'aurora'};
 const PEB_VESSELS={
   cuarzo:{
-    title:'Alba',mode:'female',short:'Alba',pro:false,relic:'#DF8068',
-    shape:'alba_petals',rotSpeed:0.05,rays:12,pctColor:'#683B30',bgMat:'ivory_blush',
-    motion:{freq:1.25,amp:6,breathAmp:0.024},
-    pal:{bg:'#F7EAE2',bg2:'#F7EAE2',disc:'#E48870',disc2:'#D6735B',ray:'#EA9C7E',ray2:'#DF8068',spark:'#E59678'}
+    title:'Alba',mode:'female',short:'Alba',pro:false,relic:'#D6735B',
+    shape:'alba_ribbons',rotSpeed:0.045,rays:16,pctColor:'#3E4D3C',bgMat:'sage_ivory',
+    motion:{freq:1.2,amp:6,breathAmp:0.022},
+    pal:{bg:'#DCE3D3',bg2:'#DCE3D3',disc:'#E8B878',disc2:'#DF9E58',ray:'#D6735B',ray2:'#E89C7A',spark:'#DF8668'}
   },
   lavanda:{
     title:'Sol Crema',mode:'female',short:'Crema',pro:true,relic:'#D97C36',
@@ -10325,6 +10325,64 @@ function drawLivingFlame(ts){
     ctx.rotate(rot);
     ctx.globalAlpha=sunVis;
 
+    /* Acompañamiento secundario orgánico (5% -> 100%) calcando la estética y paleta propia de cada sol */
+    if(u>0.16){
+      const acc=Math.max(0,Math.min(1,(u-0.16)/0.84));
+      const pulseA=0.5+0.5*Math.sin(t*1.15);
+      const pulseB=0.5+0.5*Math.sin(t*0.85+1.9);
+      ctx.save();
+      /* Halos de pigmento mate que aparecen y desaparecen suavemente detrás del sol */
+      const ring1R=baseR*(1.45+0.55*acc+0.06*Math.sin(t*1.1));
+      ctx.globalAlpha=sunVis*(0.06+0.10*acc*pulseA);
+      ctx.fillStyle=pal.disc;
+      ctx.beginPath();ctx.arc(0,0,ring1R,0,Math.PI*2);ctx.fill();
+      if(u>0.45){
+        const acc2=(u-0.45)/0.55;
+        const ring2R=baseR*(2.05+0.68*acc2+0.08*Math.cos(t*0.9));
+        ctx.globalAlpha=sunVis*(0.04+0.09*acc2*pulseB);
+        ctx.fillStyle=pal.ray2||pal.ray;
+        ctx.beginPath();ctx.arc(0,0,ring2R,0,Math.PI*2);ctx.fill();
+      }
+      /* Órbitas grabadas sutiles para Litografía */
+      if(shape==='lithograph_sun' && u>0.35){
+        const lAcc=(u-0.35)/0.65;
+        ctx.save();ctx.rotate(-t*0.08);
+        ctx.strokeStyle=pal.ray2||'#ECD98E';
+        ctx.lineWidth=Math.max(1,baseR*0.012);
+        ctx.setLineDash([4,9]);
+        ctx.globalAlpha=sunVis*(0.16+0.26*lAcc*pulseA);
+        ctx.beginPath();ctx.arc(0,0,baseR*(2.2+0.35*lAcc),0,Math.PI*2);ctx.stroke();
+        ctx.restore();
+      }
+      /* Chispas / motas artesanales en la tinta o gouache propio de cada sol */
+      const sparkTotal=Math.round(6+20*Math.pow(acc,1.1));
+      for(let s=0;s<sparkTotal;s++){
+        const phase=(t*0.48+pebHash(s*4.7)*6.28)%(Math.PI*2);
+        const fade=Math.max(0,Math.sin(phase));
+        if(fade<0.05)continue;
+        const sAng=pebHash(s*7.3)*Math.PI*2+t*0.03*(s%2===0?1:-1);
+        const sDist=baseR*(1.55+pebHash(s*11.1)*(0.9+0.85*acc));
+        const sx=Math.cos(sAng)*sDist,sy=Math.sin(sAng)*sDist;
+        ctx.globalAlpha=sunVis*fade*(0.28+0.52*acc);
+        ctx.fillStyle=(s%3===0)?pal.disc:(s%2===0?(pal.ray2||pal.ray):pal.spark);
+        if(shape==='ochre_sketch' || shape==='lithograph_sun'){
+          /* Pequeño trazo/raya artesanal coherente con el grabado o boceto */
+          ctx.strokeStyle=ctx.fillStyle;
+          ctx.lineWidth=Math.max(1.1,baseR*0.016);
+          ctx.lineCap='round';
+          const len=baseR*(0.06+0.07*pebHash(s*2.9));
+          ctx.beginPath();
+          ctx.moveTo(sx-Math.cos(sAng)*len*0.5,sy-Math.sin(sAng)*len*0.5);
+          ctx.lineTo(sx+Math.cos(sAng)*len*0.5,sy+Math.sin(sAng)*len*0.5);
+          ctx.stroke();
+        }else{
+          const sr=baseR*(0.022+0.026*pebHash(s*5.9));
+          ctx.beginPath();ctx.arc(sx,sy,sr,0,Math.PI*2);ctx.fill();
+        }
+      }
+      ctx.restore();
+    }
+
     if(shape==='flat_vermilion'){
       /* HOMBRE 1 · Sol Rojo Plano (gouache mate, disco amarillo limón pálido + 16 rayos irregulares bermellón) */
       const rays=16;
@@ -10439,21 +10497,24 @@ function drawLivingFlame(ts){
       ctx.beginPath();ctx.arc(baseR*0.14,baseR*0.18,baseR*0.52,0,Math.PI*2);ctx.fill();
       ctx.restore();
 
-    }else if(shape==='alba_petals'){
-      /* MUJER 1 · Alba (fondo marfil-rubor homogéneo + pétalos orgánicos suaves y redondeados en coral/salmón mate) */
-      const petals=12;
-      for(let i=0;i<petals;i++){
-        const a=(i*Math.PI*2)/petals+(pebHash(i*4.7)-0.5)*0.08;
-        const rLen=baseR*(1.58+pebHash(i*8.1)*0.24);
-        const bW=baseR*(0.28+pebHash(i*3.1)*0.05);
-        const tilt=(pebHash(i*5.3)-0.5)*baseR*0.14;
-        ctx.save();ctx.rotate(a);
-        ctx.fillStyle=i%2===0?pal.ray:pal.ray2;
+    }else if(shape==='alba_ribbons'){
+      /* MUJER 1 · Alba (fondo salvia-marfil homogéneo + listones/espirales botánicos curvos con puntas redondeadas + disco miel-crema) */
+      const ribbons=16;
+      for(let i=0;i<ribbons;i++){
+        const isPrimary=(i%2===0);
+        const tierVis=isPrimary?1:Math.max(0,Math.min(1,(u-0.22)/0.35));
+        if(tierVis<=0.02)continue;
+        const a=(i*Math.PI*2)/ribbons+(pebHash(i*4.7)-0.5)*0.07;
+        const rLen=baseR*(isPrimary?(1.82+pebHash(i*8.1)*0.24):(1.34+pebHash(i*5.3)*0.22))*tierVis;
+        const curl=(isPrimary?1:-1)*baseR*(0.24+pebHash(i*3.1)*0.10);
+        ctx.save();ctx.rotate(a);ctx.globalAlpha*=tierVis;
+        ctx.strokeStyle=isPrimary?pal.ray:pal.ray2;
+        ctx.lineWidth=Math.max(2.5,baseR*(isPrimary?0.095:0.068));
+        ctx.lineCap='round';
         ctx.beginPath();
-        ctx.moveTo(baseR*0.58,-bW);
-        ctx.bezierCurveTo(baseR*1.05,-bW*0.9+tilt,rLen*0.94,-bW*0.36+tilt,rLen,tilt*0.5);
-        ctx.bezierCurveTo(rLen*0.94,bW*0.36+tilt,baseR*1.05,bW*0.9+tilt,baseR*0.58,bW);
-        ctx.closePath();ctx.fill();
+        ctx.moveTo(baseR*0.62,0);
+        ctx.bezierCurveTo(baseR*1.02,curl*0.85,rLen*0.74,-curl*0.75,rLen,curl*0.22);
+        ctx.stroke();
         ctx.restore();
       }
       ctx.fillStyle=pal.disc;
@@ -10461,11 +10522,16 @@ function drawLivingFlame(ts){
       const aSteps=40;
       for(let i=0;i<=aSteps;i++){
         const a=(i/aSteps)*Math.PI*2;
-        const r=baseR*0.74*(1+0.012*Math.sin(a*6+1.1));
+        const r=baseR*0.68*(1+0.012*Math.sin(a*5+1.1));
         if(i===0)ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r);
         else ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);
       }
       ctx.closePath();ctx.fill();
+      /* Centro cálido sutil sin anillos tipo brújula */
+      ctx.save();ctx.clip();
+      ctx.globalAlpha=0.25;ctx.fillStyle=pal.disc2;
+      ctx.beginPath();ctx.arc(baseR*0.16,baseR*0.14,baseR*0.46,0,Math.PI*2);ctx.fill();
+      ctx.restore();
 
     }else if(shape==='ochre_sketch'){
       /* MUJER 2 · Sol Crema (inspiración The Mood Guide: disco ocre mate + ~32 rayos irregulares tipo boceto a mano + motitas) */
