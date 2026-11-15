@@ -2195,9 +2195,9 @@ summary::-webkit-details-marker{display:none}
 #sub-flame{padding-bottom:8px}
 #sub-flame .peb-actions .btn{white-space:nowrap;font-size:11px;padding:11px 10px}
 /* Colores de gema para cada estilo de Llama */
-[data-vessel="cuarzo"] .v-gem{--g1:#FFFDF6;--g2:#F2E3B8;--g3:#C4A35E}
-[data-vessel="lavanda"] .v-gem{--g1:#FFFBE0;--g2:#F5C84B;--g3:#A87608}
-[data-vessel="ororosa"] .v-gem{--g1:#FFF3E2;--g2:#E8A87C;--g3:#9A5A30}
+[data-vessel="cuarzo"] .v-gem{--g1:#FFF9F5;--g2:#EFC9B8;--g3:#C99A86}
+[data-vessel="lavanda"] .v-gem{--g1:#F5F0FF;--g2:#C9A8E8;--g3:#7A5A9A}
+[data-vessel="ororosa"] .v-gem{--g1:#FFF0E8;--g2:#E88A6A;--g3:#8A3A28}
 [data-vessel="ambar"] .v-gem{--g1:#FFF8DC;--g2:#F0B429;--g3:#8A5A10}
 [data-vessel="cobalto"] .v-gem{--g1:#FFF8DC;--g2:#D4A017;--g3:#7A1A10}
 [data-vessel="aurora"] .v-gem{--g1:#FFF3E0;--g2:#E07A4A;--g3:#8A1A10}
@@ -2709,10 +2709,6 @@ summary::-webkit-details-marker{display:none}
         </div>
         <div id="pebVesselBar" class="peb-vessels" role="group" aria-label="Elige tu sol"></div>
         <div class="peb-bar"><i id="pebFill"></i></div>
-        <div class="peb-actions">
-          <button class="btn" id="pb">Avivar sol</button>
-          <button class="btn soft" id="wd">Enviar luz</button>
-        </div>
       </div>
 
       <div id="devFlameBar" style="margin:10px 0 16px;padding:10px 12px;border:1px dashed var(--rule);border-radius:16px">
@@ -3399,7 +3395,7 @@ summary::-webkit-details-marker{display:none}
       </div>
       <!-- Versión de la app: sube una por ronda (v18, v19, v20…) para saber
            de un vistazo si la versión publicada ya trae los últimos cambios. -->
-      <div class="cover-version">v31</div>
+      <div class="cover-version">v32</div>
     </div>
   </div>
 </div>
@@ -10104,39 +10100,45 @@ function addFuel(n){S.fuel={v:Math.min(100,fuel()+n),t:Date.now()};save();flameV
 const PEB_LEGACY_MAP={fuente:'cuarzo',musa:'lavanda',nido:'ororosa',piedra:'ambar',horizonte:'cobalto',brasa:'aurora'};
 const PEB_VESSELS={
   cuarzo:{
-    title:'Seda',mode:'female',short:'Seda',pro:false,relic:'#C9A86A',
-    shape:'seda',archetype:'serene',rotSpeed:0.05,rays:28,
-    motion:{freq:1.10,amp:6,wScale:1.03,hScale:1.03,tongues:1,blobs:2,sparkMode:'drift',breathAmp:0.04},
-    pal:{glow:'rgba(226,196,130,',bgTop:'#f4ecda',bgBot:'#e0cfa8',outerTop:'#FFFDF6',outerMid:'#F2DFB0',outerBot:'#C9A86A',lava2:'#FFE9A8',midTop:'#FFFFFF',midBot:'#FBEEC8',core:'#FFFDF4',spark:'#D9B36A',ember:'#C9A86A'}
+    title:'Seda',mode:'female',short:'Seda',pro:false,relic:'#C99A86',
+    shape:'seda',archetype:'serene',rotSpeed:0,rays:28,
+    motion:{freq:1.10,amp:6,wScale:1.03,hScale:1.03,tongues:1,blobs:2,sparkMode:'drift',breathAmp:0},
+    wave:{n:3,spd:0.22},
+    pal:{glow:'rgba(232,184,160,',bgTop:'#f7ece8',bgBot:'#eed9d2',outerTop:'#FFF9F5',outerMid:'#EFC9B8',outerBot:'#C99A86',lava2:'#F2C4AE',midTop:'#FFFFFF',midBot:'#FBE4D8',core:'#FFFDF8',spark:'#E8B8A0',ember:'#C99A86'}
   },
   lavanda:{
-    title:'Lucero',mode:'female',short:'Lucero',pro:true,relic:'#E8B84B',
-    shape:'lucero',archetype:'serene',rotSpeed:0.14,rays:8,
-    motion:{freq:1.85,amp:12,wScale:1.06,hScale:1.06,tongues:2,blobs:3,sparkMode:'halo',breathAmp:0.055},
-    pal:{glow:'rgba(252,206,90,',bgTop:'#171204',bgBot:'#2e2408',outerTop:'#FFFBE0',outerMid:'#F5C84B',outerBot:'#9A6E08',lava2:'#FFE27A',midTop:'#FFFFFF',midBot:'#FFE89E',core:'#FFFDF6',spark:'#FFE27A',ember:'#E8B84B'}
+    title:'Lucero',mode:'female',short:'Lucero',pro:true,relic:'#A87AC9',
+    shape:'lucero',archetype:'serene',rotSpeed:0.03,rays:8,
+    motion:{freq:1.85,amp:12,wScale:1.06,hScale:1.06,tongues:2,blobs:3,sparkMode:'halo',breathAmp:0},
+    wave:{n:4,spd:0.38},
+    pal:{glow:'rgba(190,160,230,',bgTop:'#1a1420',bgBot:'#2e2138',outerTop:'#F5F0FF',outerMid:'#C9A8E8',outerBot:'#7A5A9A',lava2:'#D9C2F2',midTop:'#FFFFFF',midBot:'#E8DCF8',core:'#FBF8FF',spark:'#D9C2F2',ember:'#A87AC9'}
   },
   ororosa:{
-    title:'Áurea',mode:'female',short:'Áurea',pro:true,relic:'#D98A5A',
-    shape:'aurea',archetype:'serene',rotSpeed:-0.10,rays:20,
-    motion:{freq:2.0,amp:14,wScale:1.08,hScale:1.08,tongues:3,blobs:4,sparkMode:'burst',breathAmp:0.05},
-    pal:{glow:'rgba(232,150,90,',bgTop:'#1e0f0c',bgBot:'#3a1e16',outerTop:'#FFF3E2',outerMid:'#E8A87C',outerBot:'#8A4A28',lava2:'#FFB84D',midTop:'#FFFFFF',midBot:'#FFD9B0',core:'#FFF9F0',spark:'#FFB84D',ember:'#D98A5A'}
+    title:'Áurea',mode:'female',short:'Áurea',pro:true,relic:'#D96A4A',
+    shape:'aurea',archetype:'serene',rotSpeed:-0.05,rays:20,
+    motion:{freq:2.0,amp:14,wScale:1.08,hScale:1.08,tongues:3,blobs:4,sparkMode:'burst',breathAmp:0},
+    wave:{n:3,spd:0.5},
+    pal:{glow:'rgba(232,130,90,',bgTop:'#221014',bgBot:'#3d1c22',outerTop:'#FFF0E8',outerMid:'#E88A6A',outerBot:'#8A3A28',lava2:'#F2A080',midTop:'#FFFFFF',midBot:'#FFD9C2',core:'#FFF8F0',spark:'#F2A080',ember:'#D96A4A'}
   },
   ambar:{
     title:'Corona',mode:'male',short:'Corona',pro:false,relic:'#D9A441',
-    shape:'corona',archetype:'boil',rotSpeed:0.12,rays:24,
-    motion:{freq:2.2,amp:16,wScale:1.10,hScale:1.10,tongues:3,blobs:4,sparkMode:'rise',breathAmp:0.05},
+    shape:'corona',archetype:'boil',rotSpeed:0.10,rays:24,
+    motion:{freq:2.2,amp:16,wScale:1.10,hScale:1.10,tongues:3,blobs:4,sparkMode:'rise',breathAmp:0},
+    wave:{n:4,spd:0.6},
     pal:{glow:'rgba(240,180,70,',bgTop:'#160e04',bgBot:'#33200a',outerTop:'#FFF8DC',outerMid:'#F0B429',outerBot:'#7A4E10',lava2:'#FFD166',midTop:'#FFFFFF',midBot:'#FFDF8A',core:'#FFFDF2',spark:'#FFD166',ember:'#D9A441'}
   },
   cobalto:{
     title:'Medalla de Oro',mode:'male',short:'Medalla',pro:true,relic:'#D4A017',
-    shape:'medalla',archetype:'boil',rotSpeed:0.08,rays:22,
-    motion:{freq:1.6,amp:10,wScale:1.06,hScale:1.06,tongues:3,blobs:5,sparkMode:'fast',breathAmp:0.05},
+    shape:'medalla',archetype:'boil',rotSpeed:0.06,rays:22,
+    motion:{freq:1.6,amp:10,wScale:1.06,hScale:1.06,tongues:3,blobs:5,sparkMode:'fast',breathAmp:0},
+    wave:{n:3,spd:0.3},
     pal:{glow:'rgba(212,160,23,',bgTop:'#1a0808',bgBot:'#3a1210',outerTop:'#FFF8DC',outerMid:'#D4A017',outerBot:'#6E4E08',lava2:'#F2C94C',midTop:'#FFFFFF',midBot:'#F2D67A',core:'#FFFDF5',spark:'#F2C94C',ember:'#D4A017'}
   },
   aurora:{
     title:'Emblema',mode:'male',short:'Emblema',pro:true,relic:'#C0392B',
-    shape:'emblema',archetype:'boil',rotSpeed:-0.18,rays:20,
-    motion:{freq:2.6,amp:14,wScale:1.12,hScale:1.12,tongues:3,blobs:5,sparkMode:'burst',breathAmp:0.06},
+    shape:'emblema',archetype:'boil',rotSpeed:-0.08,rays:20,
+    motion:{freq:2.6,amp:14,wScale:1.12,hScale:1.12,tongues:3,blobs:5,sparkMode:'burst',breathAmp:0},
+    wave:{n:5,spd:0.45},
     pal:{glow:'rgba(220,90,50,',bgTop:'#160a0a',bgBot:'#2e1210',outerTop:'#FFF3E0',outerMid:'#E07A4A',outerBot:'#7A1A10',lava2:'#F2A05A',midTop:'#FFFFFF',midBot:'#F2B88A',core:'#FFF8EC',spark:'#F2A05A',ember:'#C0392B'}
   }
 };
@@ -10263,6 +10265,18 @@ function drawLivingFlame(ts){
     ctx.restore();
   }
 
+  /* Ondas expansivas del fondo: anillos que se abren desde el centro, con el color y el ritmo de cada sol */
+  const wv=cfg.wave||{n:3,spd:0.4};
+  for(let wi=0;wi<wv.n;wi++){
+    const ph=((t*wv.spd+wi/wv.n)%1);
+    const rr=(0.25+0.75*ph)*Math.min(w,h)*0.48;
+    ctx.save();
+    ctx.globalAlpha=(1-ph)*0.20*(0.3+0.7*u);
+    ctx.strokeStyle=pal.glow+'0.7)';
+    ctx.lineWidth=Math.max(1,2.5*(1-ph));
+    ctx.beginPath();ctx.arc(cx,cy,rr,0,Math.PI*2);ctx.stroke();
+    ctx.restore();
+  }
   /* 1. Halo solar orgánico continuo: solo inunda el lienzo completo en 100% */
   const maxCoverR=Math.hypot(w,h)*0.82;
   const haloR=18+(maxCoverR-18)*Math.pow(u,1.25)+Math.sin(t*mot.freq)*(3+9*u);
@@ -10274,12 +10288,12 @@ function drawLivingFlame(ts){
   ctx.fillStyle=hg;
   ctx.fillRect(0,0,w,h);
 
-  /* Halo secundario de éxtasis (88% -> 100%) suave y orgánico, sin rayas rectas */
+  /* Halo secundario de éxtasis: el color propio de cada sol (nunca blanco) */
   if(euphoria>0.01){
     ctx.save();
     ctx.globalAlpha=euphoria*0.55;
     const eg=ctx.createRadialGradient(cx,cy,w*0.04,cx,cy,maxCoverR*0.95);
-    eg.addColorStop(0,'rgba(255,250,235,0.65)');
+    eg.addColorStop(0,pal.glow+'0.5)');
     eg.addColorStop(0.35,pal.glow+'0.38)');
     eg.addColorStop(0.75,pal.glow+'0.14)');
     eg.addColorStop(1,pal.glow+'0)');
@@ -10329,12 +10343,11 @@ function drawLivingFlame(ts){
     }
     ctx.closePath();
   };
-  const breath=1+Math.sin(t*mot.freq)*(mot.breathAmp||0.045)*(0.25+0.75*u);
-  const sunR=(45+203*Math.pow(u,0.4)+12*euphoria)*breath;
+  const sunR=(10+238*Math.pow(u,0.33)+12*euphoria);
 
   ctx.save();
-  const vib=(archetype==='boil')?euphoria*euphoria*3.2:0;
-  ctx.translate(cx+(vib?(Math.random()-0.5)*vib*2:0),cy+(vib?(Math.random()-0.5)*vib*2:0));
+  const vib=(archetype==='boil')?euphoria*euphoria*1.1:0;
+  ctx.translate(cx+Math.sin(t*17)*vib,cy+Math.cos(t*15)*vib);
 
   /* Núcleo chispa inicial que se funde suavemente hacia la silueta */
   const sparkFade=Math.max(0,1-u*3.2);
@@ -10350,7 +10363,7 @@ function drawLivingFlame(ts){
     ctx.restore();
   }
 
-  const shapeAlpha=Math.min(1,0.55+u*2.2);
+  const shapeAlpha=Math.min(1,u*3.2);
   if(shapeAlpha>0.01){
     ctx.globalAlpha=shapeAlpha;
     ctx.rotate(rot);
@@ -10389,52 +10402,54 @@ function drawLivingFlame(ts){
       ctx.fillStyle=dg;ctx.beginPath();ctx.arc(0,0,sunR*0.44,0,Math.PI*2);ctx.fill();
       mottleDisc(ctx,sunR*0.44,pal,3,22,0.35);
       shadeDisc(ctx,sunR*0.44,pal);
-      ctx.strokeStyle='rgba(201,168,106,0.65)';ctx.lineWidth=Math.max(1,sunR*0.014);
+      ctx.strokeStyle='rgba(201,154,134,0.65)';ctx.lineWidth=Math.max(1,sunR*0.014);
       ctx.beginPath();ctx.arc(0,0,sunR*0.44,0,Math.PI*2);ctx.stroke();
       ctx.restore();
     }else if(shape==='lucero'){
-      /* MUJER 2 · Lucero — estrella de 4 puntas, pan de oro suave, centro de anillos */
+      /* MUJER 2 · Lucero — estrella que fluye (no brújula): brazos curvos, centro luminoso, destello lavanda */
       ctx.save();
-      ctx.shadowColor=pal.lava2||pal.outerMid;ctx.shadowBlur=10+22*u;
-      const arms=[[-Math.PI/2,0.95,0.65,0.25],[0,0.80,0.55,0.20],[Math.PI/2,0.95,0.65,0.25],[Math.PI,0.80,0.55,0.20]];
-      arms.forEach(([a,b0,bg,be],k)=>{
+      ctx.shadowColor=pal.lava2||pal.outerMid;ctx.shadowBlur=8+18*u;
+      /* 4 brazos curvos y fluidos, de longitudes orgánicas (ángulos levemente descentrados, no cardinales rígidos) */
+      const arms=[[-Math.PI/2,1.00,0.62,0.22,0.10],[0.12,0.72,0.50,0.16,-0.06],[Math.PI/2+0.10,0.92,0.58,0.20,0.08],[Math.PI-0.08,0.78,0.52,0.18,-0.04]];
+      arms.forEach(([a,b0,bg,be,curve],k)=>{
         const vis=Math.max(0,Math.min(1,(u-k*0.06)/0.30));
         if(vis<=0.01)return;
+        const tw=0.75+0.25*Math.sin(t*2.2+k*1.7);
         const len=sunR*(b0+bg*u+be*euphoria);
-        const baseW=sunR*(0.085+0.02*rnd(k+5));
-        ctx.save();ctx.rotate(a);ctx.globalAlpha*=vis;
-        const lg=ctx.createLinearGradient(sunR*0.16,0,len,0);
-        lg.addColorStop(0,'#FFFFFF');lg.addColorStop(0.35,pal.core);lg.addColorStop(0.75,pal.outerMid);lg.addColorStop(1,'rgba(245,200,75,0)');
+        const baseW=sunR*(0.075+0.018*rnd(k+5));
+        ctx.save();ctx.rotate(a);ctx.globalAlpha*=vis*tw;
+        const lg=ctx.createLinearGradient(sunR*0.14,0,len,0);
+        lg.addColorStop(0,'#FFFFFF');lg.addColorStop(0.35,pal.core);lg.addColorStop(0.75,pal.outerMid);lg.addColorStop(1,pal.glow+'0)');
         ctx.fillStyle=lg;
         ctx.beginPath();
-        ctx.moveTo(sunR*0.16,-baseW);
-        ctx.bezierCurveTo(len*0.40,-baseW*0.30,len*0.72,-baseW*0.10,len,0);
-        ctx.bezierCurveTo(len*0.72,baseW*0.10,len*0.40,baseW*0.30,sunR*0.16,baseW);
+        ctx.moveTo(sunR*0.14,-baseW);
+        ctx.bezierCurveTo(len*0.38,-baseW*0.42+curve*len*0.18,len*0.70,-baseW*0.12+curve*len*0.10,len,0);
+        ctx.bezierCurveTo(len*0.70,baseW*0.12+curve*len*0.10,len*0.38,baseW*0.42+curve*len*0.18,sunR*0.14,baseW);
         ctx.closePath();ctx.fill();
         ctx.restore();
       });
+      /* 4 puntas cortas entre los brazos, como destellos */
       for(let d=0;d<4;d++){
-        const a=(d*Math.PI*2)/4+Math.PI/4;
+        const a=(d*Math.PI*2)/4+Math.PI/4+0.12;
         const vis=Math.max(0,Math.min(1,(u-0.18-d*0.05)/0.30));
         if(vis<=0.01)continue;
-        const len=sunR*(0.45+0.40*u);
-        ctx.save();ctx.rotate(a);ctx.globalAlpha*=vis*0.9;
+        const tw=0.7+0.3*Math.sin(t*2.8+d*2.1);
+        const len=sunR*(0.42+0.38*u);
+        ctx.save();ctx.rotate(a);ctx.globalAlpha*=vis*0.9*tw;
         ctx.fillStyle=pal.outerMid;
         ctx.beginPath();
-        ctx.moveTo(sunR*0.20,-sunR*0.035);
-        ctx.quadraticCurveTo(len*0.6,-sunR*0.012,len,0);
-        ctx.quadraticCurveTo(len*0.6,sunR*0.012,sunR*0.20,sunR*0.035);
+        ctx.moveTo(sunR*0.18,-sunR*0.030);
+        ctx.quadraticCurveTo(len*0.6,-sunR*0.010,len,0);
+        ctx.quadraticCurveTo(len*0.6,sunR*0.010,sunR*0.18,sunR*0.030);
         ctx.closePath();ctx.fill();
         ctx.restore();
       }
+      /* Centro luminoso suave, SIN anillos concéntricos (no es brújula) */
       const cg=ctx.createRadialGradient(-sunR*0.05,-sunR*0.05,sunR*0.03,0,0,sunR*0.40);
       cg.addColorStop(0,'#FFFFFF');cg.addColorStop(0.5,pal.core);cg.addColorStop(1,pal.outerMid);
       ctx.fillStyle=cg;ctx.beginPath();ctx.arc(0,0,sunR*0.38,0,Math.PI*2);ctx.fill();
       mottleDisc(ctx,sunR*0.38,pal,5,26,0.45);
       shadeDisc(ctx,sunR*0.38,pal);
-      ctx.strokeStyle='rgba(255,252,240,0.9)';ctx.lineWidth=Math.max(1.2,sunR*0.028);
-      ctx.beginPath();ctx.arc(0,0,sunR*0.27,0,Math.PI*2);ctx.stroke();
-      ctx.beginPath();ctx.arc(0,0,sunR*0.16,0,Math.PI*2);ctx.stroke();
       ctx.restore();
     }else if(shape==='aurea'){
       /* MUJER 3 · Áurea — sol plano de rayos alternos (rectos y ondulados), oro rosa delicado */
@@ -10651,24 +10666,6 @@ function drawLivingFlame(ts){
         ctx.restore();
       }
     }
-    /* Corona de euforia: estrías de luz que solo aparecen cerca del 100% */
-    if(euphoria>0.03){
-      ctx.save();
-      ctx.globalAlpha=euphoria*(archetype==='boil'?0.65:0.35);
-      const cRays=28;
-      for(let i=0;i<cRays;i++){
-        const a=(i*Math.PI*2)/cRays+rot*0.4;
-        const len=sunR*((archetype==='boil'?1.7:1.45)+0.9*euphoria)*(0.75+0.5*rnd(i+21));
-        const wdt=Math.max(1,sunR*0.02*(0.6+0.8*rnd(i+33)));
-        ctx.save();ctx.rotate(a);
-        const cg2=ctx.createLinearGradient(sunR*0.9,0,len,0);
-        cg2.addColorStop(0,pal.glow+'0.55)');cg2.addColorStop(1,pal.glow+'0)');
-        ctx.strokeStyle=cg2;ctx.lineWidth=wdt;ctx.lineCap='round';
-        ctx.beginPath();ctx.moveTo(sunR*0.9,0);ctx.lineTo(len,0);ctx.stroke();
-        ctx.restore();
-      }
-      ctx.restore();
-    }
   }
   ctx.restore();
 
@@ -10814,10 +10811,11 @@ function flameView(){
       :'Si tu llama baja al mínimo, se pausa tu constancia. Cumple 1 práctica hoy para avivarla.';
   }
   const cd=Math.max(0,18e5-(Date.now()-(S.tend||0)));
-  $('pb').disabled=cd>0;
-  $('pb').textContent=cd>0?'Cuidada · '+Math.ceil(cd/6e4)+'m':(kept?'Avivar llama':'Hacer práctica →');
+  const pbEl=$('pb');
+  if(pbEl){pbEl.disabled=cd>0;pbEl.textContent=cd>0?'Cuidada · '+Math.ceil(cd/6e4)+'m':(kept?'Avivar llama':'Hacer práctica →');}
   const wdCd=Math.max(0,15000-(Date.now()-(S.lastKindle||0)));
-  $('wd').disabled=(wdCd>0 || !S.following.length);
+  const wdEl=$('wd');
+  if(wdEl)wdEl.disabled=(wdCd>0 || !S.following.length);
   if($('as'))$('as').textContent='Vínculos · '+S.following.length;
 }
 function flare(){const l=$('pd');if(!l)return;l.classList.remove('flare');void l.getBoundingClientRect();l.classList.add('flare');setTimeout(()=>l.classList.remove('flare'),1200)}
@@ -10828,7 +10826,7 @@ function pulses(){
 }
 function addPulse(dir,from){S.pulses.unshift({ts:Date.now(),from,dir});if(S.pulses.length>30)S.pulses.pop();save();pulses()}
 
-$('pb').onclick=()=>{
+if($('pb'))$('pb').onclick=()=>{
   if(!isPebeteroMaintained()){
     toast('Realiza 1 minuto de respiración o inicia una práctica de 60 s abajo para encender tu llama','er');
     switchMainView('v-breathe');
@@ -10877,7 +10875,7 @@ document.querySelectorAll('.q').forEach(q=>{
   };
 });
 
-$('wd').onclick=()=>{
+if($('wd'))$('wd').onclick=()=>{
   if(!S.following.length){toast('Agrega primero un vínculo en la pestaña Círculo','er');return}
   S.lastKindle=Date.now();
   addFuel(10);flare();
@@ -11056,8 +11054,8 @@ const HELP_GUIDES={
     eyebrow:'Hoy · Tu sol',
     title:'Tu sol vivo',
     items:[
-      ['Selector de soles','Elige uno de los 6 soles (1 libre y 2 Pro por género): Seda, Lucero y Áurea para ella; Corona, Medalla de Oro y Emblema para él. Cada uno tiene su propio fondo, movimiento, halo y digievolución.'],
-      ['De 5% a 100%, sin saltos','Tu sol nunca baja de 5% y crece de forma continua y visible al respirar en Costa, hacer check-in o escribir. Al 100% llega la digievolución: en ellos, ebullición y fuerza total; en ellas, paz y ternura absolutas.'],
+      ['Selector de soles','Elige uno de los 6 soles (1 libre y 2 Pro por género): Seda, Lucero y Áurea para ella; Corona, Medalla de Oro y Emblema para él. Cada uno tiene su propio color, fondo, movimiento, halo y digievolución.'],
+      ['De 5% a 100%, sin saltos','A 5% tu sol es solo una chispa que expide chispitas; crece de forma continua y visible al respirar en Costa, hacer check-in o escribir. Al 100% llega la digievolución: en ellos, ebullición y fuerza total; en ellas, paz y ternura absolutas.'],
       ['Vínculos y racha','Al encender tu día mantienes abierta la sintonía con tu círculo y sumas días reales de cuidado.']
     ]
   },
