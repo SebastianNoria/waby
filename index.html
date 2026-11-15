@@ -259,7 +259,7 @@ body{
   -webkit-background-clip:text;
   background-clip:text;
   -webkit-text-fill-color:transparent;
-  animation:wavyShimmer 20s ease-in-out infinite;
+  animation:wavyShimmer 80s ease-in-out infinite;
 }
 [data-theme="dark"] .masthead h1{
   background:linear-gradient(112deg, #ffffff 0%, #ffffff 43%, var(--gold) 50%, #ffffff 57%, #ffffff 100%);
@@ -291,7 +291,7 @@ h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,7vw,36px);line-
 .me-pill small{font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:var(--muted);display:block;text-align:left}
 
 /* Vistas Principales */
-.vpage{display:none;animation:fadeUp .28s cubic-bezier(.16,1,.3,1);padding-bottom:0;overscroll-behavior-y:auto;-webkit-overflow-scrolling:touch}
+.vpage{display:none;animation:fadeUp .28s cubic-bezier(.16,1,.3,1);padding-bottom:96px;overscroll-behavior-y:auto;-webkit-overflow-scrolling:touch}
 .vpage.on{display:block}
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(6px)}
@@ -1053,15 +1053,16 @@ body.coast-fullscreen > #seab .coast-fs-dock{bottom:max(18px, env(safe-area-inse
 .mo.plus-btn i{color:var(--ink);font-weight:400}
 .mo.extra-mood[hidden]{display:none !important}
 .mo .vip-dot{display:none!important}
-.mood-flip-wrap{perspective:1100px;position:relative}
+.mood-flip-wrap{perspective:1100px;position:relative;margin-bottom:6px}
 .mood-flip-inner{position:relative;transform-style:preserve-3d;transition:transform .72s cubic-bezier(.22,1,.36,1)}
-.mood-flip-inner.flipped{transform:rotateY(180deg)}
+.mood-flip-inner.flipped{transform:rotateY(180deg);min-height:300px}
 .mood-flip-front,.mood-flip-back{backface-visibility:hidden;-webkit-backface-visibility:hidden}
 .mood-flip-front{position:relative;z-index:2}
+.mood-flip-inner.flipped .mood-flip-front{pointer-events:none;min-height:300px}
 .mood-flip-back{
-  position:absolute;inset:0;transform:rotateY(180deg);border-radius:22px;padding:20px 18px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-  overflow:hidden;border:1px solid var(--line);background:var(--paper);
+  position:absolute;inset:0;transform:rotateY(180deg);border-radius:22px;padding:22px 18px 16px;
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;
+  overflow:hidden;border:1px solid var(--line);background:var(--paper);min-height:300px;box-sizing:border-box;
 }
 .mood-map-canvas{
   position:absolute;inset:-38%;border-radius:0;filter:blur(26px) saturate(1.28);opacity:1;pointer-events:none;
@@ -1155,8 +1156,8 @@ textarea::placeholder{font-style:normal;color:var(--muted);opacity:.68}
 .jtag{font-size:12px;font-family:var(--serif);background:var(--paper);border:1px solid var(--rule);padding:3px 10px;border-radius:12px;color:var(--ink)}
 .journal-theory{font-size:12.5px;line-height:1.5;color:var(--muted);border-top:none;padding-top:4px;margin-top:2px}
 
-.wk{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;margin-bottom:0;font-size:11px;letter-spacing:.12em;color:var(--muted);background:transparent;padding:2px 2px 6px;border-radius:0;border:none;border-bottom:1px solid var(--rule)}
-.wk b{display:block;font-family:var(--serif);font-size:19px;color:var(--crimson);font-weight:400;height:22px;line-height:22px}
+.wk{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;margin-bottom:10px;font-size:11px;letter-spacing:.12em;color:var(--muted);background:transparent;padding:10px 2px;border-radius:0;border:none;border-bottom:1px solid var(--rule)}
+.wk b{display:block;font-family:var(--serif);font-size:22px;color:var(--crimson);font-weight:400;height:28px;line-height:28px}
 .wk .td b{border-bottom:2px solid var(--crimson)}.wk .fu{opacity:.35}
 .ins{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:14.5px;text-align:center;margin:12px 0;line-height:1.45}
 .empty{text-align:center;color:var(--muted);font-family:var(--serif);font-style:italic;padding:18px;font-size:15px}
@@ -1348,7 +1349,7 @@ body.public-view .pub-view.on{display:block}
   border:none;
   border-bottom:1px solid var(--rule);
   border-radius:0;
-  padding:8px 0 6px;
+  padding:13px 0 11px;
   margin-bottom:0;
   box-shadow:none;
   display:grid;
@@ -1470,11 +1471,11 @@ body.public-view .pub-view.on{display:block}
 }
 
 /* Reacciones minimalistas centradas: solo símbolos visibles; etiqueta abajo al pasar/tocar */
-.react-bar{display:flex;gap:34px;align-items:center;justify-content:center;flex-wrap:nowrap;overflow:visible;padding:0;margin-top:2px;position:relative}
+.react-bar{display:flex;gap:34px;align-items:center;justify-content:center;flex-wrap:nowrap;overflow:visible;padding:2px 0 10px;margin-top:6px;position:relative}
 .react-btn{
   position:relative;display:inline-flex;align-items:center;justify-content:center;
   background:transparent;border:none;border-radius:999px;
-  min-width:34px;min-height:24px;padding:2px 8px;
+  min-width:34px;min-height:30px;padding:4px 8px;
   color:var(--muted);cursor:pointer;transition:color .18s ease, transform .15s ease;
 }
 .react-btn span{
@@ -2343,8 +2344,8 @@ summary::-webkit-details-marker{display:none}
       <h1>Wavy</h1>
       <div class="tagline">Donde tu calma se encuentra con los tuyos</div>
     </div>
-    <button type="button" class="masthead-menu-btn" id="mastheadMenuBtn" aria-label="Mi perfil y ajustes" title="Perfil y ajustes">
-      <svg class="w-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 19.5c1.4-3.2 4-4.5 7-4.5s5.6 1.3 7 4.5"/></svg>
+    <button type="button" class="masthead-menu-btn" id="mastheadMenuBtn" aria-label="Ajustes de Wavy" title="Ajustes">
+      <svg class="w-ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="8.5" x2="20" y2="8.5"/><circle cx="9" cy="8.5" r="2.1" fill="var(--paper)"/><line x1="4" y1="15.5" x2="20" y2="15.5"/><circle cx="15" cy="15.5" r="2.1" fill="var(--paper)"/></svg>
     </button>
   </header>
 
@@ -2436,13 +2437,13 @@ summary::-webkit-details-marker{display:none}
     </section>
 
     <!-- SUB-PANEL 1B: DIARIO BIOPSICOSOCIAL Y CICLO -->
-    <section class="panel card" id="sub-journal" style="padding-top:2px">
+    <section class="panel card" id="sub-journal">
       <!-- REGISTRO DEL DÍA (semana, emociones, hábitos y check-in) -->
-      <div class="retract-body" id="wkRetractBody" style="margin-bottom:0">
-        <div class="wk" id="wk" style="margin-bottom:0;padding:0 2px 6px"></div>
+      <div class="retract-body" id="wkRetractBody">
+        <div class="wk" id="wk"></div>
       </div>
 
-      <div class="bio-sec" style="margin-top:4px;padding-top:6px;border-top:none">
+      <div class="bio-sec" style="margin-top:8px;padding-top:10px;border-top:none">
         <div class="bio-sec-hd">
           <span>Emociones de hoy</span>
           <span style="display:inline-flex;align-items:center;gap:10px">
@@ -2458,19 +2459,20 @@ summary::-webkit-details-marker{display:none}
                 <button type="button" class="mood-flip-hint" id="moodFlipToBackBtn" hidden>Ver tu mapa de colores →</button>
               </div>
             </div>
-            <div class="mood-flip-back" id="moodFlipBack" style="min-height:260px">
+            <div class="mood-flip-back" id="moodFlipBack">
               <div class="mood-map-canvas" id="moodMapCanvas"></div>
               <div id="moodStickerLayer" style="position:absolute;inset:0;z-index:3;pointer-events:none"></div>
-              <div style="position:relative;z-index:2;pointer-events:none">
+              <div style="position:relative;z-index:2;pointer-events:none;margin-top:10px">
                 <div style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);opacity:.72;margin-bottom:6px;font-weight:700">Tu mapa emocional de hoy</div>
-                <div id="moodMapName" style="font-family:var(--serif);font-size:32px;font-weight:500;color:var(--ink);line-height:1.1;margin-bottom:8px;text-shadow:0 2px 14px rgba(255,255,255,.75)"></div>
-                <div id="moodMapTags" style="font-size:13px;font-family:var(--serif);font-style:italic;color:var(--ink);opacity:.9;margin-bottom:16px"></div>
+                <div id="moodMapName" style="font-family:var(--serif);font-size:32px;font-weight:500;color:var(--ink);line-height:1.15;margin-bottom:8px;text-shadow:0 2px 14px rgba(255,255,255,.75)"></div>
+                <div id="moodMapTags" style="font-size:13px;font-family:var(--serif);font-style:italic;color:var(--ink);opacity:.9;margin-bottom:14px"></div>
               </div>
               <div style="position:relative;z-index:4;display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
                 <button type="button" class="mood-flip-hint" id="moodAddGemBtn">+ Gemas</button>
                 <button type="button" class="mood-flip-hint" id="shareMoodMapBtn" style="background:var(--ink);color:var(--paper);border-color:var(--ink)">Compartir Stories</button>
                 <button type="button" class="mood-flip-hint" id="moodFlipToFrontBtn">← Cambiar</button>
               </div>
+              <div style="position:relative;z-index:2;pointer-events:none;margin-top:14px;font-family:var(--serif);font-weight:700;font-size:24px;letter-spacing:-0.02em;line-height:1;color:var(--ink)">Wavy</div>
             </div>
           </div>
         </div>
@@ -2672,6 +2674,9 @@ summary::-webkit-details-marker{display:none}
        VISTA 2: RESPIRAR (TU MAR EN VIVO + WEB AUDIO API)
        ========================================================= -->
   <div class="vpage" id="v-breathe">
+    <div class="tabs" role="tablist" style="grid-template-columns:1fr">
+      <button class="tab on" type="button" role="tab" aria-selected="true" style="cursor:default">Mi costa</button>
+    </div>
     <section class="card">
       <div class="horizon-line" hidden>
         <span>Horizonte</span>
@@ -2700,6 +2705,9 @@ summary::-webkit-details-marker{display:none}
             </button>
             <button type="button" class="coast-fs-toggle" id="coastFsDurBtn" aria-expanded="false" aria-label="Duración de pausa" title="Tiempo">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="13" r="7.5"/><path d="M12 9.5V13l2.5 1.8"/><path d="M9.5 3h5"/></svg>
+            </button>
+            <button type="button" class="coast-fs-toggle" id="coastFsSyncBtn" aria-expanded="false" aria-label="Respirar en compañía" title="Sintonía">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9.5" cy="12" r="4.5"/><circle cx="14.5" cy="12" r="4.5"/></svg>
             </button>
           </div>
           <div class="coast-fs-panel" id="coastFsPanel" hidden></div>
@@ -2761,9 +2769,7 @@ summary::-webkit-details-marker{display:none}
       </div>
 
       <!-- RITUAL DE RESPIRACIÓN MUTUA SINCRONIZADA ("RESPIRAR JUNTOS") -->
-      <!-- El recuadro de "Abrir sintonía" de Círculo, copiado aquí tal cual
-           (lo dibuja renderCoastSyncBanner con el mismo constructor). -->
-      <div id="coastSyncBanner"></div>
+      <div id="coastSyncBanner" hidden></div>
       <div class="cobreath-box" id="coBreathBox" hidden>
         <div id="coBreathActivePanel" hidden>
           <p style="font-size:12.5px;color:var(--muted);line-height:1.45;margin-bottom:8px">
@@ -2810,10 +2816,10 @@ summary::-webkit-details-marker{display:none}
        VISTA 3: CÍRCULO Y ALIADO (CO-REGULACIÓN + INVITACIÓN WHATSAPP)
        ========================================================= -->
   <div class="vpage" id="v-circle">
-    <div class="circle-tabs" style="display:flex;gap:8px;margin-bottom:12px">
-      <button type="button" class="chip on" id="circleTabFeedBtn" style="flex:1;justify-content:center;min-height:38px">Círculo</button>
-      <button type="button" class="chip" id="circleTabDiaryBtn" style="flex:1;justify-content:center;min-height:38px">Escritos</button>
-      <button type="button" class="chip" id="circleTabFriendsBtn" style="flex:1;justify-content:center;min-height:38px">Tu círculo</button>
+    <div class="tabs" role="tablist">
+      <button type="button" class="tab on" id="circleTabFeedBtn" role="tab" aria-selected="true">Muro</button>
+      <button type="button" class="tab" id="circleTabDiaryBtn" role="tab" aria-selected="false">Escritos</button>
+      <button type="button" class="tab" id="circleTabFriendsBtn" role="tab" aria-selected="false">Aliados</button>
     </div>
     <div id="circleFeedPane">
     <span id="p2pPeerIdLabel" hidden></span>
@@ -2905,11 +2911,10 @@ summary::-webkit-details-marker{display:none}
        VISTA 4: PULSO (BIENESTAR INTUITIVO Y ESTÉTICO)
        ========================================================= -->
   <div class="vpage" id="v-clinic">
+    <div class="tabs" role="tablist" style="grid-template-columns:1fr">
+      <button class="tab on" type="button" role="tab" aria-selected="true" style="cursor:default">Tu pulso</button>
+    </div>
     <div class="card">
-      <div class="hd">
-        <span>Pulso · Tu avance</span>
-        <span style="color:var(--ok)">Equilibrio diario</span>
-      </div>
       <p id="pulsoAdaptiveTip" hidden style="font-size:12.5px;color:var(--ok);font-family:var(--serif);font-style:italic;line-height:1.45;margin:-2px 0 12px"></p>
 
       <!-- HERO DE BALANCE PERSONAL -->
@@ -3072,149 +3077,17 @@ summary::-webkit-details-marker{display:none}
         </div>
       </div>
 
-      <details style="margin-bottom:12px">
-        <summary><span>Tarjeta de Presencia</span><span>Instagram &amp; Pinterest ▾</span></summary>
-        <div style="padding-top:12px">
-
-      <div class="seal-carousel-nav" id="sealCarouselNav">
-        <button type="button" class="seal-dot-btn on" data-slide="0">I · Sello Editorial</button>
-        <button type="button" class="seal-dot-btn" data-slide="1">II · Story Lyrics</button>
-      </div>
-
-      <div class="tilt-stage" id="tiltStage">
-        <div class="tilt-card" id="slideExLibris">
-          <div class="exlibris" id="exlibrisBox">
-            <div class="ex-top">Navega tu marea · Habita tu calma</div>
-            <div class="ex-av" id="exAv"></div>
-            <h4 id="exName">Viajera Wavy</h4>
-            <div class="ex-u" id="exUser">@mi.wavy</div>
-            <q id="exBio">“Un día a la vez, respirando con el oleaje.”</q>
-            <div class="ex-grid">
-              <div><b id="exDays">Día 1</b><span>Práctica</span></div>
-              <div><b id="exSync">3 vínculos</b><span>En sintonía</span></div>
-              <div><b id="exCleared">0 gestos</b><span>De calma</span></div>
-            </div>
-            <div class="ex-foot">Wavy · Calma y Co-regulación</div>
-          </div>
-        </div>
-
-        <div class="tilt-card" id="slideLyrics" hidden>
-          <div class="lyrics-card" id="lyricsCard">
-            <div class="lyrics-top">
-              <div class="lyrics-av" id="lyAv"></div>
-              <div class="lyrics-meta">
-                <strong id="lyName">Viajera Wavy</strong>
-                <span id="lyUser">@mi.wavy · Wavy</span>
-              </div>
-            </div>
-            <div class="lyrics-quote" id="lyQuote">“Un día a la vez, respirando con el oleaje.”</div>
-            <div class="lyrics-foot">
-              <span id="lyDay">Día 1 · Pebetero encendido</span>
-              <span>WAVY.APP</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sl" style="margin-top:8px">
-        <label>
-          <span>Frase en tu sello</span>
-          <span id="sealCharCounter">0 / 90 caracteres</span>
-        </label>
-        <input class="line" id="myBio" maxlength="90" placeholder="Escribe tu frase personal para el sello (máx. 90 caracteres)">
-      </div>
-
-      <div class="sl">
-        <label>
-          <span>Paletas Editoriales</span>
-          <span id="palVipIndicator" style="color:var(--gold)">Colección</span>
-        </label>
-        <div class="pal-grid" id="palGrid"></div>
-      </div>
-
-      <div class="row" style="grid-template-columns:1fr 1fr;margin-bottom:10px">
-        <button class="btn" id="shareIgStoriesBtn">Exportar Stories (9:16)</button>
-        <button class="btn ghost" id="shareIgFeedBtn">Exportar Post (4:5)</button>
-      </div>
-      <div class="row" style="grid-template-columns:1fr 1fr;margin-bottom:12px">
-        <button class="btn ghost" id="previewMyPublicBtn">Ver mi perfil público</button>
-        <button class="btn ghost" id="repeatOnbBtn">Pantalla de bienvenida</button>
-      </div>
-        </div>
-      </details>
-
-      <!-- MÓDULO 7: CÁPSULAS SONORAS EN EL PERFIL (10 PREGUNTAS EMOCIONALES CURADAS) -->
-      <div class="hd" style="margin-top:8px">
-        <span>Mi Paisaje Sonoro</span>
-        <span style="color:var(--gold)">Ritual musical</span>
-      </div>
-      <p style="font-size:13px;color:var(--muted);line-height:1.45;margin-bottom:10px">
-        Comparte una canción en tu perfil. Elige la pregunta a la que responde hoy tu melodía y búscala por nombre o artista:
-      </p>
-      <button type="button" class="btn ghost" id="scToggleBtn" style="width:100%;margin-bottom:10px;justify-content:space-between;padding:10px 14px;border-radius:12px;font-size:12px">
-        <span>+ Vincular canción en mi perfil</span>
-        <small style="color:var(--muted)">Buscar canción o artista</small>
-      </button>
-
-      <div id="scConfigBox" hidden style="background:transparent;border:none;border-bottom:1px solid var(--rule);border-radius:0;padding:8px 0 14px;margin-bottom:14px;animation:fadeUp .2s ease">
-        <label style="display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px">1. Pregunta emocional</label>
-        <select id="scQuestionSelect" class="sc-select" aria-label="Pregunta emocional para tu cápsula sonora">
-          <option value="Qué me motiva hoy">1. Qué me motiva hoy</option>
-          <option value="Lo que escucho estando triste">2. Lo que escucho estando triste</option>
-          <option value="¡Esto me baja la ansiedad!">3. ¡Esto me baja la ansiedad!</option>
-          <option value="Lo que escucho para volver a mi centro">4. Lo que escucho para volver a mi centro</option>
-          <option value="Canción que se siente como un abrazo seguro">5. Canción que se siente como un abrazo seguro</option>
-          <option value="Lo que suena cuando habito mi calma">6. Lo que suena cuando habito mi calma</option>
-          <option value="Mi refugio cuando el día pesa demasiado">7. Mi refugio cuando el día pesa demasiado</option>
-          <option value="Para acompañar una tarde de lluvia o introspección">8. Para acompañar una tarde de lluvia o introspección</option>
-          <option value="Mi ritual sonoro antes de dormir">9. Mi ritual sonoro antes de dormir</option>
-          <option value="Una melodía que le regalo hoy a mi red de apoyo">10. Una melodía que le regalo hoy a mi red de apoyo</option>
-        </select>
-        <input id="scTitleInput" hidden>
-        <input id="scArtistInput" hidden>
-        <input id="scUrlInput" hidden>
-        <label style="display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px">
-          2. Busca tu canción o artista
-        </label>
-        <div style="display:flex;align-items:center;gap:8px;background:transparent;border:none;border-bottom:1px solid var(--rule);border-radius:0;padding:6px 2px;margin-bottom:8px">
-          <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:var(--ink);fill:none;stroke-width:1.6;flex-shrink:0"><path d="M9 17.5V6.2c0-.7.5-1.3 1.2-1.4l7.4-1.3c.8-.1 1.4.5 1.4 1.3v10.7"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="15.5" r="2.5"/><path d="M9 9.5l10-1.7"/></svg>
-          <input class="line" id="profSongSearch" maxlength="80" placeholder="Busca canción o artista (ej. John Mayer)" autocomplete="off" style="border:none;background:transparent;padding:4px 0;min-height:32px;font-size:16px">
-        </div>
-        <div id="profSongResults" style="display:grid;grid-template-columns:minmax(0,1fr);gap:6px;max-height:210px;overflow-y:auto;margin-bottom:8px"></div>
-        <div style="display:flex;justify-content:flex-end">
-          <button type="button" class="btn ghost" id="clearSoundCapsuleBtn" title="Quitar canción" style="font-size:11px;padding:6px 12px">Quitar canción</button>
-        </div>
-        <button type="button" id="saveSoundCapsuleBtn" hidden></button>
-      </div>
-      <div id="mySoundCapsulePreview" style="margin-bottom:18px"></div>
-
-      <div class="hd"><span>Identidad y Privacidad</span><span>@username</span></div>
-      <div class="sl" style="margin-top:6px;border-top:none;padding-top:0">
-        <label><span>Tu @username</span><span>único</span></label>
-        <input class="line" id="myUsername" maxlength="24" placeholder="ej. claudia.mar">
-      </div>
-      <div class="sl">
-        <label><span>Nombre visible</span><span>público</span></label>
-        <input class="line" id="myDisplayName" maxlength="30" placeholder="Ej. Claudia">
-      </div>
-
-      <div class="sl">
-        <label><span>Emblema visual</span><span>8 grabados</span></label>
-        <div class="avpick" id="myAvPick"></div>
-      </div>
-
-      <button class="btn" id="saveProfileBtn" style="width:100%;margin-top:10px">Guardar cambios de perfil</button>
-
       <div class="sl">
         <label><span>Cuenta, Respaldo y Privacidad</span><span>Local</span></label>
         <p style="font-size:11.5px;color:var(--muted);line-height:1.45;margin-bottom:10px">Tus registros viven localmente en tu dispositivo. Guarda una copia periódica si cambias de teléfono.</p>
-        <div class="row" style="grid-template-columns:1fr 1fr">
+        <div class="row" style="grid-template-columns:1fr 1fr;margin-bottom:10px">
           <button type="button" class="btn ghost" id="exFileBtn">Descargar respaldo</button>
           <label class="btn ghost" style="margin:0;cursor:pointer">
             Restaurar respaldo
             <input type="file" id="imFileInput" accept=".json,application/json" hidden>
           </label>
         </div>
+        <button class="btn ghost" id="repeatOnbBtn" style="width:100%;margin-bottom:10px">Pantalla de bienvenida</button>
         <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
           <button type="button" class="mode-link" id="openPrivacyModalBtn">Aviso de Privacidad (LFPDPPP)</button>
           <span id="retentionMetricLbl" style="font-size:11px;color:var(--muted)">Aperturas registradas: 1 día</span>
@@ -3235,8 +3108,152 @@ summary::-webkit-details-marker{display:none}
           <p id="proOut" style="margin-top:8px;color:var(--ok);font-family:var(--serif);font-size:15.5px"></p>
         </div>
       </details>
+    </div>
 
   <p class="note">Wavy es una herramienta de autoobservación y hábitos; no sustituye atención médica ni psicológica profesional.<br>En crisis en México: Línea de la Vida 800 911 2000.</p>
+</div>
+
+<!-- =========================================================
+     VISTA 6: PERFIL PÚBLICO Y SU CONFIGURACIÓN (BOTÓN CENTRAL)
+     ========================================================= -->
+<div class="vpage" id="v-pubconfig">
+  <div class="tabs" role="tablist" style="grid-template-columns:1fr">
+    <button class="tab on" type="button" role="tab" aria-selected="true" style="cursor:default">Perfil público</button>
+  </div>
+  <section class="card">
+    <div class="hd" style="margin-top:2px"><span>Identidad pública</span><span>@username</span></div>
+    <div class="sl" style="margin-top:6px;border-top:none;padding-top:0">
+      <label><span>Tu @username</span><span>único</span></label>
+      <input class="line" id="myUsername" maxlength="24" placeholder="ej. claudia.mar">
+    </div>
+    <div class="sl">
+      <label><span>Nombre visible</span><span>público</span></label>
+      <input class="line" id="myDisplayName" maxlength="30" placeholder="Ej. Claudia">
+    </div>
+
+    <div class="sl">
+      <label><span>Emblema visual</span><span>Foto o grabado</span></label>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div id="myAvatarPreviewBox" style="width:46px;height:46px;border-radius:50%;overflow:hidden;border:1px solid var(--rule);flex-shrink:0;display:grid;place-items:center;background:var(--wash)"></div>
+        <label class="chip" style="min-height:36px;height:36px;padding:6px 14px;font-size:12px;cursor:pointer;margin:0">
+          Subir foto de galería
+          <input type="file" id="myAvatarUpload" accept="image/*" hidden>
+        </label>
+        <button type="button" class="chip" id="clearCustomAvatarBtn" hidden style="min-height:36px;height:36px;padding:6px 12px;font-size:12px">Quitar foto</button>
+      </div>
+      <div class="avpick" id="myAvPick"></div>
+    </div>
+
+    <div class="hd" style="margin-top:14px">
+      <span>Mi Paisaje Sonoro</span>
+      <span style="color:var(--gold)">Ritual musical</span>
+    </div>
+    <p style="font-size:13px;color:var(--muted);line-height:1.45;margin-bottom:10px">
+      Comparte una canción en tu perfil. Elige la pregunta a la que responde hoy tu melodía y búscala por nombre o artista:
+    </p>
+    <button type="button" class="btn ghost" id="scToggleBtn" style="width:100%;margin-bottom:10px;justify-content:space-between;padding:10px 14px;border-radius:12px;font-size:12px">
+      <span>+ Vincular canción en mi perfil</span>
+      <small style="color:var(--muted)">Buscar canción o artista</small>
+    </button>
+
+    <div id="scConfigBox" hidden style="background:transparent;border:none;border-bottom:1px solid var(--rule);border-radius:0;padding:8px 0 14px;margin-bottom:14px;animation:fadeUp .2s ease">
+      <label style="display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px">1. Pregunta emocional</label>
+      <select id="scQuestionSelect" class="sc-select" aria-label="Pregunta emocional para tu cápsula sonora">
+        <option value="Qué me motiva hoy">1. Qué me motiva hoy</option>
+        <option value="Lo que escucho estando triste">2. Lo que escucho estando triste</option>
+        <option value="¡Esto me baja la ansiedad!">3. ¡Esto me baja la ansiedad!</option>
+        <option value="Lo que escucho para volver a mi centro">4. Lo que escucho para volver a mi centro</option>
+        <option value="Canción que se siente como un abrazo seguro">5. Canción que se siente como un abrazo seguro</option>
+        <option value="Lo que suena cuando habito mi calma">6. Lo que suena cuando habito mi calma</option>
+        <option value="Mi refugio cuando el día pesa demasiado">7. Mi refugio cuando el día pesa demasiado</option>
+        <option value="Para acompañar una tarde de lluvia o introspección">8. Para acompañar una tarde de lluvia o introspección</option>
+        <option value="Mi ritual sonoro antes de dormir">9. Mi ritual sonoro antes de dormir</option>
+        <option value="Una melodía que le regalo hoy a mi red de apoyo">10. Una melodía que le regalo hoy a mi red de apoyo</option>
+      </select>
+      <input id="scTitleInput" hidden>
+      <input id="scArtistInput" hidden>
+      <input id="scUrlInput" hidden>
+      <label style="display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px">
+        2. Busca tu canción o artista
+      </label>
+      <div style="display:flex;align-items:center;gap:8px;background:transparent;border:none;border-bottom:1px solid var(--rule);border-radius:0;padding:6px 2px;margin-bottom:8px">
+        <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:var(--ink);fill:none;stroke-width:1.6;flex-shrink:0"><path d="M9 17.5V6.2c0-.7.5-1.3 1.2-1.4l7.4-1.3c.8-.1 1.4.5 1.4 1.3v10.7"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="15.5" r="2.5"/><path d="M9 9.5l10-1.7"/></svg>
+        <input class="line" id="profSongSearch" maxlength="80" placeholder="Busca canción o artista (ej. John Mayer)" autocomplete="off" style="border:none;background:transparent;padding:4px 0;min-height:32px;font-size:16px">
+      </div>
+      <div id="profSongResults" style="display:grid;grid-template-columns:minmax(0,1fr);gap:6px;max-height:210px;overflow-y:auto;margin-bottom:8px"></div>
+      <div style="display:flex;justify-content:flex-end">
+        <button type="button" class="btn ghost" id="clearSoundCapsuleBtn" title="Quitar canción" style="font-size:11px;padding:6px 12px">Quitar canción</button>
+      </div>
+      <button type="button" id="saveSoundCapsuleBtn" hidden></button>
+    </div>
+    <div id="mySoundCapsulePreview" style="margin-bottom:18px"></div>
+
+    <div class="hd"><span>Tarjeta de Presencia</span><span>Instagram &amp; Pinterest</span></div>
+    <div class="seal-carousel-nav" id="sealCarouselNav">
+      <button type="button" class="seal-dot-btn on" data-slide="0">I · Sello Editorial</button>
+      <button type="button" class="seal-dot-btn" data-slide="1">II · Story Lyrics</button>
+    </div>
+
+    <div class="tilt-stage" id="tiltStage">
+      <div class="tilt-card" id="slideExLibris">
+        <div class="exlibris" id="exlibrisBox">
+          <div class="ex-top">Navega tu marea · Habita tu calma</div>
+          <div class="ex-av" id="exAv"></div>
+          <h4 id="exName">Viajera Wavy</h4>
+          <div class="ex-u" id="exUser">@mi.wavy</div>
+          <q id="exBio">“Un día a la vez, respirando con el oleaje.”</q>
+          <div class="ex-grid">
+            <div><b id="exDays">Día 1</b><span>Práctica</span></div>
+            <div><b id="exSync">3 vínculos</b><span>En sintonía</span></div>
+            <div><b id="exCleared">0 gestos</b><span>De calma</span></div>
+          </div>
+          <div class="ex-foot">Wavy · Calma y Co-regulación</div>
+        </div>
+      </div>
+
+      <div class="tilt-card" id="slideLyrics" hidden>
+        <div class="lyrics-card" id="lyricsCard">
+          <div class="lyrics-top">
+            <div class="lyrics-av" id="lyAv"></div>
+            <div class="lyrics-meta">
+              <strong id="lyName">Viajera Wavy</strong>
+              <span id="lyUser">@mi.wavy · Wavy</span>
+            </div>
+          </div>
+          <div class="lyrics-quote" id="lyQuote">“Un día a la vez, respirando con el oleaje.”</div>
+          <div class="lyrics-foot">
+            <span id="lyDay">Día 1 · Pebetero encendido</span>
+            <span>WAVY.APP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl" style="margin-top:8px">
+      <label>
+        <span>Frase en tu sello</span>
+        <span id="sealCharCounter">0 / 90 caracteres</span>
+      </label>
+      <input class="line" id="myBio" maxlength="90" placeholder="Escribe tu frase personal para el sello (máx. 90 caracteres)">
+    </div>
+
+    <div class="sl">
+      <label>
+        <span>Paletas Editoriales</span>
+        <span id="palVipIndicator" style="color:var(--gold)">Colección</span>
+      </label>
+      <div class="pal-grid" id="palGrid"></div>
+    </div>
+
+    <div class="row" style="grid-template-columns:1fr 1fr;margin-bottom:10px">
+      <button class="btn" id="shareIgStoriesBtn">Exportar Stories (9:16)</button>
+      <button class="btn ghost" id="shareIgFeedBtn">Exportar Post (4:5)</button>
+    </div>
+    <button class="btn ghost" id="previewMyPublicBtn" style="width:100%;margin-bottom:10px">Ver mi perfil público</button>
+
+    <button class="btn" id="saveProfileBtn" style="width:100%;margin-top:6px">Guardar cambios de perfil</button>
+  </section>
+</div>
 </main>
 
 <!-- =========================================================
@@ -3633,7 +3650,11 @@ summary::-webkit-details-marker{display:none}
       <svg viewBox="0 0 24 24"><path d="M6.5 13.5a5.5 5.5 0 0 1 11 0"/><path d="M2.5 14h19"/><path d="M4 18c2.5-1.8 5.2-1.8 8 0s5.5 1.8 8 0"/></svg>
       <span>Costa</span>
     </button>
-    <button type="button" class="bnav-plus" id="bnavQuickBtn" aria-label="¿Qué necesitas ahora?" title="Registro rápido">+</button>
+    <button class="bnav-btn" data-v="v-pubconfig" id="bnavPubProfileBtn" role="tab" aria-selected="false" aria-label="Mi perfil público">
+      <!-- Símbolo de Autor Central: Sello de Presencia (anillo orgánico + destello interior) -->
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2" stroke-dasharray="42 10"/><path d="M12 7.2l1.2 3.6 3.6 1.2-3.6 1.2L12 16.8l-1.2-3.6-3.6-1.2 3.6-1.2L12 7.2Z"/></svg>
+      <span>Yo</span>
+    </button>
     <button class="bnav-btn" data-v="v-circle" role="tab" aria-selected="false">
       <!-- Símbolo de Autor 3: Onda de Sintonía Compartida (Centro y Resonancia en Calma) -->
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.6"/><path d="M7.2 15a5.8 5.8 0 1 1 9.6 0"/><path d="M4.2 17.6a9.4 9.4 0 1 1 15.6 0"/></svg>
@@ -4017,7 +4038,11 @@ const AVATARS=[
   {id:'botanical',name:'Olivo',svg:'<svg viewBox="0 0 60 60"><rect width="60" height="60" fill="#F4EFE6"/><path d="M22 48 Q30 30 36 14" fill="none" stroke="#5C6450" stroke-width="1.4" stroke-linecap="round"/><ellipse cx="24" cy="34" rx="6" ry="2.8" transform="rotate(-25 24 34)" fill="#7A8468"/><ellipse cx="35" cy="30" rx="6" ry="2.8" transform="rotate(20 35 30)" fill="#7A8468"/><ellipse cx="27" cy="23" rx="5.5" ry="2.5" transform="rotate(-20 27 23)" fill="#949E82"/><ellipse cx="37" cy="21" rx="5.5" ry="2.5" transform="rotate(25 37 21)" fill="#949E82"/></svg>'},
   {id:'moon',name:'Plenilunio',svg:'<svg viewBox="0 0 60 60"><rect width="60" height="60" fill="#1C2530"/><path d="M35 17 A13 13 0 1 0 45 37 A10 10 0 1 1 35 17 Z" fill="#EDE6D6"/><circle cx="19" cy="22" r="1" fill="#EDE6D6" opacity=".6"/><circle cx="44" cy="19" r=".8" fill="#EDE6D6" opacity=".5"/></svg>'}
 ];
-const getAv=id=>(AVATARS.find(x=>x.id===id)||AVATARS[0]).svg;
+const getAv=id=>{
+  if(typeof id==='string' && id.startsWith('data:image/'))return '<img src="'+id+'" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block">';
+  if(id==='custom' && typeof S!=='undefined' && S.me && S.me.customAvatar)return '<img src="'+S.me.customAvatar+'" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block">';
+  return (AVATARS.find(x=>x.id===id)||AVATARS[0]).svg;
+};
 
 const CALISTHENICS_PLAN=[
   {day:'Lun',short:'Empuje · Pecho y hombros',focus:'Día 1 · Empuje: pecho, hombros y descarga torácica',sub:'Libera la opresión en el pecho y canaliza la adrenalina acumulada.',exercises:[
@@ -5137,7 +5162,8 @@ function switchMainView(vid){
   if(vid==='v-today'){syncPebeteroRing();flameView()}
   if(vid==='v-circle'){renderHomeCoRegulation();renderCircleFriends();updateCircleComposerYield()}
   if(vid==='v-clinic'){stats();hours(true);renderClinicalReport()}
-  if(vid==='v-profile'){syncProfileForm();syncProWifiSwitchUI();renderSealsCarousel()}
+  if(vid==='v-profile'){syncProWifiSwitchUI()}
+  if(vid==='v-pubconfig'){syncProfileForm();renderSealsCarousel()}
 }
 function toggleProfileView(){
   const p=$('v-profile');
@@ -7147,6 +7173,27 @@ if($('coastFsMenuToggle') && $('coastFsPanel')){
         };
         p.appendChild(b);
       });
+    }else if(kind==='sync'){
+      const isOpen=!!(typeof S!=='undefined'&&S.openSync);
+      const b=document.createElement('button');
+      b.type='button';b.className='coast-fs-pill'+(isOpen?' on':'');
+      b.textContent=isOpen?'Sintonía abierta · Cerrar':'Respirar en compañía · Abrir';
+      b.onclick=ev=>{
+        ev.stopPropagation();
+        if(typeof S!=='undefined'){
+          if(!S.openSync){
+            if(typeof openCoBreathEthicsModal==='function')openCoBreathEthicsModal(S.following&&S.following[0]);
+          }else{
+            S.openSync=false;S.inCoBreathWith='';if(typeof coBreath!=='undefined')coBreath.active=false;
+            if(typeof save==='function')save(true);
+            if(typeof renderCircleFeed==='function')renderCircleFeed();
+            if(typeof toast==='function')toast('Cerraste tu señal de sintonía');
+          }
+        }
+        if($('coastFsSyncBtn'))$('coastFsSyncBtn').classList.toggle('on',!!(typeof S!=='undefined'&&S.openSync));
+        p.hidden=true;coastOpenMenu='';
+      };
+      p.appendChild(b);
     }else if(kind==='sound'){
       const curSound=(typeof WavyAudio!=='undefined'&&WavyAudio.getSoundMode)?WavyAudio.getSoundMode():'ocean';
       [['ocean','Olas'],['pink','Ruido rosa'],['white','Ruido blanco'],['bowls','Cuencos'],['off','Silencio']].forEach(([sm,lbl])=>{
@@ -7174,11 +7221,13 @@ if($('coastFsMenuToggle') && $('coastFsPanel')){
     if($('coastFsModeBtn'))$('coastFsModeBtn').setAttribute('aria-expanded',String(kind==='mode'));
     if($('coastFsDurBtn'))$('coastFsDurBtn').setAttribute('aria-expanded',String(kind==='dur'));
     if($('coastFsAudioQuickBtn'))$('coastFsAudioQuickBtn').setAttribute('aria-expanded',String(kind==='sound'));
+    if($('coastFsSyncBtn'))$('coastFsSyncBtn').setAttribute('aria-expanded',String(kind==='sync'));
   }
   $('coastFsMenuToggle').onclick=e=>{e.stopPropagation();openCoastMenu('pat');};
   if($('coastFsModeBtn'))$('coastFsModeBtn').onclick=e=>{e.stopPropagation();openCoastMenu('mode');};
   if($('coastFsDurBtn'))$('coastFsDurBtn').onclick=e=>{e.stopPropagation();openCoastMenu('dur');};
   if($('coastFsAudioQuickBtn'))$('coastFsAudioQuickBtn').onclick=e=>{e.stopPropagation();openCoastMenu('sound');};
+  if($('coastFsSyncBtn'))$('coastFsSyncBtn').onclick=e=>{e.stopPropagation();openCoastMenu('sync');};
   if($('coastFsBreathBtn')){
     const playSvg='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="7 5 19 12 7 19 7 5"/></svg>';
     const pauseSvg='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
@@ -8531,7 +8580,15 @@ function renderClueTrackList(){
     if(isExp && extraCats.length){
       const extraGrid=document.createElement('div');
       extraGrid.className='bento-extra-grid';
-      extraCats.forEach(cat=>extraGrid.appendChild(buildBentoCard(cat)));
+      extraGrid.style.display='grid';
+      extraGrid.style.gap='10px';
+      for(let i=0;i<extraCats.length;i+=3){
+        const chunk=extraCats.slice(i,i+3);
+        const erow=document.createElement('div');
+        erow.className='bento-row-3col';
+        chunk.forEach(cat=>erow.appendChild(buildBentoCard(cat)));
+        extraGrid.appendChild(erow);
+      }
       group.appendChild(extraGrid);
     }
 
@@ -8555,8 +8612,11 @@ function renderClueTrackList(){
         '</div>'+
         '<div id="bentoDrawerChips"></div>';
       const activeCard=list.querySelector('.bento-card.active');
+      const activeRow=activeCard?activeCard.closest('.bento-row-3col'):null;
       const activeGroup=activeCard?activeCard.closest('.bento-dim-group'):null;
-      if(activeGroup){
+      if(activeRow && activeRow.parentNode){
+        activeRow.insertAdjacentElement('afterend',drawer);
+      }else if(activeGroup){
         activeGroup.appendChild(drawer);
       }else{
         list.appendChild(drawer);
@@ -9348,9 +9408,10 @@ if($('shareMoodMapBtn'))$('shareMoodMapBtn').onclick=()=>{
     ctx.fillStyle=rg;ctx.beginPath();ctx.arc(ox,oy,480,0,Math.PI*2);ctx.fill();
   });
   ctx.fillStyle='#181411';ctx.textAlign='center';
-  ctx.font='600 28px sans-serif';ctx.fillText('WAVY · MAPA EMOCIONAL',540,260);
+  ctx.font='600 26px sans-serif';ctx.fillText('TU MAPA EMOCIONAL DE HOY',540,760);
   ctx.font='500 104px Georgia, serif';ctx.fillText((S.me&&S.me.name)?S.me.name:'Tu calma',540,940);
   ctx.font='italic 44px Georgia, serif';ctx.fillText(sel.map(x=>x.dataset.n).join('  ·  '),540,1035);
+  ctx.font='700 72px Georgia, serif';ctx.fillText('Wavy',540,1760);
   mapPlacedGems.forEach(item=>{
     const g=GEM_STICKERS.find(x=>x.id===item.id)||GEM_STICKERS[0];
     const gx=(item.xPct/100)*1080,gy=420+(item.yPct/100)*1080;
@@ -10088,6 +10149,8 @@ function drawLivingFlame(ts){
       const py=(ptsR[i][1]+ptsR[i-1][1])*0.5;
       ctx.quadraticCurveTo(ptsR[i][0],ptsR[i][1],px,py);
     }
+    /* Base curva orgánica redondeada (sin línea recta ni ángulos cortados abajo) */
+    ctx.quadraticCurveTo(ox,oy+Math.min(34,width*0.32),ptsL[0][0],ptsL[0][1]);
     ctx.closePath();
     ctx.fill();
     ctx.restore();
@@ -10108,16 +10171,17 @@ function drawLivingFlame(ts){
   ctx.beginPath();ctx.ellipse(cx,baseY+2,flameW*(isFull?1.25:0.9),16+18*p,0,0,Math.PI*2);ctx.fill();
   ctx.restore();
 
-  // 3. Muro pictórico de lenguas secundarias (al 100% se esparcen por todo el recuadro estilo El niño y la garza)
+  // 3. Muro pictórico de lenguas secundarias con bases curvas escalonadas
   const tongueCount=isFull?9:Math.max(2,Math.round(2+p*6));
   for(let i=0;i<tongueCount;i++){
     const norm=(i/(Math.max(1,tongueCount-1)))-0.5; // -0.5 a +0.5
-    const spread=norm*flameW*(isFull?1.65:0.95);
+    const spread=norm*flameW*(isFull?1.48:0.88);
+    const curveLift=Math.abs(norm)*26*(0.5+0.5*p);
     const tH=flameH*(0.48+0.46*(1-Math.abs(norm)*1.3)+0.14*Math.sin(t*1.7+i));
     const tW=flameW*(0.36+0.18*(1-Math.abs(norm)));
     drawPainterlyTongue(
       cx+spread,
-      baseY+4,
+      baseY-curveLift,
       tW,
       tH,
       i%2===0?(pal.lava2||pal.outerMid):pal.outerTop,
@@ -10130,42 +10194,41 @@ function drawLivingFlame(ts){
   }
 
   // 4. Cuerpo principal fluido (capas de acuarela superpuestas sin contorno duro)
-  drawPainterlyTongue(cx,baseY+2,flameW*0.92,flameH*0.96,pal.outerTop,pal.outerBot,0.74,7,0.4,0);
-  drawPainterlyTongue(cx+Math.sin(t*mot.freq)*4*p,baseY,flameW*0.64,flameH*0.76,pal.core,pal.midBot||pal.outerMid,0.84,4,1.9,0.12);
-  drawPainterlyTongue(cx-Math.cos(t*mot.freq*0.9)*3*p,baseY-2,flameW*0.42,flameH*0.52,'#FFFFFF',pal.core,0.90,2,3.1,-0.08);
+  drawPainterlyTongue(cx,baseY,flameW*0.92,flameH*0.96,pal.outerTop,pal.outerBot,0.74,7,0.4,0);
+  drawPainterlyTongue(cx+Math.sin(t*mot.freq)*4*p,baseY-2,flameW*0.64,flameH*0.76,pal.core,pal.midBot||pal.outerMid,0.84,4,1.9,0.12);
+  drawPainterlyTongue(cx-Math.cos(t*mot.freq*0.9)*3*p,baseY-4,flameW*0.42,flameH*0.52,'#FFFFFF',pal.core,0.90,2,3.1,-0.08);
 
-  // 5. Personalidad sutil tipo Calcifer en el núcleo (ojitos expresivos que parpadean y cobran vida)
+  // 5. Personalidad sutil estilo Forky en el núcleo (ojitos blancos simétricos y sonrisa muy sutil)
   if(p>=0.12){
     const blinkCycle=(t*0.32)%1;
     const isBlink=(blinkCycle>0.94);
     const eyeScaleY=isBlink?0.12:1;
-    const swayEye=Math.sin(t*mot.freq*1.15)*mot.amp*0.18*p;
-    const eyeY=baseY-flameH*0.22;
-    const eyeSep=Math.max(8,flameW*(isFull?0.18:0.20));
-    const eyeR=Math.max(2.6,Math.min(7.2,3.0+4.2*p));
+    const swayEye=Math.sin(t*mot.freq*1.15)*mot.amp*0.14*p;
+    const eyeY=baseY-flameH*0.23;
+    const eyeSep=Math.max(8,flameW*(isFull?0.14:0.16));
+    const eyeR=Math.max(3.2,Math.min(7.6,3.4+4.2*p));
     ctx.save();
-    ctx.globalAlpha=0.72+0.22*p;
+    ctx.globalAlpha=0.88;
     [-1,1].forEach(side=>{
       const ex=cx+swayEye+side*eyeSep;
       ctx.save();
       ctx.translate(ex,eyeY);
       ctx.scale(1,eyeScaleY);
-      // Blanco cálido de ojo Calcifer
-      ctx.fillStyle='rgba(255,253,246,0.92)';
-      ctx.beginPath();ctx.ellipse(0,0,eyeR*1.15,eyeR*1.28,0,0,Math.PI*2);ctx.fill();
-      // Pupila expresiva (más tranquila en mujer/cuarzo, más traviesa en ámbar/aurora)
-      ctx.fillStyle=(vKey==='cobalto'||vKey==='lavanda')?'#1f2438':'#2a1a12';
-      const lookX=Math.sin(t*0.7)*eyeR*0.18;
-      ctx.beginPath();ctx.arc(lookX,-eyeR*0.05,eyeR*0.48,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='#FFFDF8';
+      ctx.beginPath();ctx.arc(0,0,eyeR,0,Math.PI*2);ctx.fill();
+      ctx.strokeStyle='rgba(42,26,18,0.22)';
+      ctx.lineWidth=1;
+      ctx.stroke();
+      ctx.fillStyle=(vKey==='cobalto'||vKey==='lavanda')?'#1f2438':'#231812';
+      ctx.beginPath();ctx.arc(0,0,eyeR*0.42,0,Math.PI*2);ctx.fill();
       ctx.restore();
     });
-    // Sonrisa cálida al alcanzar plenitud (>=75%)
-    if(p>=0.70){
-      ctx.strokeStyle='rgba(210,72,38,0.65)';
-      ctx.lineWidth=Math.max(1.4,2.2*p);
+    if(p>=0.55){
+      ctx.strokeStyle='rgba(176,68,42,0.52)';
+      ctx.lineWidth=1.35;
       ctx.lineCap='round';
       ctx.beginPath();
-      ctx.arc(cx+swayEye,eyeY+eyeR*1.35,eyeR*1.15,0.18*Math.PI,0.82*Math.PI);
+      ctx.arc(cx+swayEye,eyeY+eyeR*1.45,eyeR*0.72,0.24*Math.PI,0.76*Math.PI);
       ctx.stroke();
     }
     ctx.restore();
@@ -10549,7 +10612,7 @@ const HELP_GUIDES={
     ]
   },
   'v-circle:feed':{
-    eyebrow:'Círculo · Feed',
+    eyebrow:'Círculo · Muro',
     title:'Presencia compartida',
     items:[
       ['Notas de tu círculo','Lee pensamientos breves de tus aliados. Si aún no cumples una práctica hoy, las notas se difuminan hasta que enciendas tu día.'],
@@ -10561,16 +10624,25 @@ const HELP_GUIDES={
     eyebrow:'Círculo · Escritos',
     title:'Tu diario editorial',
     items:[
-      ['Lecturas y reflexiones','Guarda artículos o reflexiones más extensas con formato editorial limpio, separados de las notas cortas del feed.'],
-      ['Escribir un artículo','Toca la barra inferior «Escribir un artículo…» para abrir el lienzo completo de escritura.']
+      ['Lecturas y reflexiones','Guarda artículos o reflexiones más extensas con formato editorial limpio, separados de las notas cortas del muro.'],
+      ['Escribir un artículo','Toca la barra inferior «Escribir un artículo» para abrir el lienzo completo de escritura.']
     ]
   },
   'v-circle:friends':{
-    eyebrow:'Círculo · Tu círculo',
+    eyebrow:'Círculo · Aliados',
     title:'Tus aliados cercanos',
     items:[
       ['Tarjetas de sintonía','Visualiza en filas de dos a las personas de tu círculo junto con su estado actual en tiempo real.'],
       ['Invitar o buscar amigo','Toca «+ Invitar o buscar amigo» debajo de las tarjetas para sumar nuevas personas de confianza.']
+    ]
+  },
+  'v-pubconfig':{
+    eyebrow:'Perfil público',
+    title:'Tu presencia en Wavy',
+    items:[
+      ['Identidad y foto','Configura tu @username, nombre visible y sube una foto de tu galería o elige un grabado editorial.'],
+      ['Mi Paisaje Sonoro','Vincula una canción que responda a cómo te sientes hoy para compartirla en tu perfil.'],
+      ['Tarjeta de Presencia','Personaliza tu sello editorial y expórtalo para Stories o Post.']
     ]
   },
   'v-clinic':{
@@ -11117,6 +11189,10 @@ $('shareIgFeedBtn').onclick=()=>exportSealImage(1080,1350,'feed-4x5');
 
 function buildMyAvatarPicker(){
   const pk=$('myAvPick');if(!pk)return;pk.innerHTML='';
+  const prev=$('myAvatarPreviewBox');
+  if(prev)prev.innerHTML=getAv(S.me.av);
+  const clr=$('clearCustomAvatarBtn');
+  if(clr)clr.hidden=!(S.me.customAvatar && S.me.av==='custom');
   AVATARS.forEach(a=>{
     const b=document.createElement('button');b.type='button';b.className='avopt'+(a.id===S.me.av?' on':'');
     b.innerHTML=a.svg+'<span>'+esc(a.name)+'</span>';
@@ -11124,10 +11200,47 @@ function buildMyAvatarPicker(){
       S.me.av=a.id;
       pk.querySelectorAll('.avopt').forEach(x=>x.classList.remove('on'));
       b.classList.add('on');
+      if(prev)prev.innerHTML=getAv(S.me.av);
+      if(clr)clr.hidden=true;
       renderSealsCarousel();
     };
     pk.appendChild(b);
   });
+}
+if($('myAvatarUpload')){
+  $('myAvatarUpload').addEventListener('change',e=>{
+    const f=e.target.files && e.target.files[0];if(!f)return;
+    const r=new FileReader();
+    r.onload=ev=>{
+      const img=new Image();
+      img.onload=()=>{
+        const c=document.createElement('canvas');const sz=256;c.width=sz;c.height=sz;
+        const ctx=c.getContext('2d');
+        const minSide=Math.min(img.width,img.height);
+        const sx=(img.width-minSide)/2,sy=(img.height-minSide)/2;
+        ctx.drawImage(img,sx,sy,minSide,minSide,0,0,sz,sz);
+        S.me.customAvatar=c.toDataURL('image/jpeg',0.85);
+        S.me.av='custom';
+        save(true);
+        buildMyAvatarPicker();
+        renderSealsCarousel();
+        renderCircleFeed();
+        toast('Foto de perfil actualizada','ok');
+      };
+      img.src=ev.target.result;
+    };
+    r.readAsDataURL(f);
+  });
+}
+if($('clearCustomAvatarBtn')){
+  $('clearCustomAvatarBtn').onclick=()=>{
+    S.me.customAvatar='';
+    if(S.me.av==='custom')S.me.av='coast';
+    save(true);
+    buildMyAvatarPicker();
+    renderSealsCarousel();
+    renderCircleFeed();
+  };
 }
 
 function syncProfileForm(){
