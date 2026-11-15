@@ -3395,7 +3395,7 @@ summary::-webkit-details-marker{display:none}
       </div>
       <!-- Versión de la app: sube una por ronda (v18, v19, v20…) para saber
            de un vistazo si la versión publicada ya trae los últimos cambios. -->
-      <div class="cover-version">v32</div>
+      <div class="cover-version">v33</div>
     </div>
   </div>
 </div>
@@ -10103,43 +10103,37 @@ const PEB_VESSELS={
     title:'Seda',mode:'female',short:'Seda',pro:false,relic:'#C99A86',
     shape:'seda',archetype:'serene',rotSpeed:0,rays:28,
     motion:{freq:1.10,amp:6,wScale:1.03,hScale:1.03,tongues:1,blobs:2,sparkMode:'drift',breathAmp:0},
-    wave:{n:3,spd:0.22},
-    pal:{glow:'rgba(232,184,160,',bgTop:'#f7ece8',bgBot:'#eed9d2',outerTop:'#FFF9F5',outerMid:'#EFC9B8',outerBot:'#C99A86',lava2:'#F2C4AE',midTop:'#FFFFFF',midBot:'#FBE4D8',core:'#FFFDF8',spark:'#E8B8A0',ember:'#C99A86'}
+    pal:{glow:'rgba(232,184,160,',bgTop:'#f9efe6',bgBot:'#efe0d2',outerTop:'#FFF9F5',outerMid:'#EFC9B8',outerBot:'#C99A86',lava2:'#F2C4AE',midTop:'#FFFFFF',midBot:'#FBE4D8',core:'#FFFDF8',spark:'#E8B8A0',ember:'#C99A86'}
   },
   lavanda:{
     title:'Lucero',mode:'female',short:'Lucero',pro:true,relic:'#A87AC9',
     shape:'lucero',archetype:'serene',rotSpeed:0.03,rays:8,
     motion:{freq:1.85,amp:12,wScale:1.06,hScale:1.06,tongues:2,blobs:3,sparkMode:'halo',breathAmp:0},
-    wave:{n:4,spd:0.38},
-    pal:{glow:'rgba(190,160,230,',bgTop:'#1a1420',bgBot:'#2e2138',outerTop:'#F5F0FF',outerMid:'#C9A8E8',outerBot:'#7A5A9A',lava2:'#D9C2F2',midTop:'#FFFFFF',midBot:'#E8DCF8',core:'#FBF8FF',spark:'#D9C2F2',ember:'#A87AC9'}
+    pal:{glow:'rgba(190,160,230,',bgTop:'#efe9f5',bgBot:'#e0d4ec',outerTop:'#F5F0FF',outerMid:'#C9A8E8',outerBot:'#7A5A9A',lava2:'#D9C2F2',midTop:'#FFFFFF',midBot:'#E8DCF8',core:'#FBF8FF',spark:'#D9C2F2',ember:'#A87AC9'}
   },
   ororosa:{
     title:'Áurea',mode:'female',short:'Áurea',pro:true,relic:'#D96A4A',
     shape:'aurea',archetype:'serene',rotSpeed:-0.05,rays:20,
     motion:{freq:2.0,amp:14,wScale:1.08,hScale:1.08,tongues:3,blobs:4,sparkMode:'burst',breathAmp:0},
-    wave:{n:3,spd:0.5},
-    pal:{glow:'rgba(232,130,90,',bgTop:'#221014',bgBot:'#3d1c22',outerTop:'#FFF0E8',outerMid:'#E88A6A',outerBot:'#8A3A28',lava2:'#F2A080',midTop:'#FFFFFF',midBot:'#FFD9C2',core:'#FFF8F0',spark:'#F2A080',ember:'#D96A4A'}
+    pal:{glow:'rgba(232,130,90,',bgTop:'#ead0c6',bgBot:'#dcc0b4',outerTop:'#FFF0E8',outerMid:'#E88A6A',outerBot:'#8A3A28',lava2:'#F2A080',midTop:'#FFFFFF',midBot:'#FFD9C2',core:'#FFF8F0',spark:'#F2A080',ember:'#D96A4A'}
   },
   ambar:{
     title:'Corona',mode:'male',short:'Corona',pro:false,relic:'#D9A441',
     shape:'corona',archetype:'boil',rotSpeed:0.10,rays:24,
     motion:{freq:2.2,amp:16,wScale:1.10,hScale:1.10,tongues:3,blobs:4,sparkMode:'rise',breathAmp:0},
-    wave:{n:4,spd:0.6},
-    pal:{glow:'rgba(240,180,70,',bgTop:'#160e04',bgBot:'#33200a',outerTop:'#FFF8DC',outerMid:'#F0B429',outerBot:'#7A4E10',lava2:'#FFD166',midTop:'#FFFFFF',midBot:'#FFDF8A',core:'#FFFDF2',spark:'#FFD166',ember:'#D9A441'}
+    pal:{glow:'rgba(240,180,70,',bgTop:'#f7ecd4',bgBot:'#ead9b4',outerTop:'#FFF8DC',outerMid:'#F0B429',outerBot:'#7A4E10',lava2:'#FFD166',midTop:'#FFFFFF',midBot:'#FFDF8A',core:'#FFFDF2',spark:'#FFD166',ember:'#D9A441'}
   },
   cobalto:{
     title:'Medalla de Oro',mode:'male',short:'Medalla',pro:true,relic:'#D4A017',
     shape:'medalla',archetype:'boil',rotSpeed:0.06,rays:22,
     motion:{freq:1.6,amp:10,wScale:1.06,hScale:1.06,tongues:3,blobs:5,sparkMode:'fast',breathAmp:0},
-    wave:{n:3,spd:0.3},
     pal:{glow:'rgba(212,160,23,',bgTop:'#1a0808',bgBot:'#3a1210',outerTop:'#FFF8DC',outerMid:'#D4A017',outerBot:'#6E4E08',lava2:'#F2C94C',midTop:'#FFFFFF',midBot:'#F2D67A',core:'#FFFDF5',spark:'#F2C94C',ember:'#D4A017'}
   },
   aurora:{
     title:'Emblema',mode:'male',short:'Emblema',pro:true,relic:'#C0392B',
     shape:'emblema',archetype:'boil',rotSpeed:-0.08,rays:20,
     motion:{freq:2.6,amp:14,wScale:1.12,hScale:1.12,tongues:3,blobs:5,sparkMode:'burst',breathAmp:0},
-    wave:{n:5,spd:0.45},
-    pal:{glow:'rgba(220,90,50,',bgTop:'#160a0a',bgBot:'#2e1210',outerTop:'#FFF3E0',outerMid:'#E07A4A',outerBot:'#7A1A10',lava2:'#F2A05A',midTop:'#FFFFFF',midBot:'#F2B88A',core:'#FFF8EC',spark:'#F2A05A',ember:'#C0392B'}
+    pal:{glow:'rgba(220,90,50,',bgTop:'#f4ead6',bgBot:'#e8dcc0',outerTop:'#FFF3E0',outerMid:'#E07A4A',outerBot:'#7A1A10',lava2:'#F2A05A',midTop:'#FFFFFF',midBot:'#F2B88A',core:'#FFF8EC',spark:'#F2A05A',ember:'#C0392B'}
   }
 };
 
@@ -10198,20 +10192,6 @@ function getGrainPattern(ctx){
   if(!__grainPat)__grainPat=ctx.createPattern(__grainCv,'repeat');
   return __grainPat;
 }
-/* Textura real (anti-paint): la superficie del sol se construye con motas
-   de pigmento y claroscuro, no con un degradado liso. */
-function mottleDisc(ctx,r,pal,seed,count,alpha){
-  ctx.save();
-  for(let d=0;d<count;d++){
-    const a=(d*2.39996+seed)%(Math.PI*2);
-    const dd=r*(0.08+0.80*Math.abs(Math.sin(d*12.9898+seed*78.233)));
-    const rr=Math.max(0.8,r*(0.02+0.05*Math.abs(Math.sin(d*39.346+seed))));
-    ctx.globalAlpha=alpha*(0.25+0.35*Math.abs(Math.sin(d*7.7+seed)));
-    ctx.fillStyle=(d%3===0)?'rgba(255,255,255,0.55)':((d%3===1)?(pal.lava2||pal.outerMid):(pal.outerBot||pal.outerMid));
-    ctx.beginPath();ctx.arc(Math.cos(a)*dd,Math.sin(a)*dd,rr,0,Math.PI*2);ctx.fill();
-  }
-  ctx.restore();
-}
 function shadeDisc(ctx,r,pal){
   /* Claroscuro: sombra suave abajo-derecha, luz arriba-izquierda. Volumen 3D. */
   ctx.save();
@@ -10251,7 +10231,7 @@ function drawLivingFlame(ts){
   if($('sunStagePct'))$('sunStagePct').textContent=Math.round(p*100)+'%';
 
   /* 0. Fondo continuo: negro profundo en 5% -> atmósfera cálida/cósmica hasta plenitud en 100% */
-  ctx.fillStyle='#040307';
+  ctx.fillStyle=pal.bgTop||'#f5efe6';
   ctx.fillRect(0,0,w,h);
   if(u>0.01){
     const bgAlpha=Math.min(1,Math.pow(u,0.72));
@@ -10265,42 +10245,16 @@ function drawLivingFlame(ts){
     ctx.restore();
   }
 
-  /* Ondas expansivas del fondo: anillos que se abren desde el centro, con el color y el ritmo de cada sol */
-  const wv=cfg.wave||{n:3,spd:0.4};
-  for(let wi=0;wi<wv.n;wi++){
-    const ph=((t*wv.spd+wi/wv.n)%1);
-    const rr=(0.25+0.75*ph)*Math.min(w,h)*0.48;
-    ctx.save();
-    ctx.globalAlpha=(1-ph)*0.20*(0.3+0.7*u);
-    ctx.strokeStyle=pal.glow+'0.7)';
-    ctx.lineWidth=Math.max(1,2.5*(1-ph));
-    ctx.beginPath();ctx.arc(cx,cy,rr,0,Math.PI*2);ctx.stroke();
-    ctx.restore();
-  }
   /* 1. Halo solar orgánico continuo: solo inunda el lienzo completo en 100% */
   const maxCoverR=Math.hypot(w,h)*0.82;
   const haloR=18+(maxCoverR-18)*Math.pow(u,1.25)+Math.sin(t*mot.freq)*(3+9*u);
   const hg=ctx.createRadialGradient(cx,cy,isLowSpark?1:8,cx,cy,haloR);
-  hg.addColorStop(0,pal.glow+(0.38+0.58*u).toFixed(2)+')');
-  hg.addColorStop(0.28,pal.glow+(0.08+0.44*Math.pow(u,1.1)).toFixed(2)+')');
-  hg.addColorStop(0.64,pal.glow+(0.02+0.26*Math.pow(u,1.6)+0.16*euphoria).toFixed(2)+')');
+  hg.addColorStop(0,pal.glow+(0.10+0.20*u).toFixed(2)+')');
+  hg.addColorStop(0.28,pal.glow+(0.05+0.15*Math.pow(u,1.1)).toFixed(2)+')');
+  hg.addColorStop(0.64,pal.glow+(0.02+0.08*Math.pow(u,1.6)+0.05*euphoria).toFixed(2)+')');
   hg.addColorStop(1,pal.glow+'0)');
   ctx.fillStyle=hg;
   ctx.fillRect(0,0,w,h);
-
-  /* Halo secundario de éxtasis: el color propio de cada sol (nunca blanco) */
-  if(euphoria>0.01){
-    ctx.save();
-    ctx.globalAlpha=euphoria*0.55;
-    const eg=ctx.createRadialGradient(cx,cy,w*0.04,cx,cy,maxCoverR*0.95);
-    eg.addColorStop(0,pal.glow+'0.5)');
-    eg.addColorStop(0.35,pal.glow+'0.38)');
-    eg.addColorStop(0.75,pal.glow+'0.14)');
-    eg.addColorStop(1,pal.glow+'0)');
-    ctx.fillStyle=eg;
-    ctx.fillRect(0,0,w,h);
-    ctx.restore();
-  }
 
   /* 2. Chispitas tipo encendedor cada 2 segundos en 5% */
   if(u<0.08){
@@ -10379,12 +10333,12 @@ function drawLivingFlame(ts){
         if(vis<=0.01)continue;
         const a=(i*Math.PI*2)/rays+rnd(i+9)*0.06;
         const kind=i%5;
-        const rLen=sunR*(kind===0?(1.55+0.75*u):(kind===1?(0.95+0.55*u):(kind===2?(1.25+0.65*u):(kind===3?(0.80+0.45*u):(1.45+0.70*u)))))*(0.85+0.30*rnd(i+3));
+        const rLen=sunR*(kind===0?(1.35+0.65*u):(kind===1?(0.95+0.55*u):(kind===2?(1.25+0.65*u):(kind===3?(0.80+0.45*u):(1.30+0.60*u)))))*(0.85+0.30*rnd(i+3));
         const baseW=Math.max(0.7,sunR*(0.006+0.006*rnd(i+11)));
         const sway=Math.sin(t*0.9+i*1.9)*sunR*0.06;
         ctx.save();ctx.rotate(a);ctx.globalAlpha*=vis*(0.55+0.45*u);
         const rg=ctx.createLinearGradient(sunR*0.30,0,rLen,0);
-        rg.addColorStop(0,pal.core||'#FFF9E8');rg.addColorStop(0.55,pal.outerMid);rg.addColorStop(1,'rgba(201,168,106,0)');
+        rg.addColorStop(0,pal.outerMid);rg.addColorStop(0.55,pal.lava2||pal.outerMid);rg.addColorStop(1,'rgba(201,154,134,0)');
         ctx.strokeStyle=rg;ctx.lineWidth=baseW;ctx.lineCap='round';
         ctx.beginPath();ctx.moveTo(sunR*0.30,0);
         if(kind===4){
@@ -10398,9 +10352,8 @@ function drawLivingFlame(ts){
         ctx.restore();
       }
       const dg=ctx.createRadialGradient(-sunR*0.06,-sunR*0.06,sunR*0.03,0,0,sunR*0.46);
-      dg.addColorStop(0,'#FFF8DC');dg.addColorStop(0.45,pal.core);dg.addColorStop(1,pal.outerMid);
+      dg.addColorStop(0,pal.outerTop||'#FFF9F5');dg.addColorStop(0.45,pal.core);dg.addColorStop(1,pal.outerMid);
       ctx.fillStyle=dg;ctx.beginPath();ctx.arc(0,0,sunR*0.44,0,Math.PI*2);ctx.fill();
-      mottleDisc(ctx,sunR*0.44,pal,3,22,0.35);
       shadeDisc(ctx,sunR*0.44,pal);
       ctx.strokeStyle='rgba(201,154,134,0.65)';ctx.lineWidth=Math.max(1,sunR*0.014);
       ctx.beginPath();ctx.arc(0,0,sunR*0.44,0,Math.PI*2);ctx.stroke();
@@ -10419,7 +10372,7 @@ function drawLivingFlame(ts){
         const baseW=sunR*(0.075+0.018*rnd(k+5));
         ctx.save();ctx.rotate(a);ctx.globalAlpha*=vis*tw;
         const lg=ctx.createLinearGradient(sunR*0.14,0,len,0);
-        lg.addColorStop(0,'#FFFFFF');lg.addColorStop(0.35,pal.core);lg.addColorStop(0.75,pal.outerMid);lg.addColorStop(1,pal.glow+'0)');
+        lg.addColorStop(0,pal.outerMid);lg.addColorStop(0.35,pal.core);lg.addColorStop(0.75,pal.outerMid);lg.addColorStop(1,pal.glow+'0)');
         ctx.fillStyle=lg;
         ctx.beginPath();
         ctx.moveTo(sunR*0.14,-baseW);
@@ -10446,9 +10399,8 @@ function drawLivingFlame(ts){
       }
       /* Centro luminoso suave, SIN anillos concéntricos (no es brújula) */
       const cg=ctx.createRadialGradient(-sunR*0.05,-sunR*0.05,sunR*0.03,0,0,sunR*0.40);
-      cg.addColorStop(0,'#FFFFFF');cg.addColorStop(0.5,pal.core);cg.addColorStop(1,pal.outerMid);
+      cg.addColorStop(0,pal.core);cg.addColorStop(0.5,pal.core);cg.addColorStop(1,pal.outerMid);
       ctx.fillStyle=cg;ctx.beginPath();ctx.arc(0,0,sunR*0.38,0,Math.PI*2);ctx.fill();
-      mottleDisc(ctx,sunR*0.38,pal,5,26,0.45);
       shadeDisc(ctx,sunR*0.38,pal);
       ctx.restore();
     }else if(shape==='aurea'){
@@ -10466,7 +10418,7 @@ function drawLivingFlame(ts){
         const phase=t*0.8+i*1.2;
         ctx.save();ctx.rotate(a);ctx.globalAlpha*=vis*(0.85+0.15*u);
         const rg=ctx.createLinearGradient(sunR*0.34,0,rLen,0);
-        rg.addColorStop(0,'#FFFFFF');rg.addColorStop(0.30,pal.core);rg.addColorStop(0.70,pal.outerMid);rg.addColorStop(1,'rgba(216,138,90,0)');
+        rg.addColorStop(0,pal.outerMid);rg.addColorStop(0.30,pal.core);rg.addColorStop(0.70,pal.outerMid);rg.addColorStop(1,'rgba(216,138,90,0)');
         ctx.fillStyle=rg;
         if(isStraight){
           ctx.beginPath();
@@ -10481,9 +10433,8 @@ function drawLivingFlame(ts){
         ctx.restore();
       }
       const wg=ctx.createRadialGradient(-sunR*0.08,-sunR*0.08,sunR*0.04,0,0,sunR*0.56);
-      wg.addColorStop(0,'#FFF9F0');wg.addColorStop(0.38,pal.core);wg.addColorStop(0.75,pal.lava2||pal.outerMid);wg.addColorStop(1,pal.outerMid);
+      wg.addColorStop(0,pal.outerTop||'#FFF0E8');wg.addColorStop(0.38,pal.core);wg.addColorStop(0.75,pal.lava2||pal.outerMid);wg.addColorStop(1,pal.outerMid);
       ctx.fillStyle=wg;ctx.beginPath();ctx.arc(0,0,sunR*0.54,0,Math.PI*2);ctx.fill();
-      mottleDisc(ctx,sunR*0.54,pal,7,30,0.5);
       shadeDisc(ctx,sunR*0.54,pal);
       ctx.strokeStyle='rgba(255,243,226,0.6)';ctx.lineWidth=Math.max(1.2,sunR*0.02);
       ctx.beginPath();ctx.arc(0,0,sunR*0.62,0,Math.PI*2);ctx.stroke();
@@ -10497,21 +10448,20 @@ function drawLivingFlame(ts){
         const vis=i%2===0?1:Math.max(0,Math.min(1,(u-0.14)/0.36));
         if(vis<=0.01)continue;
         const a=(i*Math.PI*2)/rays;
-        const rLen=sunR*(1.15+0.85*u+0.22*euphoria)*(0.75+0.45*rnd(i+17));
+        const rLen=sunR*(1.00+0.62*u+0.18*euphoria)*(0.75+0.45*rnd(i+17));
         const baseW=sunR*(0.055+0.03*rnd(i+23));
         const phase=t*0.9+i*1.15;
         ctx.save();ctx.rotate(a);ctx.globalAlpha*=vis;
         const rg=ctx.createLinearGradient(sunR*0.40,0,rLen,0);
-        rg.addColorStop(0,pal.core);rg.addColorStop(0.45,pal.lava2||pal.outerMid);rg.addColorStop(0.85,pal.outerMid);rg.addColorStop(1,'rgba(240,180,41,0)');
+        rg.addColorStop(0,pal.outerMid);rg.addColorStop(0.45,pal.lava2||pal.outerMid);rg.addColorStop(0.85,pal.outerMid);rg.addColorStop(1,'rgba(240,180,41,0)');
         ctx.fillStyle=rg;
         wavyRay(sunR*0.40,rLen,baseW,phase,2.2,sunR*0.11);
         ctx.fill();
         ctx.restore();
       }
       const fg=ctx.createRadialGradient(-sunR*0.15,-sunR*0.15,sunR*0.05,0,0,sunR*0.58);
-      fg.addColorStop(0,'#FFFDF2');fg.addColorStop(0.24,pal.core||'#FFE391');fg.addColorStop(0.58,pal.lava2||pal.outerMid);fg.addColorStop(0.84,pal.outerMid);fg.addColorStop(1,pal.outerBot||'#7A4E10');
+      fg.addColorStop(0,pal.outerTop||'#FFF8DC');fg.addColorStop(0.24,pal.core||'#FFE391');fg.addColorStop(0.58,pal.lava2||pal.outerMid);fg.addColorStop(0.84,pal.outerMid);fg.addColorStop(1,pal.outerBot||'#7A4E10');
       ctx.fillStyle=fg;ctx.beginPath();ctx.arc(0,0,sunR*0.56,0,Math.PI*2);ctx.fill();
-      mottleDisc(ctx,sunR*0.56,pal,11,34,0.55);
       shadeDisc(ctx,sunR*0.56,pal);
       ctx.strokeStyle='rgba(255,248,220,0.55)';ctx.lineWidth=Math.max(1.2,sunR*0.025);
       ctx.beginPath();ctx.arc(0,0,sunR*0.62,0,Math.PI*2);ctx.stroke();
@@ -10529,7 +10479,7 @@ function drawLivingFlame(ts){
           const rLen=sunR*(1.10+0.62*u+0.20*euphoria);
           ctx.save();ctx.rotate(a);
           const bg=ctx.createLinearGradient(sunR*0.60,0,rLen,0);
-          bg.addColorStop(0,pal.core);bg.addColorStop(0.5,pal.outerMid);bg.addColorStop(1,'rgba(212,160,23,0)');
+          bg.addColorStop(0,pal.outerMid);bg.addColorStop(0.5,pal.outerMid);bg.addColorStop(1,'rgba(212,160,23,0)');
           ctx.fillStyle=bg;
           ctx.beginPath();
           ctx.moveTo(sunR*0.58,-sunR*0.10);
@@ -10548,7 +10498,7 @@ function drawLivingFlame(ts){
         const phase=t*0.8+i*1.2;
         ctx.save();ctx.rotate(a);
         const rg=ctx.createLinearGradient(sunR*0.52,0,rLen,0);
-        rg.addColorStop(0,'#FFFDF5');rg.addColorStop(0.35,pal.core);rg.addColorStop(0.70,pal.outerMid);rg.addColorStop(1,'rgba(212,160,23,0)');
+        rg.addColorStop(0,pal.outerMid);rg.addColorStop(0.35,pal.core);rg.addColorStop(0.70,pal.outerMid);rg.addColorStop(1,'rgba(212,160,23,0)');
         ctx.fillStyle=rg;
         wavyRay(sunR*0.52,rLen,baseW,phase,1.6,sunR*0.07);
         ctx.fill();
@@ -10558,9 +10508,8 @@ function drawLivingFlame(ts){
         ctx.restore();
       }
       const hg=ctx.createRadialGradient(-sunR*0.18,-sunR*0.18,sunR*0.04,0,0,sunR*0.70);
-      hg.addColorStop(0,'#FFFDF5');hg.addColorStop(0.30,pal.core);hg.addColorStop(0.68,pal.lava2||pal.outerMid);hg.addColorStop(1,pal.outerBot||'#6E4E08');
+      hg.addColorStop(0,pal.outerTop||'#FFF8DC');hg.addColorStop(0.30,pal.core);hg.addColorStop(0.68,pal.lava2||pal.outerMid);hg.addColorStop(1,pal.outerBot||'#6E4E08');
       ctx.fillStyle=hg;ctx.beginPath();ctx.arc(0,0,sunR*0.66,0,Math.PI*2);ctx.fill();
-      mottleDisc(ctx,sunR*0.66,pal,13,40,0.6);
       shadeDisc(ctx,sunR*0.66,pal);
       ctx.save();
       ctx.globalAlpha=0.16+0.10*u;
@@ -10595,16 +10544,15 @@ function drawLivingFlame(ts){
         const phase=t*0.75+i*1.0;
         ctx.save();ctx.rotate(a);
         const rg=ctx.createLinearGradient(sunR*0.48,0,rLen,0);
-        rg.addColorStop(0,pal.core);rg.addColorStop(0.55,pal.outerMid);rg.addColorStop(1,'rgba(200,140,20,0)');
+        rg.addColorStop(0,pal.outerMid);rg.addColorStop(0.55,pal.outerMid);rg.addColorStop(1,'rgba(200,140,20,0)');
         ctx.fillStyle=rg;
         wavyRay(sunR*0.48,rLen,baseW,phase,1.7,sunR*0.08);
         ctx.fill();
         ctx.restore();
       }
       const eg=ctx.createRadialGradient(-sunR*0.12,-sunR*0.12,sunR*0.04,0,0,sunR*0.58);
-      eg.addColorStop(0,'#FFFFFF');eg.addColorStop(0.36,pal.core);eg.addColorStop(0.76,pal.lava2||pal.outerMid);eg.addColorStop(1,pal.outerBot);
+      eg.addColorStop(0,pal.outerTop||'#FFF3E0');eg.addColorStop(0.36,pal.core);eg.addColorStop(0.76,pal.lava2||pal.outerMid);eg.addColorStop(1,pal.outerBot);
       ctx.fillStyle=eg;ctx.beginPath();ctx.arc(0,0,sunR*0.56,0,Math.PI*2);ctx.fill();
-      mottleDisc(ctx,sunR*0.56,pal,17,32,0.55);
       shadeDisc(ctx,sunR*0.56,pal);
       const ringR=[0.46,0.36,0.26];
       ringR.forEach((rr,idx)=>{
@@ -10676,37 +10624,6 @@ function drawLivingFlame(ts){
   ctx.fillStyle=getGrainPattern(ctx);
   ctx.fillRect(0,0,w,h);
   ctx.restore();
-
-  /* 4. Partículas solares flotando en la atmósfera (crecen suavemente hasta 100%) */
-  if(u>0.06){
-    const maxSparks=Math.round(6+55*Math.pow(u,1.15)+(archetype==='boil'?70:25)*euphoria);
-    while(flameSparks.length<maxSparks){
-      const a=Math.random()*Math.PI*2;
-      const d=sunR*(0.6+Math.random()*1.4);
-      flameSparks.push({
-        x:cx+Math.cos(a)*d,
-        y:cy+Math.sin(a)*d,
-        vy:(archetype==='serene'?-0.15-Math.random()*0.4:-0.35-Math.random()*1.05),
-        vx:(Math.random()-0.5)*(archetype==='serene'?0.3:0.85),
-        r:1.2+Math.random()*2.3+0.8*euphoria,
-        life:Math.random()
-      });
-    }
-    if(flameSparks.length>maxSparks)flameSparks.length=maxSparks;
-    flameSparks.forEach(sp=>{
-      sp.x+=sp.vx;sp.y+=sp.vy;sp.life-=0.006;
-      if(sp.life<=0 || sp.y<8 || sp.y>h-8){
-        const a=Math.random()*Math.PI*2;
-        const d=sunR*(0.45+Math.random()*0.95);
-        sp.x=cx+Math.cos(a)*d;sp.y=cy+Math.sin(a)*d;sp.life=0.8+Math.random()*0.2;
-      }
-      ctx.save();
-      ctx.globalAlpha=Math.max(0,sp.life*(0.35+0.55*u));
-      ctx.fillStyle=pal.spark||'#FFE89E';
-      ctx.beginPath();ctx.arc(sp.x,sp.y,sp.r,0,Math.PI*2);ctx.fill();
-      ctx.restore();
-    });
-  }
 
   flameRaf=requestAnimationFrame(drawLivingFlame);
 }
@@ -11054,8 +10971,8 @@ const HELP_GUIDES={
     eyebrow:'Hoy · Tu sol',
     title:'Tu sol vivo',
     items:[
-      ['Selector de soles','Elige uno de los 6 soles (1 libre y 2 Pro por género): Seda, Lucero y Áurea para ella; Corona, Medalla de Oro y Emblema para él. Cada uno tiene su propio color, fondo, movimiento, halo y digievolución.'],
-      ['De 5% a 100%, sin saltos','A 5% tu sol es solo una chispa que expide chispitas; crece de forma continua y visible al respirar en Costa, hacer check-in o escribir. Al 100% llega la digievolución: en ellos, ebullición y fuerza total; en ellas, paz y ternura absolutas.'],
+      ['Selector de soles','Elige uno de los 6 soles (1 libre y 2 Pro por género): Seda, Lucero y Áurea para ella; Corona, Medalla de Oro y Emblema para él. Cada uno tiene su propio color y fondo pintado, como su pintura.'],
+      ['De 5% a 100%, sin saltos','A 5% tu sol es solo una chispa que expide chispitas; nace y crece de forma continua y visible al respirar en Costa, hacer check-in o escribir. Al 100% llega a su máximo apogeo: en ellos, ebullición y fuerza total; en ellas, paz y ternura absolutas.'],
       ['Vínculos y racha','Al encender tu día mantienes abierta la sintonía con tu círculo y sumas días reales de cuidado.']
     ]
   },
