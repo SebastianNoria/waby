@@ -168,18 +168,24 @@ body{
   -webkit-tap-highlight-color:transparent;
 }
 .masthead-help-btn:hover,.masthead-help-btn:active{opacity:1;transform:translateY(-50%) scale(0.95)}
-.masthead-menu-btn{
+.masthead-actions-right{
   position:absolute;
   right:0;
   top:50%;
   transform:translateY(-50%);
-  width:38px;
-  height:38px;
+  display:inline-flex;
+  align-items:center;
+  gap:2px;
+}
+.masthead-menu-btn{
+  position:relative;
+  width:36px;
+  height:36px;
   border-radius:50%;
   border:none;
   background:transparent;
   color:var(--ink);
-  opacity:0.62;
+  opacity:0.66;
   display:inline-flex;
   align-items:center;
   justify-content:center;
@@ -187,7 +193,8 @@ body{
   transition:opacity .2s ease, transform .2s ease;
   -webkit-tap-highlight-color:transparent;
 }
-.masthead-menu-btn:hover,.masthead-menu-btn:active{opacity:1;transform:translateY(-50%) scale(0.95)}
+.masthead-menu-btn:hover,.masthead-menu-btn:active{opacity:1;transform:scale(0.95)}
+.masthead-menu-btn.on{opacity:1;color:var(--crimson)}
 .first-day-guide{
   margin:4px 0 14px;
   padding:12px 0 14px;
@@ -246,28 +253,34 @@ body{
 }
 .masthead-left:active{transform:scale(0.97);opacity:0.8}
 .masthead .eyebrow{display:none}
-@keyframes wavyShimmer{
-  0%,92%{background-position:125% 0}
-  96%,100%{background-position:-35% 0}
-}
 .masthead h1{
   font-family:var(--serif);font-weight:500;font-size:clamp(35px,8.8vw,40px);line-height:1;letter-spacing:-.015em;margin:0;
   position:relative;display:inline-block;
-  background:linear-gradient(112deg, var(--ink) 0%, var(--ink) 43%, rgba(255,255,255,0.96) 50%, var(--ink) 57%, var(--ink) 100%);
-  background-size:260% 100%;
-  background-position:125% 0;
+  --wavy-angle:112deg;
+  --wavy-start:130% 0%;
+  --wavy-end:-35% 0%;
+  background:linear-gradient(var(--wavy-angle), var(--ink) 0%, var(--ink) 43%, rgba(255,255,255,0.98) 50%, var(--ink) 57%, var(--ink) 100%);
+  background-size:260% 260%;
+  background-position:var(--wavy-start);
   -webkit-background-clip:text;
   background-clip:text;
   -webkit-text-fill-color:transparent;
-  animation:wavyShimmer 240s linear infinite;
+}
+.masthead h1.shimmering{
+  transition:background-position 5s cubic-bezier(.35,.05,.25,1);
+  background-position:var(--wavy-end);
 }
 [data-theme="dark"] .masthead h1{
-  background:linear-gradient(112deg, #ffffff 0%, #ffffff 43%, var(--gold) 50%, #ffffff 57%, #ffffff 100%);
-  background-size:260% 100%;
-  background-position:125% 0;
+  background:linear-gradient(var(--wavy-angle), #ffffff 0%, #ffffff 43%, var(--gold) 50%, #ffffff 57%, #ffffff 100%);
+  background-size:260% 260%;
+  background-position:var(--wavy-start);
   -webkit-background-clip:text;
   background-clip:text;
   -webkit-text-fill-color:transparent;
+}
+[data-theme="dark"] .masthead h1.shimmering{
+  transition:background-position 5s cubic-bezier(.35,.05,.25,1);
+  background-position:var(--wavy-end);
 }
 .masthead .tagline{font-family:var(--serif);font-style:normal;color:var(--muted);font-size:11.5px;letter-spacing:.01em;margin-top:4px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .masthead-right{display:none!important}
@@ -814,32 +827,40 @@ body.coast-fullscreen > #seab .gauge{left:max(16px, env(safe-area-inset-left, 16
 }
 body.coast-fullscreen > #seab .coast-fs-dock{bottom:max(18px, env(safe-area-inset-bottom, 18px));left:50%;transform:translateX(-50%)}
 .coast-fs-toggle{
-  width:38px;height:38px;padding:0;border-radius:50%;border:1px solid rgba(255,255,255,0.30);
-  background:rgba(15,23,36,0.36);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  width:38px;height:38px;padding:0;border-radius:50%;
+  border:1px solid rgba(255,255,255,0.38);
+  background:linear-gradient(135deg, rgba(255,255,255,0.22), rgba(255,255,255,0.06));
+  backdrop-filter:blur(18px) saturate(170%);-webkit-backdrop-filter:blur(18px) saturate(170%);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,0.45), 0 6px 18px rgba(0,0,0,0.14);
   color:#fff;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;
-  transition:transform .16s ease, background .18s ease;
+  transition:transform .16s ease, background .18s ease, border-color .18s ease;
 }
 .coast-fs-toggle:active{transform:scale(0.92)}
-.coast-fs-toggle.on{background:rgba(255,255,255,0.28);border-color:rgba(255,255,255,0.68)}
+.coast-fs-toggle.on{
+  background:linear-gradient(135deg, rgba(255,255,255,0.36), rgba(255,255,255,0.14));
+  border-color:rgba(255,255,255,0.75);
+}
 #coastFsStopBtn{display:none}
 .sea.breathing #coastFsStopBtn{display:inline-flex}
 .coast-fs-panel{
   display:flex;flex-wrap:nowrap;align-items:center;gap:6px;padding:6px 8px;border-radius:999px;
   max-width:calc(100vw - 36px);overflow-x:auto;scrollbar-width:none;
-  background:rgba(16,24,38,0.44);
+  background:linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.06));
   backdrop-filter:blur(22px) saturate(185%);-webkit-backdrop-filter:blur(22px) saturate(185%);
   border:1px solid rgba(255,255,255,0.42);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,0.45), 0 10px 26px rgba(0,0,0,0.28);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,0.50), 0 10px 26px rgba(0,0,0,0.16);
   animation:fadeUp .2s ease;
 }
 .coast-fs-panel::-webkit-scrollbar{display:none}
 .coast-fs-panel[hidden]{display:none}
 .coast-fs-pill{
-  border:1px solid rgba(255,255,255,0.30);background:rgba(255,255,255,0.14);color:#fff;
+  border:1px solid rgba(255,255,255,0.34);
+  background:rgba(255,255,255,0.12);color:#fff;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   border-radius:999px;padding:6px 12px;font-size:11.5px;font-family:var(--sans);font-weight:500;
-  cursor:pointer;white-space:nowrap;flex-shrink:0;text-shadow:0 1px 2px rgba(0,0,0,0.3);
+  cursor:pointer;white-space:nowrap;flex-shrink:0;text-shadow:0 1px 2px rgba(0,0,0,0.25);
 }
-.coast-fs-pill.on{background:rgba(255,255,255,0.34);border-color:rgba(255,255,255,0.72);font-weight:700}
+.coast-fs-pill.on{background:rgba(255,255,255,0.34);border-color:rgba(255,255,255,0.78);font-weight:700}
 .bmode{
   display:grid;grid-template-columns:repeat(4,1fr);gap:6px;align-items:center;
   margin-bottom:10px;background:transparent;padding:4px 0 10px;border-radius:0;
@@ -1759,7 +1780,7 @@ body.public-view .pub-view.on{display:block}
   border:1px solid var(--rule);
   box-shadow:0 4px 18px -8px rgba(0,0,0,0.08);
 }
-.bnav-inner{width:100%;max-width:600px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;align-items:center}
+.bnav-inner{width:100%;max-width:600px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;align-items:center}
 .bnav-plus{
   width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
   background:var(--ink);color:var(--paper);font-size:24px;line-height:1;font-weight:400;
@@ -2364,9 +2385,14 @@ summary::-webkit-details-marker{display:none}
       <h1>Wavy</h1>
       <div class="tagline">Donde tu calma se encuentra con los tuyos</div>
     </div>
-    <button type="button" class="masthead-menu-btn" id="mastheadMenuBtn" aria-label="Ajustes de Wavy" title="Ajustes">
-      <svg class="w-ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="8.5" x2="20" y2="8.5"/><circle cx="9" cy="8.5" r="2.1" fill="var(--paper)"/><line x1="4" y1="15.5" x2="20" y2="15.5"/><circle cx="15" cy="15.5" r="2.1" fill="var(--paper)"/></svg>
-    </button>
+    <div class="masthead-actions-right">
+      <button type="button" class="masthead-menu-btn" id="mastheadPubProfileBtn" aria-label="Mi perfil público (Yo)" title="Yo">
+        <svg class="w-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.2" r="3.2"/><path d="M5.5 19.2c1.4-3.2 3.8-4.7 6.5-4.7s5.1 1.5 6.5 4.7"/></svg>
+      </button>
+      <button type="button" class="masthead-menu-btn" id="mastheadMenuBtn" aria-label="Ajustes de Wavy" title="Ajustes">
+        <svg class="w-ico" viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="8.5" x2="20" y2="8.5"/><circle cx="9" cy="8.5" r="2.1" fill="var(--paper)"/><line x1="4" y1="15.5" x2="20" y2="15.5"/><circle cx="15" cy="15.5" r="2.1" fill="var(--paper)"/></svg>
+      </button>
+    </div>
   </header>
 
   <!-- =========================================================
@@ -2646,24 +2672,24 @@ summary::-webkit-details-marker{display:none}
           <canvas id="flameCanvas" width="700" height="860" aria-label="Tu llama viva"></canvas>
         </div>
         <div class="hd" style="margin-bottom:8px">
-          <span>Mi constancia <button type="button" class="help-q" data-help="helpPeb" aria-label="Ayuda sobre tu llama">?</button></span>
+          <span>Mi constancia <button type="button" class="help-q" data-help="helpPeb" aria-label="Ayuda sobre tu sol">?</button></span>
           <span id="pebEvolutionBadge" style="color:var(--gold);font-weight:600">Nivel I · Chispa</span>
         </div>
-        <div class="help-tip" id="helpPeb" hidden>Tu llama representa tu presencia diaria y nunca se apaga (su mínimo es 5% porque tu capacidad de volver siempre sigue viva). Se aviva al respirar en Costa, guardar tu día o hacer una práctica de 60 s.</div>
+        <div class="help-tip" id="helpPeb" hidden>Tu sol representa tu presencia diaria y nunca se apaga (su mínimo es 5% porque tu capacidad de volver siempre sigue viva). Crece al respirar en Costa, guardar tu día o hacer una práctica de 60 s.</div>
         <div class="peb-top" style="margin-bottom:8px">
-          <span id="pebVesselTitle">Ámbar</span>
+          <span id="pebVesselTitle">Disco Solar</span>
           <span class="peb-chip"><i></i><span id="as">Vínculos · 0</span></span>
         </div>
         <div class="peb-read">
           <b><span id="fp">65</span><small>%</small></b>
-          <span id="fv">Llama encendida y en calma hoy</span>
+          <span id="fv">Sol encendido y radiante hoy</span>
           <div><span class="peb-decay-pill" id="pebDecayCountdown">-2% / h · Mínimo 5%</span></div>
-          <p id="pebHint" style="margin-top:6px">Tu llama se aviva cuando cumples una práctica hoy.</p>
+          <p id="pebHint" style="margin-top:6px">Tu sol se aviva cuando cumples una práctica hoy.</p>
         </div>
         <div class="peb-bar"><i id="pebFill"></i></div>
         <div class="peb-actions">
-          <button class="btn" id="pb">Avivar llama</button>
-          <button class="btn soft" id="wd">Enviar calor</button>
+          <button class="btn" id="pb">Avivar sol</button>
+          <button class="btn soft" id="wd">Enviar luz</button>
         </div>
       </div>
 
@@ -3056,7 +3082,7 @@ summary::-webkit-details-marker{display:none}
   <div class="vpage" id="v-profile">
     <div class="card">
       <div class="sl" style="margin-top:0;padding-top:0;border-top:none;margin-bottom:14px">
-        <label><span>Atmósfera</span><span>elige tu fondo</span></label>
+        <label><span>Atmósfera</span></label>
         <div class="chips" id="themePick" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px">
           <button type="button" class="chip" data-th="pulcritud" style="min-height:36px;height:36px;padding:6px 4px;font-size:12.5px">Pulcritud</button>
           <button type="button" class="chip" data-th="light" style="min-height:36px;height:36px;padding:6px 4px;font-size:12.5px">Editorial</button>
@@ -3065,7 +3091,7 @@ summary::-webkit-details-marker{display:none}
         </div>
       </div>
       <div class="sl" style="margin-top:0;padding-top:10px;border-top:1px solid var(--rule);margin-bottom:14px">
-        <label><span>Terminado de cajas</span><span>cromático o blanco</span></label>
+        <label><span>Terminado de cajas</span></label>
         <div class="chips" id="finishPick" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px">
           <button type="button" class="chip" data-fin="chromatic" style="min-height:36px;height:36px;padding:6px 8px;font-size:12.5px">Cromático</button>
           <button type="button" class="chip" data-fin="minimal" style="min-height:36px;height:36px;padding:6px 8px;font-size:12.5px">Minimalista</button>
@@ -3080,7 +3106,7 @@ summary::-webkit-details-marker{display:none}
       </div>
 
       <div class="sl">
-        <label><span>Tu suscripción y acceso</span><span id="profilePlanBadge" style="color:var(--gold);font-weight:700">Plan Básico</span></label>
+        <label><span>Tu suscripción y acceso</span></label>
         <div class="chips" id="subPlanPick" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px">
           <button type="button" class="chip on" data-plan-btn="basic" style="min-height:36px;height:36px;padding:6px 8px;font-size:12.5px">Básico</button>
           <button type="button" class="chip" data-plan-btn="pro" id="openPaywallBtn" style="min-height:36px;height:36px;padding:6px 8px;font-size:12.5px">Wavy Pro</button>
@@ -3088,7 +3114,7 @@ summary::-webkit-details-marker{display:none}
       </div>
 
       <div class="sl">
-        <label><span>Privacidad en tu círculo</span><span>visibilidad</span></label>
+        <label><span>Privacidad en tu círculo</span></label>
         <div class="chips" id="privToggles" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px">
           <button type="button" class="chip on" data-p="showSea" style="min-height:36px;height:36px;padding:6px 8px;font-size:12px">Estado de mi mar</button>
           <button type="button" class="chip on" data-p="showStreak" style="min-height:36px;height:36px;padding:6px 8px;font-size:12px">Día de racha</button>
@@ -3096,11 +3122,11 @@ summary::-webkit-details-marker{display:none}
       </div>
 
       <div class="sl">
-        <label><span>Cuenta, Respaldo y Privacidad</span><span>Local</span></label>
+        <label><span>Cuenta, Respaldo y Privacidad</span></label>
         <p style="font-size:11.5px;color:var(--muted);line-height:1.45;margin-bottom:10px">Tus registros viven localmente en tu dispositivo. Guarda una copia periódica si cambias de teléfono.</p>
-        <div class="row" style="grid-template-columns:1fr 1fr;margin-bottom:10px">
-          <button type="button" class="btn ghost" id="exFileBtn">Descargar respaldo</button>
-          <label class="btn ghost" style="margin:0;cursor:pointer">
+        <div class="chips" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-bottom:10px">
+          <button type="button" class="chip" id="exFileBtn" style="min-height:36px;height:36px;padding:6px 8px;font-size:12.5px">Descargar respaldo</button>
+          <label class="chip" style="min-height:36px;height:36px;padding:6px 8px;font-size:12.5px;margin:0;cursor:pointer;display:flex;align-items:center;justify-content:center">
             Restaurar respaldo
             <input type="file" id="imFileInput" accept=".json,application/json" hidden>
           </label>
@@ -3667,11 +3693,6 @@ summary::-webkit-details-marker{display:none}
       <!-- Símbolo de Autor 2: Sol/Luna Naciente sobre el Horizonte de la Costa -->
       <svg viewBox="0 0 24 24"><path d="M6.5 13.5a5.5 5.5 0 0 1 11 0"/><path d="M2.5 14h19"/><path d="M4 18c2.5-1.8 5.2-1.8 8 0s5.5 1.8 8 0"/></svg>
       <span>Costa</span>
-    </button>
-    <button class="bnav-btn" data-v="v-pubconfig" id="bnavPubProfileBtn" role="tab" aria-selected="false" aria-label="Mi perfil público">
-      <!-- Símbolo de Autor Central: Sello de Presencia (anillo orgánico + destello interior) -->
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2" stroke-dasharray="42 10"/><path d="M12 7.2l1.2 3.6 3.6 1.2-3.6 1.2L12 16.8l-1.2-3.6-3.6-1.2 3.6-1.2L12 7.2Z"/></svg>
-      <span>Yo</span>
     </button>
     <button class="bnav-btn" data-v="v-circle" role="tab" aria-selected="false">
       <!-- Símbolo de Autor 3: Onda de Sintonía Compartida (Centro y Resonancia en Calma) -->
@@ -5031,7 +5052,6 @@ function renderSoundCapsuleHTML(sc,compact=false){
 
   return '<div class="sound-capsule-card" onclick="event.stopPropagation();const p=this.querySelector(\'.sc-plat-picker\');if(p)p.classList.toggle(\'open\')">'+
     '<div class="sc-head" style="cursor:pointer">'+
-      vinylHtml+
       '<div class="sc-meta">'+
         '<strong class="sc-title">'+titleHtml+'</strong>'+
         '<span class="sc-artist">'+esc(artistTxt)+'</span>'+
@@ -10029,34 +10049,40 @@ function addFuel(n){S.fuel={v:Math.min(100,fuel()+n),t:Date.now()};save();flameV
 const PEB_LEGACY_MAP={fuente:'cuarzo',musa:'lavanda',nido:'ororosa',piedra:'ambar',horizonte:'cobalto',brasa:'aurora'};
 const PEB_VESSELS={
   cuarzo:{
-    title:'Brisa de Cuarzo',mode:'female',short:'Cuarzo',pro:false,relic:'#E06C88',
-    motion:{freq:1.65,amp:12,wScale:1.10,hScale:0.96,tongues:2,blobs:3,sparkMode:'spiral',breathAmp:0.055},
-    pal:{glow:'rgba(242,126,158,',outerTop:'#FFE5EC',outerMid:'#F27E9E',outerBot:'#D1496E',lava2:'#FFB27A',midTop:'#FFFFFF',midBot:'#FFD0DF',core:'#FFF9FB',spark:'#FFE2EC',ember:'#E06C88'}
+    title:'Estrella Astral',mode:'female',short:'Astral',pro:false,relic:'#E89B38',
+    shape:'astral_star',rotSpeed:0.12,rays:16,
+    motion:{freq:1.65,amp:12,wScale:1.05,hScale:1.05,tongues:2,blobs:3,sparkMode:'spiral',breathAmp:0.055},
+    pal:{glow:'rgba(248,184,78,',bgTop:'#0e0914',bgBot:'#241510',outerTop:'#FFF3C4',outerMid:'#F4A936',outerBot:'#C46818',lava2:'#FFE596',midTop:'#FFFFFF',midBot:'#FFD77A',core:'#FFFDF2',spark:'#FFE89E',ember:'#E89B38'}
   },
   lavanda:{
-    title:'Eclipse Violeta',mode:'female',short:'Eclipse',pro:true,relic:'#8E5CE6',
-    motion:{freq:2.45,amp:18,wScale:1.00,hScale:1.06,tongues:3,blobs:5,sparkMode:'halo',breathAmp:0.065},
-    pal:{glow:'rgba(156,104,244,',outerTop:'#F5E8FF',outerMid:'#A468F2',outerBot:'#6330C2',lava2:'#FF7EB6',midTop:'#FFFFFF',midBot:'#DFC7FF',core:'#FFF7FF',spark:'#8CF4FF',ember:'#B57DF5'}
+    title:'Sol Corazón Espiral',mode:'female',short:'Corazón',pro:true,relic:'#E879A6',
+    shape:'heart_spiral',rotSpeed:0.16,rays:20,
+    motion:{freq:2.45,amp:18,wScale:1.08,hScale:1.08,tongues:3,blobs:5,sparkMode:'halo',breathAmp:0.065},
+    pal:{glow:'rgba(246,162,198,',bgTop:'#160c1e',bgBot:'#2b1328',outerTop:'#FFF0F6',outerMid:'#FF96C0',outerBot:'#9C3674',lava2:'#FFD166',midTop:'#FFFFFF',midBot:'#FFC7E2',core:'#FFF9F2',spark:'#FFE68A',ember:'#E879A6'}
   },
   ororosa:{
-    title:'Sol de Ámbar Rosa',mode:'female',short:'Sol Rosa',pro:true,relic:'#E88A5A',
-    motion:{freq:2.85,amp:15,wScale:1.08,hScale:1.04,tongues:3,blobs:5,sparkMode:'burst',breathAmp:0.07},
-    pal:{glow:'rgba(248,162,102,',outerTop:'#FFF6DB',outerMid:'#F79F64',outerBot:'#D95B43',lava2:'#FFD666',midTop:'#FFFFFF',midBot:'#FFE2B8',core:'#FFFFF8',spark:'#FFE875',ember:'#F08A54'}
+    title:'Sol Filigrana Dorada',mode:'female',short:'Filigrana',pro:true,relic:'#E6A15C',
+    shape:'filigree',rotSpeed:-0.14,rays:18,
+    motion:{freq:2.85,amp:15,wScale:1.10,hScale:1.10,tongues:3,blobs:5,sparkMode:'burst',breathAmp:0.07},
+    pal:{glow:'rgba(252,196,112,',bgTop:'#180e0c',bgBot:'#2e1912',outerTop:'#FFF9DE',outerMid:'#F7BD5E',outerBot:'#C96830',lava2:'#FFE484',midTop:'#FFFFFF',midBot:'#FFE6B0',core:'#FFFFF8',spark:'#FFF0A8',ember:'#E6A15C'}
   },
   ambar:{
-    title:'Forja de Ámbar',mode:'male',short:'Ámbar',pro:false,relic:'#DE7E26',
-    motion:{freq:2.10,amp:13,wScale:1.14,hScale:1.00,tongues:2,blobs:3,sparkMode:'rise',breathAmp:0.045},
-    pal:{glow:'rgba(244,146,52,',outerTop:'#FFF1C2',outerMid:'#F49234',outerBot:'#C94A14',lava2:'#FFC857',midTop:'#FFFFFF',midBot:'#FFD17A',core:'#FFFDF2',spark:'#FFE699',ember:'#E67A22'}
+    title:'Disco Solar',mode:'male',short:'Disco',pro:false,relic:'#F07E1A',
+    shape:'watercolor_disc',rotSpeed:0.08,rays:0,
+    motion:{freq:2.10,amp:13,wScale:1.12,hScale:1.12,tongues:2,blobs:3,sparkMode:'rise',breathAmp:0.045},
+    pal:{glow:'rgba(248,136,36,',bgTop:'#0c0806',bgBot:'#241108',outerTop:'#FFE99E',outerMid:'#FF8C1A',outerBot:'#B83E08',lava2:'#FFD05B',midTop:'#FFFDF0',midBot:'#FFA836',core:'#FFF8DF',spark:'#FFE28A',ember:'#F07E1A'}
   },
   cobalto:{
-    title:'Marea Cobalto',mode:'male',short:'Cobalto',pro:true,relic:'#2E6FE6',
-    motion:{freq:3.10,amp:14,wScale:0.96,hScale:1.10,tongues:3,blobs:5,sparkMode:'fast',breathAmp:0.05},
-    pal:{glow:'rgba(58,136,246,',outerTop:'#E0F6FF',outerMid:'#3A88F6',outerBot:'#1644B8',lava2:'#36E2D0',midTop:'#FFFFFF',midBot:'#A6DCFF',core:'#F4FCFF',spark:'#9EF6FF',ember:'#2E6FE6'}
+    title:'Sol Helios Clásico',mode:'male',short:'Helios',pro:true,relic:'#4BA3FF',
+    shape:'helios_carved',rotSpeed:0.20,rays:24,
+    motion:{freq:3.10,amp:14,wScale:1.06,hScale:1.06,tongues:3,blobs:5,sparkMode:'fast',breathAmp:0.05},
+    pal:{glow:'rgba(104,174,255,',bgTop:'#070c1a',bgBot:'#101f3d',outerTop:'#FFF6D6',outerMid:'#FFD66B',outerBot:'#2563C9',lava2:'#5CE1E6',midTop:'#FFFFFF',midBot:'#FFE89E',core:'#FFFDF5',spark:'#9EF6FF',ember:'#4BA3FF'}
   },
   aurora:{
-    title:'Pulso Aurora',mode:'male',short:'Aurora',pro:true,relic:'#D63447',
-    motion:{freq:3.45,amp:19,wScale:1.12,hScale:1.06,tongues:3,blobs:6,sparkMode:'burst',breathAmp:0.068},
-    pal:{glow:'rgba(232,68,88,',outerTop:'#FFE9D6',outerMid:'#E84458',outerBot:'#9E1932',lava2:'#FF9E44',midTop:'#FFFFFF',midBot:'#FFB8A8',core:'#FFF8F2',spark:'#FFD470',ember:'#D63447'}
+    title:'Sol Filamentos',mode:'male',short:'Filamentos',pro:true,relic:'#E83E52',
+    shape:'radiant_filaments',rotSpeed:-0.24,rays:72,
+    motion:{freq:3.45,amp:19,wScale:1.14,hScale:1.14,tongues:3,blobs:6,sparkMode:'burst',breathAmp:0.068},
+    pal:{glow:'rgba(244,82,92,',bgTop:'#120406',bgBot:'#30080a',outerTop:'#FFF4CC',outerMid:'#FF5E3A',outerBot:'#8C1219',lava2:'#FFAA33',midTop:'#FFFFFF',midBot:'#FFD166',core:'#FFFBE8',spark:'#FFE07A',ember:'#E83E52'}
   }
 };
 
@@ -10106,231 +10132,240 @@ function drawLivingFlame(ts){
   const sub=$('sub-flame');
   if(!cv || document.hidden || (sub && !sub.classList.contains('on')))return;
   const ctx=cv.getContext('2d');if(!ctx)return;
-  const w=cv.width,h=cv.height,cx=w*0.5,baseY=h*0.80;
+  const w=cv.width,h=cv.height,cx=w*0.5,cy=h*0.5;
   const targetPct=(devFlameOverridePct!==null)?devFlameOverridePct:fuel();
   flamePctSmooth+=(targetPct-flamePctSmooth)*0.12;
   const p=Math.max(0.05,Math.min(1,flamePctSmooth/100));
-  const isFull=(p>=0.97);
+  const isLowSpark=(p<=0.09);
+  const isFull=(p>=0.95);
   const t=(ts||0)*0.001;
-  const pal=activeFlamePal;
-  const mot=activeFlameMotion||PEB_VESSELS.ambar.motion;
-  const vKey=S.pebVessel||'ambar';
+  const cfg=PEB_VESSELS[resolveFlameVesselKey()]||PEB_VESSELS.ambar;
+  const pal=cfg.pal||activeFlamePal;
+  const mot=cfg.motion||activeFlameMotion||PEB_VESSELS.ambar.motion;
+  const shape=cfg.shape||'watercolor_disc';
+  const rot=t*(cfg.rotSpeed||0.12);
 
-  /* 0. Atmósfera completa estilo Lámpara de Lava (cero blanco; líquido profundo + gotas luminosas) */
-  const bgGrad=ctx.createLinearGradient(0,0,0,h);
-  bgGrad.addColorStop(0,'#09060d');
-  bgGrad.addColorStop(0.55,'#140b16');
-  bgGrad.addColorStop(1,'#1e0e14');
-  ctx.fillStyle=bgGrad;
-  ctx.fillRect(0,0,w,h);
-
-  /* Reflejo lateral profundo tipo vidrio de lámpara de lava */
-  const rimL=ctx.createLinearGradient(0,0,w*0.26,0);
-  rimL.addColorStop(0,pal.glow+'0.22)');
-  rimL.addColorStop(1,pal.glow+'0)');
-  ctx.fillStyle=rimL;ctx.fillRect(0,0,w*0.26,h);
-  const rimR=ctx.createLinearGradient(w,0,w*0.74,0);
-  rimR.addColorStop(0,pal.glow+'0.18)');
-  rimR.addColorStop(1,pal.glow+'0)');
-  ctx.fillStyle=rimR;ctx.fillRect(w*0.74,0,w*0.26,h);
-
-  /* Gotas de cera orgánica flotando con luz interna desde abajo */
-  const lavaBlobs=mot.blobs||4;
-  for(let b=0;b<lavaBlobs;b++){
-    const bx=w*(0.18+0.64*((Math.sin(t*0.18*(b+1)+b*2.1)+1)*0.5));
-    const by=h*(0.16+0.68*((Math.cos(t*0.14*(b+0.7)+b*1.7)+1)*0.5));
-    const br=(38+28*Math.sin(t*0.4+b))*(0.7+0.35*p);
-    ctx.save();
-    if('filter' in ctx)ctx.filter='blur(14px)';
-    const bg=ctx.createRadialGradient(bx,by+br*0.18,br*0.1,bx,by,br);
-    bg.addColorStop(0,pal.lava2||pal.outerMid);
-    bg.addColorStop(0.55,pal.outerBot);
-    bg.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.globalAlpha=0.38+0.24*p;
-    ctx.fillStyle=bg;
-    ctx.beginPath();ctx.ellipse(bx,by,br*1.08,br*0.86,Math.sin(t*0.25+b)*0.4,0,Math.PI*2);ctx.fill();
-    ctx.restore();
+  /* 0. Fondo nocturno / cósmico: en 5% negro profundo casi total; en 100% halo solar cubriendo toda la pantalla */
+  if(isLowSpark){
+    ctx.fillStyle='#040307';
+    ctx.fillRect(0,0,w,h);
+  }else{
+    const bgGrad=ctx.createLinearGradient(0,0,0,h);
+    bgGrad.addColorStop(0,pal.bgTop||'#0c0806');
+    bgGrad.addColorStop(1,pal.bgBot||'#241108');
+    ctx.fillStyle=bgGrad;
+    ctx.fillRect(0,0,w,h);
   }
 
-  // 1. Brasa cálida y halo atmosférico iluminando desde la base
-  const haloR=isFull?Math.min(w,h)*0.64:(110+220*p+Math.sin(t*mot.freq)*8);
-  const haloY=baseY-(55+135*p);
-  const hg=ctx.createRadialGradient(cx,haloY,10,cx,haloY,haloR);
-  hg.addColorStop(0,pal.glow+(0.48+0.42*p).toFixed(2)+')');
-  hg.addColorStop(0.50,pal.glow+(0.22+0.22*p).toFixed(2)+')');
-  hg.addColorStop(0.84,pal.glow+(0.05+0.07*p).toFixed(2)+')');
+  /* 1. Halo solar: en 100% inunda toda la pantalla */
+  const maxCoverR=Math.hypot(w,h)*0.78;
+  const haloR=isLowSpark?(28+14*Math.sin(t*3)):(isFull?maxCoverR:(70+maxCoverR*0.65*p+Math.sin(t*mot.freq)*10));
+  const hg=ctx.createRadialGradient(cx,cy,isLowSpark?2:12,cx,cy,haloR);
+  hg.addColorStop(0,pal.glow+(isLowSpark?'0.45':(0.55+0.42*p).toFixed(2))+')');
+  hg.addColorStop(0.35,pal.glow+(isLowSpark?'0.10':(0.32+0.36*p).toFixed(2))+')');
+  hg.addColorStop(0.75,pal.glow+(isFull?'0.28':'0.06')+')');
   hg.addColorStop(1,pal.glow+'0)');
   ctx.fillStyle=hg;
-  ctx.beginPath();ctx.arc(cx,haloY,haloR,0,Math.PI*2);ctx.fill();
+  ctx.fillRect(0,0,w,h);
 
-  // Helper pictórico: dibuja una lengua de fuego orgánica ondulante con bordes difuminados
-  function drawPainterlyTongue(ox,oy,width,height,topColor,botColor,alpha,blurPx,phase,lean){
-    ctx.save();
-    if(blurPx>0 && 'filter' in ctx)ctx.filter='blur('+blurPx+'px)';
-    const steps=16;
-    const ptsL=[],ptsR=[];
-    for(let i=0;i<=steps;i++){
-      const u=i/steps; // 0 = base, 1 = punta
-      const y=oy-u*height;
-      // Perfil orgánico de llama (más ancha abajo-medio, se afina en punta ondulante)
-      const env=Math.sin(Math.pow(u,0.68)*Math.PI)*(1-u*0.28);
-      const halfW=Math.max(1.5,width*0.5*(u<0.18?(0.55+u*2.5):env));
-      const wave=Math.sin(t*mot.freq*1.15 - u*4.2 + phase)*(mot.amp*0.55*u*p)
-               + Math.cos(t*mot.freq*2.1 - u*7.0 + phase*1.4)*(mot.amp*0.22*u*p)
-               + lean*u*width*0.5;
-      ptsL.push([ox+wave-halfW,y]);
-      ptsR.push([ox+wave+halfW,y]);
+  /* 2. Chispitas tipo encendedor cada 2 segundos en 5% a lo largo de la pantalla */
+  if(isLowSpark){
+    const cycle=t%2.0;
+    if(cycle<0.48){
+      const burstFade=1-(cycle/0.48);
+      const seed=Math.floor(t/2.0)*17;
+      for(let i=0;i<14;i++){
+        const ang=((seed+i*47)%360)*Math.PI/180;
+        const dist=(20+((seed*13+i*97)%Math.round(Math.min(w,h)*0.44)))*(0.35+0.65*(cycle/0.48));
+        const sx=cx+Math.cos(ang)*dist;
+        const sy=cy+Math.sin(ang)*dist*1.15;
+        ctx.save();
+        ctx.globalAlpha=burstFade*(0.5+0.5*((i%3)/2));
+        ctx.fillStyle=i%3===0?'#FFFFFF':(pal.spark||'#FFD666');
+        ctx.beginPath();ctx.arc(sx,sy,1.4+(i%3)*0.9,0,Math.PI*2);ctx.fill();
+        ctx.restore();
+      }
     }
-    const grad=ctx.createLinearGradient(ox,oy-height,ox,oy);
-    grad.addColorStop(0,topColor);
-    grad.addColorStop(0.55,botColor);
-    grad.addColorStop(1,pal.ember||botColor);
-    ctx.globalAlpha=alpha;
-    ctx.fillStyle=grad;
-    ctx.beginPath();
-    ctx.moveTo(ptsL[0][0],ptsL[0][1]);
-    for(let i=1;i<ptsL.length;i++){
-      const px=(ptsL[i-1][0]+ptsL[i][0])*0.5;
-      const py=(ptsL[i-1][1]+ptsL[i][1])*0.5;
-      ctx.quadraticCurveTo(ptsL[i-1][0],ptsL[i-1][1],px,py);
-    }
-    const tip=ptsL[ptsL.length-1];
-    ctx.lineTo((tip[0]+ptsR[ptsR.length-1][0])*0.5,tip[1]-4);
-    for(let i=ptsR.length-1;i>0;i--){
-      const px=(ptsR[i][0]+ptsR[i-1][0])*0.5;
-      const py=(ptsR[i][1]+ptsR[i-1][1])*0.5;
-      ctx.quadraticCurveTo(ptsR[i][0],ptsR[i][1],px,py);
-    }
-    /* Base curva orgánica redondeada (sin línea recta ni ángulos cortados abajo) */
-    ctx.quadraticCurveTo(ox,oy+Math.min(34,width*0.32),ptsL[0][0],ptsL[0][1]);
-    ctx.closePath();
-    ctx.fill();
-    ctx.restore();
   }
 
-  const flameH=(42+255*p)*(isFull?1.10:mot.hScale);
-  const flameW=(30+125*p)*(isFull?1.22:mot.wScale);
+  /* 3. Sol en crecimiento (5% chispa brotando -> 100% sol máximo con su silueta) */
+  const breath=1+Math.sin(t*mot.freq)*(mot.breathAmp||0.05)*p;
+  const sunR=(isLowSpark?7:(18+112*p))*breath;
 
-  // 2. Lecho de brasas vivas en la base (como la chimenea de Calcifer)
   ctx.save();
-  if('filter' in ctx)ctx.filter='blur(10px)';
-  const bedG=ctx.createRadialGradient(cx,baseY,4,cx,baseY,flameW*1.05);
-  bedG.addColorStop(0,pal.core);
-  bedG.addColorStop(0.45,pal.outerMid);
-  bedG.addColorStop(1,'rgba(0,0,0,0)');
-  ctx.globalAlpha=0.55+0.35*p;
-  ctx.fillStyle=bedG;
-  ctx.beginPath();ctx.ellipse(cx,baseY+2,flameW*(isFull?1.25:0.9),16+18*p,0,0,Math.PI*2);ctx.fill();
+  ctx.translate(cx,cy);
+  ctx.rotate(rot);
+
+  if(!isLowSpark){
+    if(shape==='astral_star'){
+      const pts=16;
+      ctx.save();
+      ctx.fillStyle=pal.outerMid;
+      ctx.shadowColor=pal.lava2||pal.outerMid;
+      ctx.shadowBlur=24*p;
+      ctx.beginPath();
+      for(let i=0;i<pts*2;i++){
+        const a=(i*Math.PI)/pts;
+        const isCard=(i%8===0), isDiag=(i%4===0 && !isCard);
+        const r=(i%2===0)?(isCard?sunR*2.35:(isDiag?sunR*1.68:sunR*1.28)):sunR*0.42;
+        if(i===0)ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r);
+        else ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);
+      }
+      ctx.closePath();ctx.fill();
+      ctx.strokeStyle=pal.core;ctx.lineWidth=Math.max(1.5,sunR*0.07);
+      ctx.beginPath();ctx.arc(0,0,sunR*0.36,0,Math.PI*2);ctx.stroke();
+      ctx.beginPath();ctx.arc(0,0,sunR*0.20,0,Math.PI*2);ctx.stroke();
+      ctx.fillStyle=pal.core;ctx.beginPath();ctx.arc(0,0,sunR*0.09,0,Math.PI*2);ctx.fill();
+      ctx.restore();
+    }else if(shape==='heart_spiral'){
+      const rays=20;
+      ctx.save();
+      ctx.shadowColor=pal.lava2||pal.outerMid;ctx.shadowBlur=26*p;
+      for(let i=0;i<rays;i++){
+        const a=(i*Math.PI*2)/rays;
+        const isCard=(i%5===0);
+        const rLen=sunR*(isCard?2.05:1.52);
+        ctx.save();ctx.rotate(a);
+        ctx.strokeStyle=isCard?(pal.lava2||pal.core):pal.outerMid;
+        ctx.lineWidth=isCard?Math.max(2.5,sunR*0.06):Math.max(1.5,sunR*0.035);
+        ctx.lineCap='round';
+        ctx.beginPath();ctx.moveTo(sunR*0.58,0);
+        if(i%2===1){
+          ctx.quadraticCurveTo(sunR*1.02,sunR*0.14,rLen,0);
+        }else{
+          ctx.lineTo(rLen,0);
+        }
+        ctx.stroke();ctx.restore();
+      }
+      const dg=ctx.createRadialGradient(0,0,sunR*0.1,0,0,sunR*0.62);
+      dg.addColorStop(0,pal.core);dg.addColorStop(0.6,pal.lava2||pal.outerMid);dg.addColorStop(1,pal.outerBot);
+      ctx.fillStyle=dg;ctx.beginPath();ctx.arc(0,0,sunR*0.62,0,Math.PI*2);ctx.fill();
+      /* Corazón + espiral sutil en el centro */
+      ctx.strokeStyle='#FFF8EE';ctx.lineWidth=Math.max(1.6,sunR*0.045);ctx.lineCap='round';
+      ctx.beginPath();
+      const hs=sunR*0.36;
+      ctx.moveTo(0,hs*0.65);
+      ctx.bezierCurveTo(-hs*1.1,hs*0.05,-hs*0.95,-hs*0.85,0,-hs*0.32);
+      ctx.bezierCurveTo(hs*0.95,-hs*0.85,hs*1.1,hs*0.05,0,hs*0.65);
+      ctx.stroke();
+      ctx.restore();
+    }else if(shape==='filigree'){
+      const rays=18;
+      ctx.save();
+      ctx.shadowColor=pal.lava2||pal.outerMid;ctx.shadowBlur=28*p;
+      for(let i=0;i<rays;i++){
+        const a=(i*Math.PI*2)/rays;
+        const rLen=sunR*(i%3===0?2.18:(i%2===0?1.65:1.35));
+        ctx.save();ctx.rotate(a);
+        const rg=ctx.createLinearGradient(sunR*0.4,0,rLen,0);
+        rg.addColorStop(0,pal.core);rg.addColorStop(0.5,pal.outerMid);rg.addColorStop(1,'rgba(255,230,150,0)');
+        ctx.fillStyle=rg;
+        ctx.beginPath();
+        ctx.moveTo(sunR*0.38,-sunR*0.08);
+        ctx.quadraticCurveTo(sunR*1.05,Math.sin(t*2+i)*sunR*0.10,rLen,0);
+        ctx.quadraticCurveTo(sunR*1.05,-Math.sin(t*2+i)*sunR*0.10,sunR*0.38,sunR*0.08);
+        ctx.closePath();ctx.fill();ctx.restore();
+      }
+      const cg=ctx.createRadialGradient(0,0,sunR*0.08,0,0,sunR*0.58);
+      cg.addColorStop(0,'#FFFFFF');cg.addColorStop(0.5,pal.core);cg.addColorStop(1,pal.outerMid);
+      ctx.fillStyle=cg;ctx.beginPath();ctx.arc(0,0,sunR*0.56,0,Math.PI*2);ctx.fill();
+      ctx.restore();
+    }else if(shape==='watercolor_disc'){
+      ctx.save();
+      ctx.shadowColor=pal.outerMid;ctx.shadowBlur=32*p;
+      const steps=48;
+      ctx.beginPath();
+      for(let i=0;i<=steps;i++){
+        const a=(i/steps)*Math.PI*2;
+        const wob=1+0.045*Math.sin(a*7+t*1.2)+0.03*Math.cos(a*13-t*0.9);
+        const r=sunR*1.08*wob;
+        if(i===0)ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r);
+        else ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);
+      }
+      ctx.closePath();
+      const wg=ctx.createRadialGradient(-sunR*0.18,-sunR*0.18,sunR*0.08,0,0,sunR*1.12);
+      wg.addColorStop(0,pal.core);wg.addColorStop(0.45,pal.lava2||pal.outerMid);wg.addColorStop(0.85,pal.outerMid);wg.addColorStop(1,pal.outerBot);
+      ctx.fillStyle=wg;ctx.fill();
+      ctx.restore();
+    }else if(shape==='helios_carved'){
+      const rays=24;
+      ctx.save();
+      ctx.shadowColor=pal.outerMid;ctx.shadowBlur=26*p;
+      ctx.fillStyle=pal.outerMid;
+      ctx.beginPath();
+      for(let i=0;i<rays*2;i++){
+        const a=(i*Math.PI)/rays;
+        const r=(i%2===0)?sunR*(i%4===0?1.72:1.45):sunR*0.86;
+        if(i===0)ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r);
+        else ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);
+      }
+      ctx.closePath();ctx.fill();
+      const hg2=ctx.createRadialGradient(-sunR*0.15,-sunR*0.15,sunR*0.08,0,0,sunR*0.82);
+      hg2.addColorStop(0,pal.core);hg2.addColorStop(0.55,pal.lava2||pal.outerMid);hg2.addColorStop(1,pal.outerBot);
+      ctx.fillStyle=hg2;ctx.beginPath();ctx.arc(0,0,sunR*0.80,0,Math.PI*2);ctx.fill();
+      ctx.strokeStyle='rgba(255,255,255,0.45)';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.arc(0,0,sunR*0.64,0,Math.PI*2);ctx.stroke();
+      ctx.restore();
+    }else{
+      /* radiant_filaments: cientos de rayos filamentosos finos irradiando desde el núcleo */
+      const rays=72;
+      ctx.save();
+      for(let i=0;i<rays;i++){
+        const a=(i*Math.PI*2)/rays;
+        const rLen=sunR*(1.45+0.68*((Math.sin(i*3.7+t*0.8)+1)*0.5));
+        ctx.strokeStyle=i%3===0?pal.lava2:pal.outerMid;
+        ctx.globalAlpha=0.55+0.35*p;
+        ctx.lineWidth=Math.max(1,sunR*0.018);
+        ctx.beginPath();ctx.moveTo(Math.cos(a)*sunR*0.42,Math.sin(a)*sunR*0.42);
+        ctx.lineTo(Math.cos(a)*rLen,Math.sin(a)*rLen);ctx.stroke();
+      }
+      ctx.globalAlpha=1;
+      const fg=ctx.createRadialGradient(0,0,sunR*0.05,0,0,sunR*0.58);
+      fg.addColorStop(0,'#FFFFFF');fg.addColorStop(0.45,pal.core);fg.addColorStop(0.82,pal.lava2||pal.outerMid);fg.addColorStop(1,pal.outerBot);
+      ctx.shadowColor=pal.lava2||pal.outerMid;ctx.shadowBlur=28*p;
+      ctx.fillStyle=fg;ctx.beginPath();ctx.arc(0,0,sunR*0.56,0,Math.PI*2);ctx.fill();
+      ctx.restore();
+    }
+  }else{
+    /* 5%: chispa solar mínima brotando en la oscuridad */
+    const sg=ctx.createRadialGradient(0,0,1,0,0,sunR*2.4);
+    sg.addColorStop(0,'#FFFFFF');
+    sg.addColorStop(0.4,pal.core||'#FFF5C0');
+    sg.addColorStop(1,'rgba(255,160,60,0)');
+    ctx.fillStyle=sg;
+    ctx.beginPath();ctx.arc(0,0,sunR*2.4,0,Math.PI*2);ctx.fill();
+  }
   ctx.restore();
 
-  // 3. Muro pictórico de lenguas secundarias con bases curvas escalonadas
-  const tongueCount=isFull?9:Math.max(2,Math.round(2+p*6));
-  for(let i=0;i<tongueCount;i++){
-    const norm=(i/(Math.max(1,tongueCount-1)))-0.5; // -0.5 a +0.5
-    const spread=norm*flameW*(isFull?1.48:0.88);
-    const curveLift=Math.abs(norm)*26*(0.5+0.5*p);
-    const tH=flameH*(0.48+0.46*(1-Math.abs(norm)*1.3)+0.14*Math.sin(t*1.7+i));
-    const tW=flameW*(0.36+0.18*(1-Math.abs(norm)));
-    drawPainterlyTongue(
-      cx+spread,
-      baseY-curveLift,
-      tW,
-      tH,
-      i%2===0?(pal.lava2||pal.outerMid):pal.outerTop,
-      pal.outerBot,
-      0.42+0.28*p,
-      11,
-      i*1.35,
-      norm*0.75
-    );
-  }
-
-  // 4. Cuerpo principal fluido (capas de acuarela superpuestas sin contorno duro)
-  drawPainterlyTongue(cx,baseY,flameW*0.92,flameH*0.96,pal.outerTop,pal.outerBot,0.74,7,0.4,0);
-  drawPainterlyTongue(cx+Math.sin(t*mot.freq)*4*p,baseY-2,flameW*0.64,flameH*0.76,pal.core,pal.midBot||pal.outerMid,0.84,4,1.9,0.12);
-  drawPainterlyTongue(cx-Math.cos(t*mot.freq*0.9)*3*p,baseY-4,flameW*0.42,flameH*0.52,'#FFFFFF',pal.core,0.90,2,3.1,-0.08);
-
-  // 5. Personalidad sutil estilo Forky en el núcleo (ojitos blancos simétricos y sonrisa muy sutil)
-  if(p>=0.12){
-    const blinkCycle=(t*0.32)%1;
-    const isBlink=(blinkCycle>0.94);
-    const eyeScaleY=isBlink?0.12:1;
-    const swayEye=Math.sin(t*mot.freq*1.15)*mot.amp*0.14*p;
-    const eyeY=baseY-flameH*0.23;
-    const eyeSep=Math.max(8,flameW*(isFull?0.14:0.16));
-    const eyeR=Math.max(3.2,Math.min(7.6,3.4+4.2*p));
-    ctx.save();
-    ctx.globalAlpha=0.88;
-    [-1,1].forEach(side=>{
-      const ex=cx+swayEye+side*eyeSep;
+  /* 4. Partículas solares flotando en la atmósfera (en 100% llenan la pantalla) */
+  if(!isLowSpark){
+    const maxSparks=isFull?58:Math.round(8+28*p);
+    while(flameSparks.length<maxSparks){
+      const a=Math.random()*Math.PI*2;
+      const d=sunR*(0.6+Math.random()*1.4);
+      flameSparks.push({
+        x:cx+Math.cos(a)*d,
+        y:cy+Math.sin(a)*d,
+        vy:-0.35-Math.random()*1.1,
+        vx:(Math.random()-0.5)*0.9,
+        r:(isFull?2.2:1.4)+Math.random()*2.4,
+        life:Math.random()
+      });
+    }
+    if(flameSparks.length>maxSparks)flameSparks.length=maxSparks;
+    flameSparks.forEach(sp=>{
+      sp.x+=sp.vx;sp.y+=sp.vy;sp.life-=0.006;
+      if(sp.life<=0 || sp.y<8 || sp.y>h-8){
+        const a=Math.random()*Math.PI*2;
+        const d=sunR*(0.45+Math.random()*0.95);
+        sp.x=cx+Math.cos(a)*d;sp.y=cy+Math.sin(a)*d;sp.life=0.8+Math.random()*0.2;
+      }
       ctx.save();
-      ctx.translate(ex,eyeY);
-      ctx.scale(1,eyeScaleY);
-      ctx.fillStyle='#FFFDF8';
-      ctx.beginPath();ctx.arc(0,0,eyeR,0,Math.PI*2);ctx.fill();
-      ctx.strokeStyle='rgba(42,26,18,0.22)';
-      ctx.lineWidth=1;
-      ctx.stroke();
-      ctx.fillStyle=(vKey==='cobalto'||vKey==='lavanda')?'#1f2438':'#231812';
-      ctx.beginPath();ctx.arc(0,0,eyeR*0.42,0,Math.PI*2);ctx.fill();
+      ctx.globalAlpha=Math.max(0,sp.life*(0.45+0.45*p));
+      ctx.fillStyle=pal.spark||'#FFE89E';
+      ctx.beginPath();ctx.arc(sp.x,sp.y,sp.r,0,Math.PI*2);ctx.fill();
       ctx.restore();
     });
-    if(p>=0.55){
-      ctx.strokeStyle='rgba(176,68,42,0.52)';
-      ctx.lineWidth=1.35;
-      ctx.lineCap='round';
-      ctx.beginPath();
-      ctx.arc(cx+swayEye,eyeY+eyeR*1.45,eyeR*0.72,0.24*Math.PI,0.76*Math.PI);
-      ctx.stroke();
-    }
-    ctx.restore();
-  }
-
-  // 6. Chispas luminosas ascendentes (en 100% llenan el aire con ligereza)
-  const maxSparks=isFull?54:Math.round(5+28*p);
-  const spdMult=(mot.sparkMode==='fast'||mot.sparkMode==='burst'||isFull)?1.45:0.9;
-  while(flameSparks.length<maxSparks){
-    flameSparks.push({
-      x:cx+(Math.random()-0.5)*flameW*(isFull?1.75:1.05),
-      y:baseY-Math.random()*flameH*(isFull?0.95:0.55),
-      vy:(0.9+Math.random()*(1.6+2.2*p))*spdMult,
-      vx:(Math.random()-0.5)*(mot.sparkMode==='burst'||isFull?1.65:0.6),
-      r:(isFull?2.2:1.6)+Math.random()*3.0,
-      life:Math.random()
-    });
-  }
-  if(flameSparks.length>maxSparks)flameSparks.length=maxSparks;
-  flameSparks.forEach((sp,idx)=>{
-    sp.y-=sp.vy;
-    if(mot.sparkMode==='spiral'){
-      sp.x+=Math.cos(t*3.2+idx)*1.25;
-    }else if(mot.sparkMode==='halo'){
-      sp.x+=sp.vx+Math.sin(t*2.6+idx)*1.05;
-    }else{
-      sp.x+=sp.vx+Math.sin(t*mot.freq*1.6+sp.y*0.03)*0.65;
-    }
-    sp.life-=0.007+0.005*(1-p);
-    if(sp.life<=0 || sp.y<10){
-      sp.x=cx+(Math.random()-0.5)*flameW*(isFull?1.5:0.85);
-      sp.y=baseY-flameH*(0.12+Math.random()*0.62);
-      sp.vy=(0.9+Math.random()*(1.6+2.2*p))*spdMult;
-      sp.vx=(Math.random()-0.5)*(mot.sparkMode==='burst'||isFull?1.75:0.65);
-      sp.life=0.85+Math.random()*0.15;
-    }
-    ctx.save();
-    ctx.globalAlpha=Math.max(0,sp.life*(0.55+0.45*p));
-    ctx.fillStyle=pal.spark;
-    ctx.beginPath();ctx.arc(sp.x,sp.y,sp.r,0,Math.PI*2);ctx.fill();
-    ctx.restore();
-  });
-
-  // 5. Grano risográfico orgánico
-  if(window._wavyGrainPat){
-    ctx.save();
-    ctx.globalAlpha=0.14;
-    ctx.fillStyle=window._wavyGrainPat;
-    ctx.fillRect(0,0,w,h);
-    ctx.restore();
   }
 
   flameRaf=requestAnimationFrame(drawLivingFlame);
@@ -10624,6 +10659,33 @@ if($('mastheadProfileTrigger')){
   $('mastheadProfileTrigger').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleProfileView();}};
 }
 if($('mastheadMenuBtn'))$('mastheadMenuBtn').onclick=()=>toggleProfileView();
+if($('mastheadPubProfileBtn'))$('mastheadPubProfileBtn').onclick=()=>{
+  if(document.querySelector('.vpage.on')?.id==='v-pubconfig'){switchMainView('v-today');}
+  else{switchMainView('v-pubconfig');}
+};
+(function initWavyRandomShimmer(){
+  const h1=document.querySelector('.masthead h1');
+  if(!h1)return;
+  const dirs=[
+    {a:'112deg',s:'130% 50%',e:'-35% 50%'},
+    {a:'292deg',s:'-35% 50%',e:'130% 50%'},
+    {a:'35deg',s:'0% 130%',e:'100% -30%'},
+    {a:'215deg',s:'100% -30%',e:'0% 130%'},
+    {a:'155deg',s:'125% 15%',e:'-25% 85%'},
+    {a:'335deg',s:'-25% 85%',e:'125% 15%'}
+  ];
+  function runSweep(){
+    const d=dirs[Math.floor(Math.random()*dirs.length)];
+    h1.classList.remove('shimmering');
+    h1.style.setProperty('--wavy-angle',d.a);
+    h1.style.setProperty('--wavy-start',d.s);
+    h1.style.setProperty('--wavy-end',d.e);
+    void h1.offsetWidth;
+    h1.classList.add('shimmering');
+  }
+  setTimeout(runSweep, 2200);
+  setInterval(runSweep, 20000);
+})();
 const HELP_GUIDES={
   'v-today:habit':{
     eyebrow:'Hoy · Mi hábito',
