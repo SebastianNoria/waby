@@ -1568,6 +1568,16 @@ body.public-view .pub-view.on{display:block}
   font-family:var(--serif);font-size:34px;font-weight:400;color:#fff;line-height:1;
   text-shadow:0 1px 14px rgba(0,0,0,0.42);pointer-events:none;
 }
+.sun-stage-decay{
+  position:absolute;right:14px;top:14px;z-index:4;
+  padding:6px 12px;border-radius:999px;
+  background:rgba(15,23,36,0.34);
+  backdrop-filter:blur(10px) saturate(140%);
+  -webkit-backdrop-filter:blur(10px) saturate(140%);
+  border:1px solid rgba(255,255,255,0.28);
+  color:#fff;font-size:11px;font-weight:600;letter-spacing:.06em;
+  pointer-events:none;
+}
 .peb-top{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .peb-chip{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:30px;background:var(--card);border:1px solid var(--glass-border);letter-spacing:.10em;white-space:nowrap}
 .peb-chip i{width:7px;height:7px;border-radius:50%;background:#DDA88D;box-shadow:0 0 0 3px rgba(221,168,141,.2)}
@@ -2701,29 +2711,14 @@ summary::-webkit-details-marker{display:none}
 
     </section>
 
-    <!-- SUB-PANEL 1C: MI LLAMA Y PRÁCTICAS VERIFICADAS CON TEMPORIZADOR -->
+    <!-- SUB-PANEL 1C: MI SOL Y PRÁCTICAS VERIFICADAS CON TEMPORIZADOR -->
     <section class="panel card" id="sub-flame">
       <div class="pd" id="pd">
         <div class="flame-stage" id="flameStage">
           <canvas id="flameCanvas" width="700" height="860" aria-label="Tu sol vivo"></canvas>
           <div class="sun-stage-pct" id="sunStagePct">65%</div>
+          <div class="sun-stage-decay" id="pebDecayCountdown">-2%</div>
         </div>
-        <div class="hd" style="margin-bottom:8px">
-          <span>Mi constancia <button type="button" class="help-q" data-help="helpPeb" aria-label="Ayuda sobre tu sol">?</button></span>
-          <span id="pebEvolutionBadge" style="color:var(--gold);font-weight:600">Nivel I · Chispa</span>
-        </div>
-        <div class="help-tip" id="helpPeb" hidden>Tu sol representa tu presencia diaria y nunca se apaga (su mínimo es 5% porque tu capacidad de volver siempre sigue viva). Crece al respirar en Costa, guardar tu día o hacer una práctica de 60 s.</div>
-        <div class="peb-top" style="margin-bottom:8px">
-          <span id="pebVesselTitle">Disco Solar</span>
-          <span class="peb-chip"><i></i><span id="as">Vínculos · 0</span></span>
-        </div>
-        <div class="peb-read">
-          <b><span id="fp">65</span><small>%</small></b>
-          <span id="fv">Sol encendido y radiante hoy</span>
-          <div><span class="peb-decay-pill" id="pebDecayCountdown">-2% / h · Mínimo 5%</span></div>
-          <p id="pebHint" style="margin-top:6px">Tu sol se aviva cuando cumples una práctica hoy.</p>
-        </div>
-        <div class="peb-bar"><i id="pebFill"></i></div>
         <div class="peb-actions">
           <button class="btn" id="pb">Avivar sol</button>
           <button class="btn soft" id="wd">Enviar luz</button>
@@ -5247,6 +5242,7 @@ function switchMainView(vid){
   if(vid!=='v-profile')lastNonProfileView=vid;
   window.scrollTo({top:0,behavior:'instant'});
   closeAllTransientUI(vid);
+  if(typeof closeCurtains==='function')closeCurtains();
   document.querySelectorAll('.bnav-btn').forEach(b=>{
     const active=(b.dataset.v===vid);
     b.classList.toggle('on',active);
@@ -5326,8 +5322,16 @@ function renderCircleFriends(){
   });
   if(blend)blend.style.background='none';
 }
+function closeCurtains(){
+  [['feedCurtainBtn','feedCurtainDrawer'],['diaryCurtainBtn','diaryCurtainDrawer']].forEach(([bid,did])=>{
+    const b=$(bid),d=$(did);
+    if(b){b.classList.remove('open');b.setAttribute('aria-expanded','false');}
+    if(d)d.classList.remove('open');
+  });
+}
 function switchCircleTab(tab){
   const t=(tab==='diary'||tab==='friends')?tab:'feed';
+  closeCurtains();
   if($('circleTabFeedBtn'))$('circleTabFeedBtn').classList.toggle('on',t==='feed');
   if($('circleTabDiaryBtn'))$('circleTabDiaryBtn').classList.toggle('on',t==='diary');
   if($('circleTabFriendsBtn'))$('circleTabFriendsBtn').classList.toggle('on',t==='friends');
@@ -5345,16 +5349,25 @@ if($('circleTabFriendsBtn'))$('circleTabFriendsBtn').onclick=()=>switchCircleTab
 function bindCurtainToggle(btnId,drawerId,focusId){
   const btn=$(btnId),dr=$(drawerId);
   if(!btn||!dr)return;
-  btn.addEventListener('click',()=>{
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
     const open=!dr.classList.contains('open');
-    dr.classList.toggle('open',open);
-    btn.classList.toggle('open',open);
-    btn.setAttribute('aria-expanded',open?'true':'false');
-    if(open && focusId && $(focusId))setTimeout(()=>$(focusId).focus(),140);
+    closeCurtains();
+    if(open){
+      dr.classList.add('open');
+      btn.classList.add('open');
+      btn.setAttribute('aria-expanded','true');
+      if(focusId && $(focusId))setTimeout(()=>$(focusId).focus(),140);
+    }
   });
 }
 bindCurtainToggle('feedCurtainBtn','feedCurtainDrawer','echoInput');
 bindCurtainToggle('diaryCurtainBtn','diaryCurtainDrawer');
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#feedCurtainShell') && !e.target.closest('#diaryCurtainShell')){
+    closeCurtains();
+  }
+});
 if($('friendsInviteBtn'))$('friendsInviteBtn').onclick=()=>{if($('directoryModal')){$('directoryModal').hidden=false;if(typeof renderDirectory==='function')renderDirectory();}};
 
 $('bnav').addEventListener('click',e=>{
@@ -10119,40 +10132,40 @@ function addFuel(n){S.fuel={v:Math.min(100,fuel()+n),t:Date.now()};save();flameV
 const PEB_LEGACY_MAP={fuente:'cuarzo',musa:'lavanda',nido:'ororosa',piedra:'ambar',horizonte:'cobalto',brasa:'aurora'};
 const PEB_VESSELS={
   cuarzo:{
-    title:'Estrella',mode:'female',short:'Estrella',pro:false,relic:'#D99A26',
-    shape:'astral_hand',rotSpeed:0.05,rays:16,pctColor:'#785414',bgMat:'butter_yellow',
+    title:'Alba',mode:'female',short:'Alba',pro:false,relic:'#DF8068',
+    shape:'alba_petals',rotSpeed:0.05,rays:12,pctColor:'#683B30',bgMat:'ivory_blush',
     motion:{freq:1.25,amp:6,breathAmp:0.024},
-    pal:{bg:'#F5E6A6',bg2:'#ECD98E',disc:'#DF9B24',disc2:'#CC8618',ray:'#DF9B24',ray2:'#D18E1C',spark:'#E5A832'}
+    pal:{bg:'#F7EAE2',bg2:'#F7EAE2',disc:'#E48870',disc2:'#D6735B',ray:'#EA9C7E',ray2:'#DF8068',spark:'#E59678'}
   },
   lavanda:{
-    title:'Sol Crema',mode:'female',short:'Crema',pro:true,relic:'#D99429',
-    shape:'ochre_sketch',rotSpeed:0.05,rays:32,pctColor:'#6B4F24',bgMat:'sand_cream',
+    title:'Sol Crema',mode:'female',short:'Crema',pro:true,relic:'#D97C36',
+    shape:'ochre_sketch',rotSpeed:0.05,rays:32,pctColor:'#5F3A1E',bgMat:'warm_peach',
     motion:{freq:1.3,amp:6,breathAmp:0.024},
-    pal:{bg:'#EFE5D0',bg2:'#E4D7BE',disc:'#E39A2B',disc2:'#CC841E',ray:'#D69538',ray2:'#C48228',spark:'#E39A2B'}
+    pal:{bg:'#F4CEB0',bg2:'#F4CEB0',disc:'#DF8D26',disc2:'#C8761A',ray:'#C8721E',ray2:'#D9882C',spark:'#E39A2B'}
   },
   ororosa:{
     title:'Áurea',mode:'female',short:'Áurea',pro:true,relic:'#D96F5E',
     shape:'aurea_gouache',rotSpeed:-0.07,rays:14,pctColor:'#5A332D',bgMat:'dusty_rose',
     motion:{freq:1.35,amp:7,breathAmp:0.028},
-    pal:{bg:'#E8C7BF',bg2:'#DDB6AD',disc:'#E07A68',disc2:'#CC6352',ray:'#D96854',ray2:'#E88A6C',spark:'#E88B68'}
+    pal:{bg:'#E8C7BF',bg2:'#E8C7BF',disc:'#E07A68',disc2:'#CC6352',ray:'#D96854',ray2:'#E88A6C',spark:'#E88B68'}
   },
   ambar:{
     title:'Sol Rojo Plano',mode:'male',short:'Rojo',pro:false,relic:'#D64928',
     shape:'flat_vermilion',rotSpeed:0.06,rays:16,pctColor:'#5A362E',bgMat:'dusty_rose',
     motion:{freq:1.2,amp:6,breathAmp:0.024},
-    pal:{bg:'#DFC5BE',bg2:'#D4B5AD',disc:'#F0DF8A',disc2:'#E5CF70',ray:'#D84324',ray2:'#E67A30',spark:'#E26B38'}
+    pal:{bg:'#DFC5BE',bg2:'#DFC5BE',disc:'#F0DF8A',disc2:'#E5CF70',ray:'#D84324',ray2:'#E67A30',spark:'#E26B38'}
   },
   cobalto:{
-    title:'Verano',mode:'male',short:'Verano',pro:true,relic:'#DA762E',
-    shape:'summer_stripes',rotSpeed:0.06,rays:14,pctColor:'#6B4B1A',bgMat:'summer_stripes',
+    title:'Verano',mode:'male',short:'Verano',pro:true,relic:'#D95B26',
+    shape:'summer_gouache',rotSpeed:0.05,rays:12,pctColor:'#684514',bgMat:'summer_yellow',
     motion:{freq:1.3,amp:6,breathAmp:0.025},
-    pal:{bg:'#F1E1BE',bg2:'#ECC154',disc:'#D9752B',disc2:'#C4621E',ray:'#E4A138',ray2:'#D48C28',spark:'#E4A138'}
+    pal:{bg:'#ECC154',bg2:'#ECC154',disc:'#D86226',disc2:'#C24D18',ray:'#DF742B',ray2:'#C9511C',spark:'#E58038'}
   },
   aurora:{
     title:'Litografía',mode:'male',short:'Litografía',pro:true,relic:'#C83B1E',
     shape:'lithograph_sun',rotSpeed:0.04,rays:140,pctColor:'#F5DEC0',bgMat:'lithograph_red',
     motion:{freq:1.15,amp:5,breathAmp:0.022},
-    pal:{bg:'#520C08',bg2:'#3B0705',disc:'#E59D28',disc2:'#D47E1E',ray:'#BA2E16',ray2:'#ECD98E',spark:'#E8A838'}
+    pal:{bg:'#520C08',bg2:'#520C08',disc:'#E59D28',disc2:'#D47E1E',ray:'#BA2E16',ray2:'#ECD98E',spark:'#E8A838'}
   }
 };
 
@@ -10199,68 +10212,25 @@ function renderPebVesselArt(){
 const PEB_TEX_CACHE={};
 function pebHash(n){const x=Math.sin(n*127.1+311.7)*43758.5453;return x-Math.floor(x);}
 function getPebTexture(mat,pal){
-  const key=mat+'_'+(pal.bg||'');
+  const key='homog_'+mat+'_'+(pal.bg||'');
   if(PEB_TEX_CACHE[key])return PEB_TEX_CACHE[key];
   const oc=document.createElement('canvas');
   oc.width=240;oc.height=295;
   const o=oc.getContext('2d');
   o.fillStyle=pal.bg||'#E8C7BF';
   o.fillRect(0,0,oc.width,oc.height);
-  /* Lavados tonales suaves (desgaste orgánico de papel/yeso/terciopelo, sin ruido fino ni pixelado) */
-  for(let i=0;i<28;i++){
-    const px=pebHash(i*3.1)*oc.width;
-    const py=pebHash(i*7.3+5)*oc.height;
-    const pr=36+pebHash(i*11.7+9)*95;
-    const g=o.createRadialGradient(px,py,2,px,py,pr);
-    const col=(i%2===0)?(pal.bg2||pal.bg):'rgba(255,248,236,0.14)';
-    g.addColorStop(0,col);
-    g.addColorStop(1,'rgba(0,0,0,0)');
-    o.save();
-    o.globalAlpha=(i%2===0)?0.28:0.16;
-    o.fillStyle=g;
-    o.beginPath();o.arc(px,py,pr,0,Math.PI*2);o.fill();
-    o.restore();
+  /* Fondo homogéneo sin manchas ni rayas; grano de papel mate imperceptible */
+  o.save();
+  o.strokeStyle=mat==='lithograph_red'?'rgba(255,215,180,0.025)':'rgba(90,65,50,0.022)';
+  o.lineWidth=0.7;
+  for(let i=0;i<60;i++){
+    const x1=pebHash(i*4.3)*oc.width;
+    const y1=pebHash(i*9.1)*oc.height;
+    const ang=pebHash(i*2.7)*Math.PI*2;
+    const len=5+pebHash(i*6.1)*10;
+    o.beginPath();o.moveTo(x1,y1);o.lineTo(x1+Math.cos(ang)*len,y1+Math.sin(ang)*len);o.stroke();
   }
-  if(mat==='summer_stripes'){
-    o.save();
-    o.fillStyle=pal.bg2||'#ECC154';
-    const stripeW=22;
-    for(let sx=-10;sx<oc.width+20;sx+=stripeW*2){
-      o.beginPath();
-      for(let y=0;y<=oc.height;y+=12){
-        const wx=sx+Math.sin(y*0.045+sx*0.1)*4.5;
-        if(y===0)o.moveTo(wx,y);else o.lineTo(wx,y);
-      }
-      for(let y=oc.height;y>=0;y-=12){
-        const wx=sx+stripeW+Math.sin(y*0.045+sx*0.1+0.4)*4.5;
-        o.lineTo(wx,y);
-      }
-      o.closePath();
-      o.globalAlpha=0.82;
-      o.fill();
-    }
-    o.restore();
-  }else if(mat==='lithograph_red'){
-    o.save();
-    const vig=o.createRadialGradient(oc.width*0.5,oc.height*0.5,35,oc.width*0.5,oc.height*0.5,oc.height*0.72);
-    vig.addColorStop(0,'rgba(140,28,16,0.12)');
-    vig.addColorStop(1,'rgba(28,3,2,0.45)');
-    o.fillStyle=vig;o.fillRect(0,0,oc.width,oc.height);
-    o.restore();
-  }else{
-    /* Grano muy sutil de papel artesanal */
-    o.save();
-    o.strokeStyle='rgba(90,65,50,0.035)';
-    o.lineWidth=0.8;
-    for(let i=0;i<90;i++){
-      const x1=pebHash(i*4.3)*oc.width;
-      const y1=pebHash(i*9.1)*oc.height;
-      const ang=pebHash(i*2.7)*Math.PI*2;
-      const len=6+pebHash(i*6.1)*14;
-      o.beginPath();o.moveTo(x1,y1);o.lineTo(x1+Math.cos(ang)*len,y1+Math.sin(ang)*len);o.stroke();
-    }
-    o.restore();
-  }
+  o.restore();
   PEB_TEX_CACHE[key]=oc;
   return oc;
 }
@@ -10410,20 +10380,20 @@ function drawLivingFlame(ts){
       ctx.beginPath();ctx.arc(baseR*0.18,baseR*0.14,baseR*0.52,0,Math.PI*2);ctx.fill();
       ctx.restore();
 
-    }else if(shape==='summer_stripes'){
-      /* HOMBRE 2 · Verano (gouache mate sobre rayas onduladas mostaza/crema, disco terracota + rayos curvos en llama) */
-      const rays=14;
-      for(let i=0;i<rays;i++){
-        const a=(i*Math.PI*2)/rays+(pebHash(i*4.1)-0.5)*0.09;
-        const rLen=baseR*(1.68+pebHash(i*8.7)*0.34);
-        const bW=baseR*(0.175+pebHash(i*2.3)*0.04);
-        const sw=baseR*(0.24+pebHash(i*6.9)*0.12);
+    }else if(shape==='summer_gouache'){
+      /* HOMBRE 2 · Verano (fondo amarillo mostaza homogéneo + pétalos/llamas anchas redondeadas en terracota mate, SIN picos delgados) */
+      const petals=12;
+      for(let i=0;i<petals;i++){
+        const a=(i*Math.PI*2)/petals+(pebHash(i*4.1)-0.5)*0.07;
+        const rLen=baseR*(1.62+pebHash(i*8.7)*0.24);
+        const bW=baseR*(0.30+pebHash(i*2.3)*0.05);
+        const sway=(i%2===0?1:-1)*baseR*0.16;
         ctx.save();ctx.rotate(a);
-        ctx.fillStyle=pal.ray;
+        ctx.fillStyle=i%2===0?pal.ray:pal.ray2;
         ctx.beginPath();
-        ctx.moveTo(baseR*0.64,-bW);
-        ctx.bezierCurveTo(baseR*0.95,-sw*0.4,rLen*0.72,sw*0.75,rLen,sw*0.18);
-        ctx.bezierCurveTo(rLen*0.70,sw*0.42,baseR*0.95,-sw*0.1,baseR*0.64,bW);
+        ctx.moveTo(baseR*0.60,-bW);
+        ctx.bezierCurveTo(baseR*1.05,-bW*0.95+sway*0.4,rLen*0.92,-bW*0.42+sway,rLen,sway*0.45);
+        ctx.bezierCurveTo(rLen*0.92,bW*0.42+sway,baseR*1.05,bW*0.95+sway*0.4,baseR*0.60,bW);
         ctx.closePath();ctx.fill();
         ctx.restore();
       }
@@ -10432,7 +10402,7 @@ function drawLivingFlame(ts){
       const vSteps=40;
       for(let i=0;i<=vSteps;i++){
         const a=(i/vSteps)*Math.PI*2;
-        const r=baseR*0.76*(1+0.012*Math.sin(a*6+0.8));
+        const r=baseR*0.78*(1+0.012*Math.sin(a*5+0.8));
         if(i===0)ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r);
         else ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);
       }
@@ -10469,31 +10439,33 @@ function drawLivingFlame(ts){
       ctx.beginPath();ctx.arc(baseR*0.14,baseR*0.18,baseR*0.52,0,Math.PI*2);ctx.fill();
       ctx.restore();
 
-    }else if(shape==='astral_hand'){
-      /* MUJER 1 · Estrella (inspiración dane: papel amarillo mantequilla, 16 puntas mostaza hechas a mano con ejes cardinales largos) */
-      const pts=16;
-      for(let i=0;i<pts;i++){
-        const isVert=(i===0||i===8),isHoriz=(i===4||i===12),isDiag=(i%4===2);
-        const a=(i*Math.PI*2)/pts+(pebHash(i*4.7)-0.5)*0.035;
-        const rLen=baseR*(isVert?3.15:(isHoriz?2.45:(isDiag?1.72:1.15)))*(0.94+pebHash(i*8.1)*0.12);
-        const bW=baseR*(isVert||isHoriz?0.095:(isDiag?0.075:0.06));
-        const bend=(pebHash(i*3.1)-0.5)*baseR*0.04;
+    }else if(shape==='alba_petals'){
+      /* MUJER 1 · Alba (fondo marfil-rubor homogéneo + pétalos orgánicos suaves y redondeados en coral/salmón mate) */
+      const petals=12;
+      for(let i=0;i<petals;i++){
+        const a=(i*Math.PI*2)/petals+(pebHash(i*4.7)-0.5)*0.08;
+        const rLen=baseR*(1.58+pebHash(i*8.1)*0.24);
+        const bW=baseR*(0.28+pebHash(i*3.1)*0.05);
+        const tilt=(pebHash(i*5.3)-0.5)*baseR*0.14;
         ctx.save();ctx.rotate(a);
-        ctx.fillStyle=pal.ray;
+        ctx.fillStyle=i%2===0?pal.ray:pal.ray2;
         ctx.beginPath();
-        ctx.moveTo(baseR*0.18,-bW);
-        ctx.quadraticCurveTo(rLen*0.52,-bW*0.3+bend,rLen,bend*0.4);
-        ctx.quadraticCurveTo(rLen*0.52,bW*0.3+bend,baseR*0.18,bW);
+        ctx.moveTo(baseR*0.58,-bW);
+        ctx.bezierCurveTo(baseR*1.05,-bW*0.9+tilt,rLen*0.94,-bW*0.36+tilt,rLen,tilt*0.5);
+        ctx.bezierCurveTo(rLen*0.94,bW*0.36+tilt,baseR*1.05,bW*0.9+tilt,baseR*0.58,bW);
         ctx.closePath();ctx.fill();
         ctx.restore();
       }
-      /* Centro pintado a mano */
       ctx.fillStyle=pal.disc;
-      ctx.beginPath();ctx.arc(0,0,baseR*0.42,0,Math.PI*2);ctx.fill();
-      ctx.fillStyle=pal.bg;
-      ctx.beginPath();ctx.arc(0,0,baseR*0.24,0,Math.PI*2);ctx.fill();
-      ctx.fillStyle=pal.disc;
-      ctx.beginPath();ctx.arc(0,0,baseR*0.13,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();
+      const aSteps=40;
+      for(let i=0;i<=aSteps;i++){
+        const a=(i/aSteps)*Math.PI*2;
+        const r=baseR*0.74*(1+0.012*Math.sin(a*6+1.1));
+        if(i===0)ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r);
+        else ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);
+      }
+      ctx.closePath();ctx.fill();
 
     }else if(shape==='ochre_sketch'){
       /* MUJER 2 · Sol Crema (inspiración The Mood Guide: disco ocre mate + ~32 rayos irregulares tipo boceto a mano + motitas) */
@@ -10639,20 +10611,14 @@ function flameView(){
   startFlameAnim();
   p.classList.toggle('kept',kept);
   p.classList.toggle('low',!kept && v<35);
-  $('fv').textContent=v>=97?'¡100% plenitud! Tu hábito está vivo y brillando':(v<=8?'Brasa viva (mínimo 5%) · Tu capacidad de volver sigue intacta':(kept?'Llama encendida y vibrante hoy':(v>35?'Llama cálida y estable':'Brasa suave · Avívala con tu presencia')));
-  $('fp').textContent=Math.round(v);
+  if($('fv'))$('fv').textContent=v>=97?'¡100% plenitud! Tu hábito está vivo y brillando':(v<=8?'Brasa viva (mínimo 5%) · Tu capacidad de volver sigue intacta':(kept?'Llama encendida y vibrante hoy':(v>35?'Llama cálida y estable':'Brasa suave · Avívala con tu presencia')));
+  if($('fp'))$('fp').textContent=Math.round(v);
   if($('pebFill'))$('pebFill').style.width=Math.round(v)+'%';
 
   const decayEl=$('pebDecayCountdown');
   if(decayEl){
     decayEl.classList.toggle('risk',v<35);
-    if(v<=8){
-      decayEl.textContent='Mínimo 5% · Nunca se apaga del todo';
-    }else if(v<35){
-      decayEl.textContent='Brasa baja (-2%/h) · Mínimo 5% (nunca se apaga)';
-    }else{
-      decayEl.textContent='-2% / h · Mínimo 5% (nunca se apaga)';
-    }
+    decayEl.textContent=isPebeteroMaintained()?'-0.8% / h':'-2% / h';
   }
   const dCount=S.days||1;
   const dLabel=dCount===1?'1 día':(dCount+' días');
@@ -10671,7 +10637,7 @@ function flameView(){
   $('pb').textContent=cd>0?'Cuidada · '+Math.ceil(cd/6e4)+'m':(kept?'Avivar llama':'Hacer práctica →');
   const wdCd=Math.max(0,15000-(Date.now()-(S.lastKindle||0)));
   $('wd').disabled=(wdCd>0 || !S.following.length);
-  $('as').textContent='Vínculos · '+S.following.length;
+  if($('as'))$('as').textContent='Vínculos · '+S.following.length;
 }
 function flare(){const l=$('pd');if(!l)return;l.classList.remove('flare');void l.getBoundingClientRect();l.classList.add('flare');setTimeout(()=>l.classList.remove('flare'),1200)}
 function pulses(){
