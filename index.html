@@ -2542,13 +2542,13 @@ summary::-webkit-details-marker{display:none}
        ========================================================= -->
   <div class="vpage on" id="v-today">
 
-    <nav class="tabs" id="todaySubTabs" role="tablist" aria-label="Instrumentos de hoy">
-      <button class="tab on" data-sub="sub-habit" role="tab" aria-selected="true">Hábito</button>
-      <button class="tab" data-sub="sub-journal" role="tab" aria-selected="false">Bienestar</button>
+    <nav class="tabs" id="todaySubTabs" role="tablist" aria-label="Bienestar y hábito">
+      <button class="tab on" data-sub="sub-journal" role="tab" aria-selected="true">Bienestar</button>
+      <button class="tab" data-sub="sub-habit" role="tab" aria-selected="false">Hábito</button>
     </nav>
 
     <!-- SUB-PANEL 1A: HÁBITO Y BATERÍA + FLUJO SOS -->
-    <section class="panel on card habits-hidden habits-collapsed" id="sub-habit">
+    <section class="panel card habits-hidden habits-collapsed" id="sub-habit">
       <div class="hd">
         <span>Mi hábito por construir <button type="button" class="arrow-q" id="habitExpandBtn" aria-label="Expandir o contraer hábitos" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button> <button type="button" class="eye-q" id="habitEyeBtn" aria-label="Mostrar u ocultar hábitos" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.8"/><path d="M4 20L20 4"/></svg></button> <button type="button" class="help-q" data-help="helpHabit" aria-label="Ayuda sobre hábitos">?</button></span>
         <span id="proStatusBadge" hidden></span>
@@ -2624,7 +2624,7 @@ summary::-webkit-details-marker{display:none}
     </section>
 
     <!-- SUB-PANEL 1B: DIARIO BIOPSICOSOCIAL Y CICLO -->
-    <section class="panel card" id="sub-journal">
+    <section class="panel on card" id="sub-journal">
       <!-- REGISTRO DEL DÍA (semana, emociones, hábitos y check-in) -->
       <div class="retract-body" id="wkRetractBody">
         <div class="wk" id="wk"></div>
@@ -3856,9 +3856,9 @@ summary::-webkit-details-marker{display:none}
 <nav class="bnav" id="bnav" aria-label="Navegación principal">
   <div class="bnav-inner" role="tablist">
     <button class="bnav-btn on" data-v="v-today" role="tab" aria-selected="true">
-      <!-- Símbolo de Autor 1: Brote Botánico de Dos Hojas (Crecimiento y Constancia Diaria; la Flor de Loto es exclusiva de Wavy Pro) -->
+      <!-- Símbolo de Autor 1: Brote Botánico de Dos Hojas (Presencia y Bienestar Diario) -->
       <svg viewBox="0 0 24 24"><path d="M12 20V9"/><path d="M12 14c-4.5 0-7.5-3-7.5-7.5 4.5 0 7.5 3 7.5 7.5Z"/><path d="M12 11c4-0.5 6.8-3.2 6.8-7.2-4 0.5-6.8 3.2-6.8 7.2Z"/><path d="M8.5 20h7"/></svg>
-      <span>Hoy</span>
+      <span>Presencia</span>
     </button>
     <button class="bnav-btn" data-v="v-breathe" role="tab" aria-selected="false">
       <!-- Símbolo de Autor 2: Sol/Luna Naciente sobre el Horizonte en Calma -->
@@ -3866,9 +3866,9 @@ summary::-webkit-details-marker{display:none}
       <span>Calma</span>
     </button>
     <button class="bnav-btn" data-v="v-circle" role="tab" aria-selected="false">
-      <!-- Símbolo de Autor 3: Onda de Sintonía Compartida (Centro y Resonancia en Calma) -->
+      <!-- Símbolo de Autor 3: Onda de Sintonía Compartida (Vínculo y Resonancia) -->
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.6"/><path d="M7.2 15a5.8 5.8 0 1 1 9.6 0"/><path d="M4.2 17.6a9.4 9.4 0 1 1 15.6 0"/></svg>
-      <span>Círculo</span>
+      <span>Vínculo</span>
     </button>
     <button class="bnav-btn" data-v="v-clinic" role="tab" aria-selected="false">
       <!-- Símbolo de Autor 4: Brújula Minimalista (Pulso / Rumbo y Equilibrio) -->
@@ -5635,21 +5635,19 @@ function drawWavySplashSea(ts){
   ctx.fillStyle='#FFFFFF';
   ctx.fillRect(0,0,w,h);
 
-  /* Helper para trazar una curva orgánica 100% continua de borde a borde SIN puntas */
-  const traceWaveFront=(progress,extraOffset,ampBoost)=>{
-    const reach=0.10+progress*0.86+extraOffset;
+  /* Helper para trazar ola orgánica 100% continua de izquierda a derecha (imposible formar puntas o cruces) */
+  const traceCoastWave=(yBase,amp,spd,ph)=>{
     const pts=[];
-    const steps=36;
+    const steps=32;
     for(let i=0;i<=steps;i++){
-      const s=-0.18+(i/steps)*1.36;
-      const bx=w*(1.08-reach*1.16)+s*(w*0.72)-w*0.36;
-      const by=h*(1.08-reach*0.98)+(1-s)*(h*0.58)-h*0.29;
-      const wave=Math.sin(s*Math.PI*2.2+t*1.05+extraOffset*7)*(12+ampBoost)+Math.cos(s*Math.PI*3.4-t*0.75)*(5+ampBoost*0.4);
-      pts.push([bx-0.64*wave,by-0.76*wave]);
+      const s=i/steps;
+      const x=-24+s*(w+48);
+      const y=yBase+Math.sin(s*Math.PI*2.2+t*spd+ph)*amp+Math.cos(s*Math.PI*3.6-t*spd*0.7+ph)*amp*0.38;
+      pts.push([x,y]);
     }
     return pts;
   };
-  const strokeSmoothCurve=(pts)=>{
+  const strokeCoastCurve=(pts)=>{
     ctx.beginPath();
     ctx.moveTo(pts[0][0],pts[0][1]);
     for(let i=1;i<pts.length-1;i++){
@@ -5661,60 +5659,52 @@ function drawWavySplashSea(ts){
     ctx.lineTo(last[0],last[1]);
   };
 
-  /* 2. Capas translúcidas de agua marina suave con curvas orgánicas */
+  /* 2. Tres capas translúcidas de costa en movimiento orgánico continuo */
   const waterLayers=[
-    {off:0.015,amp:6+sw*5,col:'rgba(148,184,194,0.42)'},
-    {off:-0.032,amp:5+sw*4,col:'rgba(88,136,150,0.56)'},
-    {off:-0.105,amp:4+sw*4,col:'rgba(45,88,104,0.78)'}
+    {yBase:h*(0.84-sw*0.64),amp:9+sw*7,spd:0.95,ph:0.3,col:'rgba(148,184,194,0.44)'},
+    {yBase:h*(0.88-sw*0.61),amp:11+sw*8,spd:1.18,ph:2.1,col:'rgba(88,136,150,0.58)'},
+    {yBase:h*(0.92-sw*0.56),amp:12+sw*8,spd:1.38,ph:4.0,col:'rgba(45,88,104,0.80)'}
   ];
   let crestPts=[];
   waterLayers.forEach((L,idx)=>{
-    const pts=traceWaveFront(sw,L.off,L.amp);
+    const pts=traceCoastWave(L.yBase,L.amp,L.spd,L.ph);
     if(idx===0)crestPts=pts;
-    ctx.beginPath();
-    ctx.moveTo(pts[0][0],pts[0][1]);
-    for(let i=1;i<pts.length-1;i++){
-      const mx=(pts[i][0]+pts[i+1][0])*0.5;
-      const my=(pts[i][1]+pts[i+1][1])*0.5;
-      ctx.quadraticCurveTo(pts[i][0],pts[i][1],mx,my);
-    }
-    const last=pts[pts.length-1];
-    ctx.lineTo(last[0],last[1]);
-    ctx.lineTo(-80,h+80);
-    ctx.lineTo(w+80,h+80);
-    ctx.lineTo(w+80,-80);
+    strokeCoastCurve(pts);
+    ctx.lineTo(w+28,h+28);
+    ctx.lineTo(-28,h+28);
     ctx.closePath();
     ctx.fillStyle=L.col;
     ctx.fill();
   });
 
-  /* 3. Espuma de mar continua abarcando TODA la línea de borde a borde */
+  /* 3. Espuma de mar continua abarcando TODA la cresta de lado a lado */
   if(crestPts.length>2){
     ctx.save();
     ctx.lineCap='round';ctx.lineJoin='round';
-    strokeSmoothCurve(crestPts);
-    ctx.strokeStyle='rgba(255,255,255,'+(0.56+0.34*sw).toFixed(3)+')';
-    ctx.lineWidth=20+sw*16;
+    /* Halo aguamarina suave para que la espuma destaque sobre Blanco Pulcritud */
+    strokeCoastCurve(crestPts);
+    ctx.strokeStyle='rgba(195,222,228,'+(0.55+0.35*sw).toFixed(3)+')';
+    ctx.lineWidth=18+sw*12;
     ctx.stroke();
 
-    strokeSmoothCurve(crestPts);
-    ctx.strokeStyle='rgba(255,255,255,'+(0.88+0.12*sw).toFixed(3)+')';
+    /* Cresta blanca nítida de espuma de mar */
+    strokeCoastCurve(crestPts);
+    ctx.strokeStyle='rgba(255,255,255,0.96)';
     ctx.lineWidth=7+sw*4;
     ctx.stroke();
 
-    /* Burbujas suaves de espuma distribuidas en toda la línea */
-    const bubbleCount=58;
+    /* Burbujas y encaje de espuma subiendo a lo largo de toda la orilla */
+    const bubbleCount=56;
     for(let b=0;b<bubbleCount;b++){
       const idx=Math.floor((b/bubbleCount)*(crestPts.length-1));
       const [cx0,cy0]=crestPts[idx];
-      const life=((t*0.48+pebHash(b*3.7))%1);
+      const life=((t*0.50+pebHash(b*3.7))%1);
       const fade=Math.sin(life*Math.PI);
-      const drift=(0.3+life*2.0)*(10+sw*26);
-      const bx=cx0-drift*0.64+(pebHash(b*8.1)-0.5)*30;
-      const by=cy0-drift*0.76+(pebHash(b*5.3)-0.5)*30;
-      const br=(2.0+pebHash(b*2.9)*5.0)*(0.6+0.7*sw);
-      ctx.globalAlpha=fade*(0.52+0.44*sw);
-      ctx.fillStyle='#FFFFFF';
+      const bx=cx0+(pebHash(b*8.1)-0.5)*26;
+      const by=cy0-(0.25+life*1.75)*(12+sw*24)+(pebHash(b*5.3)-0.5)*14;
+      const br=(2.0+pebHash(b*2.9)*4.6)*(0.65+0.7*sw);
+      ctx.globalAlpha=fade*(0.60+0.38*sw);
+      ctx.fillStyle=(b%3===0)?'rgba(220,238,242,0.95)':'#FFFFFF';
       ctx.beginPath();ctx.arc(bx,by,br,0,Math.PI*2);ctx.fill();
     }
     ctx.restore();
@@ -10263,23 +10253,55 @@ function formatPublicDate(dstr){
    perfil público del dueño (13061998) se muestra aunque la app esté
    como invitado. El alias viejo 'sebas' apunta al dueño. */
 const WAVY_SHOWCASE_AUTHORS={
-  'wavy.editorial':{
-    me:{username:'wavy.editorial',name:'Wavy Editorial',av:'sol',bio:'Ensayos breves sobre calma, atención y vida sin ruido.'},
+  'absurdus.club':{
+    me:{username:'absurdus.club',name:'Círculo Absurdus · Wavy',av:'sol',bio:'Ensayos sobre atención, psique fragmentada, no-contacto y sentido en la era de la inmediatez.'},
     notes:[
-      {id:'ed-1',d:'2026-11-12',public:true,blank:true,estado:'El arte de no responder al instante',texto:'Vivimos rodeados de pequeñas urgencias fabricadas que nos convencen de que cada vibración merece nuestra presencia inmediata.\n\nCuando te detienes cuatro segundos para inhalar y seis para soltar el aire, recuperas el margen entre el estímulo y tu respuesta. Ese espacio mínimo es donde vuelve tu criterio.\n\nLa constancia no consiste en no caer nunca; consiste en notar antes cuando la marea empieza a subir y volver a tu orilla con suavidad.'},
-      {id:'ed-2',d:'2026-11-08',public:true,blank:true,estado:'Por qué medimos la calma en soles y mareas',texto:'Los números fríos convierten el cuidado personal en otra competencia. Un sol que crece poco a poco o una marea que se aquieta hablan el lenguaje real de tu sistema nervioso: lento, orgánico y continuo.\n\nCuidarte no es producir más. Es habitar tu día con menos fricción.'}
+      {
+        id:'ed-1',
+        d:'2026-11-15',
+        tema:'Atención e Inmediatez',
+        public:true,
+        blank:true,
+        estado:'Cuando todo es posible, nada se siente significativo',
+        texto:'Durante siglos, el valor de una conversación, de una obra o de una decisión estuvo protegido por la fricción del tiempo. Esperar una carta, caminar veinte minutos para ver a alguien o sostener el silencio de una tarde entera obligaba a la psique a digerir lo que sentía.\n\nHoy, la promesa técnica de la disponibilidad total ha borrado el proceso transformador. Si puedes generar cualquier imagen en tres segundos, reemplazar cualquier vínculo con un deslizamiento o anestesiar cualquier incomodidad abriendo otra pestaña, el deseo pierde su peso específico. Lo que no cuesta tiempo ni presencia tampoco deja huella en la memoria.\n\n## El espejismo de la eficiencia emocional\n\nNos convencimos de que ahorrar tiempo equivale a vivir mejor, pero la vida interior no funciona por productividad. Cuando eliminamos la espera, eliminamos también la maduración. Un hábito sano no nace de una epifanía instantánea; nace de volver al mismo punto incómodo sin huir hacia la pantalla.\n\nPor eso practicar cuatro segundos de inhalación y seis de exhalación antes de responder a un impulso es un acto contracultural: le devuelve al cuerpo el derecho a tardar.'
+      },
+      {
+        id:'ed-2',
+        d:'2026-11-11',
+        tema:'Culpa y Psique',
+        public:true,
+        blank:true,
+        estado:'Tu culpa no te purifica (ni es una virtud)',
+        texto:'Existe una trampa silenciosa en la forma en que muchas personas cargan sus errores: confunden el castigo interno prolongado con una forma de nobleza moral. Creen que, si siguen sintiéndose mal el tiempo suficiente, de algún modo compensan lo que hicieron o lo que dejaron pasar.\n\nPero la culpa estancada no repara nada; al contrario, suele ser una coartada elegante para no cambiar. Mientras sigues mirándote en el espejo del remordimiento, el centro de atención sigues siendo tú, no la vida que quieres construir hacia adelante.\n\n## De la rumiación a la responsabilidad tranquila\n\nCarl Jung distinguía entre la sombra que nos domina en secreto y la integración consciente de lo que somos. Aceptar un límite o un error sin dramatizarlo permite algo mucho más difícil que sufrir: actuar distinto hoy.\n\nSoltar la culpa no es volverse indiferente. Es dejar de pagar dos veces por la misma deuda y usar esa energía para cuidar tu presente con claridad.'
+      }
     ]
   },
   'valeria.sol':{
-    me:{username:'valeria.sol',name:'Valeria Mendoza',av:'alba',bio:'Escribo sobre mañanas lentas, arquitectura y silencio.'},
+    me:{username:'valeria.sol',name:'Valeria Mendoza',av:'alba',bio:'Ensayos breves sobre vínculos, no-contacto, cine lento y vida interior.'},
     notes:[
-      {id:'val-1',d:'2026-11-14',public:true,blank:true,estado:'Cinco minutos antes de abrir cualquier pantalla',texto:'Empecé dejando el teléfono fuera de la mesa del desayuno. Los primeros tres días sentí una inquietud rara, como si me faltara un objeto en la mano.\n\nAl séptimo día volví a escuchar el sonido real de la taza sobre la madera y la luz cambiando en la pared. A veces la paz no requiere añadir un hábito nuevo, sino quitar un reflejo automático.'}
+      {
+        id:'val-1',
+        d:'2026-11-14',
+        tema:'Vínculos y No-Contacto',
+        public:true,
+        blank:true,
+        estado:'La intimidad de no volver a hablar (y elegir irse queriendo)',
+        texto:'La cultura romántica nos enseñó que el amor verdadero siempre insiste y que irse solo ocurre cuando el afecto se agota. Sin embargo, una de las experiencias más adultas —y más silenciosas— consiste en querer genuinamente a alguien y aun así elegir retirarse.\n\nNo todas las historias terminan por falta de cariño; muchas terminan por incompatibilidad de ritmo, por cuidado propio o porque permanecer significaría traicionarse poco a poco. El no-contacto, cuando no nace del rencor sino de la lucidez, tiene una forma extraña de respeto: proteger lo que fue bueno sin seguir desgastándolo en discusiones repetidas.\n\n## El duelo que no hace ruido\n\nAl principio, el impulso de revisar si escribió o de buscar una última explicación se siente como urgencia física. Si sostienes esos primeros minutos de vacío sin ceder al teléfono, descubres que el silencio también acompaña. Con el paso de las semanas, la persona en la que no podías dejar de pensar se convierte en una lección silenciosa sobre tu propio valor.'
+      }
     ]
   },
   'mateo.mar':{
-    me:{username:'mateo.mar',name:'Mateo Ríos',av:'litografia',bio:'Notas de lectura, respiración y caminatas largas.'},
+    me:{username:'mateo.mar',name:'Mateo Ríos',av:'litografia',bio:'Lecturas existenciales, hábitos invisibles y filosofía cotidiana.'},
     notes:[
-      {id:'mat-1',d:'2026-11-10',public:true,blank:true,estado:'Caminar sin audífonos una vez a la semana',texto:'Cuando caminas sin música ni podcasts, al principio tu cabeza hace más ruido que la calle. Luego, hacia la tercera cuadra, los pensamientos repetitivos pierden filo y empiezas a notar detalles mínimos: el viento en los árboles, el ritmo de tus pasos, el aire entrando frío por la nariz.\n\nEs la forma más honesta que encontré para reiniciar la tarde.'}
+      {
+        id:'mat-1',
+        d:'2026-11-09',
+        tema:'Memoria y Hábito',
+        public:true,
+        blank:true,
+        estado:'Lo que te vuelves, dejas de notarlo',
+        texto:'Los cambios más profundos casi nunca llegan con una alarma. Ocurren por repetición diminuta, hasta que un día descubres que aquello que antes te sorprendía —la ansiedad al despertar, el cinismo ante una buena noticia, el impulso automático de mirar el reloj o el móvil— se volvió tu paisaje normal.\n\nLo que te vuelves, dejas de notarlo. Ese es tanto el riesgo de los hábitos que nos apagan como la promesa de los hábitos que nos devuelven la calma. Al principio, respirar consciente o escribir tres párrafos honestos se siente artificial. Semanas después, simplemente eres alguien que sabe volver a su centro.\n\n## Perdonar el pasado para habitar el presente\n\nEscribir en un espacio sin ruido externo —sin métricas públicas ni algoritmos buscando indignación— obliga a mirarse sin personaje. Como en las películas lentas donde una escena dura un minuto entero sin música, la verdad aparece cuando nadie te apura a pasar a lo siguiente.'
+      }
     ]
   }
 };
@@ -10303,7 +10325,7 @@ function renderDiaryShowcase(){
       '<h3 class="med-title">'+esc(n.estado)+'</h3>'+
       '<p class="med-excerpt">'+esc(publicExcerpt(n))+'</p>'+
       '<div class="med-foot">'+
-        '<span class="med-pill">'+publicReadMins(n)+' min de lectura</span>'+
+        '<span class="med-pill">'+(n.tema?esc(n.tema)+' · ':'')+publicReadMins(n)+' min de lectura</span>'+
         '<span style="font-size:11.5px;color:var(--muted)">Leer en Wavy Journal →</span>'+
       '</div>';
     card.onclick=()=>{location.hash='#/'+encodeURIComponent(me.username)+'/'+encodeURIComponent(n.id);};
@@ -10432,7 +10454,7 @@ function renderPublicArticle(username,postId){
   }else{
     const name=esc(me.name||('@'+(me.username||'')));
     const paras=String(n.texto||'').split(/\n+/).map(p=>p.trim()).filter(Boolean);
-    const bodyHtml=paras.length?paras.map(p=>'<p>'+esc(p)+'</p>').join(''):'<p>'+esc(n.estado||'')+'</p>';
+    const bodyHtml=paras.length?paras.map(p=>p.startsWith('## ')?'<h2 style="font-family:var(--serif);font-size:22px;font-weight:600;margin:26px 0 10px;line-height:1.25">'+esc(p.slice(3))+'</h2>':'<p>'+esc(p)+'</p>').join(''):'<p>'+esc(n.estado||'')+'</p>';
     body.innerHTML=
       '<h1>'+esc(n.estado||'Reflexión del día')+'</h1>'+
       '<div class="pub-meta"><div class="av">'+getAv(me.av)+'</div><div><div class="nm">'+name+'</div><div class="sub">'+esc(formatPublicDate(n.d))+' · '+publicReadMins(n)+' min de lectura</div></div></div>'+
@@ -10788,7 +10810,7 @@ function drawLivingFlame(ts){
     const u2=Math.max(0,Math.min(1,(u50-0.3684)/0.3684));
     const u3=Math.max(0,(u50-0.7368)/0.2632);
     const u100=Math.max(0,(u-0.4737)/0.5263);
-    const fiesta=(p>=0.99)?Math.min(1,(p-0.99)/0.01):0;
+    const fiesta=(p>=0.995)?Math.min(1,(p-0.995)/0.005):0;
     const ebu=Math.max(0,Math.min(1,(u1-0.15)/0.85));
     const ecstasy=Math.max(0,(u1-0.72)/0.28);
     const ecstasy2=Math.max(0,(u2-0.65)/0.35);
@@ -10894,42 +10916,42 @@ function drawLivingFlame(ts){
           ctx.restore();
         }
       }
-      /* 50%→100%: corona secundaria cálida en las hendiduras + fiesta de cuñas y diamantes gouache en 99%→100% */
-      if(u100>0.06){
-        const r4=Math.min(1,(u100-0.06)/0.65);
+      /* 50%→99%: corona secundaria amplia en oro-ámbar + 99%→100%: fiesta gouache de 60+ diamantes y faceta solar interior */
+      if(u100>0.05){
+        const r4=Math.min(1,(u100-0.05)/0.70);
         const fCount=16;
         for(let i=0;i<fCount;i++){
           const a=((i+0.5)*Math.PI*2)/fCount+(pebHash(i*12.3)-0.5)*0.04;
-          const rLen=baseR*(1.62+0.48*r4+0.26*fiesta*Math.sin(t*3.2+i));
-          const bW=baseR*0.065;
-          ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*0.78*r4;
+          const rLen=baseR*(1.65+0.68*r4+0.28*fiesta*Math.sin(t*3.4+i));
+          const bW=baseR*(0.085+0.045*r4);
+          ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*0.84*r4;
           ctx.fillStyle=(i%2===0)?pal.disc:pal.ray2;
           ctx.beginPath();
-          ctx.moveTo(baseR*0.86,-bW);ctx.lineTo(rLen,0);ctx.lineTo(baseR*0.86,bW);
+          ctx.moveTo(baseR*0.84,-bW);ctx.lineTo(rLen,0);ctx.lineTo(baseR*0.84,bW);
           ctx.closePath();ctx.fill();
           ctx.restore();
         }
       }
       if(fiesta>0.05){
-        const burst=32;
+        const burst=60;
         for(let b=0;b<burst;b++){
           const life=((t*0.85+pebHash(b*3.9))%1);
           const fade=Math.sin(life*Math.PI);
           if(fade<0.05)continue;
           const ba=pebHash(b*7.1)*Math.PI*2;
-          const bd=baseR*(1.35+life*2.15);
-          const sz=baseR*(0.055+0.045*pebHash(b*5.3))*fiesta;
+          const bd=baseR*(1.25+life*2.45);
+          const sz=baseR*(0.068+0.058*pebHash(b*5.3))*fiesta;
           ctx.save();
-          ctx.translate(Math.cos(ba)*bd,Math.sin(ba)*bd);ctx.rotate(ba+t*1.2);
-          ctx.globalAlpha=sunVis*fade*0.92*fiesta;
+          ctx.translate(Math.cos(ba)*bd,Math.sin(ba)*bd);ctx.rotate(ba+t*1.4);
+          ctx.globalAlpha=sunVis*fade*0.95*fiesta;
           ctx.fillStyle=(b%3===0)?pal.disc:(b%2===0?pal.ray2:pal.ray);
           ctx.beginPath();
-          ctx.moveTo(0,-sz*0.55);ctx.lineTo(sz*1.15,0);ctx.lineTo(0,sz*0.55);ctx.lineTo(-sz*0.55,0);
+          ctx.moveTo(0,-sz*0.65);ctx.lineTo(sz*1.35,0);ctx.lineTo(0,sz*0.65);ctx.lineTo(-sz*0.65,0);
           ctx.closePath();ctx.fill();
           ctx.restore();
         }
       }
-      /* Disco amarillo limón pálido intacto */
+      /* Disco amarillo limón pálido intacto (+ faceta solar interior en 100%) */
       ctx.beginPath();
       const dSteps=44;
       for(let i=0;i<=dSteps;i++){
@@ -10945,6 +10967,17 @@ function drawLivingFlame(ts){
       ctx.globalAlpha=0.22;ctx.fillStyle=pal.disc2;
       ctx.beginPath();ctx.arc(baseR*0.18,baseR*0.14,baseR*0.52,0,Math.PI*2);ctx.fill();
       ctx.restore();
+      if(fiesta>0.05){
+        ctx.save();ctx.globalAlpha=sunVis*0.82*fiesta;ctx.fillStyle=pal.ray2;
+        ctx.beginPath();
+        for(let i=0;i<16;i++){
+          const a=(i*Math.PI*2)/16;
+          const rr=(i%2===0)?baseR*0.48:baseR*0.20;
+          if(i===0)ctx.moveTo(Math.cos(a)*rr,Math.sin(a)*rr);
+          else ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr);
+        }
+        ctx.closePath();ctx.fill();ctx.restore();
+      }
 
     }else if(shape==='summer_gouache'){
       /* HOMBRE 2 · Verano (5%→50% doble flor terracota; 50%→100% tercera corona ámbar-dorada escalonada y polen gouache en dos escalas) */
@@ -11035,15 +11068,15 @@ function drawLivingFlame(ts){
           ctx.restore();
         }
       }
-      /* 50%→100%: 4ª corona puntiaguda en crema-azafrán + fiesta 99%→100% de círculos-confeti gouache */
-      if(u100>0.06){
-        const v4=Math.min(1,(u100-0.06)/0.65);
+      /* 50%→99%: 4ª corona puntiaguda en crema-azafrán + fiesta 99%→100% de 64+ círculos-confeti gouache */
+      if(u100>0.05){
+        const v4=Math.min(1,(u100-0.05)/0.65);
         for(let i=0;i<petals;i++){
           const a=(i*Math.PI*2)/petals+(Math.PI/petals)+(pebHash(i*11.1)-0.5)*0.05;
-          const rLen=baseR*(1.85+0.52*v4+0.25*fiesta*(0.5+0.5*Math.sin(t*3.0+i)));
-          const bW=baseR*0.14;
-          ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*0.72*v4;
-          ctx.fillStyle='#F9DB7A';
+          const rLen=baseR*(1.92+0.68*v4+0.32*fiesta*(0.5+0.5*Math.sin(t*3.2+i)));
+          const bW=baseR*(0.16+0.06*v4);
+          ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*0.84*v4;
+          ctx.fillStyle='#FFF0A8';
           ctx.beginPath();
           ctx.moveTo(baseR*0.64,-bW);
           ctx.quadraticCurveTo(rLen*0.84,-bW*0.45,rLen,0);
@@ -11053,16 +11086,16 @@ function drawLivingFlame(ts){
         }
       }
       if(fiesta>0.05){
-        const confetti=34;
+        const confetti=64;
         for(let c=0;c<confetti;c++){
-          const life=((t*0.78+pebHash(c*4.7))%1);
+          const life=((t*0.82+pebHash(c*4.7))%1);
           const fade=Math.sin(life*Math.PI);
           if(fade<0.05)continue;
-          const ca=pebHash(c*8.9)*Math.PI*2+life*0.35;
-          const cd=baseR*(1.35+life*2.10);
-          const cr=baseR*(0.048+0.042*pebHash(c*2.9))*fiesta;
-          ctx.save();ctx.globalAlpha=sunVis*fade*0.90*fiesta;
-          ctx.fillStyle=(c%3===0)?'#FFF0A8':(c%2===0?'#F0A63E':pal.ray);
+          const ca=pebHash(c*8.9)*Math.PI*2+life*0.40;
+          const cd=baseR*(1.25+life*2.45);
+          const cr=baseR*(0.058+0.054*pebHash(c*2.9))*fiesta;
+          ctx.save();ctx.globalAlpha=sunVis*fade*0.95*fiesta;
+          ctx.fillStyle=(c%3===0)?'#FFF3B8':(c%2===0?'#F0A63E':pal.ray);
           ctx.beginPath();ctx.arc(Math.cos(ca)*cd,Math.sin(ca)*cd,cr,0,Math.PI*2);ctx.fill();
           ctx.restore();
         }
@@ -11179,16 +11212,16 @@ function drawLivingFlame(ts){
           ctx.stroke();
         }
         if(fiesta>0.05){
-          for(let s=0;s<46;s++){
-            const life=((t*0.92+pebHash(s*5.3))%1);
+          for(let s=0;s<72;s++){
+            const life=((t*0.96+pebHash(s*5.3))%1);
             const fade=Math.sin(life*Math.PI);
             if(fade<0.05)continue;
             const sa=pebHash(s*7.7)*Math.PI*2;
-            const sd=baseR*(1.45+life*2.15);
-            const len=baseR*(0.10+0.12*pebHash(s*3.1))*fiesta;
-            ctx.globalAlpha=sunVis*fade*0.92*fiesta;
-            ctx.strokeStyle=(s%2===0)?'#FFF0BE':'#E86A28';
-            ctx.lineWidth=Math.max(1.1,baseR*0.015);
+            const sd=baseR*(1.35+life*2.45);
+            const len=baseR*(0.14+0.15*pebHash(s*3.1))*fiesta;
+            ctx.globalAlpha=sunVis*fade*0.96*fiesta;
+            ctx.strokeStyle=(s%3===0)?'#FFF4CC':(s%2===0?'#F2C36B':'#E86A28');
+            ctx.lineWidth=Math.max(1.2,baseR*0.017);
             ctx.beginPath();
             ctx.moveTo(Math.cos(sa)*(sd-len*0.5),Math.sin(sa)*(sd-len*0.5));
             ctx.lineTo(Math.cos(sa)*(sd+len*0.5),Math.sin(sa)*(sd+len*0.5));
@@ -11315,16 +11348,16 @@ function drawLivingFlame(ts){
         }
       }
       if(fiesta>0.05){
-        for(let g=0;g<24;g++){
-          const life=((t*0.76+pebHash(g*4.3))%1);
+        for(let g=0;g<44;g++){
+          const life=((t*0.82+pebHash(g*4.3))%1);
           const fade=Math.sin(life*Math.PI);
           if(fade<0.06)continue;
           const ga=pebHash(g*6.9)*Math.PI*2;
-          const gd=baseR*(1.45+life*2.05);
-          const gs=baseR*(0.075+0.065*pebHash(g*2.1))*fiesta;
+          const gd=baseR*(1.35+life*2.35);
+          const gs=baseR*(0.095+0.080*pebHash(g*2.1))*fiesta;
           ctx.save();ctx.translate(Math.cos(ga)*gd,Math.sin(ga)*gd);
-          ctx.globalAlpha=sunVis*fade*0.92*fiesta;
-          ctx.fillStyle='#FFF6E2';
+          ctx.globalAlpha=sunVis*fade*0.96*fiesta;
+          ctx.fillStyle='#FFF7E6';
           ctx.beginPath();
           ctx.moveTo(0,-gs);ctx.lineTo(gs*0.22,-gs*0.22);ctx.lineTo(gs,0);ctx.lineTo(gs*0.22,gs*0.22);
           ctx.lineTo(0,gs);ctx.lineTo(-gs*0.22,gs*0.22);ctx.lineTo(-gs,0);ctx.lineTo(-gs*0.22,-gs*0.22);
@@ -11470,16 +11503,16 @@ function drawLivingFlame(ts){
           ctx.stroke();
         }
         if(fiesta>0.05){
-          for(let s=0;s<36;s++){
-            const life=((t*0.86+pebHash(s*5.9))%1);
+          for(let s=0;s<60;s++){
+            const life=((t*0.90+pebHash(s*5.9))%1);
             const fade=Math.sin(life*Math.PI);
             if(fade<0.05)continue;
             const sa=pebHash(s*8.3)*Math.PI*2;
-            const sd=baseR*(1.45+life*2.10);
-            const len=baseR*(0.09+0.11*pebHash(s*3.7))*fiesta;
-            ctx.globalAlpha=sunVis*fade*0.92*fiesta;
-            ctx.strokeStyle=(s%2===0)?'#B86B22':'#E8A642';
-            ctx.lineWidth=Math.max(1.3,baseR*0.018);
+            const sd=baseR*(1.35+life*2.45);
+            const len=baseR*(0.12+0.14*pebHash(s*3.7))*fiesta;
+            ctx.globalAlpha=sunVis*fade*0.96*fiesta;
+            ctx.strokeStyle=(s%2===0)?'#B86B22':'#F0AE42';
+            ctx.lineWidth=Math.max(1.5,baseR*0.020);
             ctx.beginPath();
             ctx.moveTo(Math.cos(sa)*(sd-len*0.5),Math.sin(sa)*(sd-len*0.5));
             ctx.lineTo(Math.cos(sa)*(sd+len*0.5),Math.sin(sa)*(sd+len*0.5));
@@ -11626,18 +11659,18 @@ function drawLivingFlame(ts){
         }
       }
       if(fiesta>0.05){
-        for(let f=0;f<32;f++){
-          const life=((t*0.80+pebHash(f*4.9))%1);
+        for(let f=0;f<56;f++){
+          const life=((t*0.84+pebHash(f*4.9))%1);
           const fade=Math.sin(life*Math.PI);
           if(fade<0.05)continue;
-          const fa=pebHash(f*7.3)*Math.PI*2+life*0.25;
-          const fd=baseR*(1.45+life*2.10);
-          const fr=baseR*(0.048+0.042*pebHash(f*2.3))*fiesta;
+          const fa=pebHash(f*7.3)*Math.PI*2+life*0.28;
+          const fd=baseR*(1.35+life*2.40);
+          const fr=baseR*(0.058+0.052*pebHash(f*2.3))*fiesta;
           ctx.save();ctx.translate(Math.cos(fa)*fd,Math.sin(fa)*fd);ctx.rotate(fa);
-          ctx.globalAlpha=sunVis*fade*0.92*fiesta;
-          ctx.fillStyle=(f%3===0)?'#FFF1E0':(f%2===0?pal.ray2:pal.ray);
+          ctx.globalAlpha=sunVis*fade*0.96*fiesta;
+          ctx.fillStyle=(f%3===0)?'#FFF5E8':(f%2===0?pal.ray2:pal.ray);
           ctx.beginPath();
-          ctx.moveTo(-fr*1.2,0);ctx.quadraticCurveTo(0,-fr*0.95,fr*2.0,0);ctx.quadraticCurveTo(0,fr*0.95,-fr*1.2,0);
+          ctx.moveTo(-fr*1.3,0);ctx.quadraticCurveTo(0,-fr*1.05,fr*2.2,0);ctx.quadraticCurveTo(0,fr*1.05,-fr*1.3,0);
           ctx.closePath();ctx.fill();
           ctx.restore();
         }
