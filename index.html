@@ -2129,29 +2129,24 @@ summary::-webkit-details-marker{display:none}
   position:absolute;inset:0;
   display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
   opacity:0;pointer-events:none;transition:opacity .65s ease;
+  cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;
 }
 #wavySplashBreathPhase.is-active{opacity:1;pointer-events:auto}
+#wavySplashSea{
+  position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;
+}
 #wavySplashBreathLabel{
-  margin-top:15vh;
-  font-family:var(--serif);font-size:34px;font-weight:500;letter-spacing:-.01em;color:var(--ink);
-  transition:opacity .45s ease,transform .45s ease;
-  z-index:2;
+  position:relative;z-index:2;
+  margin-top:16vh;
+  font-family:var(--serif);font-size:36px;font-weight:500;letter-spacing:-.01em;color:var(--ink);
+  transition:opacity .38s ease,transform .38s ease;
+  text-align:center;padding:0 24px;
 }
-#wavySplashDome{
-  position:absolute;left:50%;bottom:-56vw;
-  width:170vw;height:110vw;min-height:460px;max-height:760px;
-  border-radius:50% 50% 0 0;
-  background:radial-gradient(ellipse at 50% 25%, #E79B6D 0%, #D47647 58%, #BA5B32 100%);
-  transform:translateX(-50%) translateY(42%) scale(0.94);
-  transition:transform 4s cubic-bezier(.42,0,.22,1);
-  will-change:transform;
-}
-#wavySplashDome.is-inhale{
-  transform:translateX(-50%) translateY(-4%) scale(1.04);
-}
-#wavySplashDome.is-exhale{
-  transition:transform 4.4s cubic-bezier(.38,0,.25,1);
-  transform:translateX(-50%) translateY(36%) scale(0.94);
+#wavySplashCycleHint{
+  position:relative;z-index:2;
+  margin-top:10px;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  transition:opacity .38s ease;text-align:center;padding:0 24px;
 }
 #wavySplashSkipBtn{
   position:absolute;top:max(18px,env(safe-area-inset-top));right:20px;z-index:3;
@@ -3428,9 +3423,10 @@ summary::-webkit-details-marker{display:none}
     <div class="wavy-splash-word">Wavy</div>
   </div>
   <div id="wavySplashBreathPhase">
+    <canvas id="wavySplashSea" aria-hidden="true"></canvas>
     <button type="button" id="wavySplashSkipBtn" aria-label="Omitir respiración">Omitir →</button>
-    <div id="wavySplashBreathLabel">Inhala</div>
-    <div id="wavySplashDome" aria-hidden="true"></div>
+    <div id="wavySplashBreathLabel">Toca para inhalar</div>
+    <div id="wavySplashCycleHint">1 de 2 · Toca la pantalla</div>
   </div>
 </div>
 
@@ -5528,12 +5524,79 @@ function claimAlias(alias,name){
 }
 
 let wavySplashTimers=[];
+let wavySplashRaf=0;
+let wavySplashState={active:false,cycle:1,phase:'wait',swell:0,targetSwell:0};
 function clearWavySplashTimers(){
   wavySplashTimers.forEach(id=>clearTimeout(id));
   wavySplashTimers=[];
 }
+function stopWavySplashSea(){
+  wavySplashState.active=false;
+  if(wavySplashRaf){cancelAnimationFrame(wavySplashRaf);wavySplashRaf=0;}
+}
+function drawWavySplashSea(ts){
+  if(!wavySplashState.active)return;
+  const cv=$('wavySplashSea');
+  if(!cv){stopWavySplashSea();return;}
+  const dpr=Math.min(2,window.devicePixelRatio||1);
+  const w=cv.clientWidth||window.innerWidth||390;
+  const h=cv.clientHeight||window.innerHeight||844;
+  if(cv.width!==Math.round(w*dpr)||cv.height!==Math.round(h*dpr)){
+    cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);
+  }
+  const ctx=cv.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  const t=(ts||0)*0.001;
+  /* Suavizado orgánico de la marea */
+  const rate=(wavySplashState.phase==='inhale')?0.024:(wavySplashState.phase==='exhale'?0.020:0.04);
+  wavySplashState.swell+=(wavySplashState.targetSwell-wavySplashState.swell)*rate;
+  const sw=wavySplashState.swell;
+
+  ctx.clearRect(0,0,w,h);
+  /* Cielo papel cálido hacia bruma marina tenue */
+  const sky=ctx.createLinearGradient(0,0,0,h);
+  sky.addColorStop(0,'#FAF7F2');
+  sky.addColorStop(0.55,'#F2EFE9');
+  sky.addColorStop(1,'#DFE7E8');
+  ctx.fillStyle=sky;
+  ctx.fillRect(0,0,w,h);
+
+  /* 3 capas de olas estilo Costa Wavy (acuarela marina translúcida) */
+  const layers=[
+    {yFrac:0.63-sw*0.23,amp:10+sw*9,spd:0.55,ph:0.4,col:'rgba(148,177,186,0.42)'},
+    {yFrac:0.68-sw*0.21,amp:13+sw*11,spd:0.78,ph:2.1,col:'rgba(96,136,149,0.56)'},
+    {yFrac:0.74-sw*0.18,amp:15+sw*12,spd:1.05,ph:4.2,col:'rgba(55,94,109,0.78)'}
+  ];
+  layers.forEach((L,idx)=>{
+    const baseY=h*L.yFrac;
+    ctx.beginPath();
+    ctx.moveTo(0,h);
+    ctx.lineTo(0,baseY);
+    for(let x=0;x<=w+16;x+=12){
+      const y=baseY+Math.sin(x*0.011+t*L.spd+L.ph)*L.amp+Math.cos(x*0.006-t*L.spd*0.6+idx)*L.amp*0.45;
+      ctx.lineTo(x,y);
+    }
+    ctx.lineTo(w,h);
+    ctx.closePath();
+    ctx.fillStyle=L.col;
+    ctx.fill();
+  });
+
+  /* Luciérnagas/brisa dorada sutil al inhalar */
+  if(sw>0.08){
+    for(let i=0;i<14;i++){
+      const fx=((i*73+t*14)%w);
+      const fy=h*(0.58-sw*0.24)-((i*29+t*18*sw)%(h*0.22));
+      const a=(0.15+0.35*Math.sin(t*1.8+i))*sw;
+      ctx.fillStyle='rgba(224,188,128,'+Math.max(0,a).toFixed(3)+')';
+      ctx.beginPath();ctx.arc(fx,fy,1.5+(i%2)*0.9,0,Math.PI*2);ctx.fill();
+    }
+  }
+  wavySplashRaf=requestAnimationFrame(drawWavySplashSea);
+}
 function finishWavySplashToLogin(){
   clearWavySplashTimers();
+  stopWavySplashSea();
   const ov=$('wavySplashOverlay');
   if(ov){
     ov.classList.add('is-fading');
@@ -5555,48 +5618,61 @@ function runWavyWelcomeSplash(){
   const logo=$('wavySplashLogoPhase');
   const breath=$('wavySplashBreathPhase');
   const lbl=$('wavySplashBreathLabel');
-  const dome=$('wavySplashDome');
-  if(!ov || !logo || !breath || !lbl || !dome){
+  const hint=$('wavySplashCycleHint');
+  if(!ov || !logo || !breath || !lbl || !hint){
     finishWavySplashToLogin();
     return;
   }
   clearWavySplashTimers();
+  stopWavySplashSea();
   ov.classList.remove('is-fading');
   ov.hidden=false;
   logo.classList.remove('is-hidden');
   breath.classList.remove('is-active');
-  dome.classList.remove('is-inhale','is-exhale');
-  lbl.textContent='Inhala';
+  wavySplashState={active:false,cycle:1,phase:'wait',swell:0,targetSwell:0};
+  lbl.textContent='Toca para inhalar';
+  hint.textContent='1 de 2 · Toca la pantalla';
   if($('onboardingModal'))$('onboardingModal').hidden=true;
 
-  /* Fase 1 (0–1.8s): Logo Wavy animado → Fase 2 (1.8s–10.4s): Inhala y Exhala en pantalla completa → Fase 3: Inicio de sesión */
+  /* Fase 1 (0–1.85s): Logo Wavy animado → Fase 2: Costa Wavy interactiva (2 ciclos tocando para inhalar) */
   wavySplashTimers.push(setTimeout(()=>{
     logo.classList.add('is-hidden');
     breath.classList.add('is-active');
-    lbl.textContent='Inhala';
-    requestAnimationFrame(()=>{
-      requestAnimationFrame(()=>{
-        dome.classList.add('is-inhale');
-      });
-    });
+    wavySplashState.active=true;
+    wavySplashRaf=requestAnimationFrame(drawWavySplashSea);
   },1850));
 
-  wavySplashTimers.push(setTimeout(()=>{
-    lbl.style.opacity='0';
-    wavySplashTimers.push(setTimeout(()=>{
-      lbl.textContent='Exhala';
-      lbl.style.opacity='1';
-    },260));
-    dome.classList.remove('is-inhale');
-    dome.classList.add('is-exhale');
-  },5850));
+  breath.onclick=(e)=>{
+    if(e.target && e.target.closest && e.target.closest('#wavySplashSkipBtn'))return;
+    if(wavySplashState.phase!=='wait')return;
+    const cy=wavySplashState.cycle;
+    wavySplashState.phase='inhale';
+    wavySplashState.targetSwell=1;
+    lbl.textContent='Inhala';
+    hint.textContent=cy+' de 2 · La marea sube contigo';
 
-  wavySplashTimers.push(setTimeout(()=>{
-    finishWavySplashToLogin();
-  },10350));
+    wavySplashTimers.push(setTimeout(()=>{
+      wavySplashState.phase='exhale';
+      wavySplashState.targetSwell=0;
+      lbl.textContent='Exhala';
+      hint.textContent=cy+' de 2 · Suelta con calma';
+
+      wavySplashTimers.push(setTimeout(()=>{
+        if(cy<2){
+          wavySplashState.cycle=2;
+          wavySplashState.phase='wait';
+          lbl.textContent='Toca para inhalar';
+          hint.textContent='2 de 2 · Toca la pantalla';
+        }else{
+          wavySplashState.phase='done';
+          finishWavySplashToLogin();
+        }
+      },4200));
+    },3800));
+  };
 }
 if($('wavySplashSkipBtn')){
-  $('wavySplashSkipBtn').onclick=()=>finishWavySplashToLogin();
+  $('wavySplashSkipBtn').onclick=(e)=>{e.stopPropagation();finishWavySplashToLogin();};
 }
 
 function initOnboarding(forceShow){
@@ -10768,16 +10844,17 @@ function drawLivingFlame(ts){
       ctx.restore();
 
     }else if(shape==='alba_starburst'){
-      /* MUJER 1 · Alba (5%→50% 36 agujas + polvo dorado; 50%→100% 36 agujas intersticiales champán + destellos en cruz de 4 puntas en el aire libre) */
-      if(u2>0.08){
-        const a2Vis=Math.min(1,(u2-0.08)/0.55);
+      /* MUJER 1 · Alba (5%→50% 36 agujas + polvo dorado; 50%→100% 12 ejes estelares largos + 36 agujas champán + estelas radiales y destellos de 4 puntas) */
+      if(u2>0.05){
+        const a2Vis=Math.min(1,(u2-0.05)/0.55);
         const interNeedles=36;
         for(let i=0;i<interNeedles;i++){
+          const isAxis=(i%3===0);
           const a=((i+0.5)*Math.PI*2)/interNeedles+(pebHash(i*7.9)-0.5)*0.02;
-          const rLen=baseR*(1.65+0.58*a2Vis+0.25*ecstasy2+pebHash(i*3.3)*0.22)*a2Vis;
-          const bW=baseR*0.018;
-          ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*0.72*a2Vis;
-          ctx.fillStyle='#F9E8C8';
+          const rLen=baseR*(isAxis?(2.35+0.85*a2Vis+0.35*ecstasy2):(1.72+0.62*a2Vis+0.25*ecstasy2+pebHash(i*3.3)*0.22))*a2Vis;
+          const bW=baseR*(isAxis?0.026:0.017);
+          ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*(isAxis?0.88:0.70)*a2Vis;
+          ctx.fillStyle=isAxis?'#FFF1D2':'#F9E8C8';
           ctx.beginPath();
           ctx.moveTo(baseR*0.36,-bW);
           ctx.lineTo(rLen,0);
@@ -10792,8 +10869,8 @@ function drawLivingFlame(ts){
         const tierVis=isMain?1:Math.max(0,Math.min(1,(u1-0.20)/0.35));
         if(tierVis<=0.02)continue;
         const a=(i*Math.PI*2)/needles+(pebHash(i*4.3)-0.5)*0.03;
-        const extraCelebrate=(i%6===0)?(0.45*ecstasy+0.32*u2):(0.16*ecstasy+0.14*u2);
-        const rLen=baseR*(isMain?(1.95+pebHash(i*7.7)*0.22+extraCelebrate):(1.42+pebHash(i*5.1)*0.24+0.15*u2))*tierVis;
+        const extraCelebrate=(i%6===0)?(0.45*ecstasy+0.42*u2):(0.16*ecstasy+0.18*u2);
+        const rLen=baseR*(isMain?(1.95+pebHash(i*7.7)*0.22+extraCelebrate):(1.42+pebHash(i*5.1)*0.24+0.18*u2))*tierVis;
         const bW=baseR*(isMain?0.042:0.026);
         ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*tierVis;
         ctx.fillStyle=isMain?pal.ray:pal.ray2;
@@ -10805,19 +10882,19 @@ function drawLivingFlame(ts){
         ctx.restore();
       }
       /* Destellos en cruz de 4 puntas finas en el espacio libre (50%→100%, sin aros) */
-      if(u2>0.32){
-        const glAcc=(u2-0.32)/0.68;
-        const glCount=Math.round(8+14*glAcc+10*ecstasy2);
+      if(u2>0.22){
+        const glAcc=(u2-0.22)/0.78;
+        const glCount=Math.round(10+18*glAcc+12*ecstasy2);
         for(let g=0;g<glCount;g++){
           const life=((t*0.42+pebHash(g*6.7))%1);
           const fade=Math.sin(life*Math.PI);
           if(fade<0.08)continue;
           const ga=pebHash(g*9.9)*Math.PI*2;
-          const gd=baseR*(2.25+pebHash(g*3.9)*0.95);
+          const gd=baseR*(2.15+pebHash(g*3.9)*1.15);
           const gx=Math.cos(ga)*gd,gy=Math.sin(ga)*gd;
-          const gs=baseR*(0.065+0.055*pebHash(g*5.1))*(0.6+0.4*glAcc);
+          const gs=baseR*(0.075+0.065*pebHash(g*5.1))*(0.65+0.35*glAcc);
           ctx.save();ctx.translate(gx,gy);
-          ctx.globalAlpha=sunVis*fade*(0.45+0.45*glAcc);
+          ctx.globalAlpha=sunVis*fade*(0.50+0.45*glAcc);
           ctx.fillStyle='#FFF2D8';
           ctx.beginPath();
           ctx.moveTo(0,-gs);ctx.lineTo(gs*0.22,-gs*0.22);
@@ -10828,43 +10905,75 @@ function drawLivingFlame(ts){
           ctx.restore();
         }
       }
-      /* Expansión del punteado de oro en micro-puntos + lluvia celebratoria al 100% */
+      /* Expansión del punteado de oro en estelas radiales + lluvia celebratoria al 100% */
       if(u1>0.35){
         const aAcc=(u1-0.35)/0.65;
-        const dustCount=Math.round(16+34*aAcc+20*ecstasy+28*u2+18*ecstasy2);
+        const dustCount=Math.round(16+34*aAcc+20*ecstasy+42*u2+22*ecstasy2);
         for(let d=0;d<dustCount;d++){
           const life=((t*0.50+pebHash(d*5.7))%1);
           const fade=Math.sin(life*Math.PI);
           if(fade<0.05)continue;
           const da=pebHash(d*8.3)*Math.PI*2+t*0.03;
-          const dr=baseR*(0.85+life*(1.55+1.1*aAcc+0.35*ecstasy+0.55*u2));
-          const dotR=baseR*(0.016+0.024*pebHash(d*3.1));
+          const dr=baseR*(0.85+life*(1.55+1.1*aAcc+0.35*ecstasy+0.75*u2));
+          const dotR=baseR*(0.016+0.026*pebHash(d*3.1));
           ctx.save();
-          ctx.globalAlpha=sunVis*fade*(0.38+0.48*aAcc+0.10*u2);
-          ctx.fillStyle=(d%2===0)?pal.disc:pal.disc2;
+          ctx.globalAlpha=sunVis*fade*(0.38+0.48*aAcc+0.12*u2);
+          ctx.fillStyle=(d%3===0)?'#FFF1D2':(d%2===0?pal.disc:pal.disc2);
           ctx.beginPath();ctx.arc(Math.cos(da)*dr,Math.sin(da)*dr,dotR,0,Math.PI*2);ctx.fill();
           ctx.restore();
         }
       }
       ctx.fillStyle=pal.disc;
       ctx.beginPath();ctx.arc(0,0,baseR*0.34,0,Math.PI*2);ctx.fill();
-      const centerDots=Math.round(42+24*u2);
+      const centerDots=Math.round(42+32*u2);
       for(let d=0;d<centerDots;d++){
         const da=pebHash(d*6.1)*Math.PI*2;
-        const dr=baseR*(0.16+pebHash(d*3.7)*0.30);
+        const dr=baseR*(0.16+pebHash(d*3.7)*0.32);
         const dotR=baseR*(0.018+pebHash(d*9.3)*0.026);
         ctx.fillStyle=d%2===0?pal.disc:pal.disc2;
         ctx.beginPath();ctx.arc(Math.cos(da)*dr,Math.sin(da)*dr,dotR,0,Math.PI*2);ctx.fill();
       }
 
     }else if(shape==='ochre_sketch'){
-      /* MUJER 2 · Sol Crema (SIN arcos circulares que choquen: 5%→50% 32 rayos boceto + guiones radiales; 50%→100% trazos paralelos dobles de lápiz ocre y constelación radial) */
+      /* MUJER 2 · Sol Crema (SIN arcos circulares que choquen: 5%→50% 32 rayos boceto; 50%→100% 16 rayos largos ocre dorado, achurado radial en la base y trazos paralelos) */
+      if(u2>0.06){
+        const skGold=Math.min(1,(u2-0.06)/0.55);
+        const goldRays=16;
+        ctx.save();ctx.lineCap='round';
+        for(let i=0;i<goldRays;i++){
+          const a=((i+0.5)*Math.PI*2)/goldRays+(pebHash(i*8.7)-0.5)*0.05;
+          const rLen=baseR*(1.95+0.68*skGold+0.25*ecstasy2+pebHash(i*4.3)*0.25)*skGold;
+          const bend=(pebHash(i*6.1)-0.5)*baseR*0.16;
+          ctx.globalAlpha=sunVis*0.82*skGold;
+          ctx.strokeStyle='#D99B38';
+          ctx.lineWidth=Math.max(1.2,baseR*0.020);
+          ctx.beginPath();
+          ctx.moveTo(Math.cos(a)*baseR*0.74,Math.sin(a)*baseR*0.74);
+          ctx.quadraticCurveTo(Math.cos(a)*rLen*0.55-Math.sin(a)*bend,Math.sin(a)*rLen*0.55+Math.cos(a)*bend,Math.cos(a)*rLen,Math.sin(a)*rLen);
+          ctx.stroke();
+        }
+        /* Achurado radial corto en la base (radial, nunca círculo cerrado) */
+        const hatchCount=48;
+        for(let h=0;h<hatchCount;h++){
+          const ha=(h*Math.PI*2)/hatchCount+(pebHash(h*3.1)-0.5)*0.03;
+          const hStart=baseR*0.70;
+          const hEnd=baseR*(0.88+0.18*skGold+pebHash(h*5.9)*0.10);
+          ctx.globalAlpha=sunVis*0.58*skGold;
+          ctx.strokeStyle=pal.ray2;
+          ctx.lineWidth=Math.max(0.9,baseR*0.011);
+          ctx.beginPath();
+          ctx.moveTo(Math.cos(ha)*hStart,Math.sin(ha)*hStart);
+          ctx.lineTo(Math.cos(ha)*hEnd,Math.sin(ha)*hEnd);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
       const rays=32;
       for(let i=0;i<rays;i++){
         const tierVis=(i%2===0)?1:Math.max(0,Math.min(1,(u1-0.18)/0.34));
         if(tierVis<=0.02)continue;
         const a=(i*Math.PI*2)/rays+(pebHash(i*5.3)-0.5)*0.07;
-        const rLen=baseR*(1.45+pebHash(i*9.1)*0.75+0.20*ecstasy+0.18*u2)*tierVis;
+        const rLen=baseR*(1.45+pebHash(i*9.1)*0.75+0.20*ecstasy+0.24*u2)*tierVis;
         const bend=(pebHash(i*2.7)-0.5)*baseR*0.18;
         ctx.save();ctx.globalAlpha=sunVis*tierVis;
         ctx.strokeStyle=i%2===0?pal.ray:pal.ray2;
@@ -10886,12 +10995,12 @@ function drawLivingFlame(ts){
         /* 50%→100%: segundo trazo paralelo bocetado en tinta ocre a mano */
         if(u2>0.08){
           const sk2=Math.min(1,(u2-0.08)/0.55);
-          ctx.globalAlpha=sunVis*0.72*sk2;
+          ctx.globalAlpha=sunVis*0.78*sk2;
           ctx.lineWidth=Math.max(0.9,baseR*0.013);
           ctx.beginPath();
           const aOff=a+((i%2===0)?0.026:-0.026);
           const rStart=baseR*0.82;
-          const rEnd2=rLen*(0.72+0.34*sk2);
+          const rEnd2=rLen*(0.75+0.36*sk2);
           ctx.moveTo(Math.cos(aOff)*rStart,Math.sin(aOff)*rStart);
           ctx.quadraticCurveTo(mx*1.03,my*1.03,Math.cos(aOff)*rEnd2,Math.sin(aOff)*rEnd2);
           ctx.stroke();
@@ -10902,17 +11011,17 @@ function drawLivingFlame(ts){
       if(u1>0.42){
         const cAcc=(u1-0.42)/0.58;
         ctx.save();ctx.lineCap='round';
-        const spTotal=Math.round(12+24*cAcc+18*ecstasy+28*u2+16*ecstasy2);
+        const spTotal=Math.round(12+24*cAcc+18*ecstasy+38*u2+20*ecstasy2);
         for(let s=0;s<spTotal;s++){
           const life=((t*0.55+pebHash(s*6.3))%1);
           const fade=Math.sin(life*Math.PI);
           if(fade<0.05)continue;
           const sa=pebHash(s*9.7)*Math.PI*2;
-          const sd=baseR*(1.55+life*(1.1+0.8*cAcc+0.35*ecstasy+0.65*u2));
+          const sd=baseR*(1.55+life*(1.1+0.8*cAcc+0.35*ecstasy+0.75*u2));
           const sx=Math.cos(sa)*sd,sy=Math.sin(sa)*sd;
-          const len=baseR*(0.06+0.09*pebHash(s*3.3));
-          ctx.globalAlpha=sunVis*fade*(0.35+0.48*cAcc+0.12*u2);
-          ctx.strokeStyle=(s%2===0)?pal.ray:pal.disc;
+          const len=baseR*(0.06+0.10*pebHash(s*3.3));
+          ctx.globalAlpha=sunVis*fade*(0.35+0.48*cAcc+0.14*u2);
+          ctx.strokeStyle=(s%3===0)?'#D99B38':(s%2===0?pal.ray:pal.disc);
           ctx.lineWidth=Math.max(1.1,baseR*0.016);
           ctx.beginPath();
           ctx.moveTo(sx-Math.cos(sa)*len*0.5,sy-Math.sin(sa)*len*0.5);
@@ -10933,22 +11042,22 @@ function drawLivingFlame(ts){
       ctx.closePath();ctx.fill();
 
     }else{
-      /* MUJER 3 · Áurea (5%→50% doble corona ondulada coral + gotas; 50%→100% tercera corona esbelta melocotón-crema y gotas coral multiplicadas) */
-      if(u2>0.06){
-        const thirdVis=Math.min(1,(u2-0.06)/0.55);
+      /* MUJER 3 · Áurea (5%→50% doble corona ondulada coral + gotas; 50%→100% tercera corona amplia melocotón-crema y lenguas/lágrimas de gouache flotantes) */
+      if(u2>0.05){
+        const thirdVis=Math.min(1,(u2-0.05)/0.55);
         const thirdRays=14;
         for(let i=0;i<thirdRays;i++){
           const a=(i*Math.PI*2)/thirdRays+(Math.PI/(thirdRays*2))+(pebHash(i*8.1)-0.5)*0.07;
-          const rLen=baseR*(1.85+0.32*u2+0.18*ecstasy2+0.10*Math.sin(t*1.6+i))*thirdVis;
-          const bW=baseR*0.115;
+          const rLen=baseR*(2.12+0.52*thirdVis+0.24*ecstasy2+0.12*Math.sin(t*1.6+i))*thirdVis;
+          const bW=baseR*0.135;
           const dir=(i%2===0?1:-1);
-          const w1=dir*baseR*0.15;
-          ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*0.48*thirdVis;
-          ctx.fillStyle='#F5C3B0';
+          const w1=dir*baseR*0.18;
+          ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*0.62*thirdVis;
+          ctx.fillStyle='#F7CBB8';
           ctx.beginPath();
           ctx.moveTo(baseR*0.66,-bW);
-          ctx.bezierCurveTo(baseR*1.02,w1-bW*0.45,rLen*0.74,-w1*0.55-bW*0.2,rLen,0);
-          ctx.bezierCurveTo(rLen*0.74,-w1*0.55+bW*0.2,baseR*1.02,w1+bW*0.45,baseR*0.66,bW);
+          ctx.bezierCurveTo(baseR*1.08,w1-bW*0.48,rLen*0.74,-w1*0.58-bW*0.22,rLen,0);
+          ctx.bezierCurveTo(rLen*0.74,-w1*0.58+bW*0.22,baseR*1.08,w1+bW*0.48,baseR*0.66,bW);
           ctx.closePath();ctx.fill();
           ctx.restore();
         }
@@ -10958,11 +11067,11 @@ function drawLivingFlame(ts){
         const backRays=14;
         for(let i=0;i<backRays;i++){
           const a=(i*Math.PI*2)/backRays+(Math.PI/backRays)+(pebHash(i*4.9)-0.5)*0.08;
-          const rLen=baseR*(1.55+0.32*ecstasy+0.14*u2+0.12*Math.sin(t*1.7+i))*backVis;
+          const rLen=baseR*(1.55+0.32*ecstasy+0.16*u2+0.12*Math.sin(t*1.7+i))*backVis;
           const bW=baseR*0.145;
           const dir=(i%2===0?-1:1);
           const w1=dir*baseR*0.13;
-          ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*0.55*backVis;
+          ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*0.58*backVis;
           ctx.fillStyle=pal.ray2;
           ctx.beginPath();
           ctx.moveTo(baseR*0.64,-bW);
@@ -10975,7 +11084,7 @@ function drawLivingFlame(ts){
       const rays=14;
       for(let i=0;i<rays;i++){
         const a=(i*Math.PI*2)/rays+(pebHash(i*5.7)-0.5)*0.09;
-        const rLen=baseR*(1.62+pebHash(i*9.3)*0.42+0.15*ecstasy+0.12*u2);
+        const rLen=baseR*(1.62+pebHash(i*9.3)*0.42+0.15*ecstasy+0.16*u2);
         const bW=baseR*0.165;
         const dir=(i%2===0?1:-1);
         const waveAnim=Math.sin(t*1.9+i)*baseR*0.045*ebu;
@@ -10989,22 +11098,31 @@ function drawLivingFlame(ts){
         ctx.closePath();ctx.fill();
         ctx.restore();
       }
-      /* Gotas orgánicas de gouache coral desprendidas de las llamas hacia el 100% */
+      /* Lágrimas y gotas orgánicas de gouache coral desprendidas de las llamas hacia el 100% */
       if(u1>0.40){
         const auAcc=(u1-0.40)/0.60;
-        const spTotal=Math.round(8+22*auAcc+16*ecstasy+24*u2+14*ecstasy2);
+        const spTotal=Math.round(8+22*auAcc+16*ecstasy+34*u2+18*ecstasy2);
         for(let s=0;s<spTotal;s++){
           const life=((t*0.50+pebHash(s*5.1))%1);
           const fade=Math.sin(life*Math.PI);
           if(fade<0.05)continue;
           const sa=pebHash(s*8.9)*Math.PI*2+life*0.22;
-          const sd=baseR*(1.58+life*(1.1+0.9*auAcc+0.4*ecstasy+0.6*u2));
+          const sd=baseR*(1.58+life*(1.1+0.9*auAcc+0.4*ecstasy+0.75*u2));
           ctx.save();
           ctx.translate(Math.cos(sa)*sd,Math.sin(sa)*sd);ctx.rotate(sa);
-          ctx.globalAlpha=sunVis*fade*(0.42+0.45*auAcc+0.10*u2);
-          ctx.fillStyle=(s%3===0)?'#F5C3B0':(s%2===0?pal.ray2:pal.ray);
-          const sr=baseR*(0.028+0.030*pebHash(s*2.7));
-          ctx.beginPath();ctx.ellipse(0,0,sr*1.45,sr*0.85,0,0,Math.PI*2);ctx.fill();
+          ctx.globalAlpha=sunVis*fade*(0.42+0.45*auAcc+0.12*u2);
+          ctx.fillStyle=(s%3===0)?'#F7CBB8':(s%2===0?pal.ray2:pal.ray);
+          const sr=baseR*(0.030+0.034*pebHash(s*2.7))*(1+0.25*u2);
+          ctx.beginPath();
+          if(u2>0.25 && s%2===0){
+            /* Pequeña lágrima/lengua flotante de gouache orientada hacia afuera */
+            ctx.moveTo(-sr*1.1,0);
+            ctx.quadraticCurveTo(0,-sr*0.95,sr*1.9,0);
+            ctx.quadraticCurveTo(0,sr*0.95,-sr*1.1,0);
+          }else{
+            ctx.ellipse(0,0,sr*1.45,sr*0.85,0,0,Math.PI*2);
+          }
+          ctx.fill();
           ctx.restore();
         }
       }
