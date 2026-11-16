@@ -2525,7 +2525,6 @@ summary::-webkit-details-marker{display:none}
     <nav class="tabs" id="todaySubTabs" role="tablist" aria-label="Instrumentos de hoy">
       <button class="tab on" data-sub="sub-habit" role="tab" aria-selected="true">Hábito</button>
       <button class="tab" data-sub="sub-journal" role="tab" aria-selected="false">Bienestar</button>
-      <button class="tab" data-sub="sub-flame" role="tab" aria-selected="false">Constancia</button>
     </nav>
 
     <!-- SUB-PANEL 1A: HÁBITO Y BATERÍA + FLUJO SOS -->
@@ -2786,50 +2785,17 @@ summary::-webkit-details-marker{display:none}
       </div>
 
     </section>
-
-    <!-- SUB-PANEL 1C: MI SOL Y PRÁCTICAS VERIFICADAS CON TEMPORIZADOR -->
-    <section class="panel card" id="sub-flame">
-      <div class="pd" id="pd">
-        <div class="flame-stage" id="flameStage">
-          <canvas id="flameCanvas" width="700" height="860" aria-label="Tu sol vivo"></canvas>
-          <div class="sun-stage-pct" id="sunStagePct">65%</div>
-          <div class="sun-stage-decay" id="pebDecayCountdown">-2%</div>
-        </div>
-        <div class="peb-actions">
-          <button class="btn" id="pb">Avivar sol</button>
-          <button class="btn soft" id="wd">Enviar luz</button>
-        </div>
-      </div>
-
-      <div id="devFlameBar" style="margin:10px 0 16px;padding:10px 12px;border:1px dashed var(--rule);border-radius:16px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600">
-          <span>Vista desarrollador · 6 llamas</span>
-          <span id="devFlamePctLbl" style="color:var(--ink)">65%</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-          <input type="range" id="devFlameSlider" min="5" max="100" value="65" style="flex:1;accent-color:var(--ink)">
-          <button type="button" class="chip" data-dev-pct="5" style="min-height:28px;padding:2px 8px;font-size:11px">5%</button>
-          <button type="button" class="chip" data-dev-pct="50" style="min-height:28px;padding:2px 8px;font-size:11px">50%</button>
-          <button type="button" class="chip" data-dev-pct="100" style="min-height:28px;padding:2px 8px;font-size:11px">100%</button>
-        </div>
-        <div id="devFlameGrid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px"></div>
-      </div>
-
-      <div class="hd" style="margin-top:8px"><span>Prácticas breves con cronómetro (60 s)</span><span>Encienden tu llama</span></div>
-      <button class="q" data-q="g"><div><strong>Arraigo corporal (Grounding)</strong><small>Pies firmes en el piso, rodillas suaves y respiración abdominal durante 60 s.</small></div><span id="qBadge_g">Iniciar 60s</span></button>
-      <button class="q" data-q="c"><div><strong>Cambio térmico consciente</strong><small>Agua fresca en rostro o muñecas durante 60 s para bajar la reactividad.</small></div><span id="qBadge_c">Iniciar 60s</span></button>
-      <button class="q" data-q="p"><div><strong>Pausa de presencia sin pantalla</strong><small>Mirar por la ventana o cerrar los ojos 60 s sin estímulos digitales.</small></div><span id="qBadge_p">Iniciar 60s</span></button>
-    </section>
   </div>
 
   <!-- =========================================================
-       VISTA 2: RESPIRAR (TU MAR EN VIVO + WEB AUDIO API)
+       VISTA 2: COSTA Y CONSTANCIA (MAR EN VIVO + TU SOL)
        ========================================================= -->
   <div class="vpage" id="v-breathe">
-    <div class="tabs" role="tablist" style="grid-template-columns:1fr">
-      <button class="tab on" type="button" role="tab" aria-selected="true" style="cursor:default">Costa</button>
-    </div>
-    <section class="card">
+    <nav class="tabs" id="coastSubTabs" role="tablist" aria-label="Costa y Constancia">
+      <button class="tab on" type="button" data-csub="coast-sea" role="tab" aria-selected="true">Costa</button>
+      <button class="tab" type="button" data-csub="sub-flame" role="tab" aria-selected="false">Constancia</button>
+    </nav>
+    <section class="panel on card" id="coast-sea">
       <div class="horizon-line" hidden>
         <span>Horizonte</span>
         <b id="skyStatus">Despejado</b>
@@ -2962,6 +2928,40 @@ summary::-webkit-details-marker{display:none}
         <div class="tide-ticks"><span>0% Calma</span><span>50% Medio</span><span>100% Alto</span></div>
       </div>
     </section>
+
+    <!-- SUB-PANEL 2B: CONSTANCIA (TU SOL VIVO Y PRÁCTICAS VERIFICADAS) -->
+    <section class="panel card" id="sub-flame">
+      <div class="pd" id="pd">
+        <div class="flame-stage" id="flameStage">
+          <canvas id="flameCanvas" width="700" height="860" aria-label="Tu sol vivo"></canvas>
+          <div class="sun-stage-pct" id="sunStagePct">65%</div>
+          <div class="sun-stage-decay" id="pebDecayCountdown">-2%</div>
+        </div>
+        <div class="peb-actions">
+          <button class="btn" id="pb">Avivar sol</button>
+          <button class="btn soft" id="wd">Enviar luz</button>
+        </div>
+      </div>
+
+      <div id="devFlameBar" style="margin:10px 0 16px;padding:10px 12px;border:1px dashed var(--rule);border-radius:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600">
+          <span>Vista desarrollador · 6 llamas</span>
+          <span id="devFlamePctLbl" style="color:var(--ink)">65%</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <input type="range" id="devFlameSlider" min="5" max="100" value="65" style="flex:1;accent-color:var(--ink)">
+          <button type="button" class="chip" data-dev-pct="5" style="min-height:28px;padding:2px 8px;font-size:11px">5%</button>
+          <button type="button" class="chip" data-dev-pct="50" style="min-height:28px;padding:2px 8px;font-size:11px">50%</button>
+          <button type="button" class="chip" data-dev-pct="100" style="min-height:28px;padding:2px 8px;font-size:11px">100%</button>
+        </div>
+        <div id="devFlameGrid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px"></div>
+      </div>
+
+      <div class="hd" style="margin-top:8px"><span>Prácticas breves con cronómetro (60 s)</span><span>Encienden tu llama</span></div>
+      <button class="q" data-q="g"><div><strong>Arraigo corporal (Grounding)</strong><small>Pies firmes en el piso, rodillas suaves y respiración abdominal durante 60 s.</small></div><span id="qBadge_g">Iniciar 60s</span></button>
+      <button class="q" data-q="c"><div><strong>Cambio térmico consciente</strong><small>Agua fresca en rostro o muñecas durante 60 s para bajar la reactividad.</small></div><span id="qBadge_c">Iniciar 60s</span></button>
+      <button class="q" data-q="p"><div><strong>Pausa de presencia sin pantalla</strong><small>Mirar por la ventana o cerrar los ojos 60 s sin estímulos digitales.</small></div><span id="qBadge_p">Iniciar 60s</span></button>
+    </section>
   </div>
 
   <!-- =========================================================
@@ -2969,14 +2969,14 @@ summary::-webkit-details-marker{display:none}
        ========================================================= -->
   <div class="vpage" id="v-circle">
     <div class="tabs" role="tablist">
-      <button type="button" class="tab on" id="circleTabFeedBtn" role="tab" aria-selected="true">Muro</button>
+      <button type="button" class="tab on" id="circleTabFeedBtn" role="tab" aria-selected="true">Notas</button>
       <button type="button" class="tab" id="circleTabDiaryBtn" role="tab" aria-selected="false">Escritos</button>
-      <button type="button" class="tab" id="circleTabFriendsBtn" role="tab" aria-selected="false">Aliados</button>
+      <button type="button" class="tab" id="circleTabFriendsBtn" role="tab" aria-selected="false">Vínculos</button>
     </div>
     <div id="circleFeedPane">
     <span id="p2pPeerIdLabel" hidden></span>
     <div class="curtain-shell" id="feedCurtainShell">
-      <button type="button" class="curtain-toggle-btn" id="feedCurtainBtn" aria-expanded="false" aria-label="Abrir cuadro para escribir en Muro">
+      <button type="button" class="curtain-toggle-btn" id="feedCurtainBtn" aria-expanded="false" aria-label="Abrir cuadro para escribir en Notas">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
       </button>
       <div class="curtain-drawer" id="feedCurtainDrawer">
@@ -3051,9 +3051,23 @@ summary::-webkit-details-marker{display:none}
         </div>
       </div>
       <section class="panel card on" id="sub-diary">
-      <div class="bio-sec" style="margin-top:0;padding-bottom:8px">
-        <div class="bio-sec-hd"><span>Tus escritos</span><span style="display:flex;align-items:center;gap:8px"><span id="diaryCountLbl" style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0"></span><button type="button" class="chip" id="shareProfileBtn" style="min-height:28px;padding:4px 11px;font-size:11px">Compartir escritos</button></span></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+        <div class="chips" id="diarySubTabs" role="tablist" aria-label="Secciones de Escritos">
+          <button type="button" class="chip on" data-dsub="mine" role="tab" aria-selected="true" style="min-height:30px;padding:4px 12px;font-size:11.5px">Mis escritos</button>
+          <button type="button" class="chip" data-dsub="showcase" role="tab" aria-selected="false" style="min-height:30px;padding:4px 12px;font-size:11.5px">Escaparate</button>
+        </div>
+        <button type="button" id="shareProfileBtn" title="Abrir y compartir tu Wavy Journal" style="display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:4px 12px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font-family:var(--serif);font-style:italic;font-size:12.5px;letter-spacing:.01em;cursor:pointer">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/></svg>
+          <span>Wavy Journal</span>
+        </button>
+      </div>
+      <div id="diaryMineWrap" class="bio-sec" style="margin-top:0;padding-bottom:8px">
+        <div class="bio-sec-hd"><span>Mis escritos</span><span id="diaryCountLbl" style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0"></span></div>
         <div id="diaryList"></div>
+      </div>
+      <div id="diaryShowcaseWrap" class="bio-sec" style="margin-top:0;padding-bottom:8px" hidden>
+        <div class="bio-sec-hd"><span>Escaparate · Wavy Journal</span><span style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">Lecturas curadas</span></div>
+        <div id="diaryShowcaseList"></div>
       </div>
       </section>
     </div>
@@ -3429,7 +3443,7 @@ summary::-webkit-details-marker{display:none}
     <canvas id="wavySplashSea" aria-hidden="true"></canvas>
     <button type="button" id="wavySplashSkipBtn" aria-label="Omitir respiración">Omitir →</button>
     <div id="wavySplashBreathLabel">Mantén para inhalar</div>
-    <div id="wavySplashCycleHint">1 de 2 · Mantén presionada la pantalla</div>
+    <div id="wavySplashCycleHint">Respiración 4-6 &nbsp;·&nbsp; <span id="wavySplashDots">● ○</span></div>
   </div>
 </div>
 
@@ -5345,8 +5359,8 @@ function switchMainView(vid){
     b.setAttribute('aria-selected',active?'true':'false');
   });
   document.querySelectorAll('.vpage').forEach(p=>p.classList.toggle('on',p.id===vid));
-  if(vid==='v-breathe'){fit();startLoop()}else{stopLoop()}
-  if(vid==='v-today'){syncPebeteroRing();flameView()}
+  if(vid==='v-breathe'){fit();startLoop();syncPebeteroRing();if($('sub-flame')&&$('sub-flame').classList.contains('on'))flameView();}else{stopLoop()}
+  if(vid==='v-today'){}
   if(vid==='v-circle'){renderHomeCoRegulation();renderCircleFriends();updateCircleComposerYield()}
   if(vid==='v-clinic'){stats();hours(true);renderClinicalReport()}
   if(vid==='v-profile'){syncProWifiSwitchUI()}
@@ -5487,8 +5501,22 @@ $('todaySubTabs').addEventListener('click',e=>{
     x.setAttribute('aria-selected',on?'true':'false');
   });
   document.querySelectorAll('#v-today > .panel').forEach(x=>x.classList.toggle('on',x.id===b.dataset.sub));
-  if(b.dataset.sub==='sub-flame')flameView();
 });
+if($('coastSubTabs')){
+  $('coastSubTabs').addEventListener('click',e=>{
+    const b=e.target.closest('.tab');if(!b)return;
+    window.scrollTo(0,0);
+    closeAllTransientUI('v-breathe');
+    document.querySelectorAll('#coastSubTabs .tab').forEach(x=>{
+      const on=(x===b);
+      x.classList.toggle('on',on);
+      x.setAttribute('aria-selected',on?'true':'false');
+    });
+    document.querySelectorAll('#v-breathe > .panel').forEach(x=>x.classList.toggle('on',x.id===b.dataset.csub));
+    if(b.dataset.csub==='sub-flame'){stopLoop();flameView();}
+    else{fit();startLoop();}
+  });
+}
 
 /* Onboarding en 3 Pasos */
 let obSelectedBio=S.bioMode||'male',obSelectedHabit=S.habit||'scrolling',obBreathTimer=null;
@@ -5528,7 +5556,7 @@ function claimAlias(alias,name){
 
 let wavySplashTimers=[];
 let wavySplashRaf=0;
-let wavySplashState={active:false,cycle:1,phase:'wait',swell:0,wetSwell:0,targetSwell:0,holdAt:0,foamDots:[]};
+let wavySplashState={active:false,cycle:1,phase:'wait',swell:0,phaseStartTs:0,fromSwell:0,exhaleDur:6000};
 function clearWavySplashTimers(){
   wavySplashTimers.forEach(id=>clearTimeout(id));
   wavySplashTimers=[];
@@ -5536,6 +5564,9 @@ function clearWavySplashTimers(){
 function stopWavySplashSea(){
   wavySplashState.active=false;
   if(wavySplashRaf){cancelAnimationFrame(wavySplashRaf);wavySplashRaf=0;}
+}
+function easeInOutSine(x){
+  return -(Math.cos(Math.PI*Math.max(0,Math.min(1,x)))-1)/2;
 }
 function drawWavySplashSea(ts){
   if(!wavySplashState.active)return;
@@ -5549,103 +5580,95 @@ function drawWavySplashSea(ts){
   }
   const ctx=cv.getContext('2d');
   ctx.setTransform(dpr,0,0,dpr,0,0);
-  const t=(ts||0)*0.001;
+  const now=ts||performance.now();
+  const t=now*0.001;
 
-  const rate=(wavySplashState.phase==='inhaling')?0.026:(wavySplashState.phase==='exhaling'?0.020:0.045);
-  wavySplashState.swell+=(wavySplashState.targetSwell-wavySplashState.swell)*rate;
-  /* Arena húmeda retrocede más lento que la ola al exhalar */
-  wavySplashState.wetSwell=Math.max(wavySplashState.swell,wavySplashState.wetSwell*0.992);
+  /* Progreso exactamente sincronizado con los segundos de Respiración 4-6 (4s inhala, 6s exhala) */
+  if(wavySplashState.phase==='inhaling'){
+    const p=Math.min(1,(now-wavySplashState.phaseStartTs)/4000);
+    wavySplashState.swell=wavySplashState.fromSwell+(1-wavySplashState.fromSwell)*easeInOutSine(p);
+  }else if(wavySplashState.phase==='exhaling'){
+    const p=Math.min(1,(now-wavySplashState.phaseStartTs)/(wavySplashState.exhaleDur||6000));
+    wavySplashState.swell=wavySplashState.fromSwell*(1-easeInOutSine(p));
+  }else{
+    wavySplashState.swell=0;
+  }
   const sw=wavySplashState.swell;
-  const wsw=wavySplashState.wetSwell;
 
-  /* 1. Arena cálida vista desde arriba */
-  const sand=ctx.createLinearGradient(0,0,w,h);
-  sand.addColorStop(0,'#FAF7F2');
-  sand.addColorStop(0.55,'#F3ECE0');
-  sand.addColorStop(1,'#E8DEC9');
-  ctx.fillStyle=sand;
+  /* 1. Atmósfera marina de Costa (sin arena, fiel a la pestaña Costa) */
+  const mist=ctx.createLinearGradient(0,0,w,h);
+  mist.addColorStop(0,'#FAF7F2');
+  mist.addColorStop(0.55,'#EDF2F3');
+  mist.addColorStop(1,'#D9E5E8');
+  ctx.fillStyle=mist;
   ctx.fillRect(0,0,w,h);
 
-  /* Helper para trazar el frente diagonal orgánico de la orilla (desde esquina inferior derecha hacia arriba-izquierda) */
-  const traceShoreLine=(progress,extraOffset,ampBoost)=>{
-    const reach=0.14+progress*0.76+extraOffset;
+  /* Helper para trazar el frente diagonal orgánico de la ola */
+  const traceWaveFront=(progress,extraOffset,ampBoost)=>{
+    const reach=0.10+progress*0.86+extraOffset;
     const pts=[];
-    const steps=28;
+    const steps=30;
     for(let i=0;i<=steps;i++){
       const s=i/steps;
-      const bx=w*(1.08-reach*1.12)+s*(w*0.56)-w*0.28;
-      const by=h*(1.06-reach*0.95)+(1-s)*(h*0.42)-h*0.21;
-      const wave=Math.sin(s*Math.PI*3.2+t*1.15+extraOffset*8)*(10+ampBoost)+Math.cos(s*Math.PI*5.5-t*0.85)*(5+ampBoost*0.5);
-      const nx=-0.64,ny=-0.76;
-      pts.push([bx+nx*wave,by+ny*wave]);
+      const bx=w*(1.08-reach*1.16)+s*(w*0.58)-w*0.29;
+      const by=h*(1.08-reach*0.98)+(1-s)*(h*0.44)-h*0.22;
+      const wave=Math.sin(s*Math.PI*3.4+t*1.25+extraOffset*9)*(9+ampBoost)+Math.cos(s*Math.PI*5.8-t*0.9)*(4.5+ampBoost*0.45);
+      pts.push([bx-0.64*wave,by-0.76*wave]);
     }
     return pts;
   };
 
-  /* 2. Huella de arena húmeda */
-  if(wsw>0.02){
-    const wetPts=traceShoreLine(wsw,0.04,4);
-    ctx.beginPath();
-    ctx.moveTo(w+40,h+40);
-    ctx.lineTo(-40,h+40);
-    wetPts.forEach(([px,py])=>ctx.lineTo(px,py));
-    ctx.lineTo(w+40,-40);
-    ctx.closePath();
-    ctx.fillStyle='rgba(207,194,174,0.34)';
-    ctx.fill();
-  }
-
-  /* 3. Capas translúcidas de agua marina entrando en diagonal */
+  /* 2. Capas translúcidas de agua marina estilo Costa */
   const waterLayers=[
-    {off:0.012,amp:8+sw*6,col:'rgba(154,186,192,0.44)'},
-    {off:-0.035,amp:6+sw*5,col:'rgba(96,142,154,0.58)'},
-    {off:-0.11,amp:5+sw*4,col:'rgba(54,96,112,0.74)'}
+    {off:0.015,amp:7+sw*6,col:'rgba(140,176,186,0.44)'},
+    {off:-0.032,amp:6+sw*5,col:'rgba(82,130,144,0.58)'},
+    {off:-0.105,amp:5+sw*4,col:'rgba(45,88,104,0.78)'}
   ];
   let crestPts=[];
   waterLayers.forEach((L,idx)=>{
-    const pts=traceShoreLine(sw,L.off,L.amp);
+    const pts=traceWaveFront(sw,L.off,L.amp);
     if(idx===0)crestPts=pts;
     ctx.beginPath();
-    ctx.moveTo(w+40,h+40);
-    ctx.lineTo(-40,h+40);
+    ctx.moveTo(w+50,h+50);
+    ctx.lineTo(-50,h+50);
     pts.forEach(([px,py])=>ctx.lineTo(px,py));
-    ctx.lineTo(w+40,-40);
+    ctx.lineTo(w+50,-50);
     ctx.closePath();
     ctx.fillStyle=L.col;
     ctx.fill();
   });
 
-  /* 4. Espuma de mar visible y orgánica apareciendo y subiendo sobre la cresta */
+  /* 3. Espuma de mar pronunciada apareciendo y subiendo sobre la cresta */
   if(crestPts.length>1){
     ctx.save();
     ctx.lineCap='round';ctx.lineJoin='round';
-    /* Banda espumosa suave detrás del borde */
+    /* Halo espumoso traslúcido de mar */
     ctx.beginPath();
     crestPts.forEach(([px,py],i)=>{if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);});
-    ctx.strokeStyle='rgba(255,253,249,'+(0.38+0.32*sw).toFixed(3)+')';
-    ctx.lineWidth=14+sw*12;
+    ctx.strokeStyle='rgba(255,255,255,'+(0.48+0.36*sw).toFixed(3)+')';
+    ctx.lineWidth=18+sw*16;
     ctx.stroke();
 
-    /* Borde principal nítido de espuma marfil */
+    /* Cresta blanca nítida de espuma */
     ctx.beginPath();
     crestPts.forEach(([px,py],i)=>{if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);});
-    ctx.strokeStyle='rgba(255,253,248,'+(0.72+0.26*sw).toFixed(3)+')';
-    ctx.lineWidth=5.5+sw*3.5;
+    ctx.strokeStyle='rgba(255,254,252,'+(0.84+0.16*sw).toFixed(3)+')';
+    ctx.lineWidth=6.5+sw*4.5;
     ctx.stroke();
 
-    /* Encaje y burbujas de espuma subiendo y disolviéndose a lo largo de la orilla */
-    const bubbleCount=34;
+    /* Encaje y burbujas visibles de espuma subiendo */
+    const bubbleCount=54;
     for(let b=0;b<bubbleCount;b++){
       const idx=Math.floor((b/bubbleCount)*(crestPts.length-1));
       const [cx0,cy0]=crestPts[idx];
-      const life=((t*0.48+pebHash(b*3.7))%1);
+      const life=((t*0.52+pebHash(b*3.7))%1);
       const fade=Math.sin(life*Math.PI);
-      const drift=(0.5+life*1.8)*(10+sw*22);
-      const bx=cx0-drift*0.64+(pebHash(b*8.1)-0.5)*26;
-      const by=cy0-drift*0.76+(pebHash(b*5.3)-0.5)*26;
-      const br=(2.2+pebHash(b*2.9)*4.8)*(0.6+0.7*sw);
-      ctx.globalAlpha=fade*(0.45+0.48*sw);
-      ctx.fillStyle='#FFFDF9';
+      const drift=(0.35+life*2.1)*(12+sw*28);
+      const bx=cx0-drift*0.64+(pebHash(b*8.1)-0.5)*34;
+      const by=cy0-drift*0.76+(pebHash(b*5.3)-0.5)*34;
+      const br=(2.4+pebHash(b*2.9)*5.8)*(0.65+0.75*sw);
+      ctx.globalAlpha=fade*(0.55+0.42*sw);
+      ctx.fillStyle='#FFFFFF';
       ctx.beginPath();ctx.arc(bx,by,br,0,Math.PI*2);ctx.fill();
     }
     ctx.restore();
@@ -5677,8 +5700,8 @@ function runWavyWelcomeSplash(){
   const logo=$('wavySplashLogoPhase');
   const breath=$('wavySplashBreathPhase');
   const lbl=$('wavySplashBreathLabel');
-  const hint=$('wavySplashCycleHint');
-  if(!ov || !logo || !breath || !lbl || !hint){
+  const dots=$('wavySplashDots');
+  if(!ov || !logo || !breath || !lbl){
     finishWavySplashToLogin();
     return;
   }
@@ -5688,12 +5711,12 @@ function runWavyWelcomeSplash(){
   ov.hidden=false;
   logo.classList.remove('is-hidden');
   breath.classList.remove('is-active');
-  wavySplashState={active:false,cycle:1,phase:'wait',swell:0,wetSwell:0,targetSwell:0,holdAt:0,foamDots:[]};
+  wavySplashState={active:false,cycle:1,phase:'wait',swell:0,phaseStartTs:0,fromSwell:0,exhaleDur:6000};
   lbl.textContent='Mantén para inhalar';
-  hint.textContent='1 de 2 · Mantén presionada la pantalla';
+  if(dots)dots.textContent='● ○';
   if($('onboardingModal'))$('onboardingModal').hidden=true;
 
-  /* Fase 1 (0–1.85s): Logo Wavy animado → Fase 2: Orilla vista desde arriba (mantener dedo para inhalar, 2 ciclos) */
+  /* Fase 1 (0–1.85s): Logo Wavy animado → Fase 2: Costa Wavy (Respiración 4-6, 2 ciclos) */
   wavySplashTimers.push(setTimeout(()=>{
     logo.classList.add('is-hidden');
     breath.classList.add('is-active');
@@ -5706,49 +5729,48 @@ function runWavyWelcomeSplash(){
     if(e.target && e.target.closest && e.target.closest('#wavySplashSkipBtn'))return;
     if(wavySplashState.phase!=='wait')return;
     if(e.preventDefault)e.preventDefault();
-    const cy=wavySplashState.cycle;
     wavySplashState.phase='inhaling';
-    wavySplashState.targetSwell=1;
-    wavySplashState.holdAt=Date.now();
+    wavySplashState.fromSwell=wavySplashState.swell||0;
+    wavySplashState.phaseStartTs=performance.now();
     lbl.textContent='Inhala';
-    hint.textContent=cy+' de 2 · Mantén mientras sube la ola';
     clearTimeout(inhaleCueTimer);
     inhaleCueTimer=setTimeout(()=>{
       if(wavySplashState.phase==='inhaling'){
         lbl.textContent='Suelta para exhalar';
-        hint.textContent=cy+' de 2 · Suelta suavemente';
       }
-    },3400);
+    },4000);
   };
 
   const endHold=()=>{
     if(wavySplashState.phase!=='inhaling')return;
     clearTimeout(inhaleCueTimer);
-    const heldMs=Date.now()-(wavySplashState.holdAt||0);
+    const heldMs=performance.now()-(wavySplashState.phaseStartTs||0);
     const cy=wavySplashState.cycle;
     if(heldMs<900){
       wavySplashState.phase='wait';
-      wavySplashState.targetSwell=0;
+      wavySplashState.swell=0;
       lbl.textContent='Mantén para inhalar';
-      hint.textContent=cy+' de 2 · Mantén un poco más mientras inhalas';
       return;
     }
+    const exDur=Math.round(6000*Math.max(0.45,wavySplashState.swell));
     wavySplashState.phase='exhaling';
-    wavySplashState.targetSwell=0;
+    wavySplashState.fromSwell=wavySplashState.swell;
+    wavySplashState.phaseStartTs=performance.now();
+    wavySplashState.exhaleDur=exDur;
     lbl.textContent='Exhala';
-    hint.textContent=cy+' de 2 · La espuma se retira en calma';
 
     wavySplashTimers.push(setTimeout(()=>{
       if(cy<2){
         wavySplashState.cycle=2;
         wavySplashState.phase='wait';
+        wavySplashState.swell=0;
         lbl.textContent='Mantén para inhalar';
-        hint.textContent='2 de 2 · Mantén presionada la pantalla';
+        if(dots)dots.textContent='● ●';
       }else{
         wavySplashState.phase='done';
         finishWavySplashToLogin();
       }
-    },4000));
+    },exDur));
   };
 
   breath.onpointerdown=startHold;
@@ -5996,7 +6018,7 @@ function renderStoriesBar(){
 
 /* Pestaña "Pebetero / Mi Llama": sin animación giratoria */
 function syncPebeteroRing(){
-  const b=document.querySelector('.tab[data-sub="sub-flame"]');if(!b)return;
+  const b=document.querySelector('.tab[data-csub="sub-flame"]');if(!b)return;
   b.classList.remove('peb-ring','peb-ring-done','peb-ring-pending');
 }
 
@@ -10194,9 +10216,72 @@ function formatPublicDate(dstr){
    (localStorage), sin importar quién sea el usuario activo. Así el
    perfil público del dueño (13061998) se muestra aunque la app esté
    como invitado. El alias viejo 'sebas' apunta al dueño. */
+const WAVY_SHOWCASE_AUTHORS={
+  'wavy.editorial':{
+    me:{username:'wavy.editorial',name:'Wavy Editorial',av:'sol',bio:'Ensayos breves sobre calma, atención y vida sin ruido.'},
+    notes:[
+      {id:'ed-1',d:'2026-11-12',public:true,blank:true,estado:'El arte de no responder al instante',texto:'Vivimos rodeados de pequeñas urgencias fabricadas que nos convencen de que cada vibración merece nuestra presencia inmediata.\n\nCuando te detienes cuatro segundos para inhalar y seis para soltar el aire, recuperas el margen entre el estímulo y tu respuesta. Ese espacio mínimo es donde vuelve tu criterio.\n\nLa constancia no consiste en no caer nunca; consiste en notar antes cuando la marea empieza a subir y volver a tu orilla con suavidad.'},
+      {id:'ed-2',d:'2026-11-08',public:true,blank:true,estado:'Por qué medimos la calma en soles y mareas',texto:'Los números fríos convierten el cuidado personal en otra competencia. Un sol que crece poco a poco o una marea que se aquieta hablan el lenguaje real de tu sistema nervioso: lento, orgánico y continuo.\n\nCuidarte no es producir más. Es habitar tu día con menos fricción.'}
+    ]
+  },
+  'valeria.sol':{
+    me:{username:'valeria.sol',name:'Valeria Mendoza',av:'alba',bio:'Escribo sobre mañanas lentas, arquitectura y silencio.'},
+    notes:[
+      {id:'val-1',d:'2026-11-14',public:true,blank:true,estado:'Cinco minutos antes de abrir cualquier pantalla',texto:'Empecé dejando el teléfono fuera de la mesa del desayuno. Los primeros tres días sentí una inquietud rara, como si me faltara un objeto en la mano.\n\nAl séptimo día volví a escuchar el sonido real de la taza sobre la madera y la luz cambiando en la pared. A veces la paz no requiere añadir un hábito nuevo, sino quitar un reflejo automático.'}
+    ]
+  },
+  'mateo.mar':{
+    me:{username:'mateo.mar',name:'Mateo Ríos',av:'litografia',bio:'Notas de lectura, respiración y caminatas largas.'},
+    notes:[
+      {id:'mat-1',d:'2026-11-10',public:true,blank:true,estado:'Caminar sin audífonos una vez a la semana',texto:'Cuando caminas sin música ni podcasts, al principio tu cabeza hace más ruido que la calle. Luego, hacia la tercera cuadra, los pensamientos repetitivos pierden filo y empiezas a notar detalles mínimos: el viento en los árboles, el ritmo de tus pasos, el aire entrando frío por la nariz.\n\nEs la forma más honesta que encontré para reiniciar la tarde.'}
+    ]
+  }
+};
+function renderDiaryShowcase(){
+  const box=$('diaryShowcaseList');if(!box)return;
+  const items=[];
+  Object.values(WAVY_SHOWCASE_AUTHORS).forEach(st=>{
+    (st.notes||[]).forEach(n=>items.push({me:st.me,n}));
+  });
+  box.innerHTML='';
+  items.forEach(({me,n})=>{
+    const card=document.createElement('article');
+    card.className='med-card';
+    card.innerHTML=
+      '<div class="med-author-row">'+
+        '<div class="med-av">'+getAv(me.av)+'</div>'+
+        '<span class="med-author-name">'+esc(me.name)+'</span>'+
+        '<span class="med-dot">·</span>'+
+        '<span class="med-date">'+esc(formatPublicDate(n.d))+'</span>'+
+      '</div>'+
+      '<h3 class="med-title">'+esc(n.estado)+'</h3>'+
+      '<p class="med-excerpt">'+esc(publicExcerpt(n))+'</p>'+
+      '<div class="med-foot">'+
+        '<span class="med-pill">'+publicReadMins(n)+' min de lectura</span>'+
+        '<span style="font-size:11.5px;color:var(--muted)">Leer en Wavy Journal →</span>'+
+      '</div>';
+    card.onclick=()=>{location.hash='#/'+encodeURIComponent(me.username)+'/'+encodeURIComponent(n.id);};
+    box.appendChild(card);
+  });
+}
+if($('diarySubTabs')){
+  $('diarySubTabs').addEventListener('click',e=>{
+    const b=e.target.closest('[data-dsub]');if(!b)return;
+    const sub=b.dataset.dsub;
+    document.querySelectorAll('#diarySubTabs [data-dsub]').forEach(x=>{
+      const on=(x===b);
+      x.classList.toggle('on',on);
+      x.setAttribute('aria-selected',on?'true':'false');
+    });
+    if($('diaryMineWrap'))$('diaryMineWrap').hidden=(sub!=='mine');
+    if($('diaryShowcaseWrap'))$('diaryShowcaseWrap').hidden=(sub!=='showcase');
+    if(sub==='showcase')renderDiaryShowcase();
+  });
+}
 function publicUserState(username){
   const u=String(username||'').toLowerCase();
   if(!u)return null;
+  if(WAVY_SHOWCASE_AUTHORS[u])return WAVY_SHOWCASE_AUTHORS[u];
   const keys=(u===OWNER_USER||u==='sebas')?['wavy_v18_'+OWNER_USER,'wavy_v18_sebas']:['wavy_v18_'+u];
   for(const k of keys){
     try{
@@ -10581,10 +10666,12 @@ function drawLivingFlame(ts){
   const shape=cfg.shape||'flat_vermilion';
   const rot=t*(cfg.rotSpeed||0.06);
 
+  /* Escala 5%→50%: toda la evolución previa (5%→100%) se comprime en 5%→50% y se detiene ahí */
+  const u50=Math.min(1,u/0.4737);
   const pctEl=$('sunStagePct');
   if(pctEl){
     pctEl.textContent=Math.round(p*100)+'%';
-    const isSparkBg=(u<0.10);
+    const isSparkBg=(u50<0.10);
     pctEl.style.color=isSparkBg?'#F8E8D4':(cfg.pctColor||'#4A3228');
     pctEl.style.textShadow=isSparkBg?'0 1px 10px rgba(0,0,0,0.45)':(cfg.pctColor==='#F3ECF8'||cfg.pctColor==='#F6EAD4'?'0 1px 10px rgba(0,0,0,0.35)':'none');
   }
@@ -10594,8 +10681,8 @@ function drawLivingFlame(ts){
   ctx.imageSmoothingEnabled=true;
   const bgTex=getPebTexture(cfg.bgMat||'cream_paper',pal);
   ctx.drawImage(bgTex,0,0,w,h);
-  if(u<0.18){
-    const sparkBgAlpha=1-(u/0.18);
+  if(u50<0.18){
+    const sparkBgAlpha=1-(u50/0.18);
     ctx.globalAlpha=sparkBgAlpha;
     const tg=ctx.createRadialGradient(cx,cy,10,cx,cy,h*0.72);
     tg.addColorStop(0,'#9E2F1B');
@@ -10607,8 +10694,8 @@ function drawLivingFlame(ts){
   ctx.restore();
 
   /* 1. Chispa cálida al 5% + chispitas sutiles cada 2s (sin espacio exterior ni blanco digital) */
-  if(u<0.14){
-    const sparkFade=1-(u/0.14);
+  if(u50<0.14){
+    const sparkFade=1-(u50/0.14);
     ctx.save();
     ctx.globalAlpha=sparkFade;
     const pulse=1+0.12*Math.sin(t*3.2);
@@ -10638,10 +10725,10 @@ function drawLivingFlame(ts){
     ctx.restore();
   }
 
-  /* 2. Escala continua: al 40% (u=0.368) ya está formado al ~70% de su tamaño final; al 100% llena el cuadro */
-  if(u>0.04){
-    const sunVis=Math.min(1,(u-0.04)/0.14);
-    const growthScale=(u<0.368)?(0.28+0.42*(u/0.368)):(0.70+0.30*((u-0.368)/0.632));
+  /* 2. Escala continua comprimida a 5%→50% (al 50% alcanza el clímax completo actual y se detiene ahí) */
+  if(u50>0.04){
+    const sunVis=Math.min(1,(u50-0.04)/0.14);
+    const growthScale=(u50<0.368)?(0.28+0.42*(u50/0.368)):(0.70+0.30*((u50-0.368)/0.632));
     const breath=1+Math.sin(t*mot.freq)*(mot.breathAmp||0.024);
     const baseR=Math.min(w,h)*0.225*growthScale*breath;
 
@@ -10650,10 +10737,10 @@ function drawLivingFlame(ts){
     ctx.rotate(rot);
     ctx.globalAlpha=sunVis;
 
-    /* 5%→40%: u1 (0→1); 40%→75%: u2 (0→1, logrando en 75% el clímax previo); 75%→100%: u3 (0→1, último cuarto armónico) */
-    const u1=Math.min(1,u/0.3684);
-    const u2=Math.max(0,Math.min(1,(u-0.3684)/0.3684));
-    const u3=Math.max(0,(u-0.7368)/0.2632);
+    /* 5%→50%: u1, u2 y u3 completan toda la animación previa exactamente al llegar al 50% */
+    const u1=Math.min(1,u50/0.3684);
+    const u2=Math.max(0,Math.min(1,(u50-0.3684)/0.3684));
+    const u3=Math.max(0,(u50-0.7368)/0.2632);
     const ebu=Math.max(0,Math.min(1,(u1-0.15)/0.85));
     const ecstasy=Math.max(0,(u1-0.72)/0.28);
     const ecstasy2=Math.max(0,(u2-0.65)/0.35);
@@ -11673,25 +11760,25 @@ const HELP_GUIDES={
     ]
   },
   'v-circle:feed':{
-    eyebrow:'Círculo · Muro',
+    eyebrow:'Círculo · Notas',
     title:'Presencia compartida',
     items:[
-      ['Notas de tu círculo','Lee pensamientos breves de tus aliados. Si aún no cumples una práctica hoy, las notas se difuminan hasta que enciendas tu día.'],
+      ['Notas de tu círculo','Lee pensamientos breves de tus vínculos. Si aún no cumples una práctica hoy, las notas se difuminan hasta que enciendas tu día.'],
       ['Reacciones minimalistas','Toca o pasa el dedo sobre los 3 símbolos debajo de cada nota para acompañar, celebrar o sentir con esa persona.'],
-      ['Publicar una nota','Usa la barra inferior para compartir cómo te sientes, agregar gemas o vincular una canción.']
+      ['Publicar una nota','Usa la cortina desplegable superior para compartir cómo te sientes, agregar gemas o vincular una canción.']
     ]
   },
   'v-circle:diary':{
     eyebrow:'Círculo · Escritos',
-    title:'Tu diario editorial',
+    title:'Mis escritos y Escaparate',
     items:[
-      ['Lecturas y reflexiones','Guarda artículos o reflexiones más extensas con formato editorial limpio, separados de las notas cortas del muro.'],
-      ['Escribir un artículo','Toca la barra inferior «Escribir un artículo» para abrir el lienzo completo de escritura.']
+      ['Mis escritos y Escaparate','Alterna entre tus propios ensayos y lecturas curadas de otros autores en Wavy Journal.'],
+      ['Escribir y compartir','Despliega «Escribir un artículo» para redactar en hoja en blanco o toca Wavy Journal para abrir tu página editorial estilo Medium.']
     ]
   },
   'v-circle:friends':{
-    eyebrow:'Círculo · Aliados',
-    title:'Tus aliados cercanos',
+    eyebrow:'Círculo · Vínculos',
+    title:'Tus vínculos cercanos',
     items:[
       ['Tarjetas de sintonía','Visualiza en filas de dos a las personas de tu círculo junto con su estado actual en tiempo real.'],
       ['Invitar o buscar amigo','Toca «+ Invitar o buscar amigo» debajo de las tarjetas para sumar nuevas personas de confianza.']
