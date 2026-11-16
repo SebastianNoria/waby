@@ -3047,14 +3047,14 @@ summary::-webkit-details-marker{display:none}
     </div>
     <div id="circleDiaryPane" hidden>
       <div class="curtain-shell" id="diaryCurtainShell" style="margin-bottom:6px">
-        <div id="diarySubTabs" role="tablist" aria-label="Secciones de Escritos" style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:6px">
-          <button type="button" class="chip on" data-dsub="public" role="tab" aria-selected="true" style="min-height:28px;padding:3px 10px;font-size:11px">Journal público</button>
-          <button type="button" class="chip" data-dsub="private" role="tab" aria-selected="false" style="min-height:28px;padding:3px 10px;font-size:11px">Journal privado</button>
-          <button type="button" class="curtain-toggle-btn" id="diaryCurtainBtn" aria-expanded="false" aria-label="Abrir cuadro para escribir artículo" style="flex-shrink:0;margin:0 2px">
+        <div id="diarySubTabs" role="tablist" aria-label="Secciones de Escritos" style="display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:nowrap;margin-bottom:6px">
+          <button type="button" class="chip on" data-dsub="journal" role="tab" aria-selected="true" style="min-height:28px;padding:3px 9px;font-size:11px;white-space:nowrap">Journal</button>
+          <button type="button" class="chip" data-dsub="profile" role="tab" aria-selected="false" style="min-height:28px;padding:3px 9px;font-size:11px;white-space:nowrap">Perfil</button>
+          <button type="button" class="curtain-toggle-btn" id="diaryCurtainBtn" aria-expanded="false" aria-label="Abrir cuadro para escribir artículo" style="flex-shrink:0;margin:0 1px">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
           </button>
-          <button type="button" class="chip" data-dsub="showcase" role="tab" aria-selected="false" style="min-height:28px;padding:3px 10px;font-size:11px">Escaparate</button>
-          <button type="button" class="chip" data-dsub="topics" role="tab" aria-selected="false" style="min-height:28px;padding:3px 10px;font-size:11px">Buscar por temas</button>
+          <button type="button" class="chip" data-dsub="showcase" role="tab" aria-selected="false" style="min-height:28px;padding:3px 9px;font-size:11px;white-space:nowrap">Escaparate</button>
+          <button type="button" class="chip" data-dsub="topics" role="tab" aria-selected="false" style="min-height:28px;padding:3px 9px;font-size:11px;white-space:nowrap">Temas</button>
         </div>
         <div class="curtain-drawer" id="diaryCurtainDrawer">
           <div class="circle-composer">
@@ -3067,23 +3067,27 @@ summary::-webkit-details-marker{display:none}
       <section class="panel card on" id="sub-diary">
       <div id="diaryMineWrap" class="bio-sec" style="margin-top:0;padding-bottom:8px">
         <div class="bio-sec-hd">
-          <span id="diaryMineTitle">Journal público</span>
-          <span style="display:flex;align-items:center;gap:8px">
-            <span id="diaryCountLbl" style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0"></span>
-            <button type="button" id="shareProfileBtn" title="Abrir y compartir tu Wavy Journal" style="display:inline-flex;align-items:center;gap:5px;min-height:28px;padding:3px 10px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font-family:var(--serif);font-style:italic;font-size:12px;cursor:pointer">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/></svg>
-              <span>Wavy Journal</span>
-            </button>
-          </span>
+          <span>Journal</span>
+          <span id="diaryCountLbl" style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0"></span>
         </div>
         <div id="diaryList"></div>
+      </div>
+      <div id="diaryProfileWrap" class="bio-sec" style="margin-top:0;padding-bottom:8px" hidden>
+        <div class="bio-sec-hd">
+          <span>Wavy Journal · Público</span>
+          <button type="button" id="shareProfileBtn" title="Abrir y compartir tu Wavy Journal" style="display:inline-flex;align-items:center;gap:5px;min-height:28px;padding:3px 10px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font-family:var(--serif);font-style:italic;font-size:12px;cursor:pointer">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/></svg>
+            <span>Compartir</span>
+          </button>
+        </div>
+        <div id="diaryPublicProfilePreview"></div>
       </div>
       <div id="diaryShowcaseWrap" class="bio-sec" style="margin-top:0;padding-bottom:8px" hidden>
         <div class="bio-sec-hd"><span>Escaparate · Wavy Editorial</span><span style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">Selección algorítmica</span></div>
         <div id="diaryShowcaseList"></div>
       </div>
       <div id="diaryTopicsWrap" class="bio-sec" style="margin-top:0;padding-bottom:8px" hidden>
-        <div class="bio-sec-hd"><span>Buscar por temas</span><span style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">Círculo de lectura</span></div>
+        <div class="bio-sec-hd"><span>Temas</span><span style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">Círculo de lectura</span></div>
         <div class="chips" id="diaryTopicChips" style="margin-bottom:14px"></div>
         <div id="diaryTopicsList"></div>
       </div>
@@ -5666,94 +5670,94 @@ function drawWavySplashSea(ts){
   const cx=w*0.5,cy=h*0.5;
   const maxR=Math.hypot(w,h)*0.64;
 
-  /* Helper para trazar ola orgánica cerrada suave alrededor del círculo central (0 puntas, 0 cruces) */
-  const traceOrganicWaveCircle=(radius,amp,ph)=>{
-    const pts=[];
-    const steps=48;
-    for(let i=0;i<steps;i++){
-      const a=(i/steps)*Math.PI*2;
-      const wOff=Math.sin(a*3+t*1.2+ph)*amp+Math.cos(a*2-t*0.85+ph)*amp*0.5;
-      const r=Math.max(10,radius+wOff);
-      pts.push([cx+Math.cos(a)*r,cy+Math.sin(a)*r]);
-    }
-    return pts;
-  };
-  const pathClosedSmooth=(pts)=>{
-    const n=pts.length;
+  /* 2. Olas circulares estilo Costa con crestas hacia AFUERA rodeando el círculo central */
+  const baseOrbR=88+Math.sin(t*1.4)*2.0+sw*14;
+  const maxReach=Math.hypot(w,h)*0.56;
+
+  const drawOutwardCoastRing=(rInner,rOuter,crestCount,curlAmp,rotOff,fillStyle)=>{
+    const steps=crestCount*10;
     ctx.beginPath();
-    const startX=(pts[n-1][0]+pts[0][0])*0.5;
-    const startY=(pts[n-1][1]+pts[0][1])*0.5;
-    ctx.moveTo(startX,startY);
-    for(let i=0;i<n;i++){
-      const next=pts[(i+1)%n];
-      const mx=(pts[i][0]+next[0])*0.5;
-      const my=(pts[i][1]+next[1])*0.5;
-      ctx.quadraticCurveTo(pts[i][0],pts[i][1],mx,my);
+    for(let i=0;i<=steps;i++){
+      const s=i/steps;
+      const a=s*Math.PI*2+rotOff;
+      /* Cresta asimétrica suave estilo ola de mar mirando hacia afuera */
+      const localPhase=(s*crestCount)%1;
+      const crest=Math.pow(Math.sin(localPhase*Math.PI),1.55)*curlAmp+Math.sin(localPhase*Math.PI*2)*curlAmp*0.22;
+      const r=rOuter+crest;
+      const px=cx+Math.cos(a)*r;
+      const py=cy+Math.sin(a)*r;
+      if(i===0)ctx.moveTo(px,py);
+      else ctx.lineTo(px,py);
     }
     ctx.closePath();
+    ctx.fillStyle=fillStyle;
+    ctx.fill();
   };
 
-  /* 2. Huella de agua mojando el Blanco Pulcritud (efecto arena/papel húmedo) */
+  /* 3 capas de marea de Costa expandiéndose desde el perímetro hacia casi toda la pantalla */
+  const tideR1=baseOrbR+30+sw*maxReach*0.96;
+  const tideR2=baseOrbR+20+sw*maxReach*0.84;
+  const tideR3=baseOrbR+10+sw*maxReach*0.72;
+
+  /* Huella suave de agua en el Blanco Pulcritud */
   if(wsw>0.015){
-    const wetPts=traceOrganicWaveCircle(96+wsw*maxR*1.04,6+wsw*10,0.6);
-    pathClosedSmooth(wetPts);
-    ctx.fillStyle='rgba(222,235,238,0.45)';
-    ctx.fill();
+    drawOutwardCoastRing(baseOrbR,baseOrbR+38+wsw*maxReach*1.02,12,18+wsw*22,t*0.08,'rgba(222,236,240,0.48)');
   }
 
-  /* 3. Una ola única orgánica que nace del círculo central y llena toda la pantalla al inhalar */
-  if(sw>0.01){
-    const waveR=92+sw*maxR;
-    const wavePts=traceOrganicWaveCircle(waveR,5+sw*11,0.0);
-    pathClosedSmooth(wavePts);
-    const wg=ctx.createRadialGradient(cx,cy,Math.max(20,waveR*0.25),cx,cy,Math.max(40,waveR*1.05));
-    wg.addColorStop(0,'rgba(72,118,132,0.72)');
-    wg.addColorStop(0.65,'rgba(112,158,170,0.52)');
-    wg.addColorStop(1,'rgba(164,198,206,0.34)');
-    ctx.fillStyle=wg;
-    ctx.fill();
+  drawOutwardCoastRing(baseOrbR,tideR1,12,16+sw*22,t*0.12,'rgba(148,184,194,0.46)');
+  drawOutwardCoastRing(baseOrbR,tideR2,12,14+sw*18,-t*0.09+0.26,'rgba(88,136,150,0.62)');
+  drawOutwardCoastRing(baseOrbR,tideR3,12,12+sw*15,t*0.07+0.52,'rgba(45,88,104,0.82)');
 
-    /* Espuma de mar continua en toda la circunferencia de la ola */
-    ctx.save();
-    pathClosedSmooth(wavePts);
-    ctx.strokeStyle='rgba(205,228,233,'+(0.52+0.35*sw).toFixed(3)+')';
-    ctx.lineWidth=14+sw*10;
-    ctx.stroke();
-
-    pathClosedSmooth(wavePts);
-    ctx.strokeStyle='rgba(255,255,255,0.95)';
-    ctx.lineWidth=5.5+sw*3.5;
-    ctx.stroke();
-
-    /* Burbujas suaves de espuma en toda la cresta */
-    for(let b=0;b<36;b++){
-      const idx=Math.floor((b/36)*wavePts.length);
-      const [bx0,by0]=wavePts[idx];
-      const life=((t*0.50+pebHash(b*3.7))%1);
-      const fade=Math.sin(life*Math.PI);
-      const ang=Math.atan2(by0-cy,bx0-cx);
-      const drift=(4+life*20)*(0.4+0.8*sw);
-      const bx=bx0+Math.cos(ang)*drift;
-      const by=by0+Math.sin(ang)*drift;
-      const br=(2.0+pebHash(b*2.9)*4.0)*(0.6+0.6*sw);
-      ctx.globalAlpha=fade*(0.50+0.42*sw);
-      ctx.fillStyle='#FFFFFF';
-      ctx.beginPath();ctx.arc(bx,by,br,0,Math.PI*2);ctx.fill();
+  /* Puntos blancos de espuma de mar + luciérnagas doradas como en nuestra Costa */
+  ctx.save();
+  const foamCount=42;
+  for(let b=0;b<foamCount;b++){
+    const a=(b/foamCount)*Math.PI*2+t*0.10;
+    const life=((t*0.48+pebHash(b*3.7))%1);
+    const fade=Math.sin(life*Math.PI);
+    const rDist=tideR1+4+life*(14+sw*28)+Math.sin(a*12)*6;
+    const bx=cx+Math.cos(a)*rDist;
+    const by=cy+Math.sin(a)*rDist;
+    const br=(1.8+pebHash(b*2.9)*3.4)*(0.65+0.65*sw);
+    ctx.globalAlpha=fade*(0.55+0.42*sw);
+    ctx.fillStyle='#FFFFFF';
+    ctx.beginPath();ctx.arc(bx,by,br,0,Math.PI*2);ctx.fill();
+    /* Aro sutil aguamarina cuando está sobre fondo blanco */
+    if(sw<0.35){
+      ctx.strokeStyle='rgba(148,184,194,0.45)';
+      ctx.lineWidth=1;
+      ctx.stroke();
     }
-    ctx.restore();
   }
+  const ffCount=20;
+  for(let f=0;f<ffCount;f++){
+    const life=((t*0.36+pebHash(f*5.3))%1);
+    const fade=Math.sin(life*Math.PI);
+    const fa=pebHash(f*9.1)*Math.PI*2+t*0.14;
+    const fr=(baseOrbR+18+pebHash(f*4.1)*(tideR1-baseOrbR+40));
+    const fx=cx+Math.cos(fa)*fr;
+    const fy=cy+Math.sin(fa)*fr;
+    const glowR=7+pebHash(f*2.3)*8;
+    const fg=ctx.createRadialGradient(fx,fy,0.5,fx,fy,glowR);
+    fg.addColorStop(0,'rgba(255,242,198,'+(0.88*fade).toFixed(3)+')');
+    fg.addColorStop(0.45,'rgba(240,206,134,'+(0.42*fade).toFixed(3)+')');
+    fg.addColorStop(1,'rgba(240,206,134,0)');
+    ctx.globalAlpha=1;
+    ctx.fillStyle=fg;
+    ctx.beginPath();ctx.arc(fx,fy,glowR,0,Math.PI*2);ctx.fill();
+  }
+  ctx.restore();
 
-  /* 4. Círculo central estilo Costa (guía serena de Inhala / Exhala) */
-  const orbR=92+Math.sin(t*1.4)*2.5+sw*22;
-  const cg=ctx.createRadialGradient(cx,cy-orbR*0.2,10,cx,cy,orbR);
-  cg.addColorStop(0,'rgba(255,255,255,0.96)');
-  cg.addColorStop(0.68,'rgba(228,240,243,0.88)');
-  cg.addColorStop(1,'rgba(148,184,194,0.52)');
+  /* 4. Círculo central sereno en Blanco Pulcritud */
+  const cg=ctx.createRadialGradient(cx,cy-baseOrbR*0.2,10,cx,cy,baseOrbR);
+  cg.addColorStop(0,'rgba(255,255,255,0.98)');
+  cg.addColorStop(0.75,'rgba(244,249,250,0.95)');
+  cg.addColorStop(1,'rgba(220,235,239,0.92)');
   ctx.fillStyle=cg;
-  ctx.beginPath();ctx.arc(cx,cy,orbR,0,Math.PI*2);ctx.fill();
-  ctx.strokeStyle='rgba(88,136,150,0.34)';
+  ctx.beginPath();ctx.arc(cx,cy,baseOrbR,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='rgba(88,136,150,0.32)';
   ctx.lineWidth=1.5;
-  ctx.beginPath();ctx.arc(cx,cy,orbR,0,Math.PI*2);ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,baseOrbR,0,Math.PI*2);ctx.stroke();
 
   wavySplashRaf=requestAnimationFrame(drawWavySplashSea);
 }
@@ -10233,19 +10237,15 @@ function formatDiaryDate(dstr){
   if(!m)return String(dstr||'');
   return m[3]+' · '+m[2]+' · ’'+m[1].slice(-2);
 }
-let activeDiarySub='public';
+let activeDiarySub='journal';
 let activeDiaryTopic='Todos';
 function renderDiaryList(){
   const b=$('diaryList');if(!b)return;
-  const all=(S.notes||[]).filter(n=>n&&((n.blank===true)||(n.texto && String(n.texto).length>140)));
-  const isPub=(activeDiarySub!=='private');
-  const list=all.filter(n=>isPub ? Boolean(n.public) : !n.public);
-  if($('diaryMineTitle'))$('diaryMineTitle').textContent=isPub?'Journal público':'Journal privado';
-  if($('shareProfileBtn'))$('shareProfileBtn').hidden=!isPub;
+  const list=(S.notes||[]).filter(n=>n&&((n.blank===true)||(n.texto && String(n.texto).length>140)));
   const c=$('diaryCountLbl');if(c)c.textContent=list.length?list.length+(list.length===1?' escrito':' escritos'):'';
   b.innerHTML='';
   if(!list.length){
-    b.innerHTML='<p class="empty">'+(isPub?'Aún no hay ensayos en tu Journal público. Marca un escrito como público para compartirlo.':'Aún no hay escritos privados. Despliega la flecha superior para escribir.')+'</p>';
+    b.innerHTML='<p class="empty">Aún no hay escritos en tu Journal. Despliega la flecha superior para escribir.</p>';
     return;
   }
   const myName=esc((S.me && S.me.name) || ('@'+(S.me && S.me.username || '')));
@@ -10253,6 +10253,7 @@ function renderDiaryList(){
   list.slice(0,20).forEach(n=>{
     const isDraft=Boolean(n.draft);
     const ex=publicExcerpt(n);
+    const isPub=Boolean(n.public);
     const card=document.createElement('article');
     card.className='med-card diary-entry';
     card.innerHTML=
@@ -10261,7 +10262,7 @@ function renderDiaryList(){
         '<span class="med-author-name">'+myName+'</span>'+
         '<span class="med-dot">·</span>'+
         '<span class="med-date">'+esc(formatDiaryDate(n.d))+'</span>'+
-        '<button type="button" class="med-vis-inline" data-vis="'+(n.public?'pub':'priv')+'" title="'+(n.public?'Público':'Privado')+'" aria-label="Visibilidad: '+(n.public?'Público':'Privado')+'">'+(n.public?VIS_PUB_SVG:VIS_PRIV_SVG)+'</button>'+
+        '<button type="button" class="med-vis-inline" data-vis="'+(isPub?'pub':'priv')+'" style="margin-left:auto;display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;border:1px solid '+(isPub?'var(--ink)':'var(--rule)')+';background:'+(isPub?'var(--ink)':'transparent')+';color:'+(isPub?'var(--paper)':'var(--muted)')+';font-size:10.5px;letter-spacing:.04em;cursor:pointer">'+(isPub?'Público':'Privado')+'</button>'+
       '</div>'+
       '<h3 class="med-title">'+esc(n.estado||(isDraft?'Borrador sin título':'Reflexión del día'))+'</h3>'+
       (ex?'<p class="med-excerpt">'+esc(ex)+'</p>':'');
@@ -10269,9 +10270,36 @@ function renderDiaryList(){
       e.stopPropagation();
       n.public=!n.public;
       save(false);renderDiaryList();
+      toast(n.public?'Publicado en tu Perfil de Wavy Journal':'Movido a Privado','ok');
     };
     card.onclick=()=>openBlankEntry(n.id);
     b.appendChild(card);
+  });
+}
+function renderDiaryPublicProfilePreview(){
+  const box=$('diaryPublicProfilePreview');if(!box)return;
+  const pubPosts=publicPosts();
+  const me=S.me||{};
+  const name=esc(me.name||('@'+(me.username||'wavy')));
+  const uname=esc(me.username||'wavy');
+  let html='<div class="pub-author" style="margin-bottom:14px"><div class="av">'+getAv(me.av)+'</div><div><h2 style="margin:0;font-size:20px">'+name+'</h2><div class="un">@'+uname+'</div></div></div>';
+  if(me.bio)html+='<p class="pub-bio" style="margin-bottom:14px">“'+esc(me.bio)+'”</p>';
+  if(!pubPosts.length){
+    html+='<p class="empty">Aún no tienes escritos públicos. Activa <b>Público</b> en cualquier ensayo de tu Journal para verlo aquí.</p>';
+  }else{
+    pubPosts.forEach(n=>{
+      const ex=publicExcerpt(n);
+      html+='<article class="med-card" data-prof-post="'+esc(String(n.id))+'">'+
+        '<div class="med-author-row"><div class="med-av">'+getAv(me.av)+'</div><span class="med-author-name">'+name+'</span><span class="med-dot">·</span><span class="med-date">'+esc(formatPublicDate(n.d))+'</span></div>'+
+        '<h3 class="med-title">'+esc(n.estado||'Reflexión del día')+'</h3>'+
+        (ex?'<p class="med-excerpt">'+esc(ex)+'</p>':'')+
+        '<div class="med-foot"><span class="med-pill">'+publicReadMins(n)+' min de lectura</span><span style="font-size:11.5px;color:var(--muted)">Abrir página pública →</span></div>'+
+      '</article>';
+    });
+  }
+  box.innerHTML=html;
+  box.querySelectorAll('[data-prof-post]').forEach(el=>{
+    el.onclick=()=>{location.hash='#/'+encodeURIComponent(me.username||'')+'/'+encodeURIComponent(el.dataset.profPost);};
   });
 }
 
@@ -10447,11 +10475,12 @@ if($('diarySubTabs')){
       x.classList.toggle('on',on);
       x.setAttribute('aria-selected',on?'true':'false');
     });
-    const isMine=(sub==='public'||sub==='private');
-    if($('diaryMineWrap'))$('diaryMineWrap').hidden=!isMine;
+    if($('diaryMineWrap'))$('diaryMineWrap').hidden=(sub!=='journal');
+    if($('diaryProfileWrap'))$('diaryProfileWrap').hidden=(sub!=='profile');
     if($('diaryShowcaseWrap'))$('diaryShowcaseWrap').hidden=(sub!=='showcase');
     if($('diaryTopicsWrap'))$('diaryTopicsWrap').hidden=(sub!=='topics');
-    if(isMine)renderDiaryList();
+    if(sub==='journal')renderDiaryList();
+    if(sub==='profile')renderDiaryPublicProfilePreview();
     if(sub==='showcase')renderDiaryShowcase();
     if(sub==='topics')renderDiaryTopics();
   });
@@ -10871,41 +10900,49 @@ function drawLivingFlame(ts){
   }
   ctx.restore();
 
-  /* 1. Chispa cálida al 5% + chispitas sutiles cada 2s (sin espacio exterior ni blanco digital) */
+  /* 1. Chispa cálida al 5% + breves chispazos que alumbran el fondo a lo largo de todo el cuadro */
   if(u50<0.14){
     const sparkFade=1-(u50/0.14);
     ctx.save();
     ctx.globalAlpha=sparkFade;
-    const pulse=1+0.12*Math.sin(t*3.2);
-    const eg=ctx.createRadialGradient(cx,cy,1,cx,cy,32*pulse);
-    eg.addColorStop(0,'#FFD984');
+    const pulse=1+0.14*Math.sin(t*3.2);
+    const eg=ctx.createRadialGradient(cx,cy,1,cx,cy,34*pulse);
+    eg.addColorStop(0,'#FFE49E');
     eg.addColorStop(0.45,'#E86A28');
     eg.addColorStop(1,'rgba(180,52,20,0)');
     ctx.fillStyle=eg;
-    ctx.beginPath();ctx.arc(cx,cy,32*pulse,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='#FFE8A8';
-    ctx.beginPath();ctx.arc(cx,cy,4.5*pulse,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(cx,cy,34*pulse,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#FFF0C4';
+    ctx.beginPath();ctx.arc(cx,cy,5*pulse,0,Math.PI*2);ctx.fill();
 
-    const cycle=t%2.0;
-    if(cycle<0.55){
-      const bf=(1-(cycle/0.55))*sparkFade;
-      const seed=Math.floor(t/2.0)*19;
-      for(let i=0;i<10;i++){
-        const ang=((seed+i*53)%360)*Math.PI/180;
-        const dist=(20+((seed*11+i*89)%160))*(0.35+0.65*(cycle/0.55));
-        const sx=cx+Math.cos(ang)*dist;
-        const sy=cy+Math.sin(ang)*dist*1.08;
-        ctx.globalAlpha=bf*(0.45+0.5*((i%3)/2));
-        ctx.fillStyle=i%2===0?'#F5B95B':'#E86F38';
-        ctx.beginPath();ctx.arc(sx,sy,1.4+(i%3)*0.7,0,Math.PI*2);ctx.fill();
-      }
+    /* Chispazos breves aleatorios que iluminan zonas del fondo por todo el cuadro */
+    for(let f=0;f<14;f++){
+      const period=1.35+pebHash(f*3.1)*1.15;
+      const phase=((t+pebHash(f*7.3)*period)%period)/period;
+      /* Pulso breve (solo ilumina ~38% de su ciclo) */
+      if(phase>0.38)continue;
+      const flash=Math.sin((phase/0.38)*Math.PI)*sparkFade;
+      const seedIdx=Math.floor((t+pebHash(f*7.3)*period)/period)*13+f*7;
+      const fx=w*(0.08+pebHash(seedIdx*1.9)*0.84);
+      const fy=h*(0.08+pebHash(seedIdx*3.7)*0.84);
+      const fr=(34+pebHash(seedIdx*5.1)*52)*dpr;
+      const fg=ctx.createRadialGradient(fx,fy,1,fx,fy,fr);
+      fg.addColorStop(0,'rgba(255,220,145,'+(0.55*flash).toFixed(3)+')');
+      fg.addColorStop(0.4,'rgba(232,106,40,'+(0.28*flash).toFixed(3)+')');
+      fg.addColorStop(1,'rgba(158,47,27,0)');
+      ctx.globalAlpha=1;
+      ctx.fillStyle=fg;
+      ctx.beginPath();ctx.arc(fx,fy,fr,0,Math.PI*2);ctx.fill();
+      ctx.globalAlpha=flash*0.92;
+      ctx.fillStyle='#FFE8A8';
+      ctx.beginPath();ctx.arc(fx,fy,(1.6+pebHash(seedIdx*2.3)*1.8)*dpr,0,Math.PI*2);ctx.fill();
     }
     ctx.restore();
   }
 
-  /* 2. Escala continua comprimida a 5%→50% (al 50% alcanza el clímax completo actual y se detiene ahí) */
-  if(u50>0.04){
-    const sunVis=Math.min(1,(u50-0.04)/0.14);
+  /* 2. Escala continua: en 5% (u50=0) es solo chispa; desde >5% va naciendo la ilustración */
+  if(u50>0.05){
+    const sunVis=Math.min(1,(u50-0.05)/0.14);
     const growthScale=(u50<0.368)?(0.28+0.42*(u50/0.368)):(0.70+0.30*((u50-0.368)/0.632));
     const breath=1+Math.sin(t*mot.freq)*(mot.breathAmp||0.024);
     const baseR=Math.min(w,h)*0.225*growthScale*breath;
