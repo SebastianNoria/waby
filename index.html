@@ -2111,9 +2111,16 @@ summary::-webkit-details-marker{display:none}
   animation:wavyStrokeDraw .95s .35s cubic-bezier(.22,1,.36,1) forwards;
 }
 .wavy-splash-word{
-  font-family:var(--serif);font-size:48px;font-weight:500;letter-spacing:-.02em;line-height:1;color:var(--ink);
-  opacity:0;transform:translateY(10px);
-  animation:wavyWordIn .85s .32s cubic-bezier(.22,1,.36,1) forwards;
+  font-family:var(--serif);font-size:62px;font-weight:500;letter-spacing:-.025em;line-height:1;
+  background:linear-gradient(110deg, var(--ink) 0%, var(--ink) 38%, #d6c5ab 50%, var(--ink) 62%, var(--ink) 100%);
+  background-size:240% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  opacity:0;transform:translateY(8px);
+  animation:wavyWordIn 1.1s .15s cubic-bezier(.22,1,.36,1) forwards, wavyShimmer 2.2s .25s ease-in-out infinite;
+}
+@keyframes wavyShimmer{
+  0%{background-position:100% 50%}
+  100%{background-position:-100% 50%}
 }
 @keyframes wavyMarkIn{
   0%{opacity:0;transform:scale(.86) translateY(8px)}
@@ -2140,34 +2147,15 @@ summary::-webkit-details-marker{display:none}
 #wavySplashBreathLabel{
   position:relative;z-index:2;
   margin-top:0;
-  font-family:var(--serif);font-size:36px;font-weight:500;letter-spacing:-.015em;color:var(--ink);
+  font-family:var(--serif);font-size:32px;font-weight:500;letter-spacing:-.015em;color:var(--ink);
   text-shadow:0 2px 18px rgba(255,255,255,0.92);
   transition:opacity .35s ease,transform .35s ease;
   text-align:center;padding:0 24px;
 }
-#wavySplashRingWrap{
-  position:relative;z-index:2;
-  width:64px;height:64px;margin:14px auto 8px;
-  display:grid;place-items:center;
-}
-#wavySplashRingWrap svg{
-  width:64px;height:64px;transform:rotate(-90deg);
-}
-#wavySplashRingTrack{
-  fill:none;stroke:rgba(35,31,29,0.12);stroke-width:2.5;
-}
-#wavySplashRingProg{
-  fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linecap:round;
-  stroke-dasharray:163.36;stroke-dashoffset:163.36;
-}
-#wavySplashSec{
-  position:absolute;inset:0;display:grid;place-items:center;
-  font-family:var(--serif);font-size:17px;font-weight:500;color:var(--ink);
-}
 #wavySplashCycleHint{
   position:relative;z-index:2;
-  margin-top:2px;
-  font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink);opacity:.68;
+  margin-top:8px;
+  font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:var(--ink);opacity:.62;
   text-shadow:0 1px 12px rgba(255,255,255,0.92);
   transition:opacity .35s ease;text-align:center;padding:0 24px;
 }
@@ -2963,7 +2951,7 @@ summary::-webkit-details-marker{display:none}
         </div>
       </div>
 
-      <div id="devFlameBar" style="margin:10px 0 16px;padding:10px 12px;border:1px dashed var(--rule);border-radius:16px">
+      <div id="devFlameBar" hidden style="margin:10px 0 16px;padding:10px 12px;border:1px dashed var(--rule);border-radius:16px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600">
           <span>Vista desarrollador · 6 llamas</span>
           <span id="devFlamePctLbl" style="color:var(--ink)">65%</span>
@@ -3058,10 +3046,16 @@ summary::-webkit-details-marker{display:none}
     <div id="circleFeedList" style="padding-bottom:8px"></div>
     </div>
     <div id="circleDiaryPane" hidden>
-      <div class="curtain-shell" id="diaryCurtainShell">
-        <button type="button" class="curtain-toggle-btn" id="diaryCurtainBtn" aria-expanded="false" aria-label="Abrir cuadro para escribir artículo">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
+      <div class="curtain-shell" id="diaryCurtainShell" style="margin-bottom:6px">
+        <div id="diarySubTabs" role="tablist" aria-label="Secciones de Escritos" style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:6px">
+          <button type="button" class="chip on" data-dsub="public" role="tab" aria-selected="true" style="min-height:28px;padding:3px 10px;font-size:11px">Journal público</button>
+          <button type="button" class="chip" data-dsub="private" role="tab" aria-selected="false" style="min-height:28px;padding:3px 10px;font-size:11px">Journal privado</button>
+          <button type="button" class="curtain-toggle-btn" id="diaryCurtainBtn" aria-expanded="false" aria-label="Abrir cuadro para escribir artículo" style="flex-shrink:0;margin:0 2px">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <button type="button" class="chip" data-dsub="showcase" role="tab" aria-selected="false" style="min-height:28px;padding:3px 10px;font-size:11px">Escaparate</button>
+          <button type="button" class="chip" data-dsub="topics" role="tab" aria-selected="false" style="min-height:28px;padding:3px 10px;font-size:11px">Buscar por temas</button>
+        </div>
         <div class="curtain-drawer" id="diaryCurtainDrawer">
           <div class="circle-composer">
             <div class="circle-composer-row">
@@ -3071,23 +3065,27 @@ summary::-webkit-details-marker{display:none}
         </div>
       </div>
       <section class="panel card on" id="sub-diary">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px;flex-wrap:wrap">
-        <div class="chips" id="diarySubTabs" role="tablist" aria-label="Secciones de Escritos">
-          <button type="button" class="chip on" data-dsub="mine" role="tab" aria-selected="true" style="min-height:30px;padding:4px 12px;font-size:11.5px">Mis escritos</button>
-          <button type="button" class="chip" data-dsub="showcase" role="tab" aria-selected="false" style="min-height:30px;padding:4px 12px;font-size:11.5px">Escaparate</button>
-        </div>
-        <button type="button" id="shareProfileBtn" title="Abrir y compartir tu Wavy Journal" style="display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:4px 12px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font-family:var(--serif);font-style:italic;font-size:12.5px;letter-spacing:.01em;cursor:pointer">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/></svg>
-          <span>Wavy Journal</span>
-        </button>
-      </div>
       <div id="diaryMineWrap" class="bio-sec" style="margin-top:0;padding-bottom:8px">
-        <div class="bio-sec-hd"><span>Mis escritos</span><span id="diaryCountLbl" style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0"></span></div>
+        <div class="bio-sec-hd">
+          <span id="diaryMineTitle">Journal público</span>
+          <span style="display:flex;align-items:center;gap:8px">
+            <span id="diaryCountLbl" style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0"></span>
+            <button type="button" id="shareProfileBtn" title="Abrir y compartir tu Wavy Journal" style="display:inline-flex;align-items:center;gap:5px;min-height:28px;padding:3px 10px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font-family:var(--serif);font-style:italic;font-size:12px;cursor:pointer">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/></svg>
+              <span>Wavy Journal</span>
+            </button>
+          </span>
+        </div>
         <div id="diaryList"></div>
       </div>
       <div id="diaryShowcaseWrap" class="bio-sec" style="margin-top:0;padding-bottom:8px" hidden>
-        <div class="bio-sec-hd"><span>Escaparate · Wavy Journal</span><span style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">Lecturas curadas</span></div>
+        <div class="bio-sec-hd"><span>Escaparate · Wavy Editorial</span><span style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">Selección algorítmica</span></div>
         <div id="diaryShowcaseList"></div>
+      </div>
+      <div id="diaryTopicsWrap" class="bio-sec" style="margin-top:0;padding-bottom:8px" hidden>
+        <div class="bio-sec-hd"><span>Buscar por temas</span><span style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">Círculo de lectura</span></div>
+        <div class="chips" id="diaryTopicChips" style="margin-bottom:14px"></div>
+        <div id="diaryTopicsList"></div>
       </div>
       </section>
     </div>
@@ -3106,7 +3104,7 @@ summary::-webkit-details-marker{display:none}
        ========================================================= -->
   <div class="vpage" id="v-clinic">
     <div class="tabs" role="tablist" style="grid-template-columns:1fr">
-      <button class="tab on" type="button" role="tab" aria-selected="true" style="cursor:default">Pulso</button>
+      <button class="tab on" type="button" role="tab" aria-selected="true" style="cursor:default">Claridad</button>
     </div>
     <div class="card">
       <p id="pulsoAdaptiveTip" hidden style="font-size:12.5px;color:var(--ok);font-family:var(--serif);font-style:italic;line-height:1.45;margin:-2px 0 12px"></p>
@@ -3443,6 +3441,20 @@ summary::-webkit-details-marker{display:none}
     <button class="btn ghost" id="previewMyPublicBtn" style="width:100%;margin-bottom:10px">Ver mi perfil público</button>
 
     <button class="btn" id="saveProfileBtn" style="width:100%;margin-top:6px">Guardar cambios de perfil</button>
+
+    <div style="margin-top:22px;padding-top:14px;border-top:1px solid var(--rule)">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+        <div>
+          <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Modo desarrollador</strong>
+          <small id="devModeStatusLbl" style="display:block;font-size:11.5px;color:var(--muted)">Bloqueado</small>
+        </div>
+        <button type="button" class="chip" id="devModeUnlockBtn" style="min-height:30px;padding:4px 12px;font-size:11.5px">Activar</button>
+      </div>
+      <div id="devModePassBox" hidden style="display:flex;gap:8px;margin-top:10px">
+        <input type="password" class="line" id="devModePassInput" placeholder="Contraseña" autocomplete="off" style="flex:1;min-height:36px;font-size:14px">
+        <button type="button" class="btn" id="devModePassSubmit" style="min-height:36px;padding:6px 14px;font-size:11.5px">Entrar</button>
+      </div>
+    </div>
   </section>
 </div>
 </main>
@@ -3452,22 +3464,13 @@ summary::-webkit-details-marker{display:none}
      ========================================================= -->
 <div id="wavySplashOverlay" hidden aria-live="polite">
   <div id="wavySplashLogoPhase">
-    <svg class="wavy-splash-mark" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-      <path class="wavy-sun-arc" d="M16 38a16 16 0 0 1 32 0" stroke="#C87A52" stroke-width="2.4" stroke-linecap="round"/>
-      <path class="wavy-wave-line" d="M10 42c6-4.5 12 4.5 18 0s12-4.5 18 0 6 2.5 8 0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-      <path class="wavy-wave-line" d="M16 49c5-3.2 10 3.2 15 0s10-3.2 17 0" stroke="#C87A52" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>
-    </svg>
     <div class="wavy-splash-word">Wavy</div>
   </div>
   <div id="wavySplashBreathPhase">
     <canvas id="wavySplashSea" aria-hidden="true"></canvas>
     <button type="button" id="wavySplashSkipBtn" aria-label="Omitir respiración">Omitir →</button>
     <div id="wavySplashBreathLabel">Mantén para inhalar</div>
-    <div id="wavySplashRingWrap" aria-hidden="true">
-      <svg viewBox="0 0 64 64"><circle id="wavySplashRingTrack" cx="32" cy="32" r="26"/><circle id="wavySplashRingProg" cx="32" cy="32" r="26"/></svg>
-      <span id="wavySplashSec">4s</span>
-    </div>
-    <div id="wavySplashCycleHint">Respiración 4-6 &nbsp;·&nbsp; <span id="wavySplashDots">● ○</span></div>
+    <div id="wavySplashCycleHint">Respiración 4-6</div>
   </div>
 </div>
 
@@ -3856,9 +3859,9 @@ summary::-webkit-details-marker{display:none}
 <nav class="bnav" id="bnav" aria-label="Navegación principal">
   <div class="bnav-inner" role="tablist">
     <button class="bnav-btn on" data-v="v-today" role="tab" aria-selected="true">
-      <!-- Símbolo de Autor 1: Brote Botánico de Dos Hojas (Presencia y Bienestar Diario) -->
+      <!-- Símbolo de Autor 1: Brote Botánico de Dos Hojas (Estar y Bienestar Diario) -->
       <svg viewBox="0 0 24 24"><path d="M12 20V9"/><path d="M12 14c-4.5 0-7.5-3-7.5-7.5 4.5 0 7.5 3 7.5 7.5Z"/><path d="M12 11c4-0.5 6.8-3.2 6.8-7.2-4 0.5-6.8 3.2-6.8 7.2Z"/><path d="M8.5 20h7"/></svg>
-      <span>Presencia</span>
+      <span>Estar</span>
     </button>
     <button class="bnav-btn" data-v="v-breathe" role="tab" aria-selected="false">
       <!-- Símbolo de Autor 2: Sol/Luna Naciente sobre el Horizonte en Calma -->
@@ -3866,14 +3869,14 @@ summary::-webkit-details-marker{display:none}
       <span>Calma</span>
     </button>
     <button class="bnav-btn" data-v="v-circle" role="tab" aria-selected="false">
-      <!-- Símbolo de Autor 3: Onda de Sintonía Compartida (Vínculo y Resonancia) -->
+      <!-- Símbolo de Autor 3: Onda de Sintonía Compartida (Afecto y Resonancia) -->
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.6"/><path d="M7.2 15a5.8 5.8 0 1 1 9.6 0"/><path d="M4.2 17.6a9.4 9.4 0 1 1 15.6 0"/></svg>
-      <span>Vínculo</span>
+      <span>Afecto</span>
     </button>
     <button class="bnav-btn" data-v="v-clinic" role="tab" aria-selected="false">
-      <!-- Símbolo de Autor 4: Brújula Minimalista (Pulso / Rumbo y Equilibrio) -->
+      <!-- Símbolo de Autor 4: Brújula Minimalista (Claridad y Rumbo) -->
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><polygon points="15.4 8.6 13.3 13.3 8.6 15.4 10.7 10.7 15.4 8.6"/><circle cx="12" cy="12" r="1"/></svg>
-      <span>Pulso</span>
+      <span>Claridad</span>
     </button>
   </div>
 </nav>
@@ -5388,8 +5391,40 @@ function switchMainView(vid){
   if(vid==='v-today'){}
   if(vid==='v-circle'){renderHomeCoRegulation();renderCircleFriends();updateCircleComposerYield()}
   if(vid==='v-clinic'){stats();hours(true);renderClinicalReport()}
-  if(vid==='v-profile'){syncProWifiSwitchUI()}
+  if(vid==='v-profile'){syncProWifiSwitchUI();syncDevModeUI();}
   if(vid==='v-pubconfig'){syncProfileForm();renderSealsCarousel()}
+}
+function syncDevModeUI(){
+  const unlocked=Boolean(S&&S.devUnlocked);
+  if($('devFlameBar'))$('devFlameBar').hidden=!unlocked;
+  if($('devModeStatusLbl'))$('devModeStatusLbl').textContent=unlocked?'Activo · Wavy Pro y 6 soles desbloqueados':'Bloqueado';
+  if($('devModeUnlockBtn'))$('devModeUnlockBtn').textContent=unlocked?'Desactivar':'Activar';
+  if(unlocked && $('devModePassBox'))$('devModePassBox').hidden=true;
+}
+if($('devModeUnlockBtn')){
+  $('devModeUnlockBtn').onclick=()=>{
+    if(S&&S.devUnlocked){
+      S.devUnlocked=false;devFlameOverridePct=null;save();syncDevModeUI();
+      if(typeof flameView==='function')flameView();
+      toast('Modo desarrollador desactivado','ok');
+      return;
+    }
+    if($('devModePassBox')){$('devModePassBox').hidden=!$('devModePassBox').hidden;if(!$('devModePassBox').hidden && $('devModePassInput'))$('devModePassInput').focus();}
+  };
+}
+if($('devModePassSubmit')){
+  $('devModePassSubmit').onclick=()=>{
+    const val=($('devModePassInput')?$('devModePassInput').value:'').trim();
+    if(val==='milena01'){
+      S.devUnlocked=true;S.pro=true;
+      if($('devModePassInput'))$('devModePassInput').value='';
+      save();syncDevModeUI();
+      if(typeof flameView==='function')flameView();
+      toast('Modo desarrollador activado · Pro y 6 soles desbloqueados','ok');
+    }else{
+      toast('Contraseña incorrecta','er');
+    }
+  };
 }
 function toggleProfileView(){
   const p=$('v-profile');
@@ -5608,107 +5643,117 @@ function drawWavySplashSea(ts){
   const now=ts||performance.now();
   const t=now*0.001;
 
-  const ringProg=$('wavySplashRingProg');
-  const secEl=$('wavySplashSec');
-  let phaseP=0;
   if(wavySplashState.phase==='inhaling'){
     const el=Math.max(0,now-wavySplashState.phaseStartTs);
-    phaseP=Math.min(1,el/4000);
+    const phaseP=Math.min(1,el/4000);
     wavySplashState.swell=wavySplashState.fromSwell+(1-wavySplashState.fromSwell)*easeInOutSine(phaseP);
-    if(ringProg)ringProg.style.strokeDashoffset=(163.36*(1-phaseP)).toFixed(2);
-    if(secEl)secEl.textContent=Math.min(4,Math.max(1,Math.ceil(el/1000)))+'s';
   }else if(wavySplashState.phase==='exhaling'){
     const el=Math.max(0,now-wavySplashState.phaseStartTs);
     const dur=wavySplashState.exhaleDur||6000;
-    phaseP=Math.min(1,el/dur);
+    const phaseP=Math.min(1,el/dur);
     wavySplashState.swell=wavySplashState.fromSwell*(1-easeInOutSine(phaseP));
-    if(ringProg)ringProg.style.strokeDashoffset=(163.36*phaseP).toFixed(2);
-    if(secEl)secEl.textContent=Math.min(6,Math.max(1,Math.ceil((dur-el)/1000)))+'s';
   }else{
     wavySplashState.swell=0;
-    if(ringProg)ringProg.style.strokeDashoffset='163.36';
-    if(secEl)secEl.textContent='4s';
   }
   const sw=wavySplashState.swell;
+  wavySplashState.wetSwell=Math.max(sw,(wavySplashState.wetSwell||0)*0.992);
+  const wsw=wavySplashState.wetSwell;
 
-  /* 1. Fondo Blanco Pulcritud (#FFFFFF) puro */
+  /* 1. Fondo Blanco Pulcritud (#FFFFFF) */
   ctx.fillStyle='#FFFFFF';
   ctx.fillRect(0,0,w,h);
 
-  /* Helper para trazar ola orgánica 100% continua de izquierda a derecha (imposible formar puntas o cruces) */
-  const traceCoastWave=(yBase,amp,spd,ph)=>{
+  const cx=w*0.5,cy=h*0.5;
+  const maxR=Math.hypot(w,h)*0.64;
+
+  /* Helper para trazar ola orgánica cerrada suave alrededor del círculo central (0 puntas, 0 cruces) */
+  const traceOrganicWaveCircle=(radius,amp,ph)=>{
     const pts=[];
-    const steps=32;
-    for(let i=0;i<=steps;i++){
-      const s=i/steps;
-      const x=-24+s*(w+48);
-      const y=yBase+Math.sin(s*Math.PI*2.2+t*spd+ph)*amp+Math.cos(s*Math.PI*3.6-t*spd*0.7+ph)*amp*0.38;
-      pts.push([x,y]);
+    const steps=48;
+    for(let i=0;i<steps;i++){
+      const a=(i/steps)*Math.PI*2;
+      const wOff=Math.sin(a*3+t*1.2+ph)*amp+Math.cos(a*2-t*0.85+ph)*amp*0.5;
+      const r=Math.max(10,radius+wOff);
+      pts.push([cx+Math.cos(a)*r,cy+Math.sin(a)*r]);
     }
     return pts;
   };
-  const strokeCoastCurve=(pts)=>{
+  const pathClosedSmooth=(pts)=>{
+    const n=pts.length;
     ctx.beginPath();
-    ctx.moveTo(pts[0][0],pts[0][1]);
-    for(let i=1;i<pts.length-1;i++){
-      const mx=(pts[i][0]+pts[i+1][0])*0.5;
-      const my=(pts[i][1]+pts[i+1][1])*0.5;
+    const startX=(pts[n-1][0]+pts[0][0])*0.5;
+    const startY=(pts[n-1][1]+pts[0][1])*0.5;
+    ctx.moveTo(startX,startY);
+    for(let i=0;i<n;i++){
+      const next=pts[(i+1)%n];
+      const mx=(pts[i][0]+next[0])*0.5;
+      const my=(pts[i][1]+next[1])*0.5;
       ctx.quadraticCurveTo(pts[i][0],pts[i][1],mx,my);
     }
-    const last=pts[pts.length-1];
-    ctx.lineTo(last[0],last[1]);
+    ctx.closePath();
   };
 
-  /* 2. Tres capas translúcidas de costa en movimiento orgánico continuo */
-  const waterLayers=[
-    {yBase:h*(0.84-sw*0.64),amp:9+sw*7,spd:0.95,ph:0.3,col:'rgba(148,184,194,0.44)'},
-    {yBase:h*(0.88-sw*0.61),amp:11+sw*8,spd:1.18,ph:2.1,col:'rgba(88,136,150,0.58)'},
-    {yBase:h*(0.92-sw*0.56),amp:12+sw*8,spd:1.38,ph:4.0,col:'rgba(45,88,104,0.80)'}
-  ];
-  let crestPts=[];
-  waterLayers.forEach((L,idx)=>{
-    const pts=traceCoastWave(L.yBase,L.amp,L.spd,L.ph);
-    if(idx===0)crestPts=pts;
-    strokeCoastCurve(pts);
-    ctx.lineTo(w+28,h+28);
-    ctx.lineTo(-28,h+28);
-    ctx.closePath();
-    ctx.fillStyle=L.col;
+  /* 2. Huella de agua mojando el Blanco Pulcritud (efecto arena/papel húmedo) */
+  if(wsw>0.015){
+    const wetPts=traceOrganicWaveCircle(96+wsw*maxR*1.04,6+wsw*10,0.6);
+    pathClosedSmooth(wetPts);
+    ctx.fillStyle='rgba(222,235,238,0.45)';
     ctx.fill();
-  });
+  }
 
-  /* 3. Espuma de mar continua abarcando TODA la cresta de lado a lado */
-  if(crestPts.length>2){
+  /* 3. Una ola única orgánica que nace del círculo central y llena toda la pantalla al inhalar */
+  if(sw>0.01){
+    const waveR=92+sw*maxR;
+    const wavePts=traceOrganicWaveCircle(waveR,5+sw*11,0.0);
+    pathClosedSmooth(wavePts);
+    const wg=ctx.createRadialGradient(cx,cy,Math.max(20,waveR*0.25),cx,cy,Math.max(40,waveR*1.05));
+    wg.addColorStop(0,'rgba(72,118,132,0.72)');
+    wg.addColorStop(0.65,'rgba(112,158,170,0.52)');
+    wg.addColorStop(1,'rgba(164,198,206,0.34)');
+    ctx.fillStyle=wg;
+    ctx.fill();
+
+    /* Espuma de mar continua en toda la circunferencia de la ola */
     ctx.save();
-    ctx.lineCap='round';ctx.lineJoin='round';
-    /* Halo aguamarina suave para que la espuma destaque sobre Blanco Pulcritud */
-    strokeCoastCurve(crestPts);
-    ctx.strokeStyle='rgba(195,222,228,'+(0.55+0.35*sw).toFixed(3)+')';
-    ctx.lineWidth=18+sw*12;
+    pathClosedSmooth(wavePts);
+    ctx.strokeStyle='rgba(205,228,233,'+(0.52+0.35*sw).toFixed(3)+')';
+    ctx.lineWidth=14+sw*10;
     ctx.stroke();
 
-    /* Cresta blanca nítida de espuma de mar */
-    strokeCoastCurve(crestPts);
-    ctx.strokeStyle='rgba(255,255,255,0.96)';
-    ctx.lineWidth=7+sw*4;
+    pathClosedSmooth(wavePts);
+    ctx.strokeStyle='rgba(255,255,255,0.95)';
+    ctx.lineWidth=5.5+sw*3.5;
     ctx.stroke();
 
-    /* Burbujas y encaje de espuma subiendo a lo largo de toda la orilla */
-    const bubbleCount=56;
-    for(let b=0;b<bubbleCount;b++){
-      const idx=Math.floor((b/bubbleCount)*(crestPts.length-1));
-      const [cx0,cy0]=crestPts[idx];
+    /* Burbujas suaves de espuma en toda la cresta */
+    for(let b=0;b<36;b++){
+      const idx=Math.floor((b/36)*wavePts.length);
+      const [bx0,by0]=wavePts[idx];
       const life=((t*0.50+pebHash(b*3.7))%1);
       const fade=Math.sin(life*Math.PI);
-      const bx=cx0+(pebHash(b*8.1)-0.5)*26;
-      const by=cy0-(0.25+life*1.75)*(12+sw*24)+(pebHash(b*5.3)-0.5)*14;
-      const br=(2.0+pebHash(b*2.9)*4.6)*(0.65+0.7*sw);
-      ctx.globalAlpha=fade*(0.60+0.38*sw);
-      ctx.fillStyle=(b%3===0)?'rgba(220,238,242,0.95)':'#FFFFFF';
+      const ang=Math.atan2(by0-cy,bx0-cx);
+      const drift=(4+life*20)*(0.4+0.8*sw);
+      const bx=bx0+Math.cos(ang)*drift;
+      const by=by0+Math.sin(ang)*drift;
+      const br=(2.0+pebHash(b*2.9)*4.0)*(0.6+0.6*sw);
+      ctx.globalAlpha=fade*(0.50+0.42*sw);
+      ctx.fillStyle='#FFFFFF';
       ctx.beginPath();ctx.arc(bx,by,br,0,Math.PI*2);ctx.fill();
     }
     ctx.restore();
   }
+
+  /* 4. Círculo central estilo Costa (guía serena de Inhala / Exhala) */
+  const orbR=92+Math.sin(t*1.4)*2.5+sw*22;
+  const cg=ctx.createRadialGradient(cx,cy-orbR*0.2,10,cx,cy,orbR);
+  cg.addColorStop(0,'rgba(255,255,255,0.96)');
+  cg.addColorStop(0.68,'rgba(228,240,243,0.88)');
+  cg.addColorStop(1,'rgba(148,184,194,0.52)');
+  ctx.fillStyle=cg;
+  ctx.beginPath();ctx.arc(cx,cy,orbR,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='rgba(88,136,150,0.34)';
+  ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.arc(cx,cy,orbR,0,Math.PI*2);ctx.stroke();
 
   wavySplashRaf=requestAnimationFrame(drawWavySplashSea);
 }
@@ -10188,13 +10233,19 @@ function formatDiaryDate(dstr){
   if(!m)return String(dstr||'');
   return m[3]+' · '+m[2]+' · ’'+m[1].slice(-2);
 }
+let activeDiarySub='public';
+let activeDiaryTopic='Todos';
 function renderDiaryList(){
   const b=$('diaryList');if(!b)return;
-  const list=(S.notes||[]).filter(n=>n&&((n.blank===true)||(n.texto && String(n.texto).length>140)));
+  const all=(S.notes||[]).filter(n=>n&&((n.blank===true)||(n.texto && String(n.texto).length>140)));
+  const isPub=(activeDiarySub!=='private');
+  const list=all.filter(n=>isPub ? Boolean(n.public) : !n.public);
+  if($('diaryMineTitle'))$('diaryMineTitle').textContent=isPub?'Journal público':'Journal privado';
+  if($('shareProfileBtn'))$('shareProfileBtn').hidden=!isPub;
   const c=$('diaryCountLbl');if(c)c.textContent=list.length?list.length+(list.length===1?' escrito':' escritos'):'';
   b.innerHTML='';
   if(!list.length){
-    b.innerHTML='<p class="empty">Aún no hay escritos. Tu primera reflexión aparecerá aquí.</p>';
+    b.innerHTML='<p class="empty">'+(isPub?'Aún no hay ensayos en tu Journal público. Marca un escrito como público para compartirlo.':'Aún no hay escritos privados. Despliega la flecha superior para escribir.')+'</p>';
     return;
   }
   const myName=esc((S.me && S.me.name) || ('@'+(S.me && S.me.username || '')));
@@ -10254,7 +10305,7 @@ function formatPublicDate(dstr){
    como invitado. El alias viejo 'sebas' apunta al dueño. */
 const WAVY_SHOWCASE_AUTHORS={
   'absurdus.club':{
-    me:{username:'absurdus.club',name:'Círculo Absurdus · Wavy',av:'sol',bio:'Ensayos sobre atención, psique fragmentada, no-contacto y sentido en la era de la inmediatez.'},
+    me:{username:'absurdus.club',name:'Círculo Absurdus · Wavy',av:'sol',bio:'Ensayos largos sobre atención, psique fragmentada, no-contacto y sentido en la era de la inmediatez.'},
     notes:[
       {
         id:'ed-1',
@@ -10263,7 +10314,7 @@ const WAVY_SHOWCASE_AUTHORS={
         public:true,
         blank:true,
         estado:'Cuando todo es posible, nada se siente significativo',
-        texto:'Durante siglos, el valor de una conversación, de una obra o de una decisión estuvo protegido por la fricción del tiempo. Esperar una carta, caminar veinte minutos para ver a alguien o sostener el silencio de una tarde entera obligaba a la psique a digerir lo que sentía.\n\nHoy, la promesa técnica de la disponibilidad total ha borrado el proceso transformador. Si puedes generar cualquier imagen en tres segundos, reemplazar cualquier vínculo con un deslizamiento o anestesiar cualquier incomodidad abriendo otra pestaña, el deseo pierde su peso específico. Lo que no cuesta tiempo ni presencia tampoco deja huella en la memoria.\n\n## El espejismo de la eficiencia emocional\n\nNos convencimos de que ahorrar tiempo equivale a vivir mejor, pero la vida interior no funciona por productividad. Cuando eliminamos la espera, eliminamos también la maduración. Un hábito sano no nace de una epifanía instantánea; nace de volver al mismo punto incómodo sin huir hacia la pantalla.\n\nPor eso practicar cuatro segundos de inhalación y seis de exhalación antes de responder a un impulso es un acto contracultural: le devuelve al cuerpo el derecho a tardar.'
+        texto:'Durante siglos, el valor de una conversación, de una obra o de una decisión estuvo protegido por la fricción del tiempo. Esperar una carta durante semanas, caminar veinte minutos para ver a alguien sin saber exactamente qué diría o sostener el silencio de una tarde entera obligaba a la psique a digerir lo que sentía. La demora no era un defecto técnico del mundo antiguo: era el recipiente mismo donde las experiencias adquirían densidad, peso y memoria.\n\nHoy, la promesa de la disponibilidad total ha borrado el proceso transformador. Si puedes generar cualquier imagen en tres segundos, reemplazar cualquier vínculo incómodo con un deslizamiento o anestesiar cualquier duda abriendo otra pestaña, el deseo pierde su gravedad específica. Lo que no cuesta tiempo, incertidumbre ni presencia tampoco deja huella en quien lo atraviesa. Terminamos rodeados de estímulos infinitos pero extrañamente hambrientos de algo que sí importe.\n\n## El espejismo de la eficiencia emocional\n\nNos convencimos de que ahorrar tiempo equivale a vivir mejor, pero la vida interior no obedece a la lógica de la productividad industrial. Un árbol no crece más rápido porque le grites ni una pérdida duele menos porque la racionalices en un hilo de tres puntos. Cuando eliminamos la espera, eliminamos también la maduración.\n\nLa psicología moderna suele olvidar lo que filósofos como Kierkegaard o Simone Weil entendían con claridad: la atención verdadera es una forma rara de generosidad. No consiste en mirar algo durante dos segundos mientras piensas en tu siguiente respuesta; consiste en suspender tu prisa el tiempo suficiente para que la realidad del otro —o la tuya propia— pueda revelarse sin que intentes controlarla.\n\n## La anestesia de la pantalla siempre encendida\n\nCada vez que sientes una punzada mínima de aburrimiento, soledad o insuficiencia, el bolsillo ofrece una salida inmediata. Esa salida parece inofensiva porque dura apenas unos minutos, pero repetida treinta veces al día entrena al sistema nervioso para no tolerar ningún espacio vacío. Y sin espacio vacío no existe la introspección ni la creatividad genuina.\n\nUn hábito sano no nace de una epifanía instantánea ni de una aplicación que te felicita con fuegos artificiales vacíos; nace de volver al mismo punto incómodo sin huir hacia la pantalla. En ese sentido, detenerte cuatro segundos para inhalar y seis para soltar el aire antes de responder a un impulso es un acto silenciosamente subversivo: le devuelve al cuerpo el derecho a tardar.\n\n## Recuperar la fricción voluntaria\n\nElegir leer un ensayo completo de diez minutos sin saltar de pestaña, escribir tres párrafos honestos sin pensar en cuántos aplausos recibirán o sostener una caminata sin audífonos una vez a la semana son pequeñas restauraciones de la fricción. No te hacen más rápido ni más eficiente. Te devuelven la capacidad de sentir que lo que haces te pertenece de verdad.\n\nCuando vuelves a habitar el tiempo lento, descubres algo paradójico: necesitas mucho menos para sentirte pleno, porque por fin estás presente mientras ocurre lo poco que elegiste vivir.'
       },
       {
         id:'ed-2',
@@ -10272,12 +10323,12 @@ const WAVY_SHOWCASE_AUTHORS={
         public:true,
         blank:true,
         estado:'Tu culpa no te purifica (ni es una virtud)',
-        texto:'Existe una trampa silenciosa en la forma en que muchas personas cargan sus errores: confunden el castigo interno prolongado con una forma de nobleza moral. Creen que, si siguen sintiéndose mal el tiempo suficiente, de algún modo compensan lo que hicieron o lo que dejaron pasar.\n\nPero la culpa estancada no repara nada; al contrario, suele ser una coartada elegante para no cambiar. Mientras sigues mirándote en el espejo del remordimiento, el centro de atención sigues siendo tú, no la vida que quieres construir hacia adelante.\n\n## De la rumiación a la responsabilidad tranquila\n\nCarl Jung distinguía entre la sombra que nos domina en secreto y la integración consciente de lo que somos. Aceptar un límite o un error sin dramatizarlo permite algo mucho más difícil que sufrir: actuar distinto hoy.\n\nSoltar la culpa no es volverse indiferente. Es dejar de pagar dos veces por la misma deuda y usar esa energía para cuidar tu presente con claridad.'
+        texto:'Existe una trampa silenciosa en la forma en que muchas personas cargan sus errores: confunden el castigo interno prolongado con una forma de nobleza moral. Creen, casi sin formularlo en voz alta, que si siguen sintiéndose mal el tiempo suficiente, de algún modo compensan lo que hicieron, lo que dijeron o lo que dejaron pasar.\n\nPero la culpa estancada no repara nada; al contrario, suele funcionar como una coartada elegante para no cambiar. Mientras sigues mirándote en el espejo del remordimiento, el centro de gravedad sigues siendo tú —tu imagen herida, tu necesidad de absolución—, no la vida concreta que quieres construir hacia adelante ni el cuidado real hacia quienes te rodean.\n\n## La sombra y la ilusión de pureza\n\nCarl Jung observaba que todo lo que reprimimos por considerarlo indigno no desaparece: se hunde en la sombra y desde ahí gobierna nuestras reacciones bajo disfraces morales. Cuando alguien se flagela durante meses por un tropiezo pasado, muchas veces está intentando demostrar ante un tribunal invisible que en el fondo es una buena persona. Esa actuación consume la energía exacta que haría falta para pedir perdón con sencillez o modificar un hábito.\n\nJacques Lacan recordaba también que el sujeto moderno sufre más por las exigencias crueles de su propio ideal imposible que por la realidad misma. Queremos ser coherentes, serenos y lúcidos todo el tiempo, y al primer fallo nos declaramos culpables perpetuos. Esa severidad no es ética; es narcisismo invertido.\n\n## De la rumiación a la responsabilidad tranquila\n\nLa responsabilidad adulta tiene una textura completamente distinta a la culpa. Es sobria, breve y orientada al presente. Reconoce el hecho sin adornos, asume la consecuencia sin teatro y pregunta qué paso concreto sigue hoy. No necesita dramatizar el pasado para demostrar sensibilidad.\n\nSoltar la culpa tampoco equivale a volverse indiferente o cínico. Al contrario: solo quien deja de pagar dos veces por la misma deuda emocional tiene las manos libres para sostener su calma diaria, reparar lo reparable y caminar con ligereza. Tu paz no es una traición a tus errores pasados; es la única condición desde la cual puedes no repetirlos.'
       }
     ]
   },
   'valeria.sol':{
-    me:{username:'valeria.sol',name:'Valeria Mendoza',av:'alba',bio:'Ensayos breves sobre vínculos, no-contacto, cine lento y vida interior.'},
+    me:{username:'valeria.sol',name:'Valeria Mendoza',av:'alba',bio:'Ensayos sobre vínculos, no-contacto, cine lento y vida interior.'},
     notes:[
       {
         id:'val-1',
@@ -10286,12 +10337,12 @@ const WAVY_SHOWCASE_AUTHORS={
         public:true,
         blank:true,
         estado:'La intimidad de no volver a hablar (y elegir irse queriendo)',
-        texto:'La cultura romántica nos enseñó que el amor verdadero siempre insiste y que irse solo ocurre cuando el afecto se agota. Sin embargo, una de las experiencias más adultas —y más silenciosas— consiste en querer genuinamente a alguien y aun así elegir retirarse.\n\nNo todas las historias terminan por falta de cariño; muchas terminan por incompatibilidad de ritmo, por cuidado propio o porque permanecer significaría traicionarse poco a poco. El no-contacto, cuando no nace del rencor sino de la lucidez, tiene una forma extraña de respeto: proteger lo que fue bueno sin seguir desgastándolo en discusiones repetidas.\n\n## El duelo que no hace ruido\n\nAl principio, el impulso de revisar si escribió o de buscar una última explicación se siente como urgencia física. Si sostienes esos primeros minutos de vacío sin ceder al teléfono, descubres que el silencio también acompaña. Con el paso de las semanas, la persona en la que no podías dejar de pensar se convierte en una lección silenciosa sobre tu propio valor.'
+        texto:'La cultura romántica nos enseñó que el amor verdadero siempre insiste y que marcharse solo ocurre cuando el afecto se agota o cuando alguien comete una traición imperdonable. Sin embargo, una de las experiencias más adultas —y más silenciosas— consiste en querer genuinamente a alguien y aun así elegir retirarse.\n\nNo todas las historias terminan por falta de cariño; muchas terminan por incompatibilidad de ritmo, por agotamiento emocional o porque permanecer significaría ir traicionando poco a poco tu propia paz. En esos casos, el no-contacto no nace del rencor ni del orgullo herido: nace de una lucidez serena que prefiere proteger lo que fue bueno antes de verlo pudrirse en discusiones repetidas.\n\n## ¿Por qué la gente actúa como si tuviera todo el mañana?\n\nA menudo damos por sentado que las personas que nos importan seguirán disponibles indefinidamente mientras resolvemos nuestras dudas o postergamos nuestras decisiones. Actuamos como si siempre hubiera otra tarde para pedir disculpas, otra llamada pendiente para decir lo que realmente sentíamos. Hasta que un día el silencio se vuelve definitivo y revela todo lo que dejamos en borrador.\n\nEse silencio posterior tiene una intimidad extraña. Ya no hay mensajes cotidianos ni pequeñas actualizaciones sobre el día, pero persiste una conversación muda hecha de recuerdos y aprendizajes. Aprender a no romper ese silencio por mera ansiedad nocturna es una de las pruebas más honestas de autorrespeto.\n\n## La persona en la que no dejas de pensar\n\nCuando alguien ocupa tu mente durante semanas después de haberse ido, rara vez se trata únicamente de esa persona: casi siempre es una lección suspendida sobre tu propio valor. Te preguntas qué parte de ti se quedó esperando validación afuera, qué límite no supiste nombrar a tiempo o qué herida antigua se reabrió con su ausencia.\n\nSi sostienes esos primeros minutos de urgencia sin ceder al impulso de escribir o revisar sus redes, descubres que la marea baja sola. Y cuando baja, queda una claridad tranquila: puedes desearle bien a alguien desde lejos y, al mismo tiempo, elegir no volver a entrar donde ya no cabes entero.'
       }
     ]
   },
   'mateo.mar':{
-    me:{username:'mateo.mar',name:'Mateo Ríos',av:'litografia',bio:'Lecturas existenciales, hábitos invisibles y filosofía cotidiana.'},
+    me:{username:'mateo.mar',name:'Mateo Ríos',av:'litografia',bio:'Lecturas existenciales, hábitos invisibles y cine contemplativo.'},
     notes:[
       {
         id:'mat-1',
@@ -10300,17 +10351,29 @@ const WAVY_SHOWCASE_AUTHORS={
         public:true,
         blank:true,
         estado:'Lo que te vuelves, dejas de notarlo',
-        texto:'Los cambios más profundos casi nunca llegan con una alarma. Ocurren por repetición diminuta, hasta que un día descubres que aquello que antes te sorprendía —la ansiedad al despertar, el cinismo ante una buena noticia, el impulso automático de mirar el reloj o el móvil— se volvió tu paisaje normal.\n\nLo que te vuelves, dejas de notarlo. Ese es tanto el riesgo de los hábitos que nos apagan como la promesa de los hábitos que nos devuelven la calma. Al principio, respirar consciente o escribir tres párrafos honestos se siente artificial. Semanas después, simplemente eres alguien que sabe volver a su centro.\n\n## Perdonar el pasado para habitar el presente\n\nEscribir en un espacio sin ruido externo —sin métricas públicas ni algoritmos buscando indignación— obliga a mirarse sin personaje. Como en las películas lentas donde una escena dura un minuto entero sin música, la verdad aparece cuando nadie te apura a pasar a lo siguiente.'
+        texto:'Los cambios más profundos casi nunca llegan anunciados por una crisis espectacular. Ocurren por repetición diminuta, día tras día, hasta que una mañana descubres que aquello que antes te sorprendía —la tensión en los hombros al despertar, el cinismo automático ante una buena noticia, el reflejo inmediato de mirar el teléfono cada tres minutos— se convirtió en tu paisaje normal.\n\nLo que te vuelves, dejas de notarlo. Ese fenómeno explica por qué tantas personas viven agotadas sin saber exactamente en qué momento perdieron su ligereza. Cuando un hábito se vuelve invisible, deja de parecer una elección y empieza a sentirse como tu personalidad definitiva.\n\n## El cine lento y la recuperación de la mirada\n\nPiensa en esas películas de Bergman, Ozu o Tarkovsky donde la cámara permanece fija durante cuarenta segundos después de que los personajes salen de la habitación. Al principio, el espectador acostumbrado al montaje frenético siente impaciencia. Luego, algo en la respiración se afloja y empiezas a ver la luz cambiando en la ventana, el polvo suspendido, la verdad emocional que no cabía en ningún diálogo.\n\nConstruir un hábito contemplativo funciona igual. Al principio, sentarte a respirar cuatro segundos y exhalar seis o abrir una hoja en blanco para escribir sin filtros se siente extraño, casi artificial. Semanas después, no te das cuenta en qué momento exacto dejaste de reaccionar con rabia o prisa ante los mismos tropiezos de siempre.\n\n## Habitar lo que ya estás construyendo\n\nPor eso importa cuidar el ambiente donde piensas y escribes. Un espacio editorial sin algoritmos de indignación ni contadores públicos de popularidad te permite volver a notar cómo estás por dentro antes de que el ruido externo decida por ti. Cada pequeño regreso a tu centro cambia lentamente aquello en lo que te conviertes.'
       }
     ]
   }
 };
+function toggleFollowAuthor(uname){
+  if(!S.followingAuthors)S.followingAuthors=[];
+  const idx=S.followingAuthors.indexOf(uname);
+  if(idx>=0)S.followingAuthors.splice(idx,1);
+  else S.followingAuthors.push(uname);
+  save(false);
+}
 function renderDiaryShowcase(){
   const box=$('diaryShowcaseList');if(!box)return;
+  const followed=new Set(S.followingAuthors||[]);
   const items=[];
   Object.values(WAVY_SHOWCASE_AUTHORS).forEach(st=>{
-    (st.notes||[]).forEach(n=>items.push({me:st.me,n}));
+    (st.notes||[]).forEach(n=>{
+      const score=(followed.has(st.me.username)?2:0)+(n.tema==='Atención e Inmediatez'?1:0);
+      items.push({me:st.me,n,score});
+    });
   });
+  items.sort((a,b)=>b.score-a.score);
   box.innerHTML='';
   items.forEach(({me,n})=>{
     const card=document.createElement('article');
@@ -10332,18 +10395,65 @@ function renderDiaryShowcase(){
     box.appendChild(card);
   });
 }
+function renderDiaryTopics(){
+  const chips=$('diaryTopicChips'),list=$('diaryTopicsList');
+  if(!chips||!list)return;
+  const temas=['Todos','Atención e Inmediatez','Culpa y Psique','Vínculos y No-Contacto','Memoria y Hábito'];
+  chips.innerHTML='';
+  temas.forEach(t=>{
+    const b=document.createElement('button');
+    b.type='button';
+    b.className='chip'+(activeDiaryTopic===t?' on':'');
+    b.style.cssText='min-height:28px;padding:3px 10px;font-size:11px';
+    b.textContent=t;
+    b.onclick=()=>{activeDiaryTopic=t;renderDiaryTopics();};
+    chips.appendChild(b);
+  });
+  const followed=new Set(S.followingAuthors||[]);
+  list.innerHTML='';
+  Object.values(WAVY_SHOWCASE_AUTHORS).forEach(st=>{
+    const matching=(st.notes||[]).filter(n=>activeDiaryTopic==='Todos'||n.tema===activeDiaryTopic);
+    if(!matching.length)return;
+    const isF=followed.has(st.me.username);
+    const row=document.createElement('div');
+    row.className='med-card';
+    row.innerHTML=
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px">'+
+        '<div style="display:flex;align-items:center;gap:9px;min-width:0">'+
+          '<div class="med-av">'+getAv(st.me.av)+'</div>'+
+          '<div style="min-width:0"><strong style="font-family:var(--serif);font-size:16px;display:block">'+esc(st.me.name)+'</strong><small style="font-size:11.5px;color:var(--muted)">@'+esc(st.me.username)+'</small></div>'+
+        '</div>'+
+        '<button type="button" class="chip'+(isF?' on':'')+'" data-follow="'+esc(st.me.username)+'" style="min-height:28px;padding:4px 12px;font-size:11px;flex-shrink:0">'+(isF?'Siguiendo':'Seguir')+'</button>'+
+      '</div>'+
+      '<p style="font-size:12.5px;color:var(--muted);margin:0 0 8px;line-height:1.45">'+esc(st.me.bio)+'</p>'+
+      '<div style="font-family:var(--serif);font-size:14.5px;color:var(--ink)">Último ensayo: <i>'+esc(matching[0].estado)+'</i></div>';
+    row.querySelector('[data-follow]').onclick=e=>{
+      e.stopPropagation();
+      toggleFollowAuthor(st.me.username);
+      renderDiaryTopics();
+      toast(followed.has(st.me.username)?'Dejaste de seguir a '+st.me.name:'Ahora sigues a '+st.me.name,'ok');
+    };
+    row.onclick=()=>{location.hash='#/'+encodeURIComponent(st.me.username)+'/'+encodeURIComponent(matching[0].id);};
+    list.appendChild(row);
+  });
+}
 if($('diarySubTabs')){
   $('diarySubTabs').addEventListener('click',e=>{
     const b=e.target.closest('[data-dsub]');if(!b)return;
     const sub=b.dataset.dsub;
+    activeDiarySub=sub;
     document.querySelectorAll('#diarySubTabs [data-dsub]').forEach(x=>{
       const on=(x===b);
       x.classList.toggle('on',on);
       x.setAttribute('aria-selected',on?'true':'false');
     });
-    if($('diaryMineWrap'))$('diaryMineWrap').hidden=(sub!=='mine');
+    const isMine=(sub==='public'||sub==='private');
+    if($('diaryMineWrap'))$('diaryMineWrap').hidden=!isMine;
     if($('diaryShowcaseWrap'))$('diaryShowcaseWrap').hidden=(sub!=='showcase');
+    if($('diaryTopicsWrap'))$('diaryTopicsWrap').hidden=(sub!=='topics');
+    if(isMine)renderDiaryList();
     if(sub==='showcase')renderDiaryShowcase();
+    if(sub==='topics')renderDiaryTopics();
   });
 }
 function publicUserState(username){
@@ -11110,6 +11220,17 @@ function drawLivingFlame(ts){
         else ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);
       }
       ctx.closePath();ctx.fill();
+      if(fiesta>0.05){
+        ctx.save();ctx.globalAlpha=sunVis*0.86*fiesta;ctx.fillStyle='#FFF3B8';
+        ctx.beginPath();
+        for(let i=0;i<24;i++){
+          const a=(i*Math.PI*2)/24+t*0.18;
+          const rr=(i%2===0)?baseR*0.52:baseR*0.24;
+          if(i===0)ctx.moveTo(Math.cos(a)*rr,Math.sin(a)*rr);
+          else ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr);
+        }
+        ctx.closePath();ctx.fill();ctx.restore();
+      }
 
     }else if(shape==='lithograph_sun'){
       /* HOMBRE 3 · Litografía (SIN circunferencias que choquen: 5%→50% 136 agujas + onda azafrán; 50%→100% 68 agujas doradas extra-largas, tramas radiales exteriores y lluvia de tinta) */
@@ -11236,6 +11357,17 @@ function drawLivingFlame(ts){
       ctx.globalAlpha=0.28;ctx.fillStyle=pal.disc2;
       ctx.beginPath();ctx.arc(baseR*0.14,baseR*0.18,baseR*0.52,0,Math.PI*2);ctx.fill();
       ctx.restore();
+      if(fiesta>0.05){
+        ctx.save();ctx.strokeStyle='#FFF2C2';ctx.lineCap='round';ctx.globalAlpha=sunVis*0.85*fiesta;
+        for(let k=0;k<16;k++){
+          const a=(k*Math.PI*2)/16;
+          const rIn=baseR*0.14;
+          const rOut=(k%2===0)?baseR*0.56:baseR*0.36;
+          ctx.lineWidth=Math.max(1.2,baseR*0.022);
+          ctx.beginPath();ctx.moveTo(Math.cos(a)*rIn,Math.sin(a)*rIn);ctx.lineTo(Math.cos(a)*rOut,Math.sin(a)*rOut);ctx.stroke();
+        }
+        ctx.restore();
+      }
 
     }else if(shape==='alba_starburst'){
       /* MUJER 1 · Alba (5%→50% 36 agujas + polvo dorado; 50%→100% 12 ejes estelares largos + 36 agujas champán + estelas radiales y destellos de 4 puntas) */
@@ -11365,15 +11497,23 @@ function drawLivingFlame(ts){
           ctx.restore();
         }
       }
-      ctx.fillStyle=pal.disc;
-      ctx.beginPath();ctx.arc(0,0,baseR*0.34,0,Math.PI*2);ctx.fill();
-      const centerDots=Math.round(42+32*u2);
-      for(let d=0;d<centerDots;d++){
-        const da=pebHash(d*6.1)*Math.PI*2;
-        const dr=baseR*(0.16+pebHash(d*3.7)*0.32);
-        const dotR=baseR*(0.018+pebHash(d*9.3)*0.026);
-        ctx.fillStyle=d%2===0?pal.disc:pal.disc2;
-        ctx.beginPath();ctx.arc(Math.cos(da)*dr,Math.sin(da)*dr,dotR,0,Math.PI*2);ctx.fill();
+      /* Centro limpio y luminoso en oro champán (cero puntos-bacteria) + estrella interior al 100% */
+      const ag=ctx.createRadialGradient(0,0,baseR*0.04,0,0,baseR*0.38);
+      ag.addColorStop(0,'#FFF6E2');
+      ag.addColorStop(0.65,pal.disc);
+      ag.addColorStop(1,pal.disc2);
+      ctx.fillStyle=ag;
+      ctx.beginPath();ctx.arc(0,0,baseR*0.36,0,Math.PI*2);ctx.fill();
+      if(fiesta>0.05){
+        ctx.save();ctx.globalAlpha=sunVis*0.92*fiesta;ctx.fillStyle='#FFF9EC';
+        ctx.beginPath();
+        for(let i=0;i<16;i++){
+          const a=(i*Math.PI*2)/16-t*0.15;
+          const rr=(i%2===0)?baseR*0.30:baseR*0.10;
+          if(i===0)ctx.moveTo(Math.cos(a)*rr,Math.sin(a)*rr);
+          else ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr);
+        }
+        ctx.closePath();ctx.fill();ctx.restore();
       }
 
     }else if(shape==='ochre_sketch'){
@@ -11531,6 +11671,16 @@ function drawLivingFlame(ts){
         else ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);
       }
       ctx.closePath();ctx.fill();
+      if(fiesta>0.05){
+        ctx.save();ctx.strokeStyle='#FFF2C8';ctx.lineCap='round';ctx.globalAlpha=sunVis*0.86*fiesta;
+        for(let i=0;i<16;i++){
+          const a=(i*Math.PI*2)/16;
+          const rOut=(i%2===0)?baseR*0.48:baseR*0.30;
+          ctx.lineWidth=Math.max(1.4,baseR*0.024);
+          ctx.beginPath();ctx.moveTo(Math.cos(a)*baseR*0.12,Math.sin(a)*baseR*0.12);ctx.lineTo(Math.cos(a)*rOut,Math.sin(a)*rOut);ctx.stroke();
+        }
+        ctx.restore();
+      }
 
     }else{
       /* MUJER 3 · Áurea (5%→50% doble corona ondulada coral + gotas; 50%→100% tercera corona amplia melocotón-crema y lenguas/lágrimas de gouache flotantes) */
@@ -11685,6 +11835,17 @@ function drawLivingFlame(ts){
         else ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);
       }
       ctx.closePath();ctx.fill();
+      if(fiesta>0.05){
+        ctx.save();ctx.globalAlpha=sunVis*0.78*fiesta;ctx.fillStyle='#FFF2E4';
+        ctx.beginPath();
+        for(let i=0;i<20;i++){
+          const a=(i*Math.PI*2)/20+t*0.14;
+          const rr=(i%2===0)?baseR*0.48:baseR*0.24;
+          if(i===0)ctx.moveTo(Math.cos(a)*rr,Math.sin(a)*rr);
+          else ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr);
+        }
+        ctx.closePath();ctx.fill();ctx.restore();
+      }
     }
 
     ctx.restore();
