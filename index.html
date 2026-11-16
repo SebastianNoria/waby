@@ -2127,9 +2127,10 @@ summary::-webkit-details-marker{display:none}
 }
 #wavySplashBreathPhase{
   position:absolute;inset:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
   opacity:0;pointer-events:none;transition:opacity .65s ease;
-  cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;
+  cursor:pointer;user-select:none;-webkit-user-select:none;
+  touch-action:none;-webkit-tap-highlight-color:transparent;
 }
 #wavySplashBreathPhase.is-active{opacity:1;pointer-events:auto}
 #wavySplashSea{
@@ -2137,16 +2138,18 @@ summary::-webkit-details-marker{display:none}
 }
 #wavySplashBreathLabel{
   position:relative;z-index:2;
-  margin-top:16vh;
-  font-family:var(--serif);font-size:36px;font-weight:500;letter-spacing:-.01em;color:var(--ink);
-  transition:opacity .38s ease,transform .38s ease;
+  margin-top:0;
+  font-family:var(--serif);font-size:34px;font-weight:500;letter-spacing:-.01em;color:var(--ink);
+  text-shadow:0 2px 18px rgba(250,247,242,0.85);
+  transition:opacity .35s ease,transform .35s ease;
   text-align:center;padding:0 24px;
 }
 #wavySplashCycleHint{
   position:relative;z-index:2;
   margin-top:10px;
-  font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
-  transition:opacity .38s ease;text-align:center;padding:0 24px;
+  font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink);opacity:.68;
+  text-shadow:0 1px 12px rgba(250,247,242,0.85);
+  transition:opacity .35s ease;text-align:center;padding:0 24px;
 }
 #wavySplashSkipBtn{
   position:absolute;top:max(18px,env(safe-area-inset-top));right:20px;z-index:3;
@@ -3425,8 +3428,8 @@ summary::-webkit-details-marker{display:none}
   <div id="wavySplashBreathPhase">
     <canvas id="wavySplashSea" aria-hidden="true"></canvas>
     <button type="button" id="wavySplashSkipBtn" aria-label="Omitir respiración">Omitir →</button>
-    <div id="wavySplashBreathLabel">Toca para inhalar</div>
-    <div id="wavySplashCycleHint">1 de 2 · Toca la pantalla</div>
+    <div id="wavySplashBreathLabel">Mantén para inhalar</div>
+    <div id="wavySplashCycleHint">1 de 2 · Mantén presionada la pantalla</div>
   </div>
 </div>
 
@@ -5525,7 +5528,7 @@ function claimAlias(alias,name){
 
 let wavySplashTimers=[];
 let wavySplashRaf=0;
-let wavySplashState={active:false,cycle:1,phase:'wait',swell:0,targetSwell:0};
+let wavySplashState={active:false,cycle:1,phase:'wait',swell:0,wetSwell:0,targetSwell:0,holdAt:0,foamDots:[]};
 function clearWavySplashTimers(){
   wavySplashTimers.forEach(id=>clearTimeout(id));
   wavySplashTimers=[];
@@ -5547,51 +5550,107 @@ function drawWavySplashSea(ts){
   const ctx=cv.getContext('2d');
   ctx.setTransform(dpr,0,0,dpr,0,0);
   const t=(ts||0)*0.001;
-  /* Suavizado orgánico de la marea */
-  const rate=(wavySplashState.phase==='inhale')?0.024:(wavySplashState.phase==='exhale'?0.020:0.04);
-  wavySplashState.swell+=(wavySplashState.targetSwell-wavySplashState.swell)*rate;
-  const sw=wavySplashState.swell;
 
-  ctx.clearRect(0,0,w,h);
-  /* Cielo papel cálido hacia bruma marina tenue */
-  const sky=ctx.createLinearGradient(0,0,0,h);
-  sky.addColorStop(0,'#FAF7F2');
-  sky.addColorStop(0.55,'#F2EFE9');
-  sky.addColorStop(1,'#DFE7E8');
-  ctx.fillStyle=sky;
+  const rate=(wavySplashState.phase==='inhaling')?0.026:(wavySplashState.phase==='exhaling'?0.020:0.045);
+  wavySplashState.swell+=(wavySplashState.targetSwell-wavySplashState.swell)*rate;
+  /* Arena húmeda retrocede más lento que la ola al exhalar */
+  wavySplashState.wetSwell=Math.max(wavySplashState.swell,wavySplashState.wetSwell*0.992);
+  const sw=wavySplashState.swell;
+  const wsw=wavySplashState.wetSwell;
+
+  /* 1. Arena cálida vista desde arriba */
+  const sand=ctx.createLinearGradient(0,0,w,h);
+  sand.addColorStop(0,'#FAF7F2');
+  sand.addColorStop(0.55,'#F3ECE0');
+  sand.addColorStop(1,'#E8DEC9');
+  ctx.fillStyle=sand;
   ctx.fillRect(0,0,w,h);
 
-  /* 3 capas de olas estilo Costa Wavy (acuarela marina translúcida) */
-  const layers=[
-    {yFrac:0.63-sw*0.23,amp:10+sw*9,spd:0.55,ph:0.4,col:'rgba(148,177,186,0.42)'},
-    {yFrac:0.68-sw*0.21,amp:13+sw*11,spd:0.78,ph:2.1,col:'rgba(96,136,149,0.56)'},
-    {yFrac:0.74-sw*0.18,amp:15+sw*12,spd:1.05,ph:4.2,col:'rgba(55,94,109,0.78)'}
-  ];
-  layers.forEach((L,idx)=>{
-    const baseY=h*L.yFrac;
-    ctx.beginPath();
-    ctx.moveTo(0,h);
-    ctx.lineTo(0,baseY);
-    for(let x=0;x<=w+16;x+=12){
-      const y=baseY+Math.sin(x*0.011+t*L.spd+L.ph)*L.amp+Math.cos(x*0.006-t*L.spd*0.6+idx)*L.amp*0.45;
-      ctx.lineTo(x,y);
+  /* Helper para trazar el frente diagonal orgánico de la orilla (desde esquina inferior derecha hacia arriba-izquierda) */
+  const traceShoreLine=(progress,extraOffset,ampBoost)=>{
+    const reach=0.14+progress*0.76+extraOffset;
+    const pts=[];
+    const steps=28;
+    for(let i=0;i<=steps;i++){
+      const s=i/steps;
+      const bx=w*(1.08-reach*1.12)+s*(w*0.56)-w*0.28;
+      const by=h*(1.06-reach*0.95)+(1-s)*(h*0.42)-h*0.21;
+      const wave=Math.sin(s*Math.PI*3.2+t*1.15+extraOffset*8)*(10+ampBoost)+Math.cos(s*Math.PI*5.5-t*0.85)*(5+ampBoost*0.5);
+      const nx=-0.64,ny=-0.76;
+      pts.push([bx+nx*wave,by+ny*wave]);
     }
-    ctx.lineTo(w,h);
+    return pts;
+  };
+
+  /* 2. Huella de arena húmeda */
+  if(wsw>0.02){
+    const wetPts=traceShoreLine(wsw,0.04,4);
+    ctx.beginPath();
+    ctx.moveTo(w+40,h+40);
+    ctx.lineTo(-40,h+40);
+    wetPts.forEach(([px,py])=>ctx.lineTo(px,py));
+    ctx.lineTo(w+40,-40);
+    ctx.closePath();
+    ctx.fillStyle='rgba(207,194,174,0.34)';
+    ctx.fill();
+  }
+
+  /* 3. Capas translúcidas de agua marina entrando en diagonal */
+  const waterLayers=[
+    {off:0.012,amp:8+sw*6,col:'rgba(154,186,192,0.44)'},
+    {off:-0.035,amp:6+sw*5,col:'rgba(96,142,154,0.58)'},
+    {off:-0.11,amp:5+sw*4,col:'rgba(54,96,112,0.74)'}
+  ];
+  let crestPts=[];
+  waterLayers.forEach((L,idx)=>{
+    const pts=traceShoreLine(sw,L.off,L.amp);
+    if(idx===0)crestPts=pts;
+    ctx.beginPath();
+    ctx.moveTo(w+40,h+40);
+    ctx.lineTo(-40,h+40);
+    pts.forEach(([px,py])=>ctx.lineTo(px,py));
+    ctx.lineTo(w+40,-40);
     ctx.closePath();
     ctx.fillStyle=L.col;
     ctx.fill();
   });
 
-  /* Luciérnagas/brisa dorada sutil al inhalar */
-  if(sw>0.08){
-    for(let i=0;i<14;i++){
-      const fx=((i*73+t*14)%w);
-      const fy=h*(0.58-sw*0.24)-((i*29+t*18*sw)%(h*0.22));
-      const a=(0.15+0.35*Math.sin(t*1.8+i))*sw;
-      ctx.fillStyle='rgba(224,188,128,'+Math.max(0,a).toFixed(3)+')';
-      ctx.beginPath();ctx.arc(fx,fy,1.5+(i%2)*0.9,0,Math.PI*2);ctx.fill();
+  /* 4. Espuma de mar visible y orgánica apareciendo y subiendo sobre la cresta */
+  if(crestPts.length>1){
+    ctx.save();
+    ctx.lineCap='round';ctx.lineJoin='round';
+    /* Banda espumosa suave detrás del borde */
+    ctx.beginPath();
+    crestPts.forEach(([px,py],i)=>{if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);});
+    ctx.strokeStyle='rgba(255,253,249,'+(0.38+0.32*sw).toFixed(3)+')';
+    ctx.lineWidth=14+sw*12;
+    ctx.stroke();
+
+    /* Borde principal nítido de espuma marfil */
+    ctx.beginPath();
+    crestPts.forEach(([px,py],i)=>{if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);});
+    ctx.strokeStyle='rgba(255,253,248,'+(0.72+0.26*sw).toFixed(3)+')';
+    ctx.lineWidth=5.5+sw*3.5;
+    ctx.stroke();
+
+    /* Encaje y burbujas de espuma subiendo y disolviéndose a lo largo de la orilla */
+    const bubbleCount=34;
+    for(let b=0;b<bubbleCount;b++){
+      const idx=Math.floor((b/bubbleCount)*(crestPts.length-1));
+      const [cx0,cy0]=crestPts[idx];
+      const life=((t*0.48+pebHash(b*3.7))%1);
+      const fade=Math.sin(life*Math.PI);
+      const drift=(0.5+life*1.8)*(10+sw*22);
+      const bx=cx0-drift*0.64+(pebHash(b*8.1)-0.5)*26;
+      const by=cy0-drift*0.76+(pebHash(b*5.3)-0.5)*26;
+      const br=(2.2+pebHash(b*2.9)*4.8)*(0.6+0.7*sw);
+      ctx.globalAlpha=fade*(0.45+0.48*sw);
+      ctx.fillStyle='#FFFDF9';
+      ctx.beginPath();ctx.arc(bx,by,br,0,Math.PI*2);ctx.fill();
     }
+    ctx.restore();
   }
+
   wavySplashRaf=requestAnimationFrame(drawWavySplashSea);
 }
 function finishWavySplashToLogin(){
@@ -5629,12 +5688,12 @@ function runWavyWelcomeSplash(){
   ov.hidden=false;
   logo.classList.remove('is-hidden');
   breath.classList.remove('is-active');
-  wavySplashState={active:false,cycle:1,phase:'wait',swell:0,targetSwell:0};
-  lbl.textContent='Toca para inhalar';
-  hint.textContent='1 de 2 · Toca la pantalla';
+  wavySplashState={active:false,cycle:1,phase:'wait',swell:0,wetSwell:0,targetSwell:0,holdAt:0,foamDots:[]};
+  lbl.textContent='Mantén para inhalar';
+  hint.textContent='1 de 2 · Mantén presionada la pantalla';
   if($('onboardingModal'))$('onboardingModal').hidden=true;
 
-  /* Fase 1 (0–1.85s): Logo Wavy animado → Fase 2: Costa Wavy interactiva (2 ciclos tocando para inhalar) */
+  /* Fase 1 (0–1.85s): Logo Wavy animado → Fase 2: Orilla vista desde arriba (mantener dedo para inhalar, 2 ciclos) */
   wavySplashTimers.push(setTimeout(()=>{
     logo.classList.add('is-hidden');
     breath.classList.add('is-active');
@@ -5642,34 +5701,59 @@ function runWavyWelcomeSplash(){
     wavySplashRaf=requestAnimationFrame(drawWavySplashSea);
   },1850));
 
-  breath.onclick=(e)=>{
+  let inhaleCueTimer=0;
+  const startHold=(e)=>{
     if(e.target && e.target.closest && e.target.closest('#wavySplashSkipBtn'))return;
     if(wavySplashState.phase!=='wait')return;
+    if(e.preventDefault)e.preventDefault();
     const cy=wavySplashState.cycle;
-    wavySplashState.phase='inhale';
+    wavySplashState.phase='inhaling';
     wavySplashState.targetSwell=1;
+    wavySplashState.holdAt=Date.now();
     lbl.textContent='Inhala';
-    hint.textContent=cy+' de 2 · La marea sube contigo';
+    hint.textContent=cy+' de 2 · Mantén mientras sube la ola';
+    clearTimeout(inhaleCueTimer);
+    inhaleCueTimer=setTimeout(()=>{
+      if(wavySplashState.phase==='inhaling'){
+        lbl.textContent='Suelta para exhalar';
+        hint.textContent=cy+' de 2 · Suelta suavemente';
+      }
+    },3400);
+  };
+
+  const endHold=()=>{
+    if(wavySplashState.phase!=='inhaling')return;
+    clearTimeout(inhaleCueTimer);
+    const heldMs=Date.now()-(wavySplashState.holdAt||0);
+    const cy=wavySplashState.cycle;
+    if(heldMs<900){
+      wavySplashState.phase='wait';
+      wavySplashState.targetSwell=0;
+      lbl.textContent='Mantén para inhalar';
+      hint.textContent=cy+' de 2 · Mantén un poco más mientras inhalas';
+      return;
+    }
+    wavySplashState.phase='exhaling';
+    wavySplashState.targetSwell=0;
+    lbl.textContent='Exhala';
+    hint.textContent=cy+' de 2 · La espuma se retira en calma';
 
     wavySplashTimers.push(setTimeout(()=>{
-      wavySplashState.phase='exhale';
-      wavySplashState.targetSwell=0;
-      lbl.textContent='Exhala';
-      hint.textContent=cy+' de 2 · Suelta con calma';
-
-      wavySplashTimers.push(setTimeout(()=>{
-        if(cy<2){
-          wavySplashState.cycle=2;
-          wavySplashState.phase='wait';
-          lbl.textContent='Toca para inhalar';
-          hint.textContent='2 de 2 · Toca la pantalla';
-        }else{
-          wavySplashState.phase='done';
-          finishWavySplashToLogin();
-        }
-      },4200));
-    },3800));
+      if(cy<2){
+        wavySplashState.cycle=2;
+        wavySplashState.phase='wait';
+        lbl.textContent='Mantén para inhalar';
+        hint.textContent='2 de 2 · Mantén presionada la pantalla';
+      }else{
+        wavySplashState.phase='done';
+        finishWavySplashToLogin();
+      }
+    },4000));
   };
+
+  breath.onpointerdown=startHold;
+  breath.onpointerup=endHold;
+  breath.onpointercancel=endHold;
 }
 if($('wavySplashSkipBtn')){
   $('wavySplashSkipBtn').onclick=(e)=>{e.stopPropagation();finishWavySplashToLogin();};
@@ -10566,12 +10650,14 @@ function drawLivingFlame(ts){
     ctx.rotate(rot);
     ctx.globalAlpha=sunVis;
 
-    /* Mitad 1 (5%→50%): la evolución previa completa su clímax en 50%; Mitad 2 (50%→100%): segundo salto evolutivo sin circunferencias que choquen */
-    const u1=Math.min(1,u/0.4737);
-    const u2=Math.max(0,(u-0.4737)/0.5263);
+    /* 5%→40%: u1 (0→1); 40%→75%: u2 (0→1, logrando en 75% el clímax previo); 75%→100%: u3 (0→1, último cuarto armónico) */
+    const u1=Math.min(1,u/0.3684);
+    const u2=Math.max(0,Math.min(1,(u-0.3684)/0.3684));
+    const u3=Math.max(0,(u-0.7368)/0.2632);
     const ebu=Math.max(0,Math.min(1,(u1-0.15)/0.85));
     const ecstasy=Math.max(0,(u1-0.72)/0.28);
     const ecstasy2=Math.max(0,(u2-0.65)/0.35);
+    const ecstasy3=Math.max(0,(u3-0.55)/0.45);
 
     if(shape==='flat_vermilion'){
       /* HOMBRE 1 · Sol Rojo Plano (gouache mate: 5%→50% dagas/lenguas + cuñas; 50%→100% facetas limón en pliegues, puntas secundarias y lluvia de cuñas) */
@@ -10638,13 +10724,23 @@ function drawLivingFlame(ts){
           ctx.bezierCurveTo(baseR*1.05,w1-bW*0.55,rLen*0.72,w2-bW*0.3,rLen,w2*0.25);
           ctx.bezierCurveTo(rLen*0.72,w2+bW*0.3,baseR*1.05,w1+bW*0.55,baseR*0.72,bW);
           ctx.closePath();ctx.fill();
+          if(u3>0.08){
+            const f3=Math.min(1,(u3-0.08)/0.55);
+            ctx.globalAlpha=sunVis*0.78*f3;
+            ctx.fillStyle=pal.disc;
+            ctx.beginPath();
+            ctx.moveTo(baseR*0.78,-bW*0.22*f3);
+            ctx.quadraticCurveTo(baseR*1.02,w1*0.65,rLen*(0.52+0.26*f3),w2*0.35);
+            ctx.quadraticCurveTo(baseR*1.02,w1*0.65,baseR*0.78,bW*0.22*f3);
+            ctx.closePath();ctx.fill();
+          }
         }
         ctx.restore();
       }
       /* Chispas en cuña y gotas planas de gouache (100% relleno, sin líneas finas) */
       if(u1>0.42){
         const rAcc=(u1-0.42)/0.58;
-        const spTotal=Math.round(8+22*rAcc+16*ecstasy+26*u2+14*ecstasy2);
+        const spTotal=Math.round(8+22*rAcc+16*ecstasy+26*u2+14*ecstasy2+18*u3+10*ecstasy3);
         for(let s=0;s<spTotal;s++){
           const life=((t*0.56+pebHash(s*4.3))%1);
           const fade=Math.sin(life*Math.PI);
@@ -10733,10 +10829,27 @@ function drawLivingFlame(ts){
         ctx.closePath();ctx.fill();
         ctx.restore();
       }
+      /* 75%→100%: corona interior corta de 12 pétalos amarillo cálido abrazando el disco */
+      if(u3>0.08){
+        const inVis=Math.min(1,(u3-0.08)/0.55);
+        for(let i=0;i<petals;i++){
+          const a=(i*Math.PI*2)/petals+(Math.PI/petals)+(pebHash(i*3.7)-0.5)*0.05;
+          const rLen=baseR*(1.18+0.24*inVis+0.12*ecstasy3)*inVis;
+          const bW=baseR*0.18;
+          ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*0.78*inVis;
+          ctx.fillStyle='#F5C556';
+          ctx.beginPath();
+          ctx.moveTo(baseR*0.62,-bW);
+          ctx.quadraticCurveTo(rLen*0.86,-bW*0.45,rLen,0);
+          ctx.quadraticCurveTo(rLen*0.86,bW*0.45,baseR*0.62,bW);
+          ctx.closePath();ctx.fill();
+          ctx.restore();
+        }
+      }
       /* Polen de fuego en gouache (círculos orgánicos rellenos en dos escalas, cero líneas finas) */
       if(u1>0.38){
         const vAcc=(u1-0.38)/0.62;
-        const spTotal=Math.round(8+22*vAcc+16*ecstasy+24*u2+14*ecstasy2);
+        const spTotal=Math.round(8+22*vAcc+16*ecstasy+24*u2+14*ecstasy2+18*u3+10*ecstasy3);
         for(let s=0;s<spTotal;s++){
           const life=((t*0.48+pebHash(s*5.9))%1);
           const fade=Math.sin(life*Math.PI);
@@ -10811,12 +10924,23 @@ function drawLivingFlame(ts){
             ctx.lineTo(Math.cos(a)*tickE,Math.sin(a)*tickE);
             ctx.stroke();
           }
+          if(u3>0.08 && i%2===1){
+            const l3=Math.min(1,(u3-0.08)/0.60);
+            const t2S=rEnd+baseR*0.06;
+            const t2E=t2S+baseR*(0.14+0.18*l3+0.12*ecstasy3);
+            ctx.globalAlpha=sunVis*0.72*l3;
+            ctx.strokeStyle='#F2C36B';
+            ctx.beginPath();
+            ctx.moveTo(Math.cos(a)*t2S,Math.sin(a)*t2S);
+            ctx.lineTo(Math.cos(a)*t2E,Math.sin(a)*t2E);
+            ctx.stroke();
+          }
         }
         ctx.restore();
       }
       if(u1>0.45){
         const lAcc=(u1-0.45)/0.55;
-        const spTotal=Math.round(14+28*lAcc+20*ecstasy+26*u2+16*ecstasy2);
+        const spTotal=Math.round(14+28*lAcc+20*ecstasy+26*u2+16*ecstasy2+20*u3+12*ecstasy3);
         for(let s=0;s<spTotal;s++){
           const life=((t*0.58+pebHash(s*4.9))%1);
           const fade=Math.sin(life*Math.PI);
@@ -10861,6 +10985,23 @@ function drawLivingFlame(ts){
           ctx.lineTo(baseR*0.36,bW);
           ctx.closePath();ctx.fill();
           ctx.restore();
+          /* 75%→100%: pequeños destellos finos de 4 puntas coronando los 12 ejes largos */
+          if(isAxis && u3>0.10){
+            const tipVis=Math.min(1,(u3-0.10)/0.55);
+            const tx=Math.cos(a)*(rLen+baseR*0.14);
+            const ty=Math.sin(a)*(rLen+baseR*0.14);
+            const ts0=baseR*(0.055+0.045*tipVis+0.025*ecstasy3);
+            ctx.save();ctx.translate(tx,ty);
+            ctx.globalAlpha=sunVis*0.86*tipVis;
+            ctx.fillStyle='#FFF5DF';
+            ctx.beginPath();
+            ctx.moveTo(0,-ts0);ctx.lineTo(ts0*0.20,-ts0*0.20);
+            ctx.lineTo(ts0,0);ctx.lineTo(ts0*0.20,ts0*0.20);
+            ctx.lineTo(0,ts0);ctx.lineTo(-ts0*0.20,ts0*0.20);
+            ctx.lineTo(-ts0,0);ctx.lineTo(-ts0*0.20,-ts0*0.20);
+            ctx.closePath();ctx.fill();
+            ctx.restore();
+          }
         }
       }
       const needles=36;
@@ -11005,13 +11146,27 @@ function drawLivingFlame(ts){
           ctx.quadraticCurveTo(mx*1.03,my*1.03,Math.cos(aOff)*rEnd2,Math.sin(aOff)*rEnd2);
           ctx.stroke();
         }
+        /* 75%→100%: trazos bocetados cortos alternos en tinta sepia cálida cerca de las puntas */
+        if(u3>0.08 && i%2===0){
+          const sk3=Math.min(1,(u3-0.08)/0.55);
+          ctx.globalAlpha=sunVis*0.76*sk3;
+          ctx.strokeStyle='#B86B22';
+          ctx.lineWidth=Math.max(1.0,baseR*0.015);
+          const a3=a+(i%4===0?0.032:-0.032);
+          const rS=rLen*0.72;
+          const rE=rLen*(1.06+0.16*sk3+0.10*ecstasy3);
+          ctx.beginPath();
+          ctx.moveTo(Math.cos(a3)*rS,Math.sin(a3)*rS);
+          ctx.lineTo(Math.cos(a3)*rE,Math.sin(a3)*rE);
+          ctx.stroke();
+        }
         ctx.restore();
       }
       /* Constelación radial de guiones y puntos de tinta ocre (sin arcos circulares que choquen) */
       if(u1>0.42){
         const cAcc=(u1-0.42)/0.58;
         ctx.save();ctx.lineCap='round';
-        const spTotal=Math.round(12+24*cAcc+18*ecstasy+38*u2+20*ecstasy2);
+        const spTotal=Math.round(12+24*cAcc+18*ecstasy+38*u2+20*ecstasy2+24*u3+14*ecstasy3);
         for(let s=0;s<spTotal;s++){
           const life=((t*0.55+pebHash(s*6.3))%1);
           const fade=Math.sin(life*Math.PI);
@@ -11058,6 +11213,29 @@ function drawLivingFlame(ts){
           ctx.moveTo(baseR*0.66,-bW);
           ctx.bezierCurveTo(baseR*1.08,w1-bW*0.48,rLen*0.74,-w1*0.58-bW*0.22,rLen,0);
           ctx.bezierCurveTo(rLen*0.74,-w1*0.58+bW*0.22,baseR*1.08,w1+bW*0.48,baseR*0.66,bW);
+          ctx.closePath();ctx.fill();
+          ctx.restore();
+        }
+      }
+      /* 75%→100%: pequeñas llamas-gota en marfil cálido (#FFF1E0) elevándose desde las crestas */
+      if(u3>0.08){
+        const au3=Math.min(1,(u3-0.08)/0.55);
+        const dropCount=Math.round(14+14*au3+8*ecstasy3);
+        for(let d=0;d<dropCount;d++){
+          const life=((t*0.46+pebHash(d*7.3))%1);
+          const fade=Math.sin(life*Math.PI);
+          if(fade<0.06)continue;
+          const da=pebHash(d*6.1)*Math.PI*2+life*0.18;
+          const dd=baseR*(1.95+life*(0.85+0.55*au3+0.35*ecstasy3));
+          const dr=baseR*(0.034+0.032*pebHash(d*4.1))*(0.7+0.3*au3);
+          ctx.save();
+          ctx.translate(Math.cos(da)*dd,Math.sin(da)*dd);ctx.rotate(da);
+          ctx.globalAlpha=sunVis*fade*(0.52+0.42*au3);
+          ctx.fillStyle='#FFF1E0';
+          ctx.beginPath();
+          ctx.moveTo(-dr*1.0,0);
+          ctx.quadraticCurveTo(0,-dr*0.9,dr*1.85,0);
+          ctx.quadraticCurveTo(0,dr*0.9,-dr*1.0,0);
           ctx.closePath();ctx.fill();
           ctx.restore();
         }
