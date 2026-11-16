@@ -7,7 +7,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="format-detection" content="telephone=no">
-<title>Wavy — Ritual de Paz Mental, Salud Emocional y Co-regulación en Vivo</title>
+<title>Wavy</title>
+<meta property="og:title" content="Wavy">
+<meta property="og:description" content="Donde tu calma se encuentra con los tuyos">
+<meta property="og:image" content="apple-touch-icon.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Wavy">
+<meta name="twitter:image" content="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -2146,18 +2152,18 @@ summary::-webkit-details-marker{display:none}
 }
 #wavySplashBreathLabel{
   position:relative;z-index:2;
-  margin-top:0;
-  font-family:var(--serif);font-size:32px;font-weight:500;letter-spacing:-.015em;color:var(--ink);
-  text-shadow:0 2px 18px rgba(255,255,255,0.92);
-  transition:opacity .35s ease,transform .35s ease;
-  text-align:center;padding:0 24px;
+  margin-top:0;max-width:152px;
+  font-family:var(--serif);font-size:clamp(19px,5vw,23px);font-weight:500;letter-spacing:-.01em;line-height:1.15;color:var(--ink);
+  text-shadow:0 1px 12px rgba(255,255,255,0.92);
+  transition:opacity .38s ease,transform .38s ease;
+  text-align:center;padding:0 6px;
 }
 #wavySplashCycleHint{
   position:relative;z-index:2;
-  margin-top:8px;
-  font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:var(--ink);opacity:.62;
-  text-shadow:0 1px 12px rgba(255,255,255,0.92);
-  transition:opacity .35s ease;text-align:center;padding:0 24px;
+  margin-top:6px;max-width:152px;
+  font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink);opacity:.62;
+  text-shadow:0 1px 10px rgba(255,255,255,0.92);
+  transition:opacity .38s ease;text-align:center;padding:0 6px;
 }
 #wavySplashSkipBtn{
   position:absolute;top:max(18px,env(safe-area-inset-top));right:20px;z-index:3;
@@ -2537,6 +2543,11 @@ summary::-webkit-details-marker{display:none}
 
     <!-- SUB-PANEL 1A: HÁBITO Y BATERÍA + FLUJO SOS -->
     <section class="panel card habits-hidden habits-collapsed" id="sub-habit">
+      <div class="sl" style="margin-top:0;margin-bottom:14px">
+        <label><span>Mi razón de hoy</span></label>
+        <div class="chips" id="loss"></div>
+      </div>
+
       <div class="hd">
         <span>Mi hábito por construir <button type="button" class="arrow-q" id="habitExpandBtn" aria-label="Expandir o contraer hábitos" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button> <button type="button" class="eye-q" id="habitEyeBtn" aria-label="Mostrar u ocultar hábitos" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.8"/><path d="M4 20L20 4"/></svg></button> <button type="button" class="help-q" data-help="helpHabit" aria-label="Ayuda sobre hábitos">?</button></span>
         <span id="proStatusBadge" hidden></span>
@@ -2578,11 +2589,6 @@ summary::-webkit-details-marker{display:none}
         <q id="sq"></q><p id="st"></p><div class="s"><span id="ss"></span><button type="button" class="sig-spirit-btn" id="spiritBtn" aria-label="Elegir línea espiritual o filosófica">✦</button></div>
       </div>
 
-      <div class="sl">
-        <label><span>Mi razón de cuidado hoy</span></label>
-        <div class="chips" id="loss"></div>
-      </div>
-
       <button class="btn sos-cta" id="sosb">
         <svg class="w-ico lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.3a4.3 4.3 0 0 1 7.5-2.8 4.3 4.3 0 0 1 7.5 2.8c0 5.7-7.5 10.3-7.5 10.3Z"/><path d="M7.5 12.2h2.2l1.4-2.8 2 5.4 1.5-2.6h2"/></svg>
         <span>Mi hábito está en riesgo · Acompañarme</span>
@@ -2621,7 +2627,7 @@ summary::-webkit-details-marker{display:none}
       <div class="bio-sec" style="margin-top:8px;padding-top:10px;border-top:none">
         <div class="bio-sec-hd">
           <span>Emociones de hoy</span>
-          <button type="button" class="bento-dim-toggle" id="moodMaticesToggleBtn">Ver más (16) ▾</button>
+          <button type="button" class="bento-dim-toggle" id="moodMaticesToggleBtn">Ver más ▾</button>
         </div>
         <div class="mood-flip-wrap" id="moodFlipWrap">
           <div class="mood-flip-inner" id="moodFlipInner">
@@ -2654,7 +2660,7 @@ summary::-webkit-details-marker{display:none}
       <div class="bio-sec" style="margin-top:16px">
         <div class="bio-sec-hd">
           <span>Hábitos de cuidado</span>
-          <span id="clueTrackCount">Toca una tarjeta</span>
+          <span id="clueTrackCount"></span>
         </div>
         <div id="clueTrackList"></div>
         <div class="bento-drawer" id="bentoActiveDrawer" hidden></div>
@@ -2944,6 +2950,10 @@ summary::-webkit-details-marker{display:none}
           <canvas id="flameCanvas" width="700" height="860" aria-label="Tu sol vivo"></canvas>
           <div class="sun-stage-pct" id="sunStagePct">65%</div>
           <div class="sun-stage-decay" id="pebDecayCountdown">-2%</div>
+          <button type="button" id="sunTrailerBtn" aria-label="Ver evolución completa del sol en 30 segundos" title="Ver evolución 5% → 100% (30 s)" style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:4;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.42);background:rgba(255,255,255,0.20);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#FFF8EE;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.16);transition:transform .18s ease,background .2s ease">
+            <svg id="sunTrailerIco" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+            <span id="sunTrailerTxt">Evolución · 30s</span>
+          </button>
         </div>
         <div class="peb-actions">
           <button class="btn" id="pb">Avivar sol</button>
@@ -5670,19 +5680,28 @@ function drawWavySplashSea(ts){
   const cx=w*0.5,cy=h*0.5;
   const maxR=Math.hypot(w,h)*0.64;
 
-  /* 2. Olas circulares estilo Costa con crestas hacia AFUERA rodeando el círculo central */
-  const baseOrbR=88+Math.sin(t*1.4)*2.0+sw*14;
-  const maxReach=Math.hypot(w,h)*0.56;
+  /* 2. Olas reales de Costa convertidas en anillos concéntricos con luz de atardecer, espuma y luciérnagas */
+  const baseOrbR=90+Math.sin(t*1.4)*2.0+sw*10;
+  const maxReach=Math.hypot(w,h)*0.68;
 
-  const drawOutwardCoastRing=(rInner,rOuter,crestCount,curlAmp,rotOff,fillStyle)=>{
-    const steps=crestCount*10;
+  /* Halo cálido de atardecer envolviendo toda la marea cuando se sumerge */
+  if(sw>0.04){
+    const sunHalo=ctx.createRadialGradient(cx,cy,baseOrbR*0.6,cx,cy,baseOrbR+sw*maxReach*1.05);
+    sunHalo.addColorStop(0,'rgba(255,232,190,'+(0.38*sw).toFixed(3)+')');
+    sunHalo.addColorStop(0.45,'rgba(239,176,122,'+(0.22*sw).toFixed(3)+')');
+    sunHalo.addColorStop(1,'rgba(45,88,104,0)');
+    ctx.fillStyle=sunHalo;
+    ctx.fillRect(0,0,w,h);
+  }
+
+  const drawOutwardCoastRing=(rOuter,crestCount,curlAmp,rotOff,fillStyle,strokeRim)=>{
+    const steps=crestCount*12;
     ctx.beginPath();
     for(let i=0;i<=steps;i++){
       const s=i/steps;
       const a=s*Math.PI*2+rotOff;
-      /* Cresta asimétrica suave estilo ola de mar mirando hacia afuera */
       const localPhase=(s*crestCount)%1;
-      const crest=Math.pow(Math.sin(localPhase*Math.PI),1.55)*curlAmp+Math.sin(localPhase*Math.PI*2)*curlAmp*0.22;
+      const crest=Math.pow(Math.sin(localPhase*Math.PI),1.5)*curlAmp+Math.sin(localPhase*Math.PI*2)*curlAmp*0.20;
       const r=rOuter+crest;
       const px=cx+Math.cos(a)*r;
       const py=cy+Math.sin(a)*r;
@@ -5692,55 +5711,61 @@ function drawWavySplashSea(ts){
     ctx.closePath();
     ctx.fillStyle=fillStyle;
     ctx.fill();
-  };
-
-  /* 3 capas de marea de Costa expandiéndose desde el perímetro hacia casi toda la pantalla */
-  const tideR1=baseOrbR+30+sw*maxReach*0.96;
-  const tideR2=baseOrbR+20+sw*maxReach*0.84;
-  const tideR3=baseOrbR+10+sw*maxReach*0.72;
-
-  /* Huella suave de agua en el Blanco Pulcritud */
-  if(wsw>0.015){
-    drawOutwardCoastRing(baseOrbR,baseOrbR+38+wsw*maxReach*1.02,12,18+wsw*22,t*0.08,'rgba(222,236,240,0.48)');
-  }
-
-  drawOutwardCoastRing(baseOrbR,tideR1,12,16+sw*22,t*0.12,'rgba(148,184,194,0.46)');
-  drawOutwardCoastRing(baseOrbR,tideR2,12,14+sw*18,-t*0.09+0.26,'rgba(88,136,150,0.62)');
-  drawOutwardCoastRing(baseOrbR,tideR3,12,12+sw*15,t*0.07+0.52,'rgba(45,88,104,0.82)');
-
-  /* Puntos blancos de espuma de mar + luciérnagas doradas como en nuestra Costa */
-  ctx.save();
-  const foamCount=42;
-  for(let b=0;b<foamCount;b++){
-    const a=(b/foamCount)*Math.PI*2+t*0.10;
-    const life=((t*0.48+pebHash(b*3.7))%1);
-    const fade=Math.sin(life*Math.PI);
-    const rDist=tideR1+4+life*(14+sw*28)+Math.sin(a*12)*6;
-    const bx=cx+Math.cos(a)*rDist;
-    const by=cy+Math.sin(a)*rDist;
-    const br=(1.8+pebHash(b*2.9)*3.4)*(0.65+0.65*sw);
-    ctx.globalAlpha=fade*(0.55+0.42*sw);
-    ctx.fillStyle='#FFFFFF';
-    ctx.beginPath();ctx.arc(bx,by,br,0,Math.PI*2);ctx.fill();
-    /* Aro sutil aguamarina cuando está sobre fondo blanco */
-    if(sw<0.35){
-      ctx.strokeStyle='rgba(148,184,194,0.45)';
-      ctx.lineWidth=1;
+    if(strokeRim){
+      ctx.strokeStyle=strokeRim;
+      ctx.lineWidth=1.8;
       ctx.stroke();
     }
-  }
-  const ffCount=20;
-  for(let f=0;f<ffCount;f++){
-    const life=((t*0.36+pebHash(f*5.3))%1);
+  };
+
+  /* 6 capas concéntricas vivas de olas de Costa (siempre con textura de olas incluso al 100% de inhalación) */
+  const bandDefs=[
+    {f:1.00,amp:15,spd:0.11,ph:0.0,c1:'rgba(148,184,194,0.44)',c2:'rgba(98,144,158,0.48)',rim:'rgba(255,255,255,0.55)'},
+    {f:0.84,amp:14,spd:-0.09,ph:0.25,c1:'rgba(108,154,166,0.56)',c2:'rgba(66,112,128,0.60)',rim:'rgba(255,244,224,0.42)'},
+    {f:0.68,amp:13,spd:0.10,ph:0.50,c1:'rgba(76,124,138,0.68)',c2:'rgba(48,92,108,0.72)',rim:'rgba(255,255,255,0.48)'},
+    {f:0.52,amp:12,spd:-0.08,ph:0.75,c1:'rgba(56,102,118,0.76)',c2:'rgba(36,76,92,0.80)',rim:'rgba(255,236,204,0.38)'},
+    {f:0.36,amp:10,spd:0.12,ph:1.00,c1:'rgba(42,84,100,0.84)',c2:'rgba(28,64,78,0.86)',rim:'rgba(255,255,255,0.45)'},
+    {f:0.20,amp:9,spd:-0.10,ph:1.25,c1:'rgba(78,128,142,0.78)',c2:'rgba(45,88,104,0.82)',rim:'rgba(255,232,196,0.52)'}
+  ];
+  const outerR=baseOrbR+28+sw*maxReach;
+  bandDefs.forEach((B)=>{
+    const rBand=baseOrbR+10+(outerR-baseOrbR-10)*B.f;
+    const rg=ctx.createRadialGradient(cx,cy,Math.max(10,rBand-40),cx,cy,rBand+24);
+    rg.addColorStop(0,B.c2);
+    rg.addColorStop(0.7,B.c1);
+    rg.addColorStop(1,'rgba(255,242,218,0.36)');
+    drawOutwardCoastRing(rBand,14,B.amp+sw*10,t*B.spd+B.ph,rg,B.rim);
+  });
+
+  /* Puntos blancos de espuma de mar + luciérnagas doradas y luces de atardecer en toda la marea */
+  ctx.save();
+  const foamCount=64;
+  for(let b=0;b<foamCount;b++){
+    const a=(b/foamCount)*Math.PI*2+t*0.10;
+    const life=((t*0.52+pebHash(b*3.7))%1);
     const fade=Math.sin(life*Math.PI);
-    const fa=pebHash(f*9.1)*Math.PI*2+t*0.14;
-    const fr=(baseOrbR+18+pebHash(f*4.1)*(tideR1-baseOrbR+40));
+    const bandFrac=0.25+pebHash(b*5.1)*0.82;
+    const rDist=baseOrbR+12+(outerR-baseOrbR)*bandFrac+life*(10+sw*22);
+    const bx=cx+Math.cos(a)*rDist;
+    const by=cy+Math.sin(a)*rDist;
+    const br=(1.6+pebHash(b*2.9)*3.2)*(0.65+0.65*sw);
+    ctx.globalAlpha=fade*(0.58+0.38*sw);
+    ctx.fillStyle='#FFFFFF';
+    ctx.beginPath();ctx.arc(bx,by,br,0,Math.PI*2);ctx.fill();
+  }
+  const ffCount=34;
+  for(let f=0;f<ffCount;f++){
+    const life=((t*0.38+pebHash(f*5.3))%1);
+    const fade=Math.sin(life*Math.PI);
+    const fa=pebHash(f*9.1)*Math.PI*2+t*0.12;
+    const fr=baseOrbR+16+pebHash(f*4.1)*Math.max(40,outerR-baseOrbR+30);
     const fx=cx+Math.cos(fa)*fr;
     const fy=cy+Math.sin(fa)*fr;
-    const glowR=7+pebHash(f*2.3)*8;
+    const glowR=8+pebHash(f*2.3)*11;
+    const isSunset=(f%3===0);
     const fg=ctx.createRadialGradient(fx,fy,0.5,fx,fy,glowR);
-    fg.addColorStop(0,'rgba(255,242,198,'+(0.88*fade).toFixed(3)+')');
-    fg.addColorStop(0.45,'rgba(240,206,134,'+(0.42*fade).toFixed(3)+')');
+    fg.addColorStop(0,isSunset?'rgba(255,214,162,'+(0.90*fade).toFixed(3)+')':'rgba(255,244,202,'+(0.92*fade).toFixed(3)+')');
+    fg.addColorStop(0.45,isSunset?'rgba(235,148,96,'+(0.42*fade).toFixed(3)+')':'rgba(240,206,134,'+(0.44*fade).toFixed(3)+')');
     fg.addColorStop(1,'rgba(240,206,134,0)');
     ctx.globalAlpha=1;
     ctx.fillStyle=fg;
@@ -5750,12 +5775,12 @@ function drawWavySplashSea(ts){
 
   /* 4. Círculo central sereno en Blanco Pulcritud */
   const cg=ctx.createRadialGradient(cx,cy-baseOrbR*0.2,10,cx,cy,baseOrbR);
-  cg.addColorStop(0,'rgba(255,255,255,0.98)');
-  cg.addColorStop(0.75,'rgba(244,249,250,0.95)');
-  cg.addColorStop(1,'rgba(220,235,239,0.92)');
+  cg.addColorStop(0,'rgba(255,255,255,0.99)');
+  cg.addColorStop(0.75,'rgba(246,250,251,0.97)');
+  cg.addColorStop(1,'rgba(224,238,242,0.94)');
   ctx.fillStyle=cg;
   ctx.beginPath();ctx.arc(cx,cy,baseOrbR,0,Math.PI*2);ctx.fill();
-  ctx.strokeStyle='rgba(88,136,150,0.32)';
+  ctx.strokeStyle='rgba(88,136,150,0.34)';
   ctx.lineWidth=1.5;
   ctx.beginPath();ctx.arc(cx,cy,baseOrbR,0,Math.PI*2);ctx.stroke();
 
@@ -5809,6 +5834,16 @@ function runWavyWelcomeSplash(){
     wavySplashRaf=requestAnimationFrame(drawWavySplashSea);
   },1850));
 
+  let lblFadeTimer=0;
+  const setSplashLabel=(txt)=>{
+    if(lbl.textContent===txt)return;
+    clearTimeout(lblFadeTimer);
+    lbl.style.opacity='0';
+    lblFadeTimer=setTimeout(()=>{
+      lbl.textContent=txt;
+      lbl.style.opacity='1';
+    },220);
+  };
   let inhaleCueTimer=0;
   const startHold=(e)=>{
     if(e.target && e.target.closest && e.target.closest('#wavySplashSkipBtn'))return;
@@ -5817,11 +5852,11 @@ function runWavyWelcomeSplash(){
     wavySplashState.phase='inhaling';
     wavySplashState.fromSwell=wavySplashState.swell||0;
     wavySplashState.phaseStartTs=performance.now();
-    lbl.textContent='Inhala';
+    setSplashLabel('Inhala');
     clearTimeout(inhaleCueTimer);
     inhaleCueTimer=setTimeout(()=>{
       if(wavySplashState.phase==='inhaling'){
-        lbl.textContent='Suelta para exhalar';
+        setSplashLabel('Suelta para exhalar');
       }
     },4000);
   };
@@ -5834,7 +5869,7 @@ function runWavyWelcomeSplash(){
     if(heldMs<900){
       wavySplashState.phase='wait';
       wavySplashState.swell=0;
-      lbl.textContent='Mantén para inhalar';
+      setSplashLabel('Mantén para inhalar');
       return;
     }
     const exDur=Math.round(6000*Math.max(0.45,wavySplashState.swell));
@@ -5842,14 +5877,14 @@ function runWavyWelcomeSplash(){
     wavySplashState.fromSwell=wavySplashState.swell;
     wavySplashState.phaseStartTs=performance.now();
     wavySplashState.exhaleDur=exDur;
-    lbl.textContent='Exhala';
+    setSplashLabel('Exhala');
 
     wavySplashTimers.push(setTimeout(()=>{
       if(cy<2){
         wavySplashState.cycle=2;
         wavySplashState.phase='wait';
         wavySplashState.swell=0;
-        lbl.textContent='Mantén para inhalar';
+        setSplashLabel('Mantén para inhalar');
         if(dots)dots.textContent='● ●';
       }else{
         wavySplashState.phase='done';
@@ -9106,7 +9141,7 @@ function renderClueTrackList(){
 
     const hd=document.createElement('div');
     hd.className='bento-dim-hd';
-    hd.innerHTML='<span>'+esc(dim.toUpperCase())+'</span>'+(extraCats.length?('<button type="button" class="bento-dim-toggle">'+(isExp?'Menos ▴':'Ver más ('+extraCats.length+') ▾')+'</button>'):'');
+    hd.innerHTML='<span>'+esc(dim.toUpperCase())+'</span>'+(extraCats.length?('<button type="button" class="bento-dim-toggle">'+(isExp?'Menos ▴':'Ver más ▾')+'</button>'):'');
     const tog=hd.querySelector('.bento-dim-toggle');
     if(tog){
       tog.onclick=()=>{
@@ -9213,7 +9248,7 @@ function renderClueTrackList(){
   }
 
   if($('clueTrackCount')){
-    $('clueTrackCount').textContent=totalCount>0?(totalCount+(totalCount===1?' hábito marcado hoy':' hábitos marcados hoy')):'Toca una tarjeta';
+    $('clueTrackCount').textContent=totalCount>0?(totalCount+(totalCount===1?' hábito marcado hoy':' hábitos marcados hoy')):'';
   }
 }
 
@@ -10062,7 +10097,7 @@ function createMoodBtn(o,isVipItem){
 let moodExtrasOpen=false;
 function syncMoodMaticesBtn(){
   const btn=$('moodMaticesToggleBtn');
-  if(btn)btn.textContent=moodExtrasOpen?'Menos ▴':'Ver más ('+MO_VIP.length+') ▾';
+  if(btn)btn.textContent=moodExtrasOpen?'Menos ▴':'Ver más ▾';
 }
 if($('moodMaticesToggleBtn')){
   $('moodMaticesToggleBtn').onclick=()=>{
@@ -10332,54 +10367,54 @@ function formatPublicDate(dstr){
    perfil público del dueño (13061998) se muestra aunque la app esté
    como invitado. El alias viejo 'sebas' apunta al dueño. */
 const WAVY_SHOWCASE_AUTHORS={
-  'absurdus.club':{
-    me:{username:'absurdus.club',name:'Círculo Absurdus · Wavy',av:'sol',bio:'Ensayos largos sobre atención, psique fragmentada, no-contacto y sentido en la era de la inmediatez.'},
+  'sofi.editorial':{
+    me:{username:'sofi.editorial',name:'Sofía Navarro',av:'sol',bio:'Ensayos sobre atención, silencio y vida sin prisa.'},
     notes:[
       {
         id:'ed-1',
         d:'2026-11-15',
-        tema:'Atención e Inmediatez',
+        tema:'Atención',
         public:true,
         blank:true,
         estado:'Cuando todo es posible, nada se siente significativo',
-        texto:'Durante siglos, el valor de una conversación, de una obra o de una decisión estuvo protegido por la fricción del tiempo. Esperar una carta durante semanas, caminar veinte minutos para ver a alguien sin saber exactamente qué diría o sostener el silencio de una tarde entera obligaba a la psique a digerir lo que sentía. La demora no era un defecto técnico del mundo antiguo: era el recipiente mismo donde las experiencias adquirían densidad, peso y memoria.\n\nHoy, la promesa de la disponibilidad total ha borrado el proceso transformador. Si puedes generar cualquier imagen en tres segundos, reemplazar cualquier vínculo incómodo con un deslizamiento o anestesiar cualquier duda abriendo otra pestaña, el deseo pierde su gravedad específica. Lo que no cuesta tiempo, incertidumbre ni presencia tampoco deja huella en quien lo atraviesa. Terminamos rodeados de estímulos infinitos pero extrañamente hambrientos de algo que sí importe.\n\n## El espejismo de la eficiencia emocional\n\nNos convencimos de que ahorrar tiempo equivale a vivir mejor, pero la vida interior no obedece a la lógica de la productividad industrial. Un árbol no crece más rápido porque le grites ni una pérdida duele menos porque la racionalices en un hilo de tres puntos. Cuando eliminamos la espera, eliminamos también la maduración.\n\nLa psicología moderna suele olvidar lo que filósofos como Kierkegaard o Simone Weil entendían con claridad: la atención verdadera es una forma rara de generosidad. No consiste en mirar algo durante dos segundos mientras piensas en tu siguiente respuesta; consiste en suspender tu prisa el tiempo suficiente para que la realidad del otro —o la tuya propia— pueda revelarse sin que intentes controlarla.\n\n## La anestesia de la pantalla siempre encendida\n\nCada vez que sientes una punzada mínima de aburrimiento, soledad o insuficiencia, el bolsillo ofrece una salida inmediata. Esa salida parece inofensiva porque dura apenas unos minutos, pero repetida treinta veces al día entrena al sistema nervioso para no tolerar ningún espacio vacío. Y sin espacio vacío no existe la introspección ni la creatividad genuina.\n\nUn hábito sano no nace de una epifanía instantánea ni de una aplicación que te felicita con fuegos artificiales vacíos; nace de volver al mismo punto incómodo sin huir hacia la pantalla. En ese sentido, detenerte cuatro segundos para inhalar y seis para soltar el aire antes de responder a un impulso es un acto silenciosamente subversivo: le devuelve al cuerpo el derecho a tardar.\n\n## Recuperar la fricción voluntaria\n\nElegir leer un ensayo completo de diez minutos sin saltar de pestaña, escribir tres párrafos honestos sin pensar en cuántos aplausos recibirán o sostener una caminata sin audífonos una vez a la semana son pequeñas restauraciones de la fricción. No te hacen más rápido ni más eficiente. Te devuelven la capacidad de sentir que lo que haces te pertenece de verdad.\n\nCuando vuelves a habitar el tiempo lento, descubres algo paradójico: necesitas mucho menos para sentirte pleno, porque por fin estás presente mientras ocurre lo poco que elegiste vivir.'
+        texto:'Durante siglos, el valor de una conversación, de una obra o de una decisión estuvo protegido por la fricción del tiempo. Esperar una carta durante semanas, caminar veinte minutos para ver a alguien sin saber exactamente qué diría o sostener el silencio de una tarde entera obligaba a la psique a digerir lo que sentía. La demora no era un defecto técnico del mundo antiguo: era el recipiente mismo donde las experiencias adquirían densidad, peso y memoria.\n\nHoy, la promesa de la disponibilidad total ha borrado el proceso transformador. Si puedes generar cualquier imagen en tres segundos, reemplazar cualquier vínculo incómodo con un deslizamiento o anestesiar cualquier duda abriendo otra pestaña, el deseo pierde su gravedad específica. Lo que no cuesta tiempo, incertidumbre ni presencia tampoco deja huella en quien lo atraviesa. Terminamos rodeados de estímulos infinitos pero extrañamente hambrientos de algo que sí importe.\n\n## El espejismo de la eficiencia emocional\n\nNos convencimos de que ahorrar tiempo equivale a vivir mejor, pero la vida interior no obedece a la lógica de la productividad industrial. Un árbol no crece más rápido porque le grites ni una pérdida duele menos porque la racionalices en un hilo de tres puntos. Cuando eliminamos la espera, eliminamos también la maduración.\n\nLa atención verdadera es una forma rara de generosidad. No consiste en mirar algo durante dos segundos mientras piensas en tu siguiente respuesta; consiste en suspender tu prisa el tiempo suficiente para que la realidad del otro —o la tuya propia— pueda revelarse sin que intentes controlarla.\n\n## La anestesia de la pantalla siempre encendida\n\nCada vez que sientes una punzada mínima de aburrimiento, soledad o insuficiencia, el bolsillo ofrece una salida inmediata. Esa salida parece inofensiva porque dura apenas unos minutos, pero repetida treinta veces al día entrena al sistema nervioso para no tolerar ningún espacio vacío. Y sin espacio vacío no existe la introspección ni la creatividad genuina.\n\nUn hábito sano no nace de una epifanía instantánea; nace de volver al mismo punto incómodo sin huir hacia la pantalla. En ese sentido, detenerte cuatro segundos para inhalar y seis para soltar el aire antes de responder a un impulso es un acto silenciosamente subversivo: le devuelve al cuerpo el derecho a tardar.\n\n## Recuperar la fricción voluntaria\n\nElegir leer un ensayo completo sin saltar de pestaña, escribir tres párrafos honestos sin pensar en cuántos aplausos recibirán o sostener una caminata sin audífonos una vez a la semana son pequeñas restauraciones de la fricción. No te hacen más rápido ni más eficiente. Te devuelven la capacidad de sentir que lo que haces te pertenece de verdad.'
       },
       {
         id:'ed-2',
         d:'2026-11-11',
-        tema:'Culpa y Psique',
+        tema:'Psique',
         public:true,
         blank:true,
         estado:'Tu culpa no te purifica (ni es una virtud)',
-        texto:'Existe una trampa silenciosa en la forma en que muchas personas cargan sus errores: confunden el castigo interno prolongado con una forma de nobleza moral. Creen, casi sin formularlo en voz alta, que si siguen sintiéndose mal el tiempo suficiente, de algún modo compensan lo que hicieron, lo que dijeron o lo que dejaron pasar.\n\nPero la culpa estancada no repara nada; al contrario, suele funcionar como una coartada elegante para no cambiar. Mientras sigues mirándote en el espejo del remordimiento, el centro de gravedad sigues siendo tú —tu imagen herida, tu necesidad de absolución—, no la vida concreta que quieres construir hacia adelante ni el cuidado real hacia quienes te rodean.\n\n## La sombra y la ilusión de pureza\n\nCarl Jung observaba que todo lo que reprimimos por considerarlo indigno no desaparece: se hunde en la sombra y desde ahí gobierna nuestras reacciones bajo disfraces morales. Cuando alguien se flagela durante meses por un tropiezo pasado, muchas veces está intentando demostrar ante un tribunal invisible que en el fondo es una buena persona. Esa actuación consume la energía exacta que haría falta para pedir perdón con sencillez o modificar un hábito.\n\nJacques Lacan recordaba también que el sujeto moderno sufre más por las exigencias crueles de su propio ideal imposible que por la realidad misma. Queremos ser coherentes, serenos y lúcidos todo el tiempo, y al primer fallo nos declaramos culpables perpetuos. Esa severidad no es ética; es narcisismo invertido.\n\n## De la rumiación a la responsabilidad tranquila\n\nLa responsabilidad adulta tiene una textura completamente distinta a la culpa. Es sobria, breve y orientada al presente. Reconoce el hecho sin adornos, asume la consecuencia sin teatro y pregunta qué paso concreto sigue hoy. No necesita dramatizar el pasado para demostrar sensibilidad.\n\nSoltar la culpa tampoco equivale a volverse indiferente o cínico. Al contrario: solo quien deja de pagar dos veces por la misma deuda emocional tiene las manos libres para sostener su calma diaria, reparar lo reparable y caminar con ligereza. Tu paz no es una traición a tus errores pasados; es la única condición desde la cual puedes no repetirlos.'
+        texto:'Existe una trampa silenciosa en la forma en que muchas personas cargan sus errores: confunden el castigo interno prolongado con una forma de nobleza moral. Creen, casi sin formularlo en voz alta, que si siguen sintiéndose mal el tiempo suficiente, de algún modo compensan lo que hicieron, lo que dijeron o lo que dejaron pasar.\n\nPero la culpa estancada no repara nada; al contrario, suele funcionar como una coartada elegante para no cambiar. Mientras sigues mirándote en el espejo del remordimiento, el centro de gravedad sigues siendo tú —tu imagen herida, tu necesidad de absolución—, no la vida concreta que quieres construir hacia adelante ni el cuidado real hacia quienes te rodean.\n\n## La sombra y la ilusión de pureza\n\nTodo lo que reprimimos por considerarlo indigno no desaparece: se hunde y desde ahí gobierna nuestras reacciones bajo disfraces morales. Cuando alguien se flagela durante meses por un tropiezo pasado, muchas veces está intentando demostrar ante un tribunal invisible que en el fondo es una buena persona. Esa actuación consume la energía exacta que haría falta para pedir perdón con sencillez o modificar un hábito.\n\n## De la rumiación a la responsabilidad tranquila\n\nLa responsabilidad adulta tiene una textura completamente distinta a la culpa. Es sobria, breve y orientada al presente. Reconoce el hecho sin adornos, asume la consecuencia sin teatro y pregunta qué paso concreto sigue hoy. No necesita dramatizar el pasado para demostrar sensibilidad.\n\nSoltar la culpa tampoco equivale a volverse indiferente o cínico. Al contrario: solo quien deja de pagar dos veces por la misma deuda emocional tiene las manos libres para sostener su calma diaria, reparar lo reparable y caminar con ligereza.'
       }
     ]
   },
   'valeria.sol':{
-    me:{username:'valeria.sol',name:'Valeria Mendoza',av:'alba',bio:'Ensayos sobre vínculos, no-contacto, cine lento y vida interior.'},
+    me:{username:'valeria.sol',name:'Valeria Mendoza',av:'alba',bio:'Vínculos, silencio y vida interior.'},
     notes:[
       {
         id:'val-1',
         d:'2026-11-14',
-        tema:'Vínculos y No-Contacto',
+        tema:'Vínculos',
         public:true,
         blank:true,
         estado:'La intimidad de no volver a hablar (y elegir irse queriendo)',
-        texto:'La cultura romántica nos enseñó que el amor verdadero siempre insiste y que marcharse solo ocurre cuando el afecto se agota o cuando alguien comete una traición imperdonable. Sin embargo, una de las experiencias más adultas —y más silenciosas— consiste en querer genuinamente a alguien y aun así elegir retirarse.\n\nNo todas las historias terminan por falta de cariño; muchas terminan por incompatibilidad de ritmo, por agotamiento emocional o porque permanecer significaría ir traicionando poco a poco tu propia paz. En esos casos, el no-contacto no nace del rencor ni del orgullo herido: nace de una lucidez serena que prefiere proteger lo que fue bueno antes de verlo pudrirse en discusiones repetidas.\n\n## ¿Por qué la gente actúa como si tuviera todo el mañana?\n\nA menudo damos por sentado que las personas que nos importan seguirán disponibles indefinidamente mientras resolvemos nuestras dudas o postergamos nuestras decisiones. Actuamos como si siempre hubiera otra tarde para pedir disculpas, otra llamada pendiente para decir lo que realmente sentíamos. Hasta que un día el silencio se vuelve definitivo y revela todo lo que dejamos en borrador.\n\nEse silencio posterior tiene una intimidad extraña. Ya no hay mensajes cotidianos ni pequeñas actualizaciones sobre el día, pero persiste una conversación muda hecha de recuerdos y aprendizajes. Aprender a no romper ese silencio por mera ansiedad nocturna es una de las pruebas más honestas de autorrespeto.\n\n## La persona en la que no dejas de pensar\n\nCuando alguien ocupa tu mente durante semanas después de haberse ido, rara vez se trata únicamente de esa persona: casi siempre es una lección suspendida sobre tu propio valor. Te preguntas qué parte de ti se quedó esperando validación afuera, qué límite no supiste nombrar a tiempo o qué herida antigua se reabrió con su ausencia.\n\nSi sostienes esos primeros minutos de urgencia sin ceder al impulso de escribir o revisar sus redes, descubres que la marea baja sola. Y cuando baja, queda una claridad tranquila: puedes desearle bien a alguien desde lejos y, al mismo tiempo, elegir no volver a entrar donde ya no cabes entero.'
+        texto:'La cultura romántica nos enseñó que el amor verdadero siempre insiste y que marcharse solo ocurre cuando el afecto se agota o cuando alguien comete una traición imperdonable. Sin embargo, una de las experiencias más adultas —y más silenciosas— consiste en querer genuinamente a alguien y aun así elegir retirarse.\n\nNo todas las historias terminan por falta de cariño; muchas terminan por incompatibilidad de ritmo, por agotamiento emocional o porque permanecer significaría ir traicionando poco a poco tu propia paz. En esos casos, el no-contacto no nace del rencor ni del orgullo herido: nace de una lucidez serena que prefiere proteger lo que fue bueno antes de verlo pudrirse en discusiones repetidas.\n\n## ¿Por qué actuamos como si hubiera todo el mañana?\n\nA menudo damos por sentado que las personas que nos importan seguirán disponibles indefinidamente mientras resolvemos nuestras dudas o postergamos nuestras decisiones. Actuamos como si siempre hubiera otra tarde para pedir disculpas, otra llamada pendiente para decir lo que realmente sentíamos. Hasta que un día el silencio se vuelve definitivo y revela todo lo que dejamos en borrador.\n\n## La persona en la que no dejas de pensar\n\nCuando alguien ocupa tu mente durante semanas después de haberse ido, rara vez se trata únicamente de esa persona: casi siempre es una lección suspendida sobre tu propio valor. Si sostienes esos primeros minutos de urgencia sin ceder al impulso de escribir, descubres que la marea baja sola y queda una claridad tranquila.'
       }
     ]
   },
   'mateo.mar':{
-    me:{username:'mateo.mar',name:'Mateo Ríos',av:'litografia',bio:'Lecturas existenciales, hábitos invisibles y cine contemplativo.'},
+    me:{username:'mateo.mar',name:'Mateo Ríos',av:'litografia',bio:'Hábitos invisibles y cine contemplativo.'},
     notes:[
       {
         id:'mat-1',
         d:'2026-11-09',
-        tema:'Memoria y Hábito',
+        tema:'Memoria',
         public:true,
         blank:true,
         estado:'Lo que te vuelves, dejas de notarlo',
-        texto:'Los cambios más profundos casi nunca llegan anunciados por una crisis espectacular. Ocurren por repetición diminuta, día tras día, hasta que una mañana descubres que aquello que antes te sorprendía —la tensión en los hombros al despertar, el cinismo automático ante una buena noticia, el reflejo inmediato de mirar el teléfono cada tres minutos— se convirtió en tu paisaje normal.\n\nLo que te vuelves, dejas de notarlo. Ese fenómeno explica por qué tantas personas viven agotadas sin saber exactamente en qué momento perdieron su ligereza. Cuando un hábito se vuelve invisible, deja de parecer una elección y empieza a sentirse como tu personalidad definitiva.\n\n## El cine lento y la recuperación de la mirada\n\nPiensa en esas películas de Bergman, Ozu o Tarkovsky donde la cámara permanece fija durante cuarenta segundos después de que los personajes salen de la habitación. Al principio, el espectador acostumbrado al montaje frenético siente impaciencia. Luego, algo en la respiración se afloja y empiezas a ver la luz cambiando en la ventana, el polvo suspendido, la verdad emocional que no cabía en ningún diálogo.\n\nConstruir un hábito contemplativo funciona igual. Al principio, sentarte a respirar cuatro segundos y exhalar seis o abrir una hoja en blanco para escribir sin filtros se siente extraño, casi artificial. Semanas después, no te das cuenta en qué momento exacto dejaste de reaccionar con rabia o prisa ante los mismos tropiezos de siempre.\n\n## Habitar lo que ya estás construyendo\n\nPor eso importa cuidar el ambiente donde piensas y escribes. Un espacio editorial sin algoritmos de indignación ni contadores públicos de popularidad te permite volver a notar cómo estás por dentro antes de que el ruido externo decida por ti. Cada pequeño regreso a tu centro cambia lentamente aquello en lo que te conviertes.'
+        texto:'Los cambios más profundos casi nunca llegan anunciados por una crisis espectacular. Ocurren por repetición diminuta, día tras día, hasta que una mañana descubres que aquello que antes te sorprendía —la tensión en los hombros al despertar, el cinismo automático ante una buena noticia, el reflejo inmediato de mirar el teléfono cada tres minutos— se convirtió en tu paisaje normal.\n\nLo que te vuelves, dejas de notarlo. Ese fenómeno explica por qué tantas personas viven agotadas sin saber exactamente en qué momento perdieron su ligereza. Cuando un hábito se vuelve invisible, deja de parecer una elección y empieza a sentirse como tu personalidad definitiva.\n\n## El cine lento y la recuperación de la mirada\n\nPiensa en esas escenas donde la cámara permanece fija durante cuarenta segundos después de que los personajes salen de la habitación. Al principio sientes impaciencia. Luego algo en la respiración se afloja y empiezas a ver la luz cambiando en la ventana. Construir un hábito contemplativo funciona igual: cada pequeño regreso a tu centro cambia lentamente aquello en lo que te conviertes.'
       }
     ]
   }
@@ -10397,7 +10432,7 @@ function renderDiaryShowcase(){
   const items=[];
   Object.values(WAVY_SHOWCASE_AUTHORS).forEach(st=>{
     (st.notes||[]).forEach(n=>{
-      const score=(followed.has(st.me.username)?2:0)+(n.tema==='Atención e Inmediatez'?1:0);
+      const score=(followed.has(st.me.username)?2:0)+(n.tema==='Atención'?1:0);
       items.push({me:st.me,n,score});
     });
   });
@@ -10415,9 +10450,9 @@ function renderDiaryShowcase(){
       '</div>'+
       '<h3 class="med-title">'+esc(n.estado)+'</h3>'+
       '<p class="med-excerpt">'+esc(publicExcerpt(n))+'</p>'+
-      '<div class="med-foot">'+
-        '<span class="med-pill">'+(n.tema?esc(n.tema)+' · ':'')+publicReadMins(n)+' min de lectura</span>'+
-        '<span style="font-size:11.5px;color:var(--muted)">Leer en Wavy Journal →</span>'+
+      '<div class="med-foot" style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:nowrap">'+
+        '<span class="med-pill" style="white-space:nowrap">'+(n.tema?esc(n.tema)+' · ':'')+publicReadMins(n)+' min</span>'+
+        '<span style="font-size:11.5px;color:var(--muted);white-space:nowrap">Leer →</span>'+
       '</div>';
     card.onclick=()=>{location.hash='#/'+encodeURIComponent(me.username)+'/'+encodeURIComponent(n.id);};
     box.appendChild(card);
@@ -10426,7 +10461,7 @@ function renderDiaryShowcase(){
 function renderDiaryTopics(){
   const chips=$('diaryTopicChips'),list=$('diaryTopicsList');
   if(!chips||!list)return;
-  const temas=['Todos','Atención e Inmediatez','Culpa y Psique','Vínculos y No-Contacto','Memoria y Hábito'];
+  const temas=['Todos','Atención','Psique','Vínculos','Memoria'];
   chips.innerHTML='';
   temas.forEach(t=>{
     const b=document.createElement('button');
@@ -10438,23 +10473,23 @@ function renderDiaryTopics(){
     chips.appendChild(b);
   });
   const followed=new Set(S.followingAuthors||[]);
+  list.style.cssText='display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px';
   list.innerHTML='';
   Object.values(WAVY_SHOWCASE_AUTHORS).forEach(st=>{
     const matching=(st.notes||[]).filter(n=>activeDiaryTopic==='Todos'||n.tema===activeDiaryTopic);
     if(!matching.length)return;
     const isF=followed.has(st.me.username);
     const row=document.createElement('div');
-    row.className='med-card';
+    row.style.cssText='display:flex;flex-direction:column;justify-content:space-between;gap:10px;padding:12px;border:1px solid var(--rule);border-radius:16px;background:var(--paper);cursor:pointer';
     row.innerHTML=
-      '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px">'+
-        '<div style="display:flex;align-items:center;gap:9px;min-width:0">'+
-          '<div class="med-av">'+getAv(st.me.av)+'</div>'+
-          '<div style="min-width:0"><strong style="font-family:var(--serif);font-size:16px;display:block">'+esc(st.me.name)+'</strong><small style="font-size:11.5px;color:var(--muted)">@'+esc(st.me.username)+'</small></div>'+
+      '<div>'+
+        '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'+
+          '<div class="med-av" style="flex-shrink:0">'+getAv(st.me.av)+'</div>'+
+          '<div style="min-width:0"><strong style="font-family:var(--serif);font-size:15px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(st.me.name)+'</strong><small style="font-size:10.5px;color:var(--muted);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">@'+esc(st.me.username)+'</small></div>'+
         '</div>'+
-        '<button type="button" class="chip'+(isF?' on':'')+'" data-follow="'+esc(st.me.username)+'" style="min-height:28px;padding:4px 12px;font-size:11px;flex-shrink:0">'+(isF?'Siguiendo':'Seguir')+'</button>'+
+        '<p style="font-size:11.5px;color:var(--muted);margin:0;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">'+esc(st.me.bio)+'</p>'+
       '</div>'+
-      '<p style="font-size:12.5px;color:var(--muted);margin:0 0 8px;line-height:1.45">'+esc(st.me.bio)+'</p>'+
-      '<div style="font-family:var(--serif);font-size:14.5px;color:var(--ink)">Último ensayo: <i>'+esc(matching[0].estado)+'</i></div>';
+      '<button type="button" class="chip'+(isF?' on':'')+'" data-follow="'+esc(st.me.username)+'" style="width:100%;min-height:28px;padding:4px 10px;font-size:11px">'+(isF?'Siguiendo':'Seguir')+'</button>';
     row.querySelector('[data-follow]').onclick=e=>{
       e.stopPropagation();
       toggleFollowAuthor(st.me.username);
@@ -10883,18 +10918,18 @@ function drawLivingFlame(ts){
     pctEl.style.textShadow=isSparkBg?'0 1px 10px rgba(0,0,0,0.45)':(cfg.pctColor==='#F3ECF8'||cfg.pctColor==='#F6EAD4'?'0 1px 10px rgba(0,0,0,0.35)':'none');
   }
 
-  /* 0. Fondo físico: papel pintado / yeso / terciopelo; en 5% papel rojo terracota cálido (estilo Neil Krug) */
+  /* 0. Fondo físico; en 5% oscuridad total (#080706) antes de que se haga la luz */
   ctx.save();
   ctx.imageSmoothingEnabled=true;
   const bgTex=getPebTexture(cfg.bgMat||'cream_paper',pal);
   ctx.drawImage(bgTex,0,0,w,h);
-  if(u50<0.18){
-    const sparkBgAlpha=1-(u50/0.18);
+  if(u50<0.16){
+    const sparkBgAlpha=1-(u50/0.16);
     ctx.globalAlpha=sparkBgAlpha;
-    const tg=ctx.createRadialGradient(cx,cy,10,cx,cy,h*0.72);
-    tg.addColorStop(0,'#9E2F1B');
-    tg.addColorStop(0.55,'#7A1E12');
-    tg.addColorStop(1,'#4A100A');
+    const tg=ctx.createRadialGradient(cx,cy,6,cx,cy,h*0.78);
+    tg.addColorStop(0,'#17110E');
+    tg.addColorStop(0.35,'#0B0908');
+    tg.addColorStop(1,'#050404');
     ctx.fillStyle=tg;
     ctx.fillRect(0,0,w,h);
   }
@@ -11894,6 +11929,39 @@ function startFlameAnim(){
   if(!flameRaf && $('flameCanvas') && !document.hidden){
     flameRaf=requestAnimationFrame(drawLivingFlame);
   }
+}
+
+/* Trailer de 30 segundos (5% → 100%) desde botón liquid glass */
+let sunTrailerTimer=0,sunTrailerOn=false;
+function stopSunTrailer(){
+  sunTrailerOn=false;
+  if(sunTrailerTimer){clearInterval(sunTrailerTimer);sunTrailerTimer=0;}
+  devFlameOverridePct=null;
+  if($('sunTrailerTxt'))$('sunTrailerTxt').textContent='Evolución · 30s';
+  if($('sunTrailerIco'))$('sunTrailerIco').innerHTML='<polygon points="6 4 20 12 6 20 6 4"/>';
+}
+if($('sunTrailerBtn')){
+  $('sunTrailerBtn').onclick=()=>{
+    if(sunTrailerOn){stopSunTrailer();return;}
+    sunTrailerOn=true;
+    const tStart=performance.now();
+    const DUR=30000;
+    devFlameOverridePct=5;flamePctSmooth=5;
+    if($('sunTrailerTxt'))$('sunTrailerTxt').textContent='Detener';
+    if($('sunTrailerIco'))$('sunTrailerIco').innerHTML='<rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/>';
+    startFlameAnim();
+    sunTrailerTimer=setInterval(()=>{
+      if(!sunTrailerOn){stopSunTrailer();return;}
+      const el=performance.now()-tStart;
+      const frac=Math.min(1,el/DUR);
+      const pct=5+95*frac;
+      devFlameOverridePct=pct;
+      if(frac>=1){
+        clearInterval(sunTrailerTimer);sunTrailerTimer=0;
+        setTimeout(()=>stopSunTrailer(),1800);
+      }
+    },50);
+  };
 }
 
 if($('pebVesselBar')){
