@@ -2083,6 +2083,84 @@ summary::-webkit-details-marker{display:none}
 
 /* La respiración vive dentro de su recuadro y difumina #sea en sus propios colores */
 
+/* Pantalla de bienvenida animada tipo editorial (Logo Wavy → Inhala / Exhala → Inicio de sesión) */
+#wavySplashOverlay{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--paper);color:var(--ink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  overflow:hidden;opacity:1;transition:opacity .65s ease;
+}
+#wavySplashOverlay[hidden]{display:none!important}
+#wavySplashOverlay.is-fading{opacity:0;pointer-events:none}
+#wavySplashLogoPhase{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  transition:opacity .55s ease,transform .55s ease;
+}
+#wavySplashLogoPhase.is-hidden{opacity:0;transform:translateY(-8px);pointer-events:none;position:absolute}
+.wavy-splash-mark{
+  width:64px;height:64px;
+  animation:wavyMarkIn 1.15s cubic-bezier(.22,1,.36,1) both;
+}
+.wavy-splash-mark .wavy-sun-arc{
+  stroke-dasharray:110;stroke-dashoffset:110;
+  animation:wavyStrokeDraw 1.05s .15s cubic-bezier(.22,1,.36,1) forwards;
+}
+.wavy-splash-mark .wavy-wave-line{
+  stroke-dasharray:80;stroke-dashoffset:80;
+  animation:wavyStrokeDraw .95s .35s cubic-bezier(.22,1,.36,1) forwards;
+}
+.wavy-splash-word{
+  font-family:var(--serif);font-size:48px;font-weight:500;letter-spacing:-.02em;line-height:1;color:var(--ink);
+  opacity:0;transform:translateY(10px);
+  animation:wavyWordIn .85s .32s cubic-bezier(.22,1,.36,1) forwards;
+}
+@keyframes wavyMarkIn{
+  0%{opacity:0;transform:scale(.86) translateY(8px)}
+  100%{opacity:1;transform:scale(1) translateY(0)}
+}
+@keyframes wavyStrokeDraw{
+  to{stroke-dashoffset:0}
+}
+@keyframes wavyWordIn{
+  0%{opacity:0;transform:translateY(10px)}
+  100%{opacity:1;transform:translateY(0)}
+}
+#wavySplashBreathPhase{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  opacity:0;pointer-events:none;transition:opacity .65s ease;
+}
+#wavySplashBreathPhase.is-active{opacity:1;pointer-events:auto}
+#wavySplashBreathLabel{
+  margin-top:15vh;
+  font-family:var(--serif);font-size:34px;font-weight:500;letter-spacing:-.01em;color:var(--ink);
+  transition:opacity .45s ease,transform .45s ease;
+  z-index:2;
+}
+#wavySplashDome{
+  position:absolute;left:50%;bottom:-56vw;
+  width:170vw;height:110vw;min-height:460px;max-height:760px;
+  border-radius:50% 50% 0 0;
+  background:radial-gradient(ellipse at 50% 25%, #E79B6D 0%, #D47647 58%, #BA5B32 100%);
+  transform:translateX(-50%) translateY(42%) scale(0.94);
+  transition:transform 4s cubic-bezier(.42,0,.22,1);
+  will-change:transform;
+}
+#wavySplashDome.is-inhale{
+  transform:translateX(-50%) translateY(-4%) scale(1.04);
+}
+#wavySplashDome.is-exhale{
+  transition:transform 4.4s cubic-bezier(.38,0,.25,1);
+  transform:translateX(-50%) translateY(36%) scale(0.94);
+}
+#wavySplashSkipBtn{
+  position:absolute;top:max(18px,env(safe-area-inset-top));right:20px;z-index:3;
+  background:none;border:none;padding:8px 10px;
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  cursor:pointer;opacity:.72;transition:opacity .2s ease;
+}
+#wavySplashSkipBtn:hover{opacity:1}
+
 /* Portada de bienvenida · Blanco Pulcritud absoluto, sin fondo negro ni marco doble */
 #onboardingModal.modal-backdrop{
   background:var(--paper);
@@ -3338,7 +3416,26 @@ summary::-webkit-details-marker{display:none}
 </main>
 
 <!-- =========================================================
-     MODAL 1: ONBOARDING MINIMALISTA EN BLANCO PULCRITUD
+     SPLASH INICIAL: LOGO WAVY ANIMADO → RESPIRACIÓN INHALA/EXHALA
+     ========================================================= -->
+<div id="wavySplashOverlay" hidden aria-live="polite">
+  <div id="wavySplashLogoPhase">
+    <svg class="wavy-splash-mark" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      <path class="wavy-sun-arc" d="M16 38a16 16 0 0 1 32 0" stroke="#C87A52" stroke-width="2.4" stroke-linecap="round"/>
+      <path class="wavy-wave-line" d="M10 42c6-4.5 12 4.5 18 0s12-4.5 18 0 6 2.5 8 0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+      <path class="wavy-wave-line" d="M16 49c5-3.2 10 3.2 15 0s10-3.2 17 0" stroke="#C87A52" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>
+    </svg>
+    <div class="wavy-splash-word">Wavy</div>
+  </div>
+  <div id="wavySplashBreathPhase">
+    <button type="button" id="wavySplashSkipBtn" aria-label="Omitir respiración">Omitir →</button>
+    <div id="wavySplashBreathLabel">Inhala</div>
+    <div id="wavySplashDome" aria-hidden="true"></div>
+  </div>
+</div>
+
+<!-- =========================================================
+     MODAL 1: INICIO DE SESIÓN MINIMALISTA EN BLANCO PULCRITUD
      ========================================================= -->
 <div class="modal-backdrop" id="onboardingModal" hidden role="dialog" aria-modal="true" aria-labelledby="onbTitle">
   <div class="cover-plate">
@@ -3347,7 +3444,7 @@ summary::-webkit-details-marker{display:none}
       <h2 class="cover-title" id="onbTitle">Wavy</h2>
       <p class="cover-sub">Donde tu calma se encuentra con los tuyos</p>
 
-      <div id="onbStep0">
+      <div id="onbStep0" hidden>
         <p style="font-family:var(--serif);font-size:17px;line-height:1.45;color:var(--ink);margin:10px 0 18px">Respira con el mar. Hazlo con los tuyos.</p>
         <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin:4px 0 20px">
           <button type="button" id="onbGiftPlayBtn" aria-label="Regálate una respiración aquí" style="width:94px;height:94px;border-radius:50%;border:1px solid var(--rule);background:radial-gradient(circle at 36% 32%, var(--paper) 0%, color-mix(in srgb, var(--ink) 7%, var(--paper)) 100%);display:grid;place-items:center;cursor:pointer;font-family:var(--serif);font-size:16px;color:var(--ink);transition:transform 4s ease-in-out, box-shadow .3s ease;box-shadow:0 8px 22px -12px rgba(0,0,0,0.20)">
@@ -3358,8 +3455,9 @@ summary::-webkit-details-marker{display:none}
         <button type="button" class="btn" id="onbShowIdentityBtn" style="width:100%;font-size:11px">Ya tengo usuario o guardar mi nombre</button>
       </div>
 
-      <!-- PASO 1: IDENTIDAD DESPUÉS DEL PRIMER LOGRO -->
-      <div id="onbStep1" hidden>
+      <!-- PASO 1: INICIO DE SESIÓN / IDENTIDAD -->
+      <div id="onbStep1">
+        <div class="cover-rule"><span>Inicia sesión o crea tu espacio</span></div>
 
         <div class="cover-form">
           <div class="cover-field">
@@ -3383,10 +3481,10 @@ summary::-webkit-details-marker{display:none}
 
         <label style="display:flex;align-items:flex-start;gap:9px;margin:10px 0 14px;font-size:11px;color:var(--muted);cursor:pointer;line-height:1.4;text-align:left;background:var(--wash);padding:10px 12px;border-radius:12px;border:1px solid var(--rule)">
           <input type="checkbox" id="obConsentCheck" checked style="margin-top:2px;width:16px;height:16px;accent-color:var(--ok)">
-          <span>Tus registros viven de forma privada en tu dispositivo (LFPDPPP). Sin anuncios ni algoritmos de ruido.</span>
+          <span>Tus registros viven de forma privada en tu dispositivo (LFPDPPP).</span>
         </label>
 
-        <button type="button" class="btn" id="onbNext1" style="width:100%">Guardar mi avance →</button>
+        <button type="button" class="btn" id="onbNext1" style="width:100%">Entrar a Wavy →</button>
       </div>
 
       <!-- PASO 2: HÁBITO Y RAZÓN DE CUIDADO -->
@@ -3407,9 +3505,8 @@ summary::-webkit-details-marker{display:none}
         <button type="button" class="btn" id="onbStartBreathBtn" style="width:100%;margin-bottom:8px"><span>Iniciar respiración de 15 s</span></button>
         <button type="button" class="btn ghost" id="onbFinishDirectBtn" style="width:100%">Entrar directamente a Wavy</button>
       </div>
-      <!-- Versión de la app: sube una por ronda (v18, v19, v20…) para saber
-           de un vistazo si la versión publicada ya trae los últimos cambios. -->
-      <div class="cover-version">v29</div>
+      <!-- Versión de la app -->
+      <div class="cover-version">V1.01</div>
     </div>
   </div>
 </div>
@@ -5430,24 +5527,92 @@ function claimAlias(alias,name){
   return true;
 }
 
+let wavySplashTimers=[];
+function clearWavySplashTimers(){
+  wavySplashTimers.forEach(id=>clearTimeout(id));
+  wavySplashTimers=[];
+}
+function finishWavySplashToLogin(){
+  clearWavySplashTimers();
+  const ov=$('wavySplashOverlay');
+  if(ov){
+    ov.classList.add('is-fading');
+    const tid=setTimeout(()=>{
+      ov.hidden=true;
+      ov.classList.remove('is-fading');
+    },620);
+    wavySplashTimers.push(tid);
+  }
+  if($('onboardingModal'))$('onboardingModal').hidden=false;
+  const s0=$('onbStep0'),s1=$('onbStep1'),s2=$('onbStep2'),s3=$('onbStep3');
+  if(s0)s0.hidden=true;
+  if(s1)s1.hidden=false;
+  if(s2)s2.hidden=true;
+  if(s3)s3.hidden=true;
+}
+function runWavyWelcomeSplash(){
+  const ov=$('wavySplashOverlay');
+  const logo=$('wavySplashLogoPhase');
+  const breath=$('wavySplashBreathPhase');
+  const lbl=$('wavySplashBreathLabel');
+  const dome=$('wavySplashDome');
+  if(!ov || !logo || !breath || !lbl || !dome){
+    finishWavySplashToLogin();
+    return;
+  }
+  clearWavySplashTimers();
+  ov.classList.remove('is-fading');
+  ov.hidden=false;
+  logo.classList.remove('is-hidden');
+  breath.classList.remove('is-active');
+  dome.classList.remove('is-inhale','is-exhale');
+  lbl.textContent='Inhala';
+  if($('onboardingModal'))$('onboardingModal').hidden=true;
+
+  /* Fase 1 (0–1.8s): Logo Wavy animado → Fase 2 (1.8s–10.4s): Inhala y Exhala en pantalla completa → Fase 3: Inicio de sesión */
+  wavySplashTimers.push(setTimeout(()=>{
+    logo.classList.add('is-hidden');
+    breath.classList.add('is-active');
+    lbl.textContent='Inhala';
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        dome.classList.add('is-inhale');
+      });
+    });
+  },1850));
+
+  wavySplashTimers.push(setTimeout(()=>{
+    lbl.style.opacity='0';
+    wavySplashTimers.push(setTimeout(()=>{
+      lbl.textContent='Exhala';
+      lbl.style.opacity='1';
+    },260));
+    dome.classList.remove('is-inhale');
+    dome.classList.add('is-exhale');
+  },5850));
+
+  wavySplashTimers.push(setTimeout(()=>{
+    finishWavySplashToLogin();
+  },10350));
+}
+if($('wavySplashSkipBtn')){
+  $('wavySplashSkipBtn').onclick=()=>finishWavySplashToLogin();
+}
+
 function initOnboarding(forceShow){
   const urlLogin=(typeof URLSearchParams!=='undefined' && new URLSearchParams(window.location.search||'').get('login')==='1');
   const needsOnboarding=(!S.onb || !S.onb.done);
   if(!forceShow && !urlLogin && !needsOnboarding)return;
-  $('onboardingModal').hidden=false;
-  const s0=$('onbStep0'),s1=$('onbStep1'),s2=$('onbStep2'),s3=$('onbStep3');
-  if(s0 && s1){
-    const showStep1=Boolean(urlLogin);
-    s0.hidden=showStep1;
-    s1.hidden=!showStep1;
-    if(s2)s2.hidden=true;
-    if(s3)s3.hidden=true;
-  }
   if($('obNameInput'))$('obNameInput').value=S.me.name||'';
   if($('obAliasInput'))$('obAliasInput').value=(S.me.username && S.me.username!=='invitado')?'@'+S.me.username:'';
   obSelectedBio=S.bioMode||'male';
   document.querySelectorAll('#obBioChoice .chip').forEach(c=>c.classList.toggle('on',c.dataset.obm===obSelectedBio));
   renderObHabitGrid();
+  if(!forceShow){
+    runWavyWelcomeSplash();
+  }else{
+    finishWavySplashToLogin();
+  }
 }
 if($('onbGiftPlayBtn') && $('onbGiftOrb') && $('onbGiftHint')){
   let giftTimer=0,giftRunning=false;
@@ -10325,20 +10490,41 @@ function drawLivingFlame(ts){
     ctx.rotate(rot);
     ctx.globalAlpha=sunVis;
 
-    const ebu=Math.max(0,Math.min(1,(u-0.15)/0.85));
-    const ecstasy=Math.max(0,(u-0.82)/0.18);
+    /* Mitad 1 (5%→50%): la evolución previa completa su clímax en 50%; Mitad 2 (50%→100%): segundo salto evolutivo sin circunferencias que choquen */
+    const u1=Math.min(1,u/0.4737);
+    const u2=Math.max(0,(u-0.4737)/0.5263);
+    const ebu=Math.max(0,Math.min(1,(u1-0.15)/0.85));
+    const ecstasy=Math.max(0,(u1-0.72)/0.28);
+    const ecstasy2=Math.max(0,(u2-0.65)/0.35);
 
     if(shape==='flat_vermilion'){
-      /* HOMBRE 1 · Sol Rojo Plano (gouache mate, disco amarillo limón + 16 dagas/lenguas bermellón) */
+      /* HOMBRE 1 · Sol Rojo Plano (gouache mate: 5%→50% dagas/lenguas + cuñas; 50%→100% facetas limón en pliegues, puntas secundarias y lluvia de cuñas) */
+      if(u2>0.08){
+        const secVis=Math.min(1,(u2-0.08)/0.55);
+        const secCount=16;
+        for(let i=0;i<secCount;i++){
+          const a=((i+0.5)*Math.PI*2)/secCount+(pebHash(i*9.1)-0.5)*0.05;
+          const rLen=baseR*(1.34+0.36*u2+0.16*ecstasy2+pebHash(i*4.7)*0.14)*secVis;
+          const bW=baseR*0.072;
+          ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*0.88*secVis;
+          ctx.fillStyle=(i%2===0)?pal.ray2:pal.ray;
+          ctx.beginPath();
+          ctx.moveTo(baseR*0.76,-bW);
+          ctx.lineTo(rLen,0);
+          ctx.lineTo(baseR*0.76,bW);
+          ctx.closePath();ctx.fill();
+          ctx.restore();
+        }
+      }
       const rays=16;
       for(let i=0;i<rays;i++){
         const isDagger=(i%2===0);
-        const tierVis=isDagger?1:Math.max(0,Math.min(1,(u-0.18)/0.32));
+        const tierVis=isDagger?1:Math.max(0,Math.min(1,(u1-0.18)/0.32));
         if(tierVis<=0.02)continue;
         const aJitter=(pebHash(i*3.7)-0.5)*0.09;
         const lJitter=0.90+pebHash(i*7.1)*0.22;
         const a=(i*Math.PI*2)/rays+aJitter;
-        const rLen=baseR*(isDagger?(2.08+0.24*ecstasy):1.68)*lJitter*tierVis;
+        const rLen=baseR*(isDagger?(2.08+0.22*ecstasy+0.14*u2):1.68+0.12*u2)*lJitter*tierVis;
         const bW=baseR*(isDagger?0.155:0.125);
         ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*tierVis;
         ctx.fillStyle=pal.ray;
@@ -10349,7 +10535,7 @@ function drawLivingFlame(ts){
           ctx.quadraticCurveTo(rLen*0.56,-bW*0.38+bend,rLen,bend*0.4);
           ctx.quadraticCurveTo(rLen*0.56,bW*0.38+bend,baseR*0.72,bW);
           ctx.closePath();ctx.fill();
-          /* Pliegue central naranja que pulsa y se alarga hacia la punta al acercarse al 100% */
+          /* Pliegue central naranja que pulsa y florece con faceta amarillo limón en 50%→100% */
           const foldReach=0.80+0.16*ebu*(0.6+0.4*Math.sin(t*2.4+i));
           ctx.fillStyle=pal.ray2;
           ctx.beginPath();
@@ -10357,6 +10543,16 @@ function drawLivingFlame(ts){
           ctx.lineTo(rLen*foldReach,bend*0.35);
           ctx.lineTo(baseR*0.78,bW*0.38);
           ctx.closePath();ctx.fill();
+          if(u2>0.10){
+            const f2=Math.min(1,(u2-0.10)/0.45);
+            ctx.globalAlpha=sunVis*f2*0.85;
+            ctx.fillStyle=pal.disc;
+            ctx.beginPath();
+            ctx.moveTo(baseR*0.82,-bW*0.18*f2);
+            ctx.lineTo(rLen*(0.64+0.26*f2),bend*0.28);
+            ctx.lineTo(baseR*0.82,bW*0.18*f2);
+            ctx.closePath();ctx.fill();
+          }
         }else{
           const dir=(pebHash(i*5.3)>0.5?1:-1);
           const waveAnim=Math.sin(t*1.8+i)*baseR*0.035*ebu;
@@ -10369,22 +10565,22 @@ function drawLivingFlame(ts){
         }
         ctx.restore();
       }
-      /* Chispas en cuña y gotas planas de gouache (100% relleno, sin líneas finas) brotando de las puntas */
-      if(u>0.42){
-        const rAcc=(u-0.42)/0.58;
-        const spTotal=Math.round(8+22*rAcc+16*ecstasy);
+      /* Chispas en cuña y gotas planas de gouache (100% relleno, sin líneas finas) */
+      if(u1>0.42){
+        const rAcc=(u1-0.42)/0.58;
+        const spTotal=Math.round(8+22*rAcc+16*ecstasy+26*u2+14*ecstasy2);
         for(let s=0;s<spTotal;s++){
           const life=((t*0.56+pebHash(s*4.3))%1);
           const fade=Math.sin(life*Math.PI);
           if(fade<0.05)continue;
           const sa=pebHash(s*7.9)*Math.PI*2;
-          const sd=baseR*(1.65+life*(1.05+0.85*rAcc+0.55*ecstasy));
+          const sd=baseR*(1.65+life*(1.05+0.85*rAcc+0.45*ecstasy+0.65*u2));
           const sx=Math.cos(sa)*sd,sy=Math.sin(sa)*sd;
           ctx.save();
           ctx.translate(sx,sy);ctx.rotate(sa);
-          ctx.globalAlpha=sunVis*fade*(0.45+0.52*rAcc);
+          ctx.globalAlpha=sunVis*fade*(0.45+0.45*rAcc+0.10*u2);
           ctx.fillStyle=(s%3===0)?pal.disc:(s%2===0?pal.ray2:pal.ray);
-          const sz=baseR*(0.038+0.035*pebHash(s*2.1));
+          const sz=baseR*(0.038+0.038*pebHash(s*2.1))*(1+0.25*u2);
           ctx.beginPath();
           ctx.moveTo(-sz*0.6,-sz*0.32);ctx.lineTo(sz,0);ctx.lineTo(-sz*0.6,sz*0.32);
           ctx.closePath();ctx.fill();
@@ -10409,13 +10605,31 @@ function drawLivingFlame(ts){
       ctx.restore();
 
     }else if(shape==='summer_gouache'){
-      /* HOMBRE 2 · Verano (fondo amarillo homogéneo + pétalos anchos terracota que abren una segunda flor solar al 100%) */
-      if(u>0.55){
-        const backVis=Math.min(1,(u-0.55)/0.38);
+      /* HOMBRE 2 · Verano (5%→50% doble flor terracota; 50%→100% tercera corona ámbar-dorada escalonada y polen gouache en dos escalas) */
+      if(u2>0.06){
+        const thirdVis=Math.min(1,(u2-0.06)/0.55);
+        const thirdPetals=12;
+        for(let i=0;i<thirdPetals;i++){
+          const a=(i*Math.PI*2)/thirdPetals+(Math.PI/(thirdPetals*2))+(pebHash(i*9.3)-0.5)*0.06;
+          const rLen=baseR*(1.88+0.28*u2+0.14*ecstasy2+0.08*Math.sin(t*1.4+i))*thirdVis;
+          const bW=baseR*0.24;
+          const sway=(i%2===0?1:-1)*baseR*0.12;
+          ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*0.58*thirdVis;
+          ctx.fillStyle='#F0A63E';
+          ctx.beginPath();
+          ctx.moveTo(baseR*0.64,-bW);
+          ctx.bezierCurveTo(baseR*1.12,-bW*0.85+sway*0.4,rLen*0.92,-bW*0.38+sway,rLen,sway*0.45);
+          ctx.bezierCurveTo(rLen*0.92,bW*0.38+sway,baseR*1.12,bW*0.85+sway*0.4,baseR*0.64,bW);
+          ctx.closePath();ctx.fill();
+          ctx.restore();
+        }
+      }
+      if(u1>0.55){
+        const backVis=Math.min(1,(u1-0.55)/0.38);
         const backPetals=12;
         for(let i=0;i<backPetals;i++){
           const a=(i*Math.PI*2)/backPetals+(Math.PI/backPetals)+(pebHash(i*6.7)-0.5)*0.06;
-          const rLen=baseR*(1.68+0.32*ecstasy+0.10*Math.sin(t*1.5+i))*backVis;
+          const rLen=baseR*(1.68+0.32*ecstasy+0.12*u2+0.10*Math.sin(t*1.5+i))*backVis;
           const bW=baseR*0.28;
           const sway=(i%2===0?-1:1)*baseR*0.14;
           ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*0.68*backVis;
@@ -10431,7 +10645,7 @@ function drawLivingFlame(ts){
       const petals=12;
       for(let i=0;i<petals;i++){
         const a=(i*Math.PI*2)/petals+(pebHash(i*4.1)-0.5)*0.07;
-        const rLen=baseR*(1.62+pebHash(i*8.7)*0.24+0.12*ecstasy);
+        const rLen=baseR*(1.62+pebHash(i*8.7)*0.24+0.12*ecstasy+0.10*u2);
         const bW=baseR*(0.30+pebHash(i*2.3)*0.05);
         const sway=(i%2===0?1:-1)*baseR*(0.16+0.04*Math.sin(t*1.6+i)*ebu);
         ctx.save();ctx.rotate(a);
@@ -10443,20 +10657,21 @@ function drawLivingFlame(ts){
         ctx.closePath();ctx.fill();
         ctx.restore();
       }
-      /* Polen de fuego en gouache (círculos orgánicos rellenos, cero líneas finas) */
-      if(u>0.38){
-        const vAcc=(u-0.38)/0.62;
-        const spTotal=Math.round(8+22*vAcc+16*ecstasy);
+      /* Polen de fuego en gouache (círculos orgánicos rellenos en dos escalas, cero líneas finas) */
+      if(u1>0.38){
+        const vAcc=(u1-0.38)/0.62;
+        const spTotal=Math.round(8+22*vAcc+16*ecstasy+24*u2+14*ecstasy2);
         for(let s=0;s<spTotal;s++){
           const life=((t*0.48+pebHash(s*5.9))%1);
           const fade=Math.sin(life*Math.PI);
           if(fade<0.05)continue;
           const sa=pebHash(s*8.3)*Math.PI*2+life*0.2;
-          const sd=baseR*(1.55+life*(1.1+0.9*vAcc+0.5*ecstasy));
+          const sd=baseR*(1.55+life*(1.1+0.9*vAcc+0.4*ecstasy+0.6*u2));
           ctx.save();
-          ctx.globalAlpha=sunVis*fade*(0.42+0.52*vAcc);
-          ctx.fillStyle=(s%2===0)?pal.disc:pal.ray;
-          const sr=baseR*(0.032+0.034*pebHash(s*3.1));
+          ctx.globalAlpha=sunVis*fade*(0.42+0.45*vAcc+0.10*u2);
+          ctx.fillStyle=(s%3===0)?'#F0A63E':(s%2===0?pal.disc:pal.ray);
+          const scaleBoost=(s%4===0 && u2>0.25)?1.45:1.0;
+          const sr=baseR*(0.032+0.034*pebHash(s*3.1))*scaleBoost;
           ctx.beginPath();ctx.arc(Math.cos(sa)*sd,Math.sin(sa)*sd,sr,0,Math.PI*2);ctx.fill();
           ctx.restore();
         }
@@ -10473,14 +10688,14 @@ function drawLivingFlame(ts){
       ctx.closePath();ctx.fill();
 
     }else if(shape==='lithograph_sun'){
-      /* HOMBRE 3 · Litografía (136 agujas grabadas + ondas radiales en la corona azafrán + anillos punteados y supernova de trazos al 100%) */
+      /* HOMBRE 3 · Litografía (SIN circunferencias que choquen: 5%→50% 136 agujas + onda azafrán; 50%→100% 68 agujas doradas extra-largas, tramas radiales exteriores y lluvia de tinta) */
       const rays=136;
       const wavePhase=t*1.35*ebu;
       for(let i=0;i<rays;i++){
         const a=(i*Math.PI*2)/rays+(pebHash(i*3.9)-0.5)*0.02;
         const petalWave=0.78+0.28*Math.sin(a*12+0.5+wavePhase*0.4);
-        const rLen=baseR*(2.25+pebHash(i*7.3)*0.65+0.28*ecstasy)*petalWave;
-        const innerLen=baseR*(1.12+0.22*Math.sin(a*12+0.5-wavePhase)+0.18*ecstasy);
+        const rLen=baseR*(2.25+pebHash(i*7.3)*0.65+0.24*ecstasy+0.16*u2)*petalWave;
+        const innerLen=baseR*(1.12+0.22*Math.sin(a*12+0.5-wavePhase)+0.16*ecstasy+0.10*u2);
         ctx.lineCap='round';
         ctx.strokeStyle=i%3===0?'#D45222':pal.ray;
         ctx.lineWidth=Math.max(1.0,baseR*0.014);
@@ -10495,31 +10710,47 @@ function drawLivingFlame(ts){
         ctx.lineTo(Math.cos(a)*innerLen,Math.sin(a)*innerLen);
         ctx.stroke();
       }
-      /* Órbitas grabadas punteadas en oro viejo + micro-destellos en trazo recto al 100% */
-      if(u>0.45){
-        const lAcc=(u-0.45)/0.55;
-        ctx.save();ctx.rotate(-t*0.06);
-        ctx.strokeStyle=pal.ray2;
-        ctx.lineWidth=Math.max(1.0,baseR*0.013);
-        ctx.setLineDash([3,9]);
-        ctx.globalAlpha=sunVis*(0.24+0.42*lAcc);
-        ctx.beginPath();ctx.arc(0,0,baseR*(2.35+0.35*lAcc),0,Math.PI*2);ctx.stroke();
-        if(u>0.75){
-          ctx.globalAlpha=sunVis*(0.20+0.45*ecstasy);
-          ctx.beginPath();ctx.arc(0,0,baseR*2.95,0,Math.PI*2);ctx.stroke();
+      /* 50%→100%: 68 agujas doradas intersticiales extra-largas + tramas radiales exteriores (sin aros circulares) */
+      if(u2>0.06){
+        const l2=Math.min(1,(u2-0.06)/0.65);
+        const extraNeedles=68;
+        ctx.save();ctx.lineCap='round';
+        for(let i=0;i<extraNeedles;i++){
+          const a=((i+0.5)*Math.PI*2)/extraNeedles+(pebHash(i*6.7)-0.5)*0.015;
+          const rStart=baseR*1.05;
+          const rEnd=baseR*(2.45+0.65*l2+0.25*ecstasy2+pebHash(i*4.1)*0.35);
+          ctx.globalAlpha=sunVis*(0.35+0.55*l2);
+          ctx.strokeStyle=(i%2===0)?pal.ray2:'#E89948';
+          ctx.lineWidth=Math.max(0.9,baseR*0.011);
+          ctx.beginPath();
+          ctx.moveTo(Math.cos(a)*rStart,Math.sin(a)*rStart);
+          ctx.lineTo(Math.cos(a)*rEnd,Math.sin(a)*rEnd);
+          ctx.stroke();
+          if(u2>0.38 && i%2===0){
+            const tickS=rEnd+baseR*0.08;
+            const tickE=tickS+baseR*(0.12+0.14*ecstasy2);
+            ctx.globalAlpha=sunVis*0.65*((u2-0.38)/0.62);
+            ctx.beginPath();
+            ctx.moveTo(Math.cos(a)*tickS,Math.sin(a)*tickS);
+            ctx.lineTo(Math.cos(a)*tickE,Math.sin(a)*tickE);
+            ctx.stroke();
+          }
         }
         ctx.restore();
-        const spTotal=Math.round(14+28*lAcc+20*ecstasy);
+      }
+      if(u1>0.45){
+        const lAcc=(u1-0.45)/0.55;
+        const spTotal=Math.round(14+28*lAcc+20*ecstasy+26*u2+16*ecstasy2);
         for(let s=0;s<spTotal;s++){
           const life=((t*0.58+pebHash(s*4.9))%1);
           const fade=Math.sin(life*Math.PI);
           if(fade<0.06)continue;
           const sa=pebHash(s*9.1)*Math.PI*2;
-          const sd=baseR*(1.6+life*(1.5+0.9*lAcc));
+          const sd=baseR*(1.6+life*(1.5+0.9*lAcc+0.7*u2));
           const sx=Math.cos(sa)*sd,sy=Math.sin(sa)*sd;
-          const len=baseR*(0.06+0.09*pebHash(s*2.3));
+          const len=baseR*(0.06+0.10*pebHash(s*2.3));
           ctx.save();
-          ctx.globalAlpha=sunVis*fade*(0.38+0.55*lAcc);
+          ctx.globalAlpha=sunVis*fade*(0.38+0.48*lAcc+0.12*u2);
           ctx.strokeStyle=(s%2===0)?pal.ray2:'#D45222';
           ctx.lineWidth=Math.max(1.0,baseR*0.014);
           ctx.beginPath();
@@ -10537,15 +10768,32 @@ function drawLivingFlame(ts){
       ctx.restore();
 
     }else if(shape==='alba_starburst'){
-      /* MUJER 1 · Alba (terracota-coral + estallido dorado punteado y agujas finas + lluvia de polvo de oro al 100%) */
+      /* MUJER 1 · Alba (5%→50% 36 agujas + polvo dorado; 50%→100% 36 agujas intersticiales champán + destellos en cruz de 4 puntas en el aire libre) */
+      if(u2>0.08){
+        const a2Vis=Math.min(1,(u2-0.08)/0.55);
+        const interNeedles=36;
+        for(let i=0;i<interNeedles;i++){
+          const a=((i+0.5)*Math.PI*2)/interNeedles+(pebHash(i*7.9)-0.5)*0.02;
+          const rLen=baseR*(1.65+0.58*a2Vis+0.25*ecstasy2+pebHash(i*3.3)*0.22)*a2Vis;
+          const bW=baseR*0.018;
+          ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*0.72*a2Vis;
+          ctx.fillStyle='#F9E8C8';
+          ctx.beginPath();
+          ctx.moveTo(baseR*0.36,-bW);
+          ctx.lineTo(rLen,0);
+          ctx.lineTo(baseR*0.36,bW);
+          ctx.closePath();ctx.fill();
+          ctx.restore();
+        }
+      }
       const needles=36;
       for(let i=0;i<needles;i++){
         const isMain=(i%2===0);
-        const tierVis=isMain?1:Math.max(0,Math.min(1,(u-0.20)/0.35));
+        const tierVis=isMain?1:Math.max(0,Math.min(1,(u1-0.20)/0.35));
         if(tierVis<=0.02)continue;
         const a=(i*Math.PI*2)/needles+(pebHash(i*4.3)-0.5)*0.03;
-        const extraCelebrate=(i%6===0)?0.55*ecstasy:0.18*ecstasy;
-        const rLen=baseR*(isMain?(1.95+pebHash(i*7.7)*0.22+extraCelebrate):(1.42+pebHash(i*5.1)*0.24))*tierVis;
+        const extraCelebrate=(i%6===0)?(0.45*ecstasy+0.32*u2):(0.16*ecstasy+0.14*u2);
+        const rLen=baseR*(isMain?(1.95+pebHash(i*7.7)*0.22+extraCelebrate):(1.42+pebHash(i*5.1)*0.24+0.15*u2))*tierVis;
         const bW=baseR*(isMain?0.042:0.026);
         ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*tierVis;
         ctx.fillStyle=isMain?pal.ray:pal.ray2;
@@ -10556,19 +10804,43 @@ function drawLivingFlame(ts){
         ctx.closePath();ctx.fill();
         ctx.restore();
       }
-      /* Expansión del punteado de oro en anillos de micro-puntos + lluvia celebratoria al 100% */
-      if(u>0.35){
-        const aAcc=(u-0.35)/0.65;
-        const dustCount=Math.round(16+34*aAcc+24*ecstasy);
+      /* Destellos en cruz de 4 puntas finas en el espacio libre (50%→100%, sin aros) */
+      if(u2>0.32){
+        const glAcc=(u2-0.32)/0.68;
+        const glCount=Math.round(8+14*glAcc+10*ecstasy2);
+        for(let g=0;g<glCount;g++){
+          const life=((t*0.42+pebHash(g*6.7))%1);
+          const fade=Math.sin(life*Math.PI);
+          if(fade<0.08)continue;
+          const ga=pebHash(g*9.9)*Math.PI*2;
+          const gd=baseR*(2.25+pebHash(g*3.9)*0.95);
+          const gx=Math.cos(ga)*gd,gy=Math.sin(ga)*gd;
+          const gs=baseR*(0.065+0.055*pebHash(g*5.1))*(0.6+0.4*glAcc);
+          ctx.save();ctx.translate(gx,gy);
+          ctx.globalAlpha=sunVis*fade*(0.45+0.45*glAcc);
+          ctx.fillStyle='#FFF2D8';
+          ctx.beginPath();
+          ctx.moveTo(0,-gs);ctx.lineTo(gs*0.22,-gs*0.22);
+          ctx.lineTo(gs,0);ctx.lineTo(gs*0.22,gs*0.22);
+          ctx.lineTo(0,gs);ctx.lineTo(-gs*0.22,gs*0.22);
+          ctx.lineTo(-gs,0);ctx.lineTo(-gs*0.22,-gs*0.22);
+          ctx.closePath();ctx.fill();
+          ctx.restore();
+        }
+      }
+      /* Expansión del punteado de oro en micro-puntos + lluvia celebratoria al 100% */
+      if(u1>0.35){
+        const aAcc=(u1-0.35)/0.65;
+        const dustCount=Math.round(16+34*aAcc+20*ecstasy+28*u2+18*ecstasy2);
         for(let d=0;d<dustCount;d++){
           const life=((t*0.50+pebHash(d*5.7))%1);
           const fade=Math.sin(life*Math.PI);
           if(fade<0.05)continue;
           const da=pebHash(d*8.3)*Math.PI*2+t*0.03;
-          const dr=baseR*(0.85+life*(1.55+1.1*aAcc+0.4*ecstasy));
+          const dr=baseR*(0.85+life*(1.55+1.1*aAcc+0.35*ecstasy+0.55*u2));
           const dotR=baseR*(0.016+0.024*pebHash(d*3.1));
           ctx.save();
-          ctx.globalAlpha=sunVis*fade*(0.38+0.55*aAcc);
+          ctx.globalAlpha=sunVis*fade*(0.38+0.48*aAcc+0.10*u2);
           ctx.fillStyle=(d%2===0)?pal.disc:pal.disc2;
           ctx.beginPath();ctx.arc(Math.cos(da)*dr,Math.sin(da)*dr,dotR,0,Math.PI*2);ctx.fill();
           ctx.restore();
@@ -10576,7 +10848,8 @@ function drawLivingFlame(ts){
       }
       ctx.fillStyle=pal.disc;
       ctx.beginPath();ctx.arc(0,0,baseR*0.34,0,Math.PI*2);ctx.fill();
-      for(let d=0;d<42;d++){
+      const centerDots=Math.round(42+24*u2);
+      for(let d=0;d<centerDots;d++){
         const da=pebHash(d*6.1)*Math.PI*2;
         const dr=baseR*(0.16+pebHash(d*3.7)*0.30);
         const dotR=baseR*(0.018+pebHash(d*9.3)*0.026);
@@ -10585,13 +10858,13 @@ function drawLivingFlame(ts){
       }
 
     }else if(shape==='ochre_sketch'){
-      /* MUJER 2 · Sol Crema (disco ocre + 32 rayos boceto + arcos discontinuos de lápiz y constelación de tinta al 100%) */
+      /* MUJER 2 · Sol Crema (SIN arcos circulares que choquen: 5%→50% 32 rayos boceto + guiones radiales; 50%→100% trazos paralelos dobles de lápiz ocre y constelación radial) */
       const rays=32;
       for(let i=0;i<rays;i++){
-        const tierVis=(i%2===0)?1:Math.max(0,Math.min(1,(u-0.18)/0.34));
+        const tierVis=(i%2===0)?1:Math.max(0,Math.min(1,(u1-0.18)/0.34));
         if(tierVis<=0.02)continue;
         const a=(i*Math.PI*2)/rays+(pebHash(i*5.3)-0.5)*0.07;
-        const rLen=baseR*(1.45+pebHash(i*9.1)*0.75+0.22*ecstasy)*tierVis;
+        const rLen=baseR*(1.45+pebHash(i*9.1)*0.75+0.20*ecstasy+0.18*u2)*tierVis;
         const bend=(pebHash(i*2.7)-0.5)*baseR*0.18;
         ctx.save();ctx.globalAlpha=sunVis*tierVis;
         ctx.strokeStyle=i%2===0?pal.ray:pal.ray2;
@@ -10610,34 +10883,35 @@ function drawLivingFlame(ts){
           ctx.lineTo(Math.cos(a+0.01)*rLen*0.78,Math.sin(a+0.01)*rLen*0.78);
           ctx.stroke();
         }
+        /* 50%→100%: segundo trazo paralelo bocetado en tinta ocre a mano */
+        if(u2>0.08){
+          const sk2=Math.min(1,(u2-0.08)/0.55);
+          ctx.globalAlpha=sunVis*0.72*sk2;
+          ctx.lineWidth=Math.max(0.9,baseR*0.013);
+          ctx.beginPath();
+          const aOff=a+((i%2===0)?0.026:-0.026);
+          const rStart=baseR*0.82;
+          const rEnd2=rLen*(0.72+0.34*sk2);
+          ctx.moveTo(Math.cos(aOff)*rStart,Math.sin(aOff)*rStart);
+          ctx.quadraticCurveTo(mx*1.03,my*1.03,Math.cos(aOff)*rEnd2,Math.sin(aOff)*rEnd2);
+          ctx.stroke();
+        }
         ctx.restore();
       }
-      /* Arcos discontinuos de boceto + chispas de trazo fino al 100% */
-      if(u>0.42){
-        const cAcc=(u-0.42)/0.58;
-        const arcCount=Math.round(4+6*cAcc);
+      /* Constelación radial de guiones y puntos de tinta ocre (sin arcos circulares que choquen) */
+      if(u1>0.42){
+        const cAcc=(u1-0.42)/0.58;
         ctx.save();ctx.lineCap='round';
-        for(let k=0;k<arcCount;k++){
-          const phase=(t*0.5+pebHash(k*4.1)*6.28)%(Math.PI*2);
-          const fade=Math.max(0,Math.sin(phase));
-          if(fade<0.05)continue;
-          const startA=pebHash(k*7.7)*Math.PI*2;
-          const arcR=baseR*(1.65+pebHash(k*2.9)*0.85+0.3*ecstasy);
-          ctx.globalAlpha=sunVis*fade*(0.28+0.45*cAcc);
-          ctx.strokeStyle=(k%2===0)?pal.ray:pal.ray2;
-          ctx.lineWidth=Math.max(1.1,baseR*0.018);
-          ctx.beginPath();ctx.arc(0,0,arcR,startA,startA+0.35+0.25*pebHash(k*5.1));ctx.stroke();
-        }
-        const spTotal=Math.round(10+22*cAcc+18*ecstasy);
+        const spTotal=Math.round(12+24*cAcc+18*ecstasy+28*u2+16*ecstasy2);
         for(let s=0;s<spTotal;s++){
           const life=((t*0.55+pebHash(s*6.3))%1);
           const fade=Math.sin(life*Math.PI);
           if(fade<0.05)continue;
           const sa=pebHash(s*9.7)*Math.PI*2;
-          const sd=baseR*(1.55+life*(1.1+0.8*cAcc+0.4*ecstasy));
+          const sd=baseR*(1.55+life*(1.1+0.8*cAcc+0.35*ecstasy+0.65*u2));
           const sx=Math.cos(sa)*sd,sy=Math.sin(sa)*sd;
-          const len=baseR*(0.06+0.08*pebHash(s*3.3));
-          ctx.globalAlpha=sunVis*fade*(0.35+0.55*cAcc);
+          const len=baseR*(0.06+0.09*pebHash(s*3.3));
+          ctx.globalAlpha=sunVis*fade*(0.35+0.48*cAcc+0.12*u2);
           ctx.strokeStyle=(s%2===0)?pal.ray:pal.disc;
           ctx.lineWidth=Math.max(1.1,baseR*0.016);
           ctx.beginPath();
@@ -10659,13 +10933,32 @@ function drawLivingFlame(ts){
       ctx.closePath();ctx.fill();
 
     }else{
-      /* MUJER 3 · Áurea (gouache coral-rosa con llamas onduladas vivas + segunda corona coral y gotas desprendidas al 100%) */
-      if(u>0.55){
-        const backVis=Math.min(1,(u-0.55)/0.38);
+      /* MUJER 3 · Áurea (5%→50% doble corona ondulada coral + gotas; 50%→100% tercera corona esbelta melocotón-crema y gotas coral multiplicadas) */
+      if(u2>0.06){
+        const thirdVis=Math.min(1,(u2-0.06)/0.55);
+        const thirdRays=14;
+        for(let i=0;i<thirdRays;i++){
+          const a=(i*Math.PI*2)/thirdRays+(Math.PI/(thirdRays*2))+(pebHash(i*8.1)-0.5)*0.07;
+          const rLen=baseR*(1.85+0.32*u2+0.18*ecstasy2+0.10*Math.sin(t*1.6+i))*thirdVis;
+          const bW=baseR*0.115;
+          const dir=(i%2===0?1:-1);
+          const w1=dir*baseR*0.15;
+          ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*0.48*thirdVis;
+          ctx.fillStyle='#F5C3B0';
+          ctx.beginPath();
+          ctx.moveTo(baseR*0.66,-bW);
+          ctx.bezierCurveTo(baseR*1.02,w1-bW*0.45,rLen*0.74,-w1*0.55-bW*0.2,rLen,0);
+          ctx.bezierCurveTo(rLen*0.74,-w1*0.55+bW*0.2,baseR*1.02,w1+bW*0.45,baseR*0.66,bW);
+          ctx.closePath();ctx.fill();
+          ctx.restore();
+        }
+      }
+      if(u1>0.55){
+        const backVis=Math.min(1,(u1-0.55)/0.38);
         const backRays=14;
         for(let i=0;i<backRays;i++){
           const a=(i*Math.PI*2)/backRays+(Math.PI/backRays)+(pebHash(i*4.9)-0.5)*0.08;
-          const rLen=baseR*(1.55+0.35*ecstasy+0.12*Math.sin(t*1.7+i))*backVis;
+          const rLen=baseR*(1.55+0.32*ecstasy+0.14*u2+0.12*Math.sin(t*1.7+i))*backVis;
           const bW=baseR*0.145;
           const dir=(i%2===0?-1:1);
           const w1=dir*baseR*0.13;
@@ -10682,7 +10975,7 @@ function drawLivingFlame(ts){
       const rays=14;
       for(let i=0;i<rays;i++){
         const a=(i*Math.PI*2)/rays+(pebHash(i*5.7)-0.5)*0.09;
-        const rLen=baseR*(1.62+pebHash(i*9.3)*0.42+0.16*ecstasy);
+        const rLen=baseR*(1.62+pebHash(i*9.3)*0.42+0.15*ecstasy+0.12*u2);
         const bW=baseR*0.165;
         const dir=(i%2===0?1:-1);
         const waveAnim=Math.sin(t*1.9+i)*baseR*0.045*ebu;
@@ -10697,19 +10990,19 @@ function drawLivingFlame(ts){
         ctx.restore();
       }
       /* Gotas orgánicas de gouache coral desprendidas de las llamas hacia el 100% */
-      if(u>0.40){
-        const auAcc=(u-0.40)/0.60;
-        const spTotal=Math.round(8+22*auAcc+16*ecstasy);
+      if(u1>0.40){
+        const auAcc=(u1-0.40)/0.60;
+        const spTotal=Math.round(8+22*auAcc+16*ecstasy+24*u2+14*ecstasy2);
         for(let s=0;s<spTotal;s++){
           const life=((t*0.50+pebHash(s*5.1))%1);
           const fade=Math.sin(life*Math.PI);
           if(fade<0.05)continue;
           const sa=pebHash(s*8.9)*Math.PI*2+life*0.22;
-          const sd=baseR*(1.58+life*(1.1+0.9*auAcc+0.45*ecstasy));
+          const sd=baseR*(1.58+life*(1.1+0.9*auAcc+0.4*ecstasy+0.6*u2));
           ctx.save();
           ctx.translate(Math.cos(sa)*sd,Math.sin(sa)*sd);ctx.rotate(sa);
-          ctx.globalAlpha=sunVis*fade*(0.42+0.52*auAcc);
-          ctx.fillStyle=(s%2===0)?pal.ray2:pal.ray;
+          ctx.globalAlpha=sunVis*fade*(0.42+0.45*auAcc+0.10*u2);
+          ctx.fillStyle=(s%3===0)?'#F5C3B0':(s%2===0?pal.ray2:pal.ray);
           const sr=baseR*(0.028+0.030*pebHash(s*2.7));
           ctx.beginPath();ctx.ellipse(0,0,sr*1.45,sr*0.85,0,0,Math.PI*2);ctx.fill();
           ctx.restore();
