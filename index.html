@@ -334,8 +334,6 @@ h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,7vw,36px);line-
   .hd .eye-q svg,.hd .arrow-q svg{width:13px;height:13px}
   .story small{font-size:11px}
   .sl label{font-size:11px;letter-spacing:.05em;gap:6px}
-  .rate label{font-size:16px}
-  .rate label b{font-size:20px}
   #bb{font-size:11px;letter-spacing:.06em;padding-left:12px;padding-right:12px}
 }
 .hd{
@@ -771,14 +769,15 @@ body.co-sync-screen #coFirefliesOverlay{opacity:1}
 .lectura-hl-menu[hidden]{display:none}
 .lectura-hl-dot{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.92);box-shadow:0 2px 6px rgba(0,0,0,0.12);cursor:pointer;padding:0;transition:transform .14s ease}
 .lectura-hl-dot:active{transform:scale(0.9)}
-.sun-pillars-bar{margin-top:18px;padding-top:10px;border-top:none;text-align:left}
+.sun-pillars-bar{margin-top:18px;border-top:none;text-align:left}
 .sun-pillars-hd{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:var(--serif);font-size:17.5px;color:var(--ink);margin-bottom:6px}
 .sun-pillars-hd b{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--crimson);white-space:nowrap;flex-shrink:0}
-@media(max-width:520px){.sun-pillars-hd{font-size:16px}.sun-pillars-hd b{font-size:20px}}
+.sun-pillars-hd span{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:520px){.sun-pillars-hd,.rate label{font-size:16px}.sun-pillars-hd b,.rate label b{font-size:20px}}
 .sun-pillars-track{position:relative;height:4px;border-radius:999px;background:rgba(128,128,128,0.2);overflow:hidden;margin:8px 0 6px}
 .sun-pillars-fill{height:100%;width:0%;border-radius:999px;background:var(--crimson);transition:width .35s cubic-bezier(.2,.8,.2,1)}
 .sun-pillars-ticks{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin:4px 2px 12px;font-family:var(--serif);font-style:italic}
-.sun-pillars-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
+.sun-pillars-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
 .sun-pillar-btn{border:1px solid var(--rule);background:transparent;color:var(--muted);border-radius:999px;min-height:30px;padding:4px 2px;font-size:10px;font-family:var(--sans);font-weight:600;cursor:pointer;white-space:nowrap;text-align:center;transition:all .18s ease}
 .sun-pillar-btn.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 
@@ -788,6 +787,13 @@ body.co-sync-screen #coFirefliesOverlay{opacity:1}
 .sl label > span:last-child{flex-shrink:0}
 .sl label > span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis}
 input[type=range]{width:100%;accent-color:var(--crimson);cursor:pointer;min-height:32px}
+/* Espejo: #rs es la misma barra de 4 px que .sun-pillars-track; el padding mantiene 32 px táctiles */
+#rs{-webkit-appearance:none;appearance:none;width:100%;height:4px;padding:14px 0;background:linear-gradient(90deg,var(--crimson) 10%,rgba(128,128,128,.2) 10%) no-repeat;background-clip:content-box;border-radius:999px;cursor:pointer;min-height:0}
+#rs::-webkit-slider-runnable-track{height:4px;border-radius:999px;background:transparent}
+#rs::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--paper);border:2px solid var(--crimson);box-shadow:0 1px 4px rgba(0,0,0,.18);cursor:pointer}
+#rs::-moz-range-track{height:4px;border-radius:999px;background:rgba(128,128,128,.2)}
+#rs::-moz-range-progress{height:4px;border-radius:999px;background:var(--crimson)}
+#rs::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--paper);border:2px solid var(--crimson)}
 .spark{width:100%;height:48px;display:block;margin-top:10px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:12px;padding-top:8px;border-top:none;text-align:center}
 .stats b{display:block;font-family:var(--serif);font-size:28px;font-weight:500}
@@ -947,11 +953,11 @@ body.coast-fullscreen > #seab .coast-fs-dock{bottom:max(18px, env(safe-area-inse
   border-color:var(--glass-border);box-shadow:0 2px 6px rgba(0,0,0,0.08);
 }
 .bmode button svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5}
-.rate{margin-bottom:6px}
-.rate label{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:var(--serif);font-size:17.5px;margin-bottom:6px}
+.rate{margin-bottom:0}
+.rate label{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:var(--serif);color:var(--ink);font-size:17.5px;margin-bottom:6px}
 .rate label span{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rate label b{color:var(--crimson);font-size:22px;white-space:nowrap;flex-shrink:0}
-.tide-ticks{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin:4px 2px 10px;font-family:var(--serif);font-style:italic}
+.rate label b{color:var(--crimson);font-size:22px;font-weight:600;white-space:nowrap;flex-shrink:0}
+.tide-ticks{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin:4px 2px 12px;font-family:var(--serif);font-style:italic}
 .hours{display:grid;grid-template-columns:repeat(24,1fr);gap:2px;height:16px;margin:4px 0 12px}
 .hours div{background:var(--wash);border:1px solid var(--rule);border-radius:2px}
 .hours .cur{border-color:var(--ink)}.hours .sp{background:var(--crimson);border-color:var(--crimson)}
@@ -1148,6 +1154,12 @@ body.coast-fullscreen > #seab .coast-fs-dock{bottom:max(18px, env(safe-area-inse
   color:var(--muted);margin-bottom:8px;font-weight:500;
 }
 .bio-sec-hd span:last-child{font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0;font-size:13px}
+/* Subtítulos centrados (Hoy): el título se centra; la acción (Ver más / contador / botón) se queda a la derecha */
+.sl label{justify-content:center;text-align:center}
+.bio-sec-hd.sub-c{position:relative;justify-content:center;text-align:center}
+.bio-sec-hd.sub-c>:last-child{position:absolute;right:0;top:50%;transform:translateY(-50%)}
+.bento-dim-hd{position:relative;justify-content:center;text-align:center}
+.bento-dim-hd .bento-dim-toggle{position:absolute;right:0;top:50%;transform:translateY(-50%)}
 @keyframes auraTide{
   0%,100%{background-position:42% 45%;transform:translateY(0px)}
   50%{background-position:58% 55%;transform:translateY(-1.5px)}
@@ -2727,7 +2739,7 @@ summary::-webkit-details-marker{display:none}
       </div>
 
       <div class="bio-sec" style="margin-top:8px;padding-top:10px;border-top:none">
-        <div class="bio-sec-hd">
+        <div class="bio-sec-hd sub-c">
           <span>Emociones de hoy <span id="moodCountLbl" style="font-weight:500;opacity:.7">(0/3)</span></span>
           <button type="button" class="bento-dim-toggle" id="moodMaticesToggleBtn">Ver más ▾</button>
         </div>
@@ -2760,7 +2772,7 @@ summary::-webkit-details-marker{display:none}
 
       <!-- HÁBITOS DE CUIDADO AGRUPADOS POR DIMENSIÓN (CUERPO, MENTE, VÍNCULO) -->
       <div class="bio-sec" style="margin-top:16px">
-        <div class="bio-sec-hd">
+        <div class="bio-sec-hd sub-c">
           <span>Hábitos de cuidado</span>
           <span id="clueTrackCount"></span>
         </div>
@@ -2782,7 +2794,7 @@ summary::-webkit-details-marker{display:none}
       <div hidden><div id="ffuerza"></div><div id="ffuerzaExtra"></div><div id="fcuerpo"></div><div id="fcuerpoExtra"></div><div id="fsl"></div><div id="fslExtra"></div><div id="fsoc"></div><div id="fsocExtra"></div></div>
 
       <div class="bio-sec" id="femaleBioBlock" hidden>
-        <div class="bio-sec-hd">
+        <div class="bio-sec-hd sub-c">
           <span>Ciclo, energía y calma</span>
           <button type="button" class="mode-link" id="clueGoalToggle">Conocer mi ciclo ▾</button>
         </div>
@@ -2838,7 +2850,7 @@ summary::-webkit-details-marker{display:none}
       </div>
 
       <div class="bio-sec" id="maleBioBlock" hidden>
-        <div class="bio-sec-hd">
+        <div class="bio-sec-hd sub-c">
           <span>Ritmo, fuerza y calma</span>
           <button type="button" class="mode-link" id="maleGoalToggle">Concentración y calma ▾</button>
         </div>
@@ -3296,6 +3308,66 @@ summary::-webkit-details-marker{display:none}
         <div id="clarityCorrGrid" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:8px"></div>
       </div>
 
+      <!-- GRÁFICA 4: SUEÑO · ÚLTIMOS 7 DÍAS -->
+      <div class="cmd-chart-box" style="margin-top:14px">
+        <div class="cmd-chart-hd">
+          <div>
+            <strong>Sueño · últimos 7 días</strong>
+            <p style="font-size:12px;color:var(--muted);margin-top:2px">Horas de sueño por noche, según tu registro</p>
+          </div>
+          <span id="claritySleepBadge">7 días</span>
+        </div>
+        <svg class="cmd-svg" id="claritySleepChart" viewBox="0 0 440 138" preserveAspectRatio="none" role="img" aria-label="Horas de sueño por día"></svg>
+      </div>
+
+      <!-- GRÁFICA 5: ESTRÉS Y SUEÑO -->
+      <div class="cmd-chart-box" style="margin-top:14px">
+        <div class="cmd-chart-hd">
+          <div>
+            <strong>Estrés y sueño</strong>
+            <p style="font-size:12px;color:var(--muted);margin-top:2px">La barra es tu estrés del día; el punto, tus horas de sueño</p>
+          </div>
+          <span id="clarityStressBadge">7 días</span>
+        </div>
+        <svg class="cmd-svg" id="clarityStressChart" viewBox="0 0 440 138" preserveAspectRatio="none" role="img" aria-label="Estrés y sueño por día"></svg>
+      </div>
+
+      <!-- GRÁFICA 6: AGUA Y MOVIMIENTO -->
+      <div class="cmd-chart-box" style="margin-top:14px">
+        <div class="cmd-chart-hd">
+          <div>
+            <strong>Agua y movimiento</strong>
+            <p style="font-size:12px;color:var(--muted);margin-top:2px">Vasos de agua por día; el punto verde marca que te moviste</p>
+          </div>
+          <span id="clarityWaterBadge">7 días</span>
+        </div>
+        <svg class="cmd-svg" id="clarityWaterChart" viewBox="0 0 440 138" preserveAspectRatio="none" role="img" aria-label="Agua y movimiento por día"></svg>
+      </div>
+
+      <!-- GRÁFICA 7: TU SEMANA EN NÚMEROS -->
+      <div class="cmd-chart-box" style="margin-top:14px">
+        <div class="cmd-chart-hd">
+          <div>
+            <strong>Tu semana en números</strong>
+            <p style="font-size:12px;color:var(--muted);margin-top:2px">Lo esencial de tus últimos 7 días, en una tabla</p>
+          </div>
+          <span id="clarityWeekBadge">7 días</span>
+        </div>
+        <div id="clarityWeekTable" style="margin-top:4px"></div>
+      </div>
+
+      <!-- GRÁFICA 8: REGISTRO · ÚLTIMOS 14 DÍAS -->
+      <div class="cmd-chart-box" style="margin-top:14px">
+        <div class="cmd-chart-hd">
+          <div>
+            <strong>Registro · últimos 14 días</strong>
+            <p style="font-size:12px;color:var(--muted);margin-top:2px">Cada barra verde es un día en el que te registraste</p>
+          </div>
+          <span id="clarityStreakBadge">14 días</span>
+        </div>
+        <svg class="cmd-svg" id="clarityStreakChart" viewBox="0 0 440 138" preserveAspectRatio="none" role="img" aria-label="Días registrados en los últimos 14 días"></svg>
+      </div>
+
       <!-- SECCIÓN EXPANDIBLE: EFECTO DE PAUSAS, CAMINO DE 90 DÍAS Y REPORTE PDF -->
       <details style="margin-top:14px">
         <summary><span>Pausas, camino de 90 días y reporte PDF</span><span style="white-space:nowrap;flex-shrink:0">Abrir ▾</span></summary>
@@ -3688,7 +3760,7 @@ summary::-webkit-details-marker{display:none}
         <button type="button" class="btn ghost" id="onbFinishDirectBtn" style="width:100%">Entrar directamente a Wavy</button>
       </div>
       <!-- Versión de la app -->
-      <div class="cover-version">V1.01</div>
+      <div class="cover-version">V1.02</div>
     </div>
   </div>
 </div>
@@ -4464,6 +4536,16 @@ const HABITS=[
     [75,'Día 75: vínculos afectivos más presentes y seguros','El impulso deja de utilizarse como vía de escape frente a las emociones difíciles.'],
     [90,'90 días: autodominio y serenidad conductual','Cuentas con herramientas prácticas probadas para navegar cualquier marea alta sin volver al automatismo.']
   ]},
+  {id:'dopamina',name:'Dopamina',glyph:'✦',vip:false,ref:'Impulso, energía y presencia',ms:[
+    [7,'Primera semana: la urgencia pierde su automatismo','Observar el impulso sin actuar por reflejo debilita el ciclo automático de buscar dopamina rápida.'],
+    [14,'Dos semanas: más claridad y menos niebla','Muchas personas reportan menor dispersión y una recuperación gradual del disfrute en lo cotidiano.'],
+    [21,'Tres semanas: el cuerpo vuelve a sentir lo simple','Acompañar la tensión con respiración lenta fortalece la tolerancia al malestar sin pedir dopamina inmediata.'],
+    [30,'Un mes: el placer cotidiano se vuelve más vivo','Las actividades simples, el ejercicio y el descanso suelen percibirse como más satisfactorios.'],
+    [45,'Día 45: menos culpa y más congruencia','Sostener tu compromiso diario fortalece la tranquilidad interna y la confianza en ti.'],
+    [60,'Dos meses: reconoces el impulso antes de que llegue','Identificas el cansancio, la soledad o el aburrimiento antes de que se conviertan en búsqueda de dopamina.'],
+    [75,'Día 75: vínculos más presentes y seguros','La dopamina deja de usarse como vía de escape frente a las emociones difíciles.'],
+    [90,'90 días: energía tuya, no prestada','Cuentas con herramientas prácticas para navegar cualquier impulso sin volver al automatismo.']
+  ]},
   {id:'sugar',name:'Ultraprocesados',glyph:'❋',vip:false,ref:'Alimentación consciente y energía',ms:[
     [7,'Primera semana: menor fluctuación de antojos por la tarde','Muchas personas notan que ceden los picos de urgencia por recompensas dulces inmediatas.'],
     [14,'Dos semanas: mayor sensibilidad al sabor natural','El paladar suele adaptarse gradualmente, apreciando mejor los alimentos reales.'],
@@ -4567,6 +4649,7 @@ const BREATH_PATTERNS=[
   {id:'stanford',label:'Suspiro 2·1·6',name:'Doble inhalación + exhalación larga',desc:'Doble inhalación nasal (3 s) + exhalación larga (6 s) ideal en momentos de impulso',in:3,hold:0,out:6,double:true,vip:false},
   {id:'box',label:'4 · 4 · 4',name:'Respiración cuadrada (Enfoque)',desc:'Inhala 4 s · Sostén 4 s · Exhala 4 s (Favorece la atención centrada)',in:4,hold:4,out:4,double:false,vip:false},
   {id:'4-7-8',label:'4 · 7 · 8',name:'Pausa nocturna profunda',desc:'Inhala 4 s · Sostén 7 s · Exhala 8 s (Ideal antes de dormir o en alta tensión)',in:4,hold:7,out:8,double:false,vip:true},
+  {id:'wimhof',label:'30 · 3',name:'Wim Hof · Respiración de poder',desc:'30 respiraciones profundas · Sostén en vacío · Recuperación 15 s · 3 rondas (Sentado o acostado. Nunca en el agua ni manejando.)',in:2,hold:0,out:2,double:false,vip:true,wimhof:true},
   {id:'custom',label:'Propio',name:'Ritmo personalizado',desc:'Configura tus propios segundos de inhalación, pausa y exhalación',in:4,hold:2,out:6,double:false,vip:true}
 ];
 
@@ -4923,7 +5006,7 @@ function handleIncomingLivePacket(pkt){
     if(g.kind==='clear_sky'){
       const newSea=Math.max(8,Math.round((S.arousal||0.10)*100)-28);
       target=newSea/100;arousal=target;S.arousal=target;
-      if($('rs'))$('rs').value=newSea;
+      if($('rs')){$('rs').value=newSea;paintRsFill();}
       if($('rv'))$('rv').textContent=newSea+'%';
       updateCoastLabels(arousal);
       S.clearedCount=(S.clearedCount||0)+1;
@@ -5095,7 +5178,7 @@ function switchActiveAccount(newAlias){
   S=createDefaultStateForUser(activeUser);
   load();
   arousal=target=S.arousal||0.10;
-  if($('rs'))$('rs').value=Math.round(target*100);
+  if($('rs')){$('rs').value=Math.round(target*100);paintRsFill();}
   if($('rv'))$('rv').textContent=Math.round(target*100)+'%';
   updateCoastLabels(arousal);
   renderAll();
@@ -6117,6 +6200,7 @@ if($('onbShowIdentityBtn')){
 const HABIT_SVGS={
   scrolling:'<svg class="w-ico lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M10 7h4M12 17h.01"/><path d="M4 9c1.5-1.5 1.5-3 0-4.5M20 9c-1.5-1.5-1.5-3 0-4.5"/></svg>',
   porn:'<svg class="w-ico lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.8"/><path d="M4 20L20 4"/></svg>',
+  dopamina:'<svg class="w-ico lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.4L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.6L12 3Z"/><path d="M12 20.5v.01"/></svg>',
   sugar:'<svg class="w-ico lg" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 3 19 7 19 17 12 21 5 17 5 7 12 3"/><path d="M12 3v18M5 7l14 10M19 7L5 17"/></svg>',
   gaming:'<svg class="w-ico lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="10" rx="5"/><path d="M7.5 12h3M9 10.5v3"/><circle cx="15.5" cy="11" r="0.9"/><circle cx="17.2" cy="13" r="0.9"/></svg>',
   betting:'<svg class="w-ico lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3.5"/><circle cx="8.5" cy="8.5" r="1"/><circle cx="15.5" cy="8.5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="8.5" cy="15.5" r="1"/><circle cx="15.5" cy="15.5" r="1"/></svg>',
@@ -7000,6 +7084,7 @@ function renderCustomIconPicker(){
 const HABIT_COLORS={
   scrolling:['rgba(68,148,214,.78)','rgba(48,118,184,.54)','rgba(54,136,206,.92)','#1e6bb8'],
   porn:['rgba(148,108,208,.78)','rgba(116,78,176,.54)','rgba(136,92,198,.92)','#6e3cc4'],
+  dopamina:['rgba(198,158,48,.80)','rgba(166,128,32,.56)','rgba(188,146,40,.92)','#9a7414'],
   nicotine:['rgba(66,174,142,.78)','rgba(44,138,110,.54)','rgba(52,158,128,.92)','#1f8a6b'],
   sugar:['rgba(236,154,66,.80)','rgba(206,120,42,.56)','rgba(226,140,52,.92)','#c96b18'],
   alcohol:['rgba(92,120,196,.78)','rgba(66,92,164,.54)','rgba(78,106,184,.92)','#3b56b0'],
@@ -7916,6 +8001,145 @@ function renderPulsoCommandCenter(){
     ).join('');
   }
 
+  /* GRÁFICAS 4–8: SUEÑO, ESTRÉS, AGUA, SEMANA EN NÚMEROS Y REGISTRO (cuestionario de cuidado) */
+  const clueDayKey=off=>{const d=new Date();d.setDate(d.getDate()-off);return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate());};
+  const clueLogAt=off=>((S.clue&&S.clue.logs)||{})[clueDayKey(off)]||{};
+  const SLEEP_H={'Dormí 8+ h':8.5,'Dormí 7–8 h':7.5,'Menos de 6 h':5,'Me costó dormir':5.5,'Despertares nocturnos':6};
+  const STRESS_V={'Bajo':1,'Manejable':2,'Alto':3};
+  const WATER_V={'8+ vasos de agua':8,'5–7 vasos':6,'Poca agua (<4 vasos)':3,'Agua + Matcha / Té':6,'Agua con electrolitos':6};
+  const dayLbl=off=>{const d=new Date();d.setDate(d.getDate()-off);return ['D','L','M','X','J','V','S'][d.getDay()];};
+  const last7=[];for(let o=6;o>=0;o--)last7.push({off:o,log:clueLogAt(o),lbl:dayLbl(o)});
+  const hasWeek=last7.some(d=>d.log&&Object.keys(d.log).length);
+  const weekEmpty='<text x="220" y="70" font-size="13" text-anchor="middle" fill="var(--muted)">Registra tu día en Cuidado para ver tu semana aquí.</text>';
+
+  /* GRÁFICA 4: SUEÑO */
+  const sleepSvg=$('claritySleepChart');
+  if(sleepSvg){
+    const W=440,baseY=108,maxH=66,slotW=(W-36)/7;
+    let out='<line x1="18" y1="'+baseY+'" x2="'+(W-18)+'" y2="'+baseY+'" stroke="var(--rule)"/>';
+    let vals=0,sum=0;
+    last7.forEach((d,i)=>{
+      const v=SLEEP_H[d.log.sleep];
+      const cx=18+slotW*i+slotW*0.5;
+      if(v==null){
+        out+='<rect x="'+(cx-13).toFixed(1)+'" y="'+(baseY-6)+'" width="26" height="6" rx="3" fill="rgba(128,128,128,0.18)"/>'+
+             '<text x="'+cx.toFixed(1)+'" y="'+(baseY-12)+'" font-size="11" text-anchor="middle" fill="var(--muted)">—</text>';
+      }else{
+        vals++;sum+=v;
+        const bh=Math.max(10,Math.round((v/9)*maxH));
+        out+='<rect x="'+(cx-13).toFixed(1)+'" y="'+(baseY-bh)+'" width="26" height="'+bh+'" rx="8" fill="#5F87A8" opacity="0.9"/>'+
+             '<text x="'+cx.toFixed(1)+'" y="'+(baseY-bh-7)+'" font-size="12" font-weight="600" text-anchor="middle" fill="var(--ink)">'+String(v).replace('.5','½')+' h</text>';
+      }
+      out+='<text x="'+cx.toFixed(1)+'" y="'+(baseY+20)+'" font-size="12" font-weight="500" text-anchor="middle" fill="var(--ink)">'+d.lbl+'</text>';
+    });
+    sleepSvg.innerHTML=hasWeek?out:weekEmpty;
+    if($('claritySleepBadge'))$('claritySleepBadge').textContent=vals?((sum/vals).toFixed(1).replace('.0','')+' h prom.'):'7 días';
+  }
+
+  /* GRÁFICA 5: ESTRÉS (barras) Y SUEÑO (puntos) */
+  const stressSvg=$('clarityStressChart');
+  if(stressSvg){
+    const W=440,baseY=108,maxH=66,slotW=(W-36)/7;
+    let out='<line x1="18" y1="'+baseY+'" x2="'+(W-18)+'" y2="'+baseY+'" stroke="var(--rule)"/>'+
+            '<text x="18" y="16" font-size="11" fill="#C4826E">■ Estrés</text><text x="92" y="16" font-size="11" fill="#5F87A8">● Sueño</text>';
+    let hi=0;
+    last7.forEach((d,i)=>{
+      const sv=STRESS_V[d.log.stress];
+      const hv=SLEEP_H[d.log.sleep];
+      const cx=18+slotW*i+slotW*0.5;
+      if(sv!=null){
+        if(sv===3)hi++;
+        const bh=Math.max(12,Math.round((sv/3)*maxH));
+        const col=sv===1?'#7A9A82':(sv===2?'#D68C59':'#C4826E');
+        out+='<rect x="'+(cx-13).toFixed(1)+'" y="'+(baseY-bh)+'" width="26" height="'+bh+'" rx="8" fill="'+col+'" opacity="0.9"/>';
+      }
+      if(hv!=null){
+        const cy=baseY-Math.round((hv/9)*maxH);
+        out+='<circle cx="'+cx.toFixed(1)+'" cy="'+cy+'" r="4.5" fill="#5F87A8" stroke="var(--paper)" stroke-width="1.5"/>';
+      }
+      out+='<text x="'+cx.toFixed(1)+'" y="'+(baseY+20)+'" font-size="12" font-weight="500" text-anchor="middle" fill="var(--ink)">'+d.lbl+'</text>';
+    });
+    stressSvg.innerHTML=hasWeek?out:weekEmpty;
+    if($('clarityStressBadge'))$('clarityStressBadge').textContent=hi?(hi+(hi===1?' día alto':' días altos')):'7 días';
+  }
+
+  /* GRÁFICA 6: AGUA (barras) Y MOVIMIENTO (punto verde) */
+  const waterSvg=$('clarityWaterChart');
+  if(waterSvg){
+    const W=440,baseY=108,maxH=66,slotW=(W-36)/7;
+    let out='<line x1="18" y1="'+baseY+'" x2="'+(W-18)+'" y2="'+baseY+'" stroke="var(--rule)"/>';
+    let w8=0;
+    last7.forEach((d,i)=>{
+      const wv=WATER_V[d.log.water];
+      const mv=Array.isArray(d.log.movement)?d.log.movement:(d.log.movement?[d.log.movement]:[]);
+      const moved=mv.length>0&&!mv.includes('Hoy no me moví');
+      const cx=18+slotW*i+slotW*0.5;
+      if(wv!=null){
+        if(d.log.water==='8+ vasos de agua')w8++;
+        const bh=Math.max(10,Math.round((wv/8)*maxH));
+        out+='<rect x="'+(cx-13).toFixed(1)+'" y="'+(baseY-bh)+'" width="26" height="'+bh+'" rx="8" fill="#5F87A8" opacity="0.9"/>'+
+             '<text x="'+cx.toFixed(1)+'" y="'+(baseY-bh-7)+'" font-size="12" font-weight="600" text-anchor="middle" fill="var(--ink)">'+wv+'</text>';
+      }else{
+        out+='<rect x="'+(cx-13).toFixed(1)+'" y="'+(baseY-6)+'" width="26" height="6" rx="3" fill="rgba(128,128,128,0.18)"/>';
+      }
+      if(mv.length>0){
+        out+='<circle cx="'+cx.toFixed(1)+'" cy="'+(baseY+32)+'" r="3.5" fill="'+(moved?'#7A9A82':'rgba(128,128,128,0.35)')+'"/>';
+      }
+      out+='<text x="'+cx.toFixed(1)+'" y="'+(baseY+20)+'" font-size="12" font-weight="500" text-anchor="middle" fill="var(--ink)">'+d.lbl+'</text>';
+    });
+    waterSvg.innerHTML=hasWeek?out:weekEmpty;
+    if($('clarityWaterBadge'))$('clarityWaterBadge').textContent=w8?((w8+'/7 con 8+ vasos')):'7 días';
+  }
+
+  /* GRÁFICA 7: TU SEMANA EN NÚMEROS (tabla) */
+  const weekTbl=$('clarityWeekTable');
+  if(weekTbl){
+    if(!hasWeek){
+      weekTbl.innerHTML='<p style="font-size:12.5px;color:var(--muted);padding:6px 2px">Registra tu día en Cuidado para ver tu semana en números.</p>';
+    }else{
+      let sVals=0,sSum=0;
+      last7.forEach(d=>{const v=SLEEP_H[d.log.sleep];if(v!=null){sVals++;sSum+=v;}});
+      const w8n=last7.filter(d=>d.log.water==='8+ vasos de agua').length;
+      const hiN=last7.filter(d=>d.log.stress==='Alto').length;
+      const coN=last7.filter(d=>d.log.loneliness==='Acompañada/o'||(Array.isArray(d.log.connection)?d.log.connection.length:d.log.connection)).length;
+      const regN=last7.filter(d=>d.log&&Object.keys(d.log).length).length;
+      const rows=[
+        ['Sueño promedio',sVals?((sSum/sVals).toFixed(1).replace('.0','')+' h'):'—'],
+        ['Días con 8+ vasos de agua',w8n+' / 7'],
+        ['Días con estrés alto',hiN+' / 7'],
+        ['Días con compañía',coN+' / 7'],
+        ['Días registrados',regN+' / 7']
+      ];
+      weekTbl.innerHTML='<table style="width:100%;border-collapse:collapse;font-size:13px;text-align:left">'+
+        rows.map(r=>'<tr><td style="padding:7px 2px;color:var(--muted)">'+r[0]+'</td><td style="padding:7px 2px;text-align:right;font-weight:600;font-family:var(--serif);font-size:15px">'+r[1]+'</td></tr>').join('')+
+        '</table>';
+    }
+    if($('clarityWeekBadge'))$('clarityWeekBadge').textContent='7 días';
+  }
+
+  /* GRÁFICA 8: REGISTRO · ÚLTIMOS 14 DÍAS */
+  const streakSvg=$('clarityStreakChart');
+  if(streakSvg){
+    const days14=[];
+    for(let o=13;o>=0;o--){
+      const k=clueDayKey(o);
+      const log=((S.clue&&S.clue.logs)||{})[k]||{};
+      const hasNote=(S.notes||[]).some(n=>n&&n.d===k);
+      days14.push({reg:Object.keys(log).length>0||hasNote});
+    }
+    const nReg=days14.filter(d=>d.reg).length;
+    const W=440,baseY=96,maxH=54,slotW=(W-36)/14;
+    let out='<line x1="18" y1="'+baseY+'" x2="'+(W-18)+'" y2="'+baseY+'" stroke="var(--rule)"/>';
+    days14.forEach((d,i)=>{
+      const cx=18+slotW*i+slotW*0.5;
+      const bh=d.reg?maxH:8;
+      out+='<rect x="'+(cx-6).toFixed(1)+'" y="'+(baseY-bh)+'" width="12" height="'+bh+'" rx="6" fill="'+(d.reg?'#7A9A82':'rgba(128,128,128,0.18)')+'"/>';
+    });
+    out+='<text x="'+(18+slotW*13+slotW*0.5).toFixed(1)+'" y="'+(baseY+20)+'" font-size="11" text-anchor="middle" fill="var(--muted)">hoy</text>';
+    streakSvg.innerHTML=out;
+    if($('clarityStreakBadge'))$('clarityStreakBadge').textContent=nReg+'/14 días';
+  }
+
   const heroBtn=$('pulsoHeroActionBtn');
   if(heroBtn){
     heroBtn.onclick=()=>{
@@ -8473,7 +8697,7 @@ $('sosgo').onclick=()=>{
   else S.patId='4-6';
 
   target=Math.max(target,preScore/10);arousal=target;S.arousal=target;
-  $('rs').value=Math.round(target*100);$('rv').textContent=Math.round(target*100)+'%';
+  $('rs').value=Math.round(target*100);$('rv').textContent=Math.round(target*100)+'%';paintRsFill();
 
   save();renderPatternsMenu();renderClinicalReport();
   $('sos').hidden=true;
@@ -9142,7 +9366,8 @@ function renderBreathOverlay(ctx,w,h,dt,ts){
   ctx.fillStyle='rgba(255,253,250,'+(0.98*al).toFixed(3)+')';
   ctx.font='italic 19px "EB Garamond",Georgia,serif';
   let lbl='';
-  if(bothSync){
+  if(pat.wimhof&&br.wh){lbl=br.wh.lbl;}
+  else if(bothSync){
     lbl='Inhalando juntos en sintonía · Presencia compartida';
   }else if(br.ph==='in'){
     if(S.bmode==='touch' && !br.down){
@@ -9184,6 +9409,7 @@ function promptPostBreathEvaluation(){
 }
 
 function endBreath(done){
+  try{if(window.speechSynthesis)speechSynthesis.cancel();}catch(e){}
   const hadCycles=(br.elapsedTotal>=18);
   const wasCoBreath=coBreath.active;
   br.on=false;br.paused=false;br.down=false;
@@ -9199,7 +9425,7 @@ function endBreath(done){
   if($('bbTxt'))$('bbTxt').textContent='Comenzar respiración';
   if(done || hadCycles){
     WavyAudio.cuePhase('close');
-    const v=Math.round(target*100);$('rs').value=v;$('rv').textContent=v+'%';
+    const v=Math.round(target*100);$('rs').value=v;$('rv').textContent=v+'%';paintRsFill();
     markVerifiedPractice('Sesión de respiración completada','breath');
     $('bt').textContent='Sesión completada. Tu llama ha quedado encendida en verde hoy.';
     vib([20,110,20]);
@@ -9211,6 +9437,88 @@ function endBreath(done){
   }else updateBreathHint();
 }
 
+/* ============ WIM HOF (PRO): 30 respiraciones + retención en vacío + recuperación 15 s, 3 rondas ============ */
+const WH_BREATHS=30,WH_ROUNDS=3,WH_POWER_IN=2,WH_POWER_OUT=2,WH_RECOVERY_HOLD=15;
+const WH_CUES=["you're doing great","almost there","keep going","stay with it","you're doing great, hold on"];
+function speakWim(text){
+  try{
+    if(!S.audioOn||!('speechSynthesis' in window))return;
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='en-US';u.rate=0.95;u.pitch=0.85;
+    const vs=speechSynthesis.getVoices()||[];
+    const v=vs.find(x=>/google us english/i.test(x.name))||vs.find(x=>/^en[-_]US/i.test(x.lang))||vs.find(x=>/^en/i.test(x.lang));
+    if(v)u.voice=v;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+function whInit(){
+  br.wh={round:1,breath:0,lastKey:'',sub:'power',el:0,holdSec:0,cueIdx:0,lastCueSec:-1,lbl:'',done:false};
+  br.ph='in';
+}
+function endWimHold(){
+  if(!br.wh||br.wh.sub!=='retention')return;
+  br.wh.sub='recovery';br.wh.el=0;br.ph='in';
+  br.wh.lbl='Recuperación · Inhala y sostén 15 s';
+  if($('bbTxt'))$('bbTxt').textContent='Terminar';
+  speakWim('breathe in');
+  WavyAudio.cuePhase('in');vib(15);
+}
+function stepWimHof(dt){
+  const wh=br.wh;
+  if(!wh){whInit();return;}
+  wh.el+=dt;br.elapsedTotal+=dt;
+  const subProg=wh.sub==='power'?(wh.breath/WH_BREATHS)*0.5:(wh.sub==='retention'?0.6:0.85);
+  const roundProg=((wh.round-1)+subProg)/WH_ROUNDS;
+  const fl=Math.min(br.a0,0.08);
+  target=br.a0-(br.a0-fl)*Math.min(1,roundProg);
+  if(wh.sub==='power'){
+    const cyc=WH_POWER_IN+WH_POWER_OUT;
+    const inPhase=(wh.el%cyc)<WH_POWER_IN;
+    br.ph=inPhase?'in':'out';
+    const breathNo=Math.min(WH_BREATHS,Math.floor(wh.el/cyc)+1);
+    const key=breathNo+(inPhase?'i':'o');
+    if(key!==wh.lastKey&&wh.el<WH_BREATHS*cyc){
+      wh.lastKey=key;wh.breath=breathNo;
+      speakWim(inPhase?'breathe in':'breathe out');
+      WavyAudio.cuePhase(br.ph);
+    }
+    br.phaseProg=inPhase?((wh.el%cyc)/WH_POWER_IN):((wh.el%cyc-WH_POWER_IN)/WH_POWER_OUT);
+    br.p=inPhase?br.phaseProg:(1-br.phaseProg);
+    wh.lbl='Respiración '+Math.min(WH_BREATHS,wh.breath)+'/'+WH_BREATHS+' · Ronda '+wh.round+'/'+WH_ROUNDS;
+    if(wh.el>=WH_BREATHS*cyc){
+      wh.sub='retention';wh.el=0;wh.holdSec=0;wh.cueIdx=0;wh.lastCueSec=-1;br.ph='hold';
+      wh.lbl='Sostén · 0:00';
+      if($('bbTxt'))$('bbTxt').textContent='Respirar';
+      speakWim('let it go');
+      WavyAudio.cuePhase('hold');vib(15);
+    }
+  }else if(wh.sub==='retention'){
+    wh.holdSec=wh.el;br.ph='hold';br.p=1;
+    const mm=Math.floor(wh.holdSec/60),ss=Math.floor(wh.holdSec%60);
+    wh.lbl='Sostén · '+mm+':'+String(ss).padStart(2,'0')+' · Toca Respirar cuando necesites aire';
+    const cueSec=Math.floor(wh.holdSec/10);
+    if(cueSec>0&&cueSec!==wh.lastCueSec){
+      wh.lastCueSec=cueSec;
+      speakWim(WH_CUES[wh.cueIdx%WH_CUES.length]);wh.cueIdx++;
+    }
+  }else if(wh.sub==='recovery'){
+    if(wh.el<1.2){br.ph='in';br.p=Math.min(1,wh.el/1.2);}
+    else{br.ph='hold';br.p=1;}
+    const rem=Math.max(0,WH_RECOVERY_HOLD-Math.max(0,wh.el-1.2));
+    wh.lbl='Recuperación · Sostén '+Math.ceil(rem)+' s · Ronda '+wh.round+'/'+WH_ROUNDS;
+    if(wh.el>=1.2+WH_RECOVERY_HOLD){
+      speakWim('let it go');
+      if(wh.round>=WH_ROUNDS){endBreath(true);return;}
+      wh.round++;wh.sub='power';wh.el=0;wh.breath=0;wh.lastKey='';br.ph='in';
+      wh.lbl='Ronda '+wh.round+'/'+WH_ROUNDS+' · Respira profundo';
+      if($('bbTxt'))$('bbTxt').textContent='Terminar';
+      speakWim(wh.round===2?'round two':'round three');
+      WavyAudio.cuePhase('in');
+    }
+  }
+}
+
 function stepBreath(dt){
   if(!br.on)return;
   if(br.paused){br.lastWall=Date.now();return;}
@@ -9219,6 +9527,7 @@ function stepBreath(dt){
   br.lastWall=nowWall;
 
   const pat=activePattern();
+  if(pat.wimhof){stepWimHof(wallDt);return;}
   const isTouch=(S.bmode==='touch');
 
   if(br.ph==='in'){
@@ -9277,10 +9586,15 @@ $('bb').addEventListener('pointerdown',()=>{WavyAudio.unlockNow()});
 $('bb').onclick=()=>{
   WavyAudio.unlockNow();
   if($('bbDurMenu'))$('bbDurMenu').hidden=true;
-  if(br.on){endBreath(false);return}
+  if(br.on){
+    const pat0=activePattern();
+    if(pat0.wimhof&&br.wh&&br.wh.sub==='retention'){endWimHold();return;}
+    endBreath(false);return;
+  }
   window.scrollTo(0,0);
   const now=Date.now();
-  br={on:true,paused:false,ph:'in',el:0,p:0,phaseProg:0,elapsedTotal:0,sessionStartWall:now,lastWall:now,doubleCued:false,a0:target,alpha:br.alpha||0,down:false};
+  br={on:true,paused:false,ph:'in',el:0,p:0,phaseProg:0,elapsedTotal:0,sessionStartWall:now,lastWall:now,doubleCued:false,a0:target,alpha:br.alpha||0,down:false,wh:null};
+  if(activePattern().wimhof){whInit();if($('bbTxt'))$('bbTxt').textContent='Terminar';}
   if($('coastFsBreathBtn')){
     $('coastFsBreathBtn').innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
     $('coastFsBreathBtn').classList.add('on');
@@ -9475,12 +9789,18 @@ if($('sendFreeVigilBtn')){
   };
 }
 
+/* Espejo: la barra de tensión se pinta como la de práctica (relleno carmesí hasta el valor) */
+function paintRsFill(){
+  const rs=$('rs');if(!rs)return;
+  const v=Math.max(0,Math.min(100,+rs.value||0));
+  rs.style.background='linear-gradient(90deg,var(--crimson) '+v+'%,rgba(128,128,128,.2) '+v+'%)';
+}
 $('rs').addEventListener('pointerdown',()=>{isDraggingSlider=true;WavyAudio.unlockNow()});
 ['pointerup','pointercancel'].forEach(ev=>$('rs').addEventListener(ev,()=>{isDraggingSlider=false}));
 let rsAutoSaveTimer=null;
 $('rs').oninput=e=>{
   const v=+e.target.value;
-  $('rv').textContent=v+'%';
+  $('rv').textContent=v+'%';paintRsFill();
   if(br.on)endBreath(false);
   target=v/100;arousal=target;S.arousal=target;
   updateCoastLabels(arousal);
@@ -14005,7 +14325,7 @@ function renderAll(){
 /* Inicialización Principal Multi-Cuenta + Sincronización en Vivo */
 load();
 arousal=target=S.arousal||.10;
-$('rs').value=Math.round(target*100);$('rv').textContent=Math.round(target*100)+'%';
+$('rs').value=Math.round(target*100);$('rv').textContent=Math.round(target*100)+'%';paintRsFill();
 updateCoastLabels(arousal);
 document.querySelectorAll('#bmode button[data-m]').forEach(x=>x.classList.toggle('on',x.dataset.m===(S.bmode||'auto')));
 updateBreathHint();
