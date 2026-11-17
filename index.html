@@ -1156,10 +1156,8 @@ body.coast-fullscreen > #seab .coast-fs-dock{bottom:max(18px, env(safe-area-inse
 .bio-sec-hd span:last-child{font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0;font-size:13px}
 /* Subtítulos centrados (Hoy): el título se centra; la acción (Ver más / contador / botón) se queda a la derecha */
 .sl label{justify-content:center;text-align:center}
-.bio-sec-hd.sub-c{position:relative;justify-content:center;text-align:center}
+.bio-sec-hd.sub-c{position:relative;justify-content:center;text-align:center;margin-bottom:10px}
 .bio-sec-hd.sub-c>:last-child{position:absolute;right:0;top:50%;transform:translateY(-50%)}
-.bento-dim-hd{position:relative;justify-content:center;text-align:center}
-.bento-dim-hd .bento-dim-toggle{position:absolute;right:0;top:50%;transform:translateY(-50%)}
 @keyframes auraTide{
   0%,100%{background-position:42% 45%;transform:translateY(0px)}
   50%{background-position:58% 55%;transform:translateY(-1.5px)}
@@ -2011,6 +2009,9 @@ summary::-webkit-details-marker{display:none}
 .cmd-chart-hd{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px;flex-wrap:wrap}
 .cmd-chart-hd strong{font-family:var(--serif);font-size:20px;font-weight:500;color:var(--ink);letter-spacing:-.01em}
 .cmd-chart-hd span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ok);font-weight:600;background:rgba(122,154,130,0.12);padding:4px 10px;border-radius:999px}
+.cmd-pro-lock{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(250,247,242,.82);border-radius:12px;z-index:2;text-align:center;padding:12px}
+.cmd-pro-lock[hidden]{display:none}
+.cmd-pro-locked svg{filter:blur(7px);pointer-events:none}
 .cmd-svg{width:100%;height:142px;display:block;overflow:visible}
 .cmd-axis{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.04em;color:var(--muted);margin-top:6px;font-variant-numeric:tabular-nums}
 .cmd-matrix{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
@@ -2102,21 +2103,23 @@ summary::-webkit-details-marker{display:none}
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:10px;
 }
 .bento-row-3col{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:8px;align-items:stretch;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:10px;align-items:stretch;
 }
 .bento-extra-grid{
-  display:flex;flex-direction:column;gap:8px;margin-bottom:10px;animation:fadeUp .18s ease;
+  display:flex;flex-direction:column;gap:0;margin-bottom:0;animation:fadeUp .18s ease;
 }
 #v-today .sl,#v-today .clock,#v-today .sig,#v-today .cal,#v-today .info-box,#v-today .wk,#v-today .extra-box,#v-today .hd,#v-today .bio-sec{
   border-top:none !important;border-bottom:none !important;
 }
 .bento-extra-grid[hidden]{display:none}
-.bento-dim-group{margin-bottom:14px}
+.bento-dim-group{margin-bottom:0}
 .bento-dim-group:last-child{margin-bottom:0}
 .bento-dim-hd{
   display:flex;align-items:center;justify-content:space-between;
-  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;margin:4px 0 8px;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;margin:0 0 10px;
 }
+.bento-dim-hd{position:relative;justify-content:center;text-align:center}
+.bento-dim-hd .bento-dim-toggle{position:absolute;right:0;top:50%;transform:translateY(-50%)}
 .bento-dim-toggle{
   background:none;border:none;color:var(--muted);font-size:11px;font-family:var(--sans);font-weight:600;
   letter-spacing:.03em;cursor:pointer;padding:2px 4px;text-transform:none;
@@ -2142,7 +2145,6 @@ summary::-webkit-details-marker{display:none}
 .bento-card:nth-child(4n){animation-duration:7.9s;animation-direction:reverse;animation-delay:-0.8s}
 .bento-card:hover{transform:translateY(-2px) scale(1.03)}
 .bento-card.open,.bento-card.active,.bento-card.has{
-  transform:scale(1.05);
   box-shadow:inset 0 2px 6px rgba(255,255,255,0.48), 0 0 0 2px rgba(255,255,255,0.75), 0 12px 24px -10px rgba(0,0,0,0.30);
   background-image:
     radial-gradient(circle at 26% 24%, rgba(255,255,255,0.34) 0%, transparent 50%),
@@ -3217,11 +3219,11 @@ summary::-webkit-details-marker{display:none}
         </div>
       </div>
       <div id="diaryShowcaseWrap" class="bio-sec" style="margin-top:0;padding-bottom:8px" hidden>
-        <div class="bio-sec-hd"><span>Lecturas · Wavy Editorial</span><span style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">Selección editorial</span></div>
+        <div class="bio-sec-hd sub-c"><span>Lecturas · Wavy Editorial</span><span style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">Selección editorial</span></div>
         <div id="diaryShowcaseList"></div>
       </div>
       <div id="diaryTopicsWrap" class="bio-sec" style="margin-top:0;padding-bottom:8px" hidden>
-        <div class="bio-sec-hd"><span>Temas</span><span style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">Círculo de lectura</span></div>
+        <div class="bio-sec-hd sub-c"><span>Temas</span><span style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">Círculo de lectura</span></div>
         <div class="chips" id="diaryTopicChips" style="margin-bottom:14px"></div>
         <div id="diaryTopicsList"></div>
       </div>
@@ -3366,6 +3368,121 @@ summary::-webkit-details-marker{display:none}
           <span id="clarityStreakBadge">14 días</span>
         </div>
         <svg class="cmd-svg" id="clarityStreakChart" viewBox="0 0 440 138" preserveAspectRatio="none" role="img" aria-label="Días registrados en los últimos 14 días"></svg>
+      </div>
+
+      <!-- GRÁFICA 9: ÍNDICE DE CLARIDAD COMPUESTO -->
+      <div class="cmd-chart-box" style="margin-top:14px">
+        <div class="cmd-chart-hd">
+          <div>
+            <strong>Índice de claridad</strong>
+            <p style="font-size:12px;color:var(--muted);margin-top:2px">Sueño + agua + movimiento + estrés + rumiación + vínculo, en un solo número</p>
+          </div>
+          <span id="clarityIndexBadge">7 días</span>
+        </div>
+        <svg class="cmd-svg" id="clarityIndexChart" viewBox="0 0 440 138" preserveAspectRatio="none" role="img" aria-label="Índice de claridad por día"></svg>
+      </div>
+
+      <!-- GRÁFICA 10: LO QUE MÁS TE CALMA -->
+      <div class="cmd-chart-box" style="margin-top:14px">
+        <div class="cmd-chart-hd">
+          <div>
+            <strong>Lo que más te calma</strong>
+            <p style="font-size:12px;color:var(--muted);margin-top:2px">Qué registros coinciden con tus días de calma, últimos 30 días</p>
+          </div>
+          <span id="clarityCalmBadge">30 días</span>
+        </div>
+        <div id="clarityCalmList" style="margin-top:4px"></div>
+      </div>
+
+      <!-- GRÁFICA 11 (PRO): TENDENCIA 30 DÍAS -->
+      <div class="cmd-chart-box" style="margin-top:14px" id="clarityIndex30Box">
+        <div class="cmd-chart-hd">
+          <div>
+            <strong>Tendencia 30 días</strong>
+            <p style="font-size:12px;color:var(--muted);margin-top:2px">Tu índice de claridad, día a día, un mes entero</p>
+          </div>
+          <span>Pro</span>
+        </div>
+        <div style="position:relative">
+          <svg class="cmd-svg" id="clarityIndex30Chart" viewBox="0 0 440 138" preserveAspectRatio="none" role="img" aria-label="Índice de claridad en 30 días"></svg>
+          <div class="cmd-pro-lock" id="clarityIndex30Lock" hidden>
+            <b style="font-family:var(--serif);font-size:17px;font-weight:500;color:var(--ink)">Disponible en Wavy Pro</b>
+            <button type="button" class="cmd-action-btn" id="clarityIndex30Unlock">Desbloquear</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRÁFICA 12 (PRO): MAPA DE CALOR 30 DÍAS -->
+      <div class="cmd-chart-box" style="margin-top:14px" id="clarityHeatBox">
+        <div class="cmd-chart-hd">
+          <div>
+            <strong>Mapa de calor · 30 días</strong>
+            <p style="font-size:12px;color:var(--muted);margin-top:2px">Cuerpo, mente y vínculo, día por día</p>
+          </div>
+          <span>Pro</span>
+        </div>
+        <div style="position:relative">
+          <svg class="cmd-svg" id="clarityHeatChart" viewBox="0 0 440 138" preserveAspectRatio="none" role="img" aria-label="Mapa de calor por dimensión en 30 días"></svg>
+          <div class="cmd-pro-lock" id="clarityHeatLock" hidden>
+            <b style="font-family:var(--serif);font-size:17px;font-weight:500;color:var(--ink)">Disponible en Wavy Pro</b>
+            <button type="button" class="cmd-action-btn" id="clarityHeatUnlock">Desbloquear</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRÁFICA 13 (PRO): TU MEJOR DÍA DE LA SEMANA -->
+      <div class="cmd-chart-box" style="margin-top:14px" id="clarityWeekdayBox">
+        <div class="cmd-chart-hd">
+          <div>
+            <strong>Tu mejor día de la semana</strong>
+            <p style="font-size:12px;color:var(--muted);margin-top:2px">En qué día tu índice de claridad es más alto</p>
+          </div>
+          <span>Pro</span>
+        </div>
+        <div style="position:relative">
+          <svg class="cmd-svg" id="clarityWeekdayChart" viewBox="0 0 440 138" preserveAspectRatio="none" role="img" aria-label="Índice de claridad por día de la semana"></svg>
+          <div class="cmd-pro-lock" id="clarityWeekdayLock" hidden>
+            <b style="font-family:var(--serif);font-size:17px;font-weight:500;color:var(--ink)">Disponible en Wavy Pro</b>
+            <button type="button" class="cmd-action-btn" id="clarityWeekdayUnlock">Desbloquear</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRÁFICA 14 (PRO): SUEÑO ↔ ESTRÉS -->
+      <div class="cmd-chart-box" style="margin-top:14px" id="clarityCorrSleepStressBox">
+        <div class="cmd-chart-hd">
+          <div>
+            <strong>Sueño ↔ estrés</strong>
+            <p style="font-size:12px;color:var(--muted);margin-top:2px">La correlación entre tus horas de sueño y tu estrés</p>
+          </div>
+          <span>Pro</span>
+        </div>
+        <div style="position:relative">
+          <svg class="cmd-svg" id="clarityCorrSleepStressChart" viewBox="0 0 440 138" preserveAspectRatio="none" role="img" aria-label="Correlación entre sueño y estrés"></svg>
+          <p id="clarityCorrSleepStressTxt" style="font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.45"></p>
+          <div class="cmd-pro-lock" id="clarityCorrSleepStressLock" hidden>
+            <b style="font-family:var(--serif);font-size:17px;font-weight:500;color:var(--ink)">Disponible en Wavy Pro</b>
+            <button type="button" class="cmd-action-btn" id="clarityCorrSleepStressUnlock">Desbloquear</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRÁFICA 15 (PRO): ENERGÍA Y VITALIDAD -->
+      <div class="cmd-chart-box" style="margin-top:14px" id="clarityEnergyBox">
+        <div class="cmd-chart-hd">
+          <div>
+            <strong>Energía y vitalidad</strong>
+            <p style="font-size:12px;color:var(--muted);margin-top:2px">Tu vitalidad contra tus horas de sueño</p>
+          </div>
+          <span>Pro</span>
+        </div>
+        <div style="position:relative">
+          <svg class="cmd-svg" id="clarityEnergyChart" viewBox="0 0 440 138" preserveAspectRatio="none" role="img" aria-label="Vitalidad y sueño por día"></svg>
+          <div class="cmd-pro-lock" id="clarityEnergyLock" hidden>
+            <b style="font-family:var(--serif);font-size:17px;font-weight:500;color:var(--ink)">Disponible en Wavy Pro</b>
+            <button type="button" class="cmd-action-btn" id="clarityEnergyUnlock">Desbloquear</button>
+          </div>
+        </div>
       </div>
 
       <!-- SECCIÓN EXPANDIBLE: EFECTO DE PAUSAS, CAMINO DE 90 DÍAS Y REPORTE PDF -->
@@ -3760,7 +3877,7 @@ summary::-webkit-details-marker{display:none}
         <button type="button" class="btn ghost" id="onbFinishDirectBtn" style="width:100%">Entrar directamente a Wavy</button>
       </div>
       <!-- Versión de la app -->
-      <div class="cover-version">V1.02</div>
+      <div class="cover-version">V1.03</div>
     </div>
   </div>
 </div>
@@ -8012,6 +8129,64 @@ function renderPulsoCommandCenter(){
   const hasWeek=last7.some(d=>d.log&&Object.keys(d.log).length);
   const weekEmpty='<text x="220" y="70" font-size="13" text-anchor="middle" fill="var(--muted)">Registra tu día en Cuidado para ver tu semana aquí.</text>';
 
+  /* Ayudantes para el índice compuesto y las correlaciones (combinan varias variables del día) */
+  const ENERGY_V={'Cuerpo ligero':100,'Energía alta':90,'Cansancio moderado':45,'Sin pila':10};
+  const RUM_INV={'Sin bucles':100,'Pensamientos repetitivos':50,'Sobreanálisis alto':10};
+  const BOND_V={'Acompañada/o':100,'Sola/o en paz':60,'Necesito compañía':20};
+  const dayHasVar=(log,field,opt)=>{const v=log[field];if(v==null)return false;return Array.isArray(v)?v.includes(opt):v===opt;};
+  /* Índice de claridad del día (0-100): promedio de las variables registradas ese día */
+  function dayIndex(log){
+    if(!log)return null;
+    const parts=[];
+    if(SLEEP_H[log.sleep]!=null)parts.push(SLEEP_H[log.sleep]/9*100);
+    if(WATER_V[log.water]!=null)parts.push(WATER_V[log.water]/8*100);
+    if(log.movement!=null){const mv=Array.isArray(log.movement)?log.movement:[log.movement];parts.push(mv.includes('Hoy no me moví')?0:100);}
+    if(STRESS_V[log.stress]!=null)parts.push(log.stress==='Bajo'?100:(log.stress==='Manejable'?55:10));
+    if(RUM_INV[log.rumination]!=null)parts.push(RUM_INV[log.rumination]);
+    if(BOND_V[log.loneliness]!=null)parts.push(BOND_V[log.loneliness]);
+    if(parts.length<2)return null;
+    return Math.round(parts.reduce((a,b)=>a+b,0)/parts.length);
+  }
+  function dayDimScores(log){
+    if(!log)return{body:null,mind:null,bond:null};
+    const b=[],m=[],bo=[];
+    if(SLEEP_H[log.sleep]!=null)b.push(SLEEP_H[log.sleep]/9*100);
+    if(WATER_V[log.water]!=null)b.push(WATER_V[log.water]/8*100);
+    if(log.movement!=null){const mv=Array.isArray(log.movement)?log.movement:[log.movement];b.push(mv.includes('Hoy no me moví')?0:100);}
+    if(ENERGY_V[log.energy]!=null)b.push(ENERGY_V[log.energy]);
+    if(STRESS_V[log.stress]!=null)m.push(log.stress==='Bajo'?100:(log.stress==='Manejable'?55:10));
+    if(RUM_INV[log.rumination]!=null)m.push(RUM_INV[log.rumination]);
+    if(log.mind_clarity==='Mente despejada')m.push(100);else if(log.mind_clarity==='Un poco nublada')m.push(55);else if(log.mind_clarity==='Niebla mental')m.push(15);
+    if(BOND_V[log.loneliness]!=null)bo.push(BOND_V[log.loneliness]);
+    if(log.connection!=null){const cv=Array.isArray(log.connection)?log.connection:[log.connection];bo.push(cv.length?100:40);}
+    const avg=a=>a.length?Math.round(a.reduce((x,y)=>x+y,0)/a.length):null;
+    return{body:avg(b),mind:avg(m),bond:avg(bo)};
+  }
+  const last30=[];for(let o=29;o>=0;o--)last30.push({off:o,log:clueLogAt(o),lbl:dayLbl(o),key:clueDayKey(o)});
+  const CALM_MOODS=['Quietud','Plenitud','Gratitud','Alivio','Claridad','Enfoque','Ternura','Compasión','Asombro'];
+  function dayCalm(key){
+    const ns=(S.notes||[]).filter(n=>n&&n.d===key);
+    if(ns.length){
+      for(const n of ns){
+        const arr=Array.isArray(n.moodNames)?n.moodNames:(Array.isArray(n.moods)?n.moods:(n.estado?[n.estado]:[]));
+        if(arr.some(m=>CALM_MOODS.includes(m)))return true;
+      }
+      return false;
+    }
+    const lg=((S.clue&&S.clue.logs)||{})[key]||{};
+    if(lg.stress==='Bajo'||lg.stress==='Manejable')return true;
+    if(lg.stress==='Alto')return false;
+    return null;
+  }
+  /* Candado Pro: la gráfica se pinta igual, pero sin Pro se ve borrosa y con el aviso */
+  const gatePro=(boxId,lockId,unlockId,msg)=>{
+    const box=$(boxId),lk=$(lockId),un=$(unlockId);
+    const pro=isPro();
+    if(box)box.classList.toggle('cmd-pro-locked',!pro);
+    if(lk)lk.hidden=pro;
+    if(un)un.onclick=()=>openPaywall(msg);
+  };
+
   /* GRÁFICA 4: SUEÑO */
   const sleepSvg=$('claritySleepChart');
   if(sleepSvg){
@@ -8138,6 +8313,200 @@ function renderPulsoCommandCenter(){
     out+='<text x="'+(18+slotW*13+slotW*0.5).toFixed(1)+'" y="'+(baseY+20)+'" font-size="11" text-anchor="middle" fill="var(--muted)">hoy</text>';
     streakSvg.innerHTML=out;
     if($('clarityStreakBadge'))$('clarityStreakBadge').textContent=nReg+'/14 días';
+  }
+
+  /* GRÁFICA 9: ÍNDICE DE CLARIDAD COMPUESTO (libre) */
+  const idxSvg=$('clarityIndexChart');
+  if(idxSvg){
+    const W=440,baseY=108,maxH=66,slotW=(W-36)/7;
+    let out='<line x1="18" y1="'+baseY+'" x2="'+(W-18)+'" y2="'+baseY+'" stroke="var(--rule)"/>';
+    let vals=0,sum=0;
+    last7.forEach((d,i)=>{
+      const v=dayIndex(d.log);
+      const cx=18+slotW*i+slotW*0.5;
+      if(v==null){
+        out+='<rect x="'+(cx-13).toFixed(1)+'" y="'+(baseY-6)+'" width="26" height="6" rx="3" fill="rgba(128,128,128,0.18)"/>'+
+             '<text x="'+cx.toFixed(1)+'" y="'+(baseY-12)+'" font-size="11" text-anchor="middle" fill="var(--muted)">—</text>';
+      }else{
+        vals++;sum+=v;
+        const bh=Math.max(10,Math.round((v/100)*maxH));
+        const col=v>=70?'#7A9A82':(v>=45?'#D68C59':'#C4826E');
+        out+='<rect x="'+(cx-13).toFixed(1)+'" y="'+(baseY-bh)+'" width="26" height="'+bh+'" rx="8" fill="'+col+'" opacity="0.9"/>'+
+             '<text x="'+cx.toFixed(1)+'" y="'+(baseY-bh-7)+'" font-size="12" font-weight="600" text-anchor="middle" fill="var(--ink)">'+v+'</text>';
+      }
+      out+='<text x="'+cx.toFixed(1)+'" y="'+(baseY+20)+'" font-size="12" font-weight="500" text-anchor="middle" fill="var(--ink)">'+d.lbl+'</text>';
+    });
+    idxSvg.innerHTML=hasWeek?out:weekEmpty;
+    if($('clarityIndexBadge'))$('clarityIndexBadge').textContent=vals?('Prom. '+Math.round(sum/vals)):'7 días';
+  }
+
+  /* GRÁFICA 10: LO QUE MÁS TE CALMA (libre) */
+  const calmList=$('clarityCalmList');
+  if(calmList){
+    const VARS=[
+      ['Dormí 8+ h','sleep'],['Dormí 7–8 h','sleep'],['8+ vasos de agua','water'],['5–7 vasos','water'],
+      ['Pilates / Pádel / Entreno','movement'],['Caminata larga','movement'],['Comida limpia','nutrition'],
+      ['Acompañada/o','loneliness'],['Con alguien cercano','connection'],['Sin bucles','rumination'],
+      ['Mente despejada','mind_clarity'],['15+ min al sol','sunlight'],['Estiramiento suave','movement'],['Descansado','recovery']
+    ];
+    const rows=[];
+    VARS.forEach(([opt,field])=>{
+      let withN=0,calmN=0;
+      last30.forEach(d=>{
+        if(!dayHasVar(d.log,field,opt))return;
+        const c=dayCalm(d.key);
+        if(c===null)return;
+        withN++;if(c)calmN++;
+      });
+      if(withN>=2)rows.push({opt:opt,pct:Math.round(calmN/withN*100),n:withN});
+    });
+    rows.sort((a,b)=>b.pct-a.pct||b.n-a.n);
+    const top=rows.slice(0,4);
+    if(!top.length){
+      calmList.innerHTML='<p style="font-size:12.5px;color:var(--muted);padding:6px 2px">Registra tu día en Cuidado durante unos días para ver qué te calma de verdad.</p>';
+    }else{
+      calmList.innerHTML=top.map(r=>
+        '<div style="margin-bottom:10px">'+
+          '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><span style="font-size:13px;font-weight:600;color:var(--ink)">'+esc(r.opt)+'</span><b style="font-family:var(--serif);font-size:15px;color:var(--ok)">'+r.pct+'%</b></div>'+
+          '<div style="height:6px;border-radius:999px;background:rgba(128,128,128,0.14);margin-top:4px"><div style="height:6px;border-radius:999px;background:#7A9A82;width:'+r.pct+'%"></div></div>'+
+          '<span style="font-size:11px;color:var(--muted);font-family:var(--serif);font-style:italic">calma en '+r.n+' días con este registro</span>'+
+        '</div>').join('');
+    }
+    if($('clarityCalmBadge'))$('clarityCalmBadge').textContent=top.length?(top.length+' factores'):'30 días';
+  }
+
+  /* GRÁFICA 11 (PRO): TENDENCIA 30 DÍAS DEL ÍNDICE */
+  const idx30Svg=$('clarityIndex30Chart');
+  if(idx30Svg){
+    const W=440,baseY=108,maxH=66,slotW=(W-36)/30;
+    let out='<line x1="18" y1="'+baseY+'" x2="'+(W-18)+'" y2="'+baseY+'" stroke="var(--rule)"/>';
+    let vals=0;
+    last30.forEach((d,i)=>{
+      const v=dayIndex(d.log);
+      const cx=18+slotW*i+slotW*0.5;
+      if(v!=null){
+        vals++;
+        const bh=Math.max(6,Math.round((v/100)*maxH));
+        const col=v>=70?'#7A9A82':(v>=45?'#D68C59':'#C4826E');
+        out+='<rect x="'+(cx-4.5).toFixed(1)+'" y="'+(baseY-bh)+'" width="9" height="'+bh+'" rx="4.5" fill="'+col+'" opacity="0.9"/>';
+      }else{
+        out+='<rect x="'+(cx-4.5).toFixed(1)+'" y="'+(baseY-5)+'" width="9" height="5" rx="2.5" fill="rgba(128,128,128,0.18)"/>';
+      }
+    });
+    out+='<text x="'+(18+slotW*29+slotW*0.5).toFixed(1)+'" y="'+(baseY+20)+'" font-size="11" text-anchor="middle" fill="var(--muted)">hoy</text>';
+    idx30Svg.innerHTML=vals?out:weekEmpty;
+    gatePro('clarityIndex30Box','clarityIndex30Lock','clarityIndex30Unlock','La tendencia de 30 días de tu índice de claridad es parte de Wavy Pro.');
+  }
+
+  /* GRÁFICA 12 (PRO): MAPA DE CALOR 30 DÍAS */
+  const heatSvg=$('clarityHeatChart');
+  if(heatSvg){
+    const W=440,slotW=(W-40)/30;
+    const dims=[['Cuerpo','#7A9A82'],['Mente','#5F87A8'],['Vínculo','#C4826E']];
+    let out='';
+    dims.forEach(([label,col],ri)=>{
+      const y=22+ri*22;
+      out+='<text x="8" y="'+(y+10)+'" font-size="11" font-weight="600" fill="var(--ink)">'+label[0]+'</text>';
+      last30.forEach((d,i)=>{
+        const sc=dayDimScores(d.log);
+        const v=ri===0?sc.body:(ri===1?sc.mind:sc.bond);
+        const cx=24+slotW*i;
+        const op=v==null?0.08:Math.max(0.12,v/100);
+        out+='<rect x="'+cx.toFixed(1)+'" y="'+y+'" width="10" height="12" rx="3" fill="'+col+'" opacity="'+op.toFixed(2)+'"/>';
+      });
+    });
+    out+='<text x="24" y="104" font-size="11" fill="var(--muted)">hace 30 días</text><text x="'+(W-24)+'" y="104" font-size="11" text-anchor="end" fill="var(--muted)">hoy</text>';
+    heatSvg.innerHTML=out;
+    gatePro('clarityHeatBox','clarityHeatLock','clarityHeatUnlock','El mapa de calor de 30 días por dimensión es parte de Wavy Pro.');
+  }
+
+  /* GRÁFICA 13 (PRO): TU MEJOR DÍA DE LA SEMANA */
+  const wdSvg=$('clarityWeekdayChart');
+  if(wdSvg){
+    const names=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+    const sums=[0,0,0,0,0,0,0],cnts=[0,0,0,0,0,0,0];
+    last30.forEach(d=>{
+      const v=dayIndex(d.log);if(v==null)return;
+      const dt=new Date();dt.setDate(dt.getDate()-d.off);
+      const wi=(dt.getDay()+6)%7;
+      sums[wi]+=v;cnts[wi]++;
+    });
+    const avgs=sums.map((sm,i)=>cnts[i]?Math.round(sm/cnts[i]):null);
+    const best=avgs.indexOf(Math.max.apply(null,avgs.map(a=>a==null?-1:a)));
+    const W=440,baseY=108,maxH=66,slotW=(W-36)/7;
+    let out='<line x1="18" y1="'+baseY+'" x2="'+(W-18)+'" y2="'+baseY+'" stroke="var(--rule)"/>';
+    avgs.forEach((v,i)=>{
+      const cx=18+slotW*i+slotW*0.5;
+      if(v==null){
+        out+='<text x="'+cx.toFixed(1)+'" y="'+(baseY-12)+'" font-size="11" text-anchor="middle" fill="var(--muted)">—</text>';
+      }else{
+        const bh=Math.max(10,Math.round((v/100)*maxH));
+        out+='<rect x="'+(cx-13).toFixed(1)+'" y="'+(baseY-bh)+'" width="26" height="'+bh+'" rx="8" fill="'+(i===best?'#B87077':'#7A9A82')+'" opacity="0.9"/>'+
+             '<text x="'+cx.toFixed(1)+'" y="'+(baseY-bh-7)+'" font-size="12" font-weight="600" text-anchor="middle" fill="var(--ink)">'+v+'</text>';
+      }
+      out+='<text x="'+cx.toFixed(1)+'" y="'+(baseY+20)+'" font-size="12" font-weight="500" text-anchor="middle" fill="var(--ink)">'+names[i]+'</text>';
+    });
+    wdSvg.innerHTML=out;
+    gatePro('clarityWeekdayBox','clarityWeekdayLock','clarityWeekdayUnlock','Tu mejor día de la semana es parte de Wavy Pro.');
+  }
+
+  /* GRÁFICA 14 (PRO): SUEÑO ↔ ESTRÉS */
+  const csSvg=$('clarityCorrSleepStressChart');
+  if(csSvg){
+    const pts=[];
+    last30.forEach(d=>{
+      const hv=SLEEP_H[d.log.sleep],sv=STRESS_V[d.log.stress];
+      if(hv!=null&&sv!=null)pts.push([hv,sv]);
+    });
+    const W=440,baseY=108;
+    let out='<line x1="18" y1="'+baseY+'" x2="'+(W-18)+'" y2="'+baseY+'" stroke="var(--rule)"/>';
+    pts.forEach(([h,sv])=>{
+      const x=30+((h-4.5)/4.5)*(W-60);
+      const y=baseY-14-(3-sv)*26;
+      out+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="5" fill="#5F87A8" opacity="0.75"/>';
+    });
+    out+='<text x="18" y="20" font-size="11" fill="var(--muted)">Más sueño →</text><text x="'+(W-18)+'" y="20" font-size="11" text-anchor="end" fill="var(--muted)">menos estrés ↑</text>';
+    csSvg.innerHTML=pts.length>=3?out:weekEmpty;
+    const txt=$('clarityCorrSleepStressTxt');
+    if(txt){
+      if(pts.length<3){txt.textContent='Necesitas al menos 3 días con sueño y estrés registrados para ver la correlación.';}
+      else{
+        const n=pts.length,mx=pts.reduce((a,p)=>a+p[0],0)/n,my=pts.reduce((a,p)=>a+p[1],0)/n;
+        let num=0,dx=0,dy=0;
+        pts.forEach(([x,y])=>{num+=(x-mx)*(y-my);dx+=(x-mx)*(x-mx);dy+=(y-my)*(y-my);});
+        const r=(dx>0&&dy>0)?num/Math.sqrt(dx*dy):0;
+        const hi=pts.filter(p=>p[0]>=7.5),lo=pts.filter(p=>p[0]<7.5);
+        const avg=a=>a.length?(a.reduce((sm,p)=>sm+p[1],0)/a.length):null;
+        const aHi=avg(hi),aLo=avg(lo);
+        txt.textContent='Correlación '+r.toFixed(2)+' · '+(r<-0.3?'a más sueño, menos estrés.':(r>0.3?'a más sueño, más estrés (revisa tus noches).':'sin relación clara todavía.'))+((aHi!=null&&aLo!=null)?(' Con 7.5+ h tu estrés promedio es '+aHi.toFixed(1)+' y con menos, '+aLo.toFixed(1)+'.'):'');
+      }
+    }
+    gatePro('clarityCorrSleepStressBox','clarityCorrSleepStressLock','clarityCorrSleepStressUnlock','La correlación sueño ↔ estrés es parte de Wavy Pro.');
+  }
+
+  /* GRÁFICA 15 (PRO): ENERGÍA Y VITALIDAD */
+  const enSvg=$('clarityEnergyChart');
+  if(enSvg){
+    const W=440,baseY=108,maxH=66,slotW=(W-36)/7;
+    let out='<line x1="18" y1="'+baseY+'" x2="'+(W-18)+'" y2="'+baseY+'" stroke="var(--rule)"/>'+
+            '<text x="18" y="16" font-size="11" fill="#D68C59">■ Vitalidad</text><text x="96" y="16" font-size="11" fill="#5F87A8">● Sueño</text>';
+    last7.forEach((d,i)=>{
+      const ev=ENERGY_V[d.log.energy];
+      const hv=SLEEP_H[d.log.sleep];
+      const cx=18+slotW*i+slotW*0.5;
+      if(ev!=null){
+        const bh=Math.max(10,Math.round((ev/100)*maxH));
+        out+='<rect x="'+(cx-13).toFixed(1)+'" y="'+(baseY-bh)+'" width="26" height="'+bh+'" rx="8" fill="#D68C59" opacity="0.9"/>'+
+             '<text x="'+cx.toFixed(1)+'" y="'+(baseY-bh-7)+'" font-size="12" font-weight="600" text-anchor="middle" fill="var(--ink)">'+ev+'</text>';
+      }
+      if(hv!=null){
+        const cy=baseY-Math.round((hv/9)*maxH);
+        out+='<circle cx="'+cx.toFixed(1)+'" cy="'+cy+'" r="4.5" fill="#5F87A8" stroke="var(--paper)" stroke-width="1.5"/>';
+      }
+      out+='<text x="'+cx.toFixed(1)+'" y="'+(baseY+20)+'" font-size="12" font-weight="500" text-anchor="middle" fill="var(--ink)">'+d.lbl+'</text>';
+    });
+    enSvg.innerHTML=hasWeek?out:weekEmpty;
+    gatePro('clarityEnergyBox','clarityEnergyLock','clarityEnergyUnlock','Energía y vitalidad es parte de Wavy Pro.');
   }
 
   const heroBtn=$('pulsoHeroActionBtn');
@@ -9793,7 +10162,7 @@ if($('sendFreeVigilBtn')){
 function paintRsFill(){
   const rs=$('rs');if(!rs)return;
   const v=Math.max(0,Math.min(100,+rs.value||0));
-  rs.style.background='linear-gradient(90deg,var(--crimson) '+v+'%,rgba(128,128,128,.2) '+v+'%)';
+  rs.style.backgroundImage='linear-gradient(90deg,var(--crimson) '+v+'%,rgba(128,128,128,.2) '+v+'%)';
 }
 $('rs').addEventListener('pointerdown',()=>{isDraggingSlider=true;WavyAudio.unlockNow()});
 ['pointerup','pointercancel'].forEach(ev=>$('rs').addEventListener(ev,()=>{isDraggingSlider=false}));
@@ -10158,7 +10527,7 @@ function renderClueTrackList(){
   }
 
   if($('clueTrackCount')){
-    $('clueTrackCount').textContent=totalCount>0?(totalCount+(totalCount===1?' hábito marcado hoy':' hábitos marcados hoy')):'';
+    $('clueTrackCount').textContent=totalCount>0?(totalCount+' hoy'):'';
   }
 }
 
