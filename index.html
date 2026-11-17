@@ -748,6 +748,13 @@ body.co-sync-screen #coFirefliesOverlay{opacity:1}
   font-family:var(--serif);font-size:16px;padding:10px 12px;border-radius:12px;outline:none;
   margin-bottom:10px;
 }
+#lecturaReader{position:fixed;inset:0;z-index:200;overflow-y:auto;background:var(--paper);padding:calc(env(safe-area-inset-top,0px) + 16px) 20px calc(env(safe-area-inset-bottom,0px) + 48px)}
+#lecturaReader[hidden]{display:none}
+.lectura-reader-inner{max-width:600px;margin:0 auto}
+.lectura-reader-meta{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:10px}
+#lecturaReaderTitle{font-family:var(--serif);font-size:28px;font-weight:600;line-height:1.2;margin:0 0 6px}
+#lecturaReaderBody p{font-family:var(--serif);font-size:17px;line-height:1.65;margin:0 0 16px}
+#lecturaReaderBody h2{font-family:var(--serif);font-size:22px;font-weight:600;margin:26px 0 10px;line-height:1.25}
 
 .sl{margin-top:14px;padding-top:4px;border-top:none}
 .sl label{display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:600}
@@ -856,18 +863,6 @@ body.coast-fullscreen > #seab .coast-fs-dock{bottom:max(18px, env(safe-area-inse
   background:linear-gradient(135deg, rgba(255,255,255,0.36), rgba(255,255,255,0.14));
   border-color:rgba(255,255,255,0.75);
 }
-/* Dock de cristal en el sol: play + elegir diseño (mismo Liquid Glass que Regulación) */
-.sun-glass-dock{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:4;display:flex;align-items:center;justify-content:center;gap:10px}
-.peb-vessel-sheet{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0 4px;animation:fadeUp .2s ease}
-.peb-vessel-sheet[hidden]{display:none}
-/* Lector de ensayos (Lecturas y Claridad) */
-#lecturaReader{position:fixed;inset:0;z-index:200;overflow-y:auto;background:var(--paper);padding:calc(env(safe-area-inset-top,0px) + 16px) 20px calc(env(safe-area-inset-bottom,0px) + 48px)}
-#lecturaReader[hidden]{display:none}
-.lectura-reader-inner{max-width:600px;margin:0 auto}
-.lectura-reader-meta{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:10px}
-#lecturaReaderTitle{font-family:var(--serif);font-size:28px;font-weight:600;line-height:1.2;margin:0 0 6px}
-#lecturaReaderBody p{font-family:var(--serif);font-size:17px;line-height:1.65;margin:0 0 16px}
-#lecturaReaderBody h2{font-family:var(--serif);font-size:22px;font-weight:600;margin:26px 0 10px;line-height:1.25}
 #coastFsStopBtn{display:none}
 .sea.breathing #coastFsStopBtn{display:inline-flex}
 .coast-fs-panel{
@@ -946,20 +941,6 @@ body.coast-fullscreen > #seab .coast-fs-dock{bottom:max(18px, env(safe-area-inse
 .retract-body{overflow:hidden;transition:all .25s ease;margin-bottom:12px}
 .retract-body[hidden]{display:none}
 .retract-body:not([hidden]){animation:fadeUp .28s ease}
-/* Menú Calendario, rutina y detalles: una sola escala tipográfica, sin líneas divisorias */
-#caliToggleBtn{border-bottom:none}
-.cali-menu .info-box,.cali-menu .cal{border-bottom:none}
-.cali-menu .info-box small{font-size:11px}
-.cali-menu .info-box b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cali-menu .info-box em{display:block;font-size:11.5px;color:var(--muted);font-style:normal;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cali-menu .cal-intro{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cali-menu .cal-head strong{font-size:16px}
-.cali-menu .cal-legend{font-family:var(--sans);font-size:11px}
-.cali-menu .cali-detail-hd small{font-size:11px}
-.cali-menu .cali-detail-hd strong{font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cali-menu .cali-detail-hd p{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cali-menu .ex-card strong{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cali-menu .ex-card span{font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 .mode-link{background:none;border:none;padding:4px 0;font-family:var(--serif);font-style:normal;font-size:14px;color:var(--crimson);cursor:pointer}
 .mode-sheet{display:flex;flex-wrap:wrap;gap:6px;margin:-2px 0 10px;animation:fadeUp .2s ease}
@@ -2751,10 +2732,6 @@ summary::-webkit-details-marker{display:none}
         <div id="nb"></div>
         <button class="btn ghost" id="more" style="width:100%;margin-top:10px" hidden>Ver registros anteriores</button>
       </div>
-      <div class="bio-sec" id="todayReadingCard" hidden style="margin-top:16px">
-        <div class="bio-sec-hd"><span>Lectura para hoy</span><span id="todayReadingMood" style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">—</span></div>
-        <div id="todayReadingBody"></div>
-      </div>
       <div hidden><div id="ffuerza"></div><div id="ffuerzaExtra"></div><div id="fcuerpo"></div><div id="fcuerpoExtra"></div><div id="fsl"></div><div id="fslExtra"></div><div id="fsoc"></div><div id="fsocExtra"></div></div>
 
       <div class="bio-sec" id="femaleBioBlock" hidden>
@@ -2842,15 +2819,15 @@ summary::-webkit-details-marker{display:none}
           <span>Calendario, rutina y detalles</span>
           <b id="caliToggleIcon">Abrir ▾</b>
         </button>
-        <div class="retract-body cali-menu" id="caliRetractBody" hidden>
+        <div class="retract-body" id="caliRetractBody" hidden>
           <div class="info-grid" style="margin-bottom:10px">
-            <div class="info-box"><small>Movimiento de hoy</small><b id="maleSummaryTxt">—</b><em id="maleSummarySub">Antiansiedad</em></div>
+            <div class="info-box"><small>Movimiento de hoy</small><b id="maleSummaryTxt">—</b><em id="maleSummarySub">Calistenia antiansiedad</em></div>
             <div class="info-box"><small>Enfoque sugerido</small><b id="maleFocusWindow">—</b><em id="maleFocusHint">—</em></div>
             <div class="info-box"><small>Rutina sugerida hoy</small><b id="maleSplitName">—</b><em id="maleSplitSub">—</em></div>
-            <div class="info-box"><small>Impacto en calma</small><b id="maleCalmStatTxt">-34% estrés</b><em id="maleCalmStatSub">Respirar y regular</em></div>
+            <div class="info-box"><small>Impacto en calma</small><b id="maleCalmStatTxt">-34% estrés</b><em id="maleCalmStatSub">Regulación y respiración activa</em></div>
           </div>
           <div class="cal">
-            <p class="cal-intro">Tu semana en casa, o solo ritmo por hora.</p>
+            <p class="cal-intro">Genera tu calendario semanal en casa (cada ejercicio libera tensión muscular y baja la ansiedad) o elige «Solo ritmo por hora» si no deseas rutina.</p>
             <div class="chips" id="caliPresets" style="margin-bottom:12px">
               <button type="button" class="chip on" data-p="3">3 días/sem</button>
               <button type="button" class="chip" data-p="4">4 días</button>
@@ -3028,16 +3005,10 @@ summary::-webkit-details-marker{display:none}
           <canvas id="flameCanvas" width="700" height="860" aria-label="Tu sol vivo"></canvas>
           <div class="sun-stage-pct" id="sunStagePct">65%</div>
           <div class="sun-stage-decay" id="pebDecayCountdown">-2%</div>
-          <div class="sun-glass-dock" id="sunGlassDock">
-            <button type="button" class="coast-fs-toggle" id="sunTrailerBtn" aria-label="Ver evolución completa del sol en 30 segundos" title="Ver evolución 5% → 100% (30 s)">
-              <svg id="sunTrailerIco" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;display:block" aria-hidden="true"><polygon points="7 5 19 12 7 19 7 5"/></svg>
-            </button>
-            <button type="button" class="coast-fs-toggle" id="sunDesignBtn" aria-label="Elegir diseño de tu sol" title="Elegir diseño">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;display:block" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.3M12 19.1v2.3M2.6 12h2.3M19.1 12h2.3M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"/></svg>
-            </button>
-          </div>
+          <button type="button" class="coast-fs-toggle" id="sunTrailerBtn" aria-label="Ver evolución completa del sol en 30 segundos" title="Ver evolución 5% → 100% (30 s)" style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:4;width:38px;height:38px;border-radius:50%;padding:0">
+            <svg id="sunTrailerIco" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;display:block" aria-hidden="true"><polygon points="7 5 19 12 7 19 7 5"/></svg>
+          </button>
         </div>
-        <div id="pebVesselBar" class="peb-vessel-sheet" hidden></div>
         <div class="peb-actions">
           <button class="btn" id="pb">Avivar sol</button>
           <button class="btn soft" id="wd">Enviar luz</button>
@@ -3219,49 +3190,22 @@ summary::-webkit-details-marker{display:none}
         <div>
           <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ok);font-weight:600">Tu lectura de hoy</div>
           <h3 id="pulsoHeadline" style="font-family:var(--serif);font-size:21px;font-weight:500;line-height:1.2;margin:4px 0 6px">Tu mente y tu cuerpo están en armonía hoy</h3>
-          <p id="pulsoSubline" style="font-size:12.5px;color:var(--muted);line-height:1.45">Refleja tu descanso, tu hidratación, tus pausas y cómo te sientes después de respirar.</p>
+          <p id="pulsoSubline" style="font-size:12.5px;color:var(--muted);line-height:1.45">Refleja tus emociones y lo que registraste en Cuerpo, Mente y Vínculo hoy.</p>
           <div class="cmd-kpis">
             <div class="cmd-kpi"><small>Emoción de hoy</small><b id="cs1">—</b></div>
             <div class="cmd-kpi"><small>Cuerpo</small><b id="cs3">—</b></div>
             <div class="cmd-kpi"><small>Mente</small><b id="cs2">—</b></div>
             <div class="cmd-kpi"><small>Vínculo</small><b id="pulsoBestWindow">—</b></div>
           </div>
-          <button type="button" class="cmd-action-btn" id="pulsoHeroActionBtn">Regalarme 2 min en Costa</button>
+          <button type="button" class="cmd-action-btn" id="pulsoHeroActionBtn">Regalarme 2 min en Calma</button>
         </div>
       </div>
 
-      <!-- LECTURAS PARA HOY (ALGORITMO DE CLARIDAD) -->
+      <!-- LECTURAS PARA HOY (4 ENSAYOS: 2 DE ACOMPAÑAMIENTO + 2 DE CAMBIO DE ESTADO) -->
       <div id="clarityReadingBox" style="margin-top:14px">
-        <div class="bio-sec-hd"><span>Lecturas para hoy</span><span id="clarityReadingModeLbl" style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">Acompañarte en lo que sientes</span></div>
-        <div class="chips" style="margin-bottom:12px">
-          <button type="button" class="chip on" id="clarityModeStayBtn">Quedarme aquí</button>
-          <button type="button" class="chip" id="clarityModeLiftBtn">Sentirme diferente</button>
-        </div>
+        <div class="bio-sec-hd"><span>Lecturas para hoy</span><span style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">Wavy Editorial</span></div>
         <div id="clarityEssayList"></div>
         <p id="clarityEssayHint" style="font-size:12.5px;color:var(--muted);line-height:1.45;margin-top:8px" hidden></p>
-      </div>
-
-      <!-- GRÁFICA 1: TU FLUJO DEL DÍA -->
-      <div class="cmd-chart-box">
-        <div class="cmd-chart-hd">
-          <div>
-            <strong>Tu flujo del día</strong>
-            <p id="cins" style="font-size:12.5px;color:var(--muted);margin-top:2px"></p>
-          </div>
-          <span id="pulsoPeakHourBadge">Pausa: 21:00 h</span>
-        </div>
-        <div style="display:flex;gap:14px;align-items:center;margin:6px 0 10px;flex-wrap:wrap">
-          <span style="display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:500;color:#C47D6B"><i style="width:8px;height:8px;border-radius:50%;background:#D99B88;display:inline-block"></i> <span id="pulsoPeakLegend">Pide pausa: 21:00 h</span></span>
-          <span style="display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:500;color:var(--ok)"><i style="width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block"></i> <span id="pulsoNowLegend">Tu claridad ahora</span></span>
-        </div>
-        <svg class="cmd-svg" id="circadianSplineSvg" viewBox="0 0 440 140" preserveAspectRatio="none" role="img" aria-label="Flujo de energía del día"></svg>
-        <div class="cmd-axis">
-          <span>6 am</span>
-          <span>12 pm</span>
-          <span>6 pm</span>
-          <span>10 pm</span>
-        </div>
-        <button type="button" class="cmd-action-btn" id="pulsoScheduleReminderBtn">Recordarme mi pausa de la tarde</button>
       </div>
 
       <!-- NOTA PERSONAL DE EQUILIBRIO -->
@@ -3666,7 +3610,7 @@ summary::-webkit-details-marker{display:none}
         <button type="button" class="btn ghost" id="onbFinishDirectBtn" style="width:100%">Entrar directamente a Wavy</button>
       </div>
       <!-- Versión de la app -->
-      <div class="cover-version">V1.02</div>
+      <div class="cover-version">V1.01</div>
     </div>
   </div>
 </div>
@@ -5896,6 +5840,7 @@ function drawWavySplashSea(ts){
 
   wavySplashRaf=requestAnimationFrame(drawWavySplashSea);
 }
+let splashForceLogin=false;
 function finishWavySplashToLogin(){
   clearWavySplashTimers();
   stopWavySplashSea();
@@ -5908,12 +5853,17 @@ function finishWavySplashToLogin(){
     },620);
     wavySplashTimers.push(tid);
   }
-  if($('onboardingModal'))$('onboardingModal').hidden=false;
-  const s0=$('onbStep0'),s1=$('onbStep1'),s2=$('onbStep2'),s3=$('onbStep3');
-  if(s0)s0.hidden=true;
-  if(s1)s1.hidden=false;
-  if(s2)s2.hidden=true;
-  if(s3)s3.hidden=true;
+  const urlLogin=(typeof URLSearchParams!=='undefined' && new URLSearchParams(window.location.search||'').get('login')==='1');
+  const needsLogin=splashForceLogin || urlLogin || !S.onb || !S.onb.done;
+  splashForceLogin=false;
+  if($('onboardingModal'))$('onboardingModal').hidden=!needsLogin;
+  if(needsLogin){
+    const s0=$('onbStep0'),s1=$('onbStep1'),s2=$('onbStep2'),s3=$('onbStep3');
+    if(s0)s0.hidden=true;
+    if(s1)s1.hidden=false;
+    if(s2)s2.hidden=true;
+    if(s3)s3.hidden=true;
+  }
 }
 function runWavyWelcomeSplash(){
   const ov=$('wavySplashOverlay');
@@ -6012,19 +5962,16 @@ if($('wavySplashSkipBtn')){
 }
 
 function initOnboarding(forceShow){
-  const urlLogin=(typeof URLSearchParams!=='undefined' && new URLSearchParams(window.location.search||'').get('login')==='1');
-  const needsOnboarding=(!S.onb || !S.onb.done);
-  if(!forceShow && !urlLogin && !needsOnboarding)return;
+  const isPub=(typeof location!=='undefined' && /^#\//.test(location.hash||''));
+  const noSplash=(typeof URLSearchParams!=='undefined' && new URLSearchParams(window.location.search||'').get('nosplash')==='1');
+  if(isPub || noSplash)return;
+  splashForceLogin=Boolean(forceShow);
   if($('obNameInput'))$('obNameInput').value=S.me.name||'';
   if($('obAliasInput'))$('obAliasInput').value=(S.me.username && S.me.username!=='invitado')?'@'+S.me.username:'';
   obSelectedBio=S.bioMode||'male';
   document.querySelectorAll('#obBioChoice .chip').forEach(c=>c.classList.toggle('on',c.dataset.obm===obSelectedBio));
   renderObHabitGrid();
-  if(!forceShow){
-    runWavyWelcomeSplash();
-  }else{
-    finishWavySplashToLogin();
-  }
+  runWavyWelcomeSplash();
 }
 if($('onbGiftPlayBtn') && $('onbGiftOrb') && $('onbGiftHint')){
   let giftTimer=0,giftRunning=false;
@@ -7327,151 +7274,286 @@ function drawSpark(svgId){
     <text x="${Math.min(W-70, Math.max(padX+4, curX-20)).toFixed(1)}" y="${Math.max(14, curY-10).toFixed(1)}" font-size="11" fill="var(--ok)" font-weight="600">Hoy · Día ${curDay}</text>`;
 }
 
-/* ---------- CLARIDAD: ALGORITMO DE LECTURA DEL DÍA ---------- */
-/* Entradas: emociones de hoy (Hoy) + formulario Cuerpo/Mente/Vínculo (Cuidado).
-   Salida: lectura personal (título + texto), balance 0-100, estado por dimensión y 5+5 ensayos.
-   La lectura es una reflexión en lenguaje Wavy, nunca un diagnóstico médico. */
+/* =========================================================
+   CLARIDAD · ALGORITMO UNIFICADO (EMOCIONES + CUERPO/MENTE/VÍNCULO) + 4 ENSAYOS (2 + 2)
+   ========================================================= */
+let lecturasCache=null,lecturasLoading=null;
+function loadLecturas(){
+  if(lecturasCache)return Promise.resolve(lecturasCache);
+  if(lecturasLoading)return lecturasLoading;
+  lecturasLoading=fetch('./lecturas.json')
+    .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+    .then(d=>{lecturasCache=Array.isArray(d)?d:[];return lecturasCache;})
+    .catch(()=>{lecturasCache=[];lecturasLoading=null;return lecturasCache;});
+  return lecturasLoading;
+}
+function essayByMood(mood){
+  if(!lecturasCache||!mood)return null;
+  return lecturasCache.find(e=>e.mood===mood||e.topic===mood)||null;
+}
+function openLecturaReader(n){
+  if(!n||!$('lecturaReader'))return;
+  const back=$('lecturaReaderBack');
+  if(back)back.onclick=()=>{if($('lecturaReader'))$('lecturaReader').hidden=true;};
+  if($('lecturaReaderTitle'))$('lecturaReaderTitle').textContent=n.title||'Lectura';
+  if($('lecturaReaderMeta'))$('lecturaReaderMeta').textContent='Wavy Editorial · '+(n.readMinutes||4)+' min · '+(n.mood||n.topic||'');
+  const body=$('lecturaReaderBody');
+  if(body){
+    const paras=Array.isArray(n.paragraphs)?n.paragraphs:[];
+    body.innerHTML=paras.length
+      ?paras.map(p=>String(p).startsWith('## ')?'<h2>'+esc(String(p).slice(3))+'</h2>':'<p>'+esc(String(p))+'</p>').join('')
+      :'<p>'+esc(n.excerpt||'')+'</p>';
+  }
+  $('lecturaReader').hidden=false;
+  $('lecturaReader').scrollTop=0;
+}
+function lecturaCard(n){
+  const card=document.createElement('article');
+  card.className='med-card';
+  card.innerHTML=
+    '<div class="med-author-row">'+
+      '<span class="med-author-name">Wavy Editorial</span>'+
+      '<span class="med-dot">·</span>'+
+      '<span class="med-date">'+esc(formatPublicDate(n.date||'2026-11-16'))+'</span>'+
+    '</div>'+
+    '<h3 class="med-title">'+esc(n.title)+'</h3>'+
+    '<p class="med-excerpt">'+esc(n.excerpt||'')+'</p>'+
+    '<div class="med-foot" style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:nowrap">'+
+      '<span class="med-pill" style="white-space:nowrap">'+esc(n.mood||n.topic||'')+' · '+(n.readMinutes||4)+' min</span>'+
+      '<span style="font-size:11.5px;color:var(--muted);white-space:nowrap">Leer →</span>'+
+    '</div>';
+  card.onclick=()=>openLecturaReader(n);
+  return card;
+}
+
 const CLARITY_MOODS={
-  'Plenitud':{v:1,t:'Hoy estás llena sin que pase nada extraordinario.',l:'La plenitud no es un pico: es sentirte entera en un momento común. Hoy tu día tiene eso.'},
-  'Gratitud':{v:1,t:'Hoy ves lo que sí hay.',l:'La gratitud no es obligarte a estar bien: es notar lo que ya te sostiene.'},
-  'Quietud':{v:1,t:'Hoy hay silencio por dentro.',l:'La quietud no es vacío: es presencia sin ruido. Hoy tu mente te dio un respiro.'},
-  'Enfoque':{v:0,t:'Hoy tu atención está contigo.',l:'El enfoque no es apretar: es elegir una sola cosa y estar ahí.'},
-  'Ternura':{v:1,t:'Hoy necesitas que te miren suave.',l:'La ternura no es debilidad: es sentir que existes para alguien.'},
+  'Plenitud':{v:1,t:'Hoy estás llena sin que pase nada extraordinario.',l:'La plenitud no es un pico: es sentirte entera en un momento común.'},
+  'Gratitud':{v:1,t:'Hoy ves lo que sí te sostiene.',l:'La gratitud no es obligarte a estar bien: es notar lo que ya está contigo.'},
+  'Quietud':{v:1,t:'Hoy hay silencio habitable por dentro.',l:'La quietud no es vacío: es presencia sin ruido.'},
+  'Enfoque':{v:0,t:'Hoy tu atención busca dirección.',l:'El enfoque no es apretar: es elegir una sola cosa y estar ahí.'},
+  'Ternura':{v:1,t:'Hoy miras con suavidad.',l:'La ternura no es debilidad: es presencia que no juzga.'},
   'Ambivalencia':{v:-1,t:'Hoy quieres dos cosas a la vez.',l:'La ambivalencia no es indecisión: son dos partes verdaderas pidiendo lugar.'},
-  'Inquietud':{v:-1,t:'Hoy hay un ruido que no tiene nombre.',l:'La inquietud es una señal, no un enemigo: algo te está pidiendo atención.'},
-  'Impulso':{v:-1,t:'Hoy el antojo llega antes que tú.',l:'El impulso no te define: es una ola que pasa si le das diez minutos.'},
-  'Vacío':{v:-1,t:'Hoy hay un hueco que no se llena con más.',l:'El vacío no es falta de cosas: es falta de sentido. Hoy vale mirarlo de frente.'},
-  'Ira':{v:-1,t:'Hoy tu enojo está hablando.',l:'El enojo no llegó a arruinarte el día: llegó a marcarte dónde está tu límite.'},
-  'Alivio':{v:1,t:'Hoy tu cuerpo soltó algo.',l:'El alivio es el cuerpo sintiéndose a salvo. Hoy respiraste y se notó.'},
-  'Compasión':{v:1,t:'Hoy te hablas más suave.',l:'La compasión no es conformarte: es tratarte como tratarías a alguien que quieres.'},
-  'Claridad':{v:1,t:'Hoy por fin sabes lo que quieres.',l:'La claridad no es tener todas las respuestas: es saber cuál es la pregunta.'},
-  'Asombro':{v:1,t:'Hoy algo te dejó sin palabras.',l:'El asombro es mirar como si fuera la primera vez. Hoy el mundo te sorprendió.'},
-  'Nostalgia':{v:-1,t:'Hoy extrañas lo que ya no vuelve.',l:'La nostalgia no es vivir en el pasado: es darle a la memoria su lugar.'},
-  'Vulnerabilidad':{v:-1,t:'Hoy te muestras sin armadura.',l:'La vulnerabilidad no es exponerte: es dejar que te vean de verdad.'},
-  'Sensibilidad':{v:-1,t:'Hoy sientes demasiado, y eso está bien.',l:'Sentir mucho no es un defecto: es información que llega antes que las palabras.'},
-  'Agotamiento':{v:-1,t:'Hoy estás cansada de actuar.',l:'El agotamiento no es flojera: es el cuerpo pidiendo que dejes el personaje.'},
-  'Desconexión':{v:-1,t:'Hoy te fuiste aunque estás aquí.',l:'La desconexión no es frialdad: es el cuerpo protegiéndose. Volver es suave, no a la fuerza.'}
+  'Inquietud':{v:-1,t:'Hoy hay un ruido que no tiene nombre.',l:'La inquietud es una señal, no un enemigo: algo pide atención.'},
+  'Impulso':{v:-1,t:'Hoy el antojo llega antes que tú.',l:'El impulso no te define: es una ola que baja si le das espacio.'},
+  'Vacío':{v:-1,t:'Hoy hay un hueco que no se llena con más.',l:'El vacío no es falta de cosas: es falta de sentido.'},
+  'Ira':{v:-1,t:'Hoy tu enojo está marcando un límite.',l:'El enojo no llegó a arruinarte el día: llegó a defender algo tuyo.'},
+  'Alivio':{v:1,t:'Hoy tu cuerpo soltó algo.',l:'El alivio es el cuerpo sintiéndose a salvo.'},
+  'Compasión':{v:1,t:'Hoy te hablas más suave.',l:'La compasión te devuelve aire para volver a intentar.'},
+  'Claridad':{v:1,t:'Hoy distingues lo que es tuyo.',l:'La claridad es saber qué quieres sin ruido prestado.'},
+  'Asombro':{v:1,t:'Hoy algo te dejó sin palabras.',l:'El asombro te recuerda que el mundo es más grande que tus pendientes.'},
+  'Nostalgia':{v:-1,t:'Hoy extrañas lo que ya no vuelve.',l:'La nostalgia es el precio de haber querido.'},
+  'Vulnerabilidad':{v:-1,t:'Hoy te sientes sin armadura.',l:'Mostrarte sin armadura da vértigo, pero es la única forma de estar de verdad.'},
+  'Sensibilidad':{v:-1,t:'Hoy sientes demasiado, y eso pesa.',l:'Sentir mucho no es defecto: es información que pide cauce.'},
+  'Agotamiento':{v:-1,t:'Hoy pesa sostener el personaje.',l:'El agotamiento no es flojera: es tu cuerpo pidiendo que pares.'},
+  'Desconexión':{v:-1,t:'Hoy te fuiste aunque sigas aquí.',l:'La desconexión es protección, no falla. Volver es suave.'}
 };
 const CLARITY_AFFINITY={
-  'Plenitud':{a:['Plenitud','Gratitud','Asombro','Quietud','Compasión'],l:['Presencia','Tiempo','Claridad','Ternura','Alivio']},
-  'Gratitud':{a:['Gratitud','Plenitud','Ternura','Compasión','Quietud'],l:['Presencia','Asombro','Claridad','Tiempo','Alivio']},
-  'Quietud':{a:['Quietud','Plenitud','Claridad','Alivio','Presencia'],l:['Asombro','Gratitud','Ternura','Tiempo','Compasión']},
-  'Enfoque':{a:['Enfoque','Claridad','Presencia','Tiempo','Quietud'],l:['Alivio','Gratitud','Energía','Ternura','Plenitud']},
-  'Ternura':{a:['Ternura','Compasión','Gratitud','Vulnerabilidad','Plenitud'],l:['Presencia','Alivio','Claridad','Autoestima','Quietud']},
-  'Ambivalencia':{a:['Ambivalencia','Vulnerabilidad','Sensibilidad','Nostalgia','Vacío'],l:['Claridad','Presencia','Quietud','Alivio','Tiempo']},
-  'Inquietud':{a:['Inquietud','Impulso','Ira','Sensibilidad','Vulnerabilidad'],l:['Alivio','Quietud','Claridad','Presencia','Cuerpo en paz']},
-  'Impulso':{a:['Impulso','Inquietud','Ira','Vacío','Sensibilidad'],l:['Presencia','Claridad','Tiempo','Alivio','Cuerpo en paz']},
-  'Vacío':{a:['Vacío','Nostalgia','Desconexión','Vulnerabilidad','Sensibilidad'],l:['Plenitud','Gratitud','Asombro','Claridad','Presencia']},
-  'Ira':{a:['Ira','Inquietud','Impulso','Vulnerabilidad','Sensibilidad'],l:['Alivio','Claridad','Quietud','Ternura','Cuerpo en paz']},
-  'Alivio':{a:['Alivio','Quietud','Claridad','Gratitud','Presencia'],l:['Plenitud','Asombro','Ternura','Compasión','Tiempo']},
-  'Compasión':{a:['Compasión','Ternura','Gratitud','Vulnerabilidad','Alivio'],l:['Presencia','Autoestima','Claridad','Quietud','Plenitud']},
-  'Claridad':{a:['Claridad','Quietud','Enfoque','Presencia','Alivio'],l:['Asombro','Gratitud','Plenitud','Ternura','Tiempo']},
-  'Asombro':{a:['Asombro','Plenitud','Gratitud','Quietud','Claridad'],l:['Presencia','Ternura','Compasión','Tiempo','Alivio']},
-  'Nostalgia':{a:['Nostalgia','Vacío','Vulnerabilidad','Sensibilidad','Desconexión'],l:['Gratitud','Plenitud','Presencia','Alivio','Claridad']},
-  'Vulnerabilidad':{a:['Vulnerabilidad','Sensibilidad','Ternura','Nostalgia','Vacío'],l:['Compasión','Alivio','Autoestima','Quietud','Claridad']},
-  'Sensibilidad':{a:['Sensibilidad','Vulnerabilidad','Inquietud','Nostalgia','Ternura'],l:['Claridad','Alivio','Quietud','Presencia','Compasión']},
-  'Agotamiento':{a:['Agotamiento','Vacío','Desconexión','Sensibilidad','Nostalgia'],l:['Descanso','Cuerpo en paz','Alivio','Energía','Quietud']},
-  'Desconexión':{a:['Desconexión','Vacío','Agotamiento','Vulnerabilidad','Nostalgia'],l:['Presencia','Ternura','Compasión','Claridad','Cuerpo en paz']}
+  'Plenitud':{a:['Plenitud','Gratitud','Asombro','Quietud'],l:['Presencia','Tiempo','Claridad','Ternura']},
+  'Gratitud':{a:['Gratitud','Plenitud','Ternura','Compasión'],l:['Presencia','Asombro','Claridad','Tiempo']},
+  'Quietud':{a:['Quietud','Plenitud','Claridad','Alivio'],l:['Asombro','Gratitud','Ternura','Tiempo']},
+  'Enfoque':{a:['Enfoque','Claridad','Presencia','Tiempo'],l:['Alivio','Energía','Descanso','Quietud']},
+  'Ternura':{a:['Ternura','Compasión','Gratitud','Vulnerabilidad'],l:['Presencia','Alivio','Autoestima','Quietud']},
+  'Ambivalencia':{a:['Ambivalencia','Vulnerabilidad','Sensibilidad','Nostalgia'],l:['Claridad','Presencia','Quietud','Alivio']},
+  'Inquietud':{a:['Inquietud','Impulso','Ira','Sensibilidad'],l:['Alivio','Quietud','Cuerpo en paz','Claridad']},
+  'Impulso':{a:['Impulso','Inquietud','Vacío','Ira'],l:['Presencia','Claridad','Tiempo','Cuerpo en paz']},
+  'Vacío':{a:['Vacío','Nostalgia','Desconexión','Vulnerabilidad'],l:['Plenitud','Asombro','Presencia','Claridad']},
+  'Ira':{a:['Ira','Inquietud','Impulso','Vulnerabilidad'],l:['Alivio','Claridad','Cuerpo en paz','Compasión']},
+  'Alivio':{a:['Alivio','Quietud','Claridad','Gratitud'],l:['Plenitud','Asombro','Tiempo','Presencia']},
+  'Compasión':{a:['Compasión','Ternura','Vulnerabilidad','Gratitud'],l:['Autoestima','Alivio','Quietud','Claridad']},
+  'Claridad':{a:['Claridad','Quietud','Enfoque','Presencia'],l:['Asombro','Tiempo','Plenitud','Ternura']},
+  'Asombro':{a:['Asombro','Plenitud','Gratitud','Quietud'],l:['Presencia','Tiempo','Ternura','Claridad']},
+  'Nostalgia':{a:['Nostalgia','Vacío','Vulnerabilidad','Sensibilidad'],l:['Gratitud','Presencia','Alivio','Plenitud']},
+  'Vulnerabilidad':{a:['Vulnerabilidad','Sensibilidad','Nostalgia','Vacío'],l:['Compasión','Autoestima','Alivio','Claridad']},
+  'Sensibilidad':{a:['Sensibilidad','Vulnerabilidad','Inquietud','Nostalgia'],l:['Cuerpo en paz','Alivio','Claridad','Compasión']},
+  'Agotamiento':{a:['Agotamiento','Vacío','Desconexión','Sensibilidad'],l:['Descanso','Cuerpo en paz','Energía','Quietud']},
+  'Desconexión':{a:['Desconexión','Vacío','Agotamiento','Vulnerabilidad'],l:['Presencia','Cuerpo en paz','Ternura','Alivio']}
 };
-const CLARITY_DIM_LINES={
-  'Cuerpo':'Tu cuerpo es el que más te pide hoy: poco sueño, poca agua, poco movimiento. Empieza por ahí, no por la cabeza.',
-  'Mente':'Tu mente es la que más ruido trae hoy: vueltas, tensión, antojos. No la pelees; nómbrala y dale una pausa.',
-  'Vínculo':'Tu vínculo es el que más pesa hoy: distancia, soledad o roce. Un mensaje corto a alguien que te quiere pesa más que mil vueltas.'
+const CLARITY_DIM_RULES={
+  Cuerpo:{
+    water:{pos:['8+ vasos de agua','Agua + Matcha / Té','Agua con electrolitos'],neg:['Poca agua (<4 vasos)']},
+    nutrition:{pos:['Comida limpia','Proteína y fruta fresca','Comida casera balanceada'],neg:['Ultraprocesados','Exceso de azúcar']},
+    sleep:{pos:['Dormí 8+ h','Dormí 7–8 h'],neg:['Menos de 6 h','Me costó dormir','Despertares nocturnos']},
+    movement:{pos:['Pilates / Pádel / Entreno','Caminata larga','Calistenia / Fuerza','Estiramiento suave'],neg:['Hoy no me moví']},
+    energy:{pos:['Cuerpo ligero','Energía alta'],neg:['Cansancio moderado','Sin pila']},
+    bodypain:{pos:['Sin dolor'],neg:['Cabeza','Tensión muscular','Espalda / Cuello']},
+    digestion:{pos:['Ligera y bien'],neg:['Inflamación','Pesadez','Reflujo / Malestar']},
+    posture:{pos:['Espalda suelta'],neg:['Cuello tenso','Mandíbula apretada','Hombros cargados']},
+    sunlight:{pos:['15+ min al sol'],neg:['Todo el día adentro']},
+    recovery:{pos:['Descansado'],neg:['Aún fatigado','Necesito siesta']},
+    strength:{pos:['Fuerza plena'],neg:['Fatiga muscular']},
+    cold:{pos:['Ducha fría','Sauna / Calor'],neg:[]},
+    bleeding:{pos:[],neg:['Abundante']},
+    pain:{pos:['Sin molestias'],neg:['Cólicos leves']}
+  },
+  Mente:{
+    mind_clarity:{pos:['Mente despejada'],neg:['Un poco nublada','Niebla mental']},
+    rumination:{pos:['Sin bucles'],neg:['Pensamientos repetitivos','Sobreanálisis alto']},
+    focus_flow:{pos:['Bloques profundos'],neg:['Disperso','Multitarea excesiva']},
+    mental_load:{pos:['Ligera'],neg:['Saturada']},
+    self_talk:{pos:['Amable conmigo'],neg:['Exigente','Dura / Culpa']},
+    craving:{pos:['No lo sentí','Lo resistí'],neg:['Cedí un poco']},
+    stress:{pos:['Bajo'],neg:['Alto']},
+    patience:{pos:['Sereno'],neg:['Impaciente','Reactivo']},
+    creativity:{pos:['Ideas fluidas'],neg:['Bloqueado']},
+    meaning:{pos:['Con dirección'],neg:['Sin rumbo']},
+    decisions:{pos:['Decidido'],neg:['Dudando','Postergando']},
+    screen_fatigue:{pos:['Poco tiempo'],neg:['Exceso de pantallas']}
+  },
+  'Vínculo':{
+    connection:{pos:['Con alguien cercano','En mi círculo','En comunidad'],neg:[]},
+    loneliness:{pos:['Acompañada/o','Sola/o en paz'],neg:['Necesito compañía']},
+    soc:{pos:['Espacio ordenado','Aire libre'],neg:['Ruido / Caos']},
+    boundaries:{pos:['Dije que no a tiempo'],neg:['Me costó poner límite','Cedí por agradar']},
+    listening:{pos:['Escuché presente','Me escucharon bien'],neg:['Conversación superficial']},
+    family:{pos:['En armonía'],neg:['Tensión familiar']},
+    partner:{pos:['Cercanía cálida','Soltero/a en paz'],neg:['Distancia']},
+    friends:{pos:['Risa compartida','Mensaje sincero'],neg:['Sin contacto hoy']},
+    support_ask:{pos:['Pedí ayuda hoy'],neg:['Me cuesta pedirlo']},
+    solitude_good:{pos:['Nutritivo'],neg:['Sin espacio propio']},
+    nature:{pos:['Caminé afuera','Vi el cielo / árboles'],neg:['Nada hoy']},
+    community:{pos:['Aporté al grupo','Me sentí parte'],neg:['Aislado del entorno']}
+  }
 };
+function scoreClarityDimension(log,rules){
+  let s=0;
+  Object.entries(rules).forEach(([k,r])=>{
+    const val=log[k];
+    if(!val)return;
+    const arr=Array.isArray(val)?val:[val];
+    arr.forEach(v=>{
+      if(r.pos.includes(v))s+=1;
+      if(r.neg.includes(v))s-=1;
+    });
+  });
+  return s;
+}
 function clarityDimScores(){
   const l=getTodayClueLog();
-  const arr=v=>Array.isArray(v)?v:(v?[v]:[]);
-  const has=v=>v!==undefined&&v!==null&&v!=='';
-  let cuerpo=0,mente=0,vinculo=0;
-  if(l.sleep==='Dormí 8+ h'||l.sleep==='Dormí 7–8 h')cuerpo+=1;
-  else if(l.sleep==='Menos de 6 h'||l.sleep==='Me costó dormir'||l.sleep==='Despertares nocturnos')cuerpo-=1;
-  if(l.water&&String(l.water).indexOf('Poca agua')===0)cuerpo-=1;
-  else if(has(l.water))cuerpo+=1;
-  if(arr(l.nutrition).some(x=>String(x).indexOf('Ultraprocesados')===0||String(x).indexOf('Exceso de azúcar')===0))cuerpo-=1;
-  else if(arr(l.nutrition).length)cuerpo+=1;
-  if(arr(l.energy).some(x=>x==='Sin pila'||x==='Cansancio moderado'))cuerpo-=1;
-  else if(arr(l.energy).length)cuerpo+=1;
-  if(l.stress==='Bajo')mente+=1; else if(l.stress==='Alto')mente-=1;
-  if(l.patience==='Sereno')mente+=1; else if(l.patience==='Impaciente'||l.patience==='Reactivo')mente-=1;
-  if(l.meaning==='Con dirección')mente+=1; else if(l.meaning==='Sin rumbo')mente-=1;
-  if(l.rumination==='Sin bucles')mente+=1; else if(has(l.rumination))mente-=1;
-  if(l.craving==='No lo sentí'||l.craving==='Lo resistí')mente+=1;
-  if(arr(l.connection).length)vinculo+=1;
-  if(l.loneliness==='Acompañada/o')vinculo+=1; else if(l.loneliness==='Necesito compañía')vinculo-=1;
-  if(arr(l.soc).some(x=>x==='Ruido / Caos'))vinculo-=1;
-  else if(arr(l.soc).length)vinculo+=1;
-  return {Cuerpo:cuerpo,Mente:mente,'Vínculo':vinculo};
+  return{
+    Cuerpo:scoreClarityDimension(l,CLARITY_DIM_RULES.Cuerpo),
+    Mente:scoreClarityDimension(l,CLARITY_DIM_RULES.Mente),
+    'Vínculo':scoreClarityDimension(l,CLARITY_DIM_RULES['Vínculo'])
+  };
 }
 function clarityDimWord(dim,score){
-  if(dim==='Cuerpo')return score>=1?'Descansado':(score===0?'Regular':'Cansado');
-  if(dim==='Mente')return score>=1?'En calma':(score===0?'Regular':'Saturada');
-  return score>=1?'Acompañada':(score===0?'En paz':'Sola');
+  if(dim==='Cuerpo')return score>=2?'Fuerte':(score>=0?'Estable':'Cargado');
+  if(dim==='Mente')return score>=2?'Despejada':(score>=0?'Estable':'Saturada');
+  return score>=2?'Sostenida':(score>=0?'En paz':'Distante');
 }
-let clarityMode='stay';
+function getTodaySelectedMoods(){
+  const live=[...document.querySelectorAll('.mo.on:not(.plus-btn)')].map(x=>x.dataset.n).filter(Boolean);
+  if(live.length)return live.slice(0,3);
+  const todayNotes=(S.notes||[]).filter(n=>n&&n.d===today()&&Array.isArray(n.moodNames)&&n.moodNames.length);
+  if(todayNotes.length)return todayNotes[0].moodNames.slice(0,3);
+  const latest=(S.notes||[]).find(n=>n&&Array.isArray(n.moodNames)&&n.moodNames.length);
+  return latest?latest.moodNames.slice(0,3):[];
+}
 function computeClarityReading(){
-  const todayNotes=(S.notes||[]).filter(n=>n&&n.d===today());
-  const lastNote=todayNotes[todayNotes.length-1]||(S.notes||[]).filter(n=>n&&Array.isArray(n.moodNames)&&n.moodNames.length).slice(-1)[0];
-  const moods=(lastNote&&Array.isArray(lastNote.moodNames))?lastNote.moodNames:[];
-  const mood=moods[0]||'';
+  const moods=getTodaySelectedMoods();
+  const l=getTodayClueLog();
+  const hasLogs=Object.keys(l).some(k=>{const v=l[k];return Array.isArray(v)?v.length>0:Boolean(v);});
   const dims=clarityDimScores();
   const weakest=['Cuerpo','Mente','Vínculo'].sort((a,b)=>dims[a]-dims[b])[0];
-  const withAfter=(S.trigLogs||[]).filter(t=>typeof t.pre==='number'&&typeof t.after==='number');
-  let relief=0;
-  if(withAfter.length>=3){
-    const avgPre=withAfter.reduce((a,t)=>a+t.pre,0)/withAfter.length;
-    const avgPost=withAfter.reduce((a,t)=>a+t.after,0)/withAfter.length;
-    relief=Math.max(0,Math.min(10,Math.round((avgPre-avgPost)/Math.max(0.1,avgPre)*10)));
+  if(!moods.length && !hasLogs){
+    return{empty:true,score:null,state:'Empezando',title:'Hoy aún no me has contado nada',body:'Elige tus emociones en Cuidado y llena tus tarjetas de Cuerpo, Mente y Vínculo. Tu lectura y tus 4 ensayos aparecen aquí.',moods:[],moodWord:'—',bodyWord:'—',mindWord:'—',bondWord:'—',stay:[],lift:[]};
   }
-  if(!mood&&!Object.keys(getTodayClueLog()).length){
-    return {empty:true,score:null,state:'Empezando',title:'Hoy aún no me has contado nada',body:'Elige una emoción en Hoy y llena tu cuidado del día. Tu lectura aparece aquí.',mood:'',moodWord:'—',bodyWord:'—',mindWord:'—',bondWord:'—',weakest:'',stay:[],lift:[]};
-  }
-  const info=CLARITY_MOODS[mood]||{v:0,t:'Hoy estás aquí, y eso basta.',l:'Sin una emoción nombrada, la lectura empieza por el cuerpo: ¿cómo dormiste, cómo respiraste, con quién estuviste?'};
+  const primary=moods[0]||'';
+  const info=CLARITY_MOODS[primary]||{v:0,t:'Hoy estás aquí, y eso ya dice algo.',l:'Tus registros corporales y relacionales dibujan cómo llegas hoy.'};
+  const moodValAvg=moods.length?(moods.reduce((acc,m)=>acc+((CLARITY_MOODS[m]&&CLARITY_MOODS[m].v)||0),0)/moods.length):0;
   const dimSum=dims.Cuerpo+dims.Mente+dims['Vínculo'];
-  const score=Math.max(5,Math.min(98,Math.round(50+info.v*18+dimSum*6+relief)));
-  const state=score>=75?'En sintonía':(score>=55?'En calma':(score>=40?'Día pesado':'Pide pausa'));
-  const aff=CLARITY_AFFINITY[mood]||{a:[],l:[]};
-  const body=info.l+(dims[weakest]<0?' '+CLARITY_DIM_LINES[weakest]:'')+' Claridad no es resolverlo todo hoy. Es verlo claro.';
-  return {empty:false,score,state,title:info.t,body,mood,moodWord:mood||'—',bodyWord:clarityDimWord('Cuerpo',dims.Cuerpo),mindWord:clarityDimWord('Mente',dims.Mente),bondWord:clarityDimWord('Vínculo',dims['Vínculo']),weakest,stay:aff.a,lift:aff.l};
+  const score=Math.max(8,Math.min(98,Math.round(54+moodValAvg*18+dimSum*4)));
+  const state=score>=75?'En sintonía':(score>=55?'En calma':(score>=38?'Día pesado':'Pide pausa'));
+
+  const extraSignals=[];
+  if(['Menos de 6 h','Me costó dormir','Despertares nocturnos'].includes(l.sleep)||['Sin pila','Cansancio moderado'].includes(l.energy))extraSignals.push('tu cuerpo trae cansancio acumulado');
+  if(['Pensamientos repetitivos','Sobreanálisis alto'].includes(l.rumination)||l.mental_load==='Saturada')extraSignals.push('tu mente está dando demasiadas vueltas');
+  if(['Exigente','Dura / Culpa'].includes(l.self_talk))extraSignals.push('te estás exigiendo de más por dentro');
+  if(l.loneliness==='Necesito compañía'||['Me costó poner límite','Cedí por agradar'].includes(l.boundaries)||l.partner==='Distancia'||l.family==='Tensión familiar')extraSignals.push('tus vínculos piden aire o límites claros');
+  if(l.screen_fatigue==='Exceso de pantallas'||l.focus_flow==='Disperso')extraSignals.push('las pantallas están fragmentando tu atención');
+
+  const dimNote=dims[weakest]<0
+    ?(weakest==='Cuerpo'?'Tu cuerpo es quien más pide tregua hoy.':(weakest==='Mente'?'Tu mente carga más ruido del necesario hoy.':'Tu esfera relacional pesa más hoy.'))
+    :'';
+  const multiMoodLine=moods.length>1?('Mezcla de hoy: '+moods.join(', ')+'. '):'';
+  const sigLine=extraSignals.length?('En tus respuestas se nota que '+extraSignals.slice(0,2).join(' y ')+'. '):'';
+  const body=multiMoodLine+info.l+' '+sigLine+dimNote;
+
+  /* Algoritmo 2 + 2: 2 ensayos que acompañan/profundizan + 2 ensayos que mueven de estado */
+  const stayScores={},liftScores={};
+  const add=(map,topic,pts)=>{if(topic)map[topic]=(map[topic]||0)+pts;};
+  moods.forEach((m,idx)=>{
+    const w=idx===0?6:(idx===1?4:3);
+    const aff=CLARITY_AFFINITY[m]||{a:[m],l:['Presencia','Claridad']};
+    aff.a.forEach((t,ti)=>add(stayScores,t,w*3-ti));
+    aff.l.forEach((t,ti)=>add(liftScores,t,w*3-ti));
+  });
+  if(['Pensamientos repetitivos','Sobreanálisis alto'].includes(l.rumination)){add(stayScores,'Inquietud',5);add(liftScores,'Quietud',5);}
+  if(['Exigente','Dura / Culpa'].includes(l.self_talk)){add(stayScores,'Vulnerabilidad',4);add(liftScores,'Compasión',6);add(liftScores,'Autoestima',4);}
+  if(['Menos de 6 h','Me costó dormir','Despertares nocturnos'].includes(l.sleep)||['Sin pila','Cansancio moderado'].includes(l.energy)){add(stayScores,'Agotamiento',5);add(liftScores,'Descanso',6);add(liftScores,'Energía',4);}
+  if(['Mandíbula apretada','Hombros cargados','Cuello tenso'].includes(l.posture)||l.stress==='Alto'){add(stayScores,'Inquietud',4);add(liftScores,'Cuerpo en paz',6);add(liftScores,'Alivio',4);}
+  if(l.loneliness==='Necesito compañía'||l.friends==='Sin contacto hoy'){add(stayScores,'Nostalgia',4);add(stayScores,'Desconexión',4);add(liftScores,'Ternura',5);}
+  if(['Me costó poner límite','Cedí por agradar'].includes(l.boundaries)){add(stayScores,'Ira',4);add(liftScores,'Claridad',6);}
+  if(l.screen_fatigue==='Exceso de pantallas'||l.focus_flow==='Disperso'){add(stayScores,'Enfoque',4);add(liftScores,'Tiempo',6);add(liftScores,'Presencia',5);}
+  if(!moods.length){
+    if(dims.Cuerpo<0){add(stayScores,'Agotamiento',5);add(liftScores,'Cuerpo en paz',6);}
+    if(dims.Mente<0){add(stayScores,'Inquietud',5);add(liftScores,'Quietud',6);}
+    if(dims['Vínculo']<0){add(stayScores,'Vulnerabilidad',5);add(liftScores,'Compasión',6);}
+    add(stayScores,'Presencia',2);add(liftScores,'Claridad',2);
+  }
+  const stayTop=Object.entries(stayScores).sort((a,b)=>b[1]-a[1]).map(x=>x[0]).slice(0,2);
+  const liftTop=Object.entries(liftScores).sort((a,b)=>b[1]-a[1]).map(x=>x[0]).filter(t=>!stayTop.includes(t)).slice(0,2);
+  ['Claridad','Presencia','Alivio','Cuerpo en paz'].forEach(fb=>{
+    if(stayTop.length<2 && !stayTop.includes(fb))stayTop.push(fb);
+    if(liftTop.length<2 && !stayTop.includes(fb) && !liftTop.includes(fb))liftTop.push(fb);
+  });
+
+  return{
+    empty:false,score,state,title:info.t,body:body.trim(),
+    moods,moodWord:moods.length?moods[0]:'—',
+    bodyWord:clarityDimWord('Cuerpo',dims.Cuerpo),
+    mindWord:clarityDimWord('Mente',dims.Mente),
+    bondWord:clarityDimWord('Vínculo',dims['Vínculo']),
+    stay:stayTop.slice(0,2),
+    lift:liftTop.slice(0,2)
+  };
 }
 function renderClarityEssays(){
   const list=$('clarityEssayList');if(!list)return;
   const R=computeClarityReading();
-  const stayBtn=$('clarityModeStayBtn'),liftBtn=$('clarityModeLiftBtn');
-  if(stayBtn){stayBtn.classList.toggle('on',clarityMode==='stay');stayBtn.onclick=()=>{clarityMode='stay';renderClarityEssays();};}
-  if(liftBtn){liftBtn.classList.toggle('on',clarityMode==='lift');liftBtn.onclick=()=>{clarityMode='lift';renderClarityEssays();};}
-  const lbl=$('clarityReadingModeLbl');
-  if(lbl)lbl.textContent=clarityMode==='stay'?'Acompañarte en lo que sientes':(R.mood&&CLARITY_MOODS[R.mood]&&CLARITY_MOODS[R.mood].v>0?'Ir más hondo':'Sentirme diferente');
   const hint=$('clarityEssayHint');
   if(R.empty){
     list.innerHTML='';
-    if(hint){hint.hidden=false;hint.textContent='Registra tus emociones de hoy en Estar y tu cuidado del día, y aquí aparecen tus 5 lecturas para acompañarte y 5 para sentirte diferente.';}
+    if(hint){hint.hidden=false;hint.textContent='Registra tus emociones y tus tarjetas de Cuerpo, Mente y Vínculo en Cuidado para ver aquí tus 4 lecturas de hoy.';}
     return;
   }
   if(hint)hint.hidden=true;
-  const topics=clarityMode==='stay'?R.stay:R.lift;
+  const topics=[...R.stay,...R.lift].slice(0,4);
   const draw=()=>{
     list.innerHTML='';
-    const found=topics.map(t=>essayByMood(t)).filter(Boolean);
-    if(!found.length){list.innerHTML='<p style="font-size:12.5px;color:var(--muted);padding:6px 2px">Las lecturas no cargaron todavía.</p>';return}
+    const seen=new Set();
+    const found=topics.map(t=>essayByMood(t)).filter(e=>{
+      if(!e||seen.has(e.id))return false;
+      seen.add(e.id);return true;
+    });
+    if(!found.length){list.innerHTML='<p style="font-size:12.5px;color:var(--muted);padding:6px 2px">Las lecturas no cargaron todavía.</p>';return;}
     found.forEach(n=>list.appendChild(lecturaCard(n)));
   };
-  if(lecturasCache){draw();return}
+  if(lecturasCache){draw();return;}
   list.innerHTML='<p style="font-size:12.5px;color:var(--muted);padding:6px 2px">Cargando lecturas…</p>';
   loadLecturas().then(draw);
 }
+
 function renderPulsoCommandCenter(){
-  /* Claridad: la lectura del día sale del algoritmo (emociones + Cuerpo/Mente/Vínculo) */
   const R=computeClarityReading();
   const ringSvg=$('pulsoScoreSvg');
-  const paintRing=(val)=>{
-    if(!ringSvg)return;
+  if(ringSvg){
     const r=48,c=2*Math.PI*r;
-    const dash=val===null?0:(val/100)*c;
+    const dash=R.score===null?0:(R.score/100)*c;
     ringSvg.innerHTML=
       '<circle cx="60" cy="60" r="'+r+'" fill="none" stroke="rgba(122,154,130,0.12)" stroke-width="6"/>'+
       '<circle cx="60" cy="60" r="39" fill="none" stroke="rgba(194,160,104,0.18)" stroke-width="1.2"/>'+
       '<circle cx="60" cy="60" r="'+r+'" fill="none" stroke="var(--ok)" stroke-width="6" stroke-linecap="round" stroke-dasharray="'+dash.toFixed(1)+' '+c.toFixed(1)+'" transform="rotate(-90 60 60)"/>';
-  };
+  }
   if($('pulsoScoreVal'))$('pulsoScoreVal').textContent=R.score===null?'—':R.score;
   if($('pulsoScoreState'))$('pulsoScoreState').textContent=R.state;
   if($('pulsoHeadline'))$('pulsoHeadline').textContent=R.title;
@@ -7480,85 +7562,30 @@ function renderPulsoCommandCenter(){
   if($('cs3'))$('cs3').textContent=R.bodyWord;
   if($('cs2'))$('cs2').textContent=R.mindWord;
   if($('pulsoBestWindow'))$('pulsoBestWindow').textContent=R.bondWord;
-  paintRing(R.score);
   renderClarityEssays();
 
   const heroBtn=$('pulsoHeroActionBtn');
   if(heroBtn){
     heroBtn.onclick=()=>{
       switchMainView('v-breathe');
-      setTimeout(()=>{if(!br.on)$('bb').click()},220);
+      setTimeout(()=>{if(!br.on && $('bb'))$('bb').click()},220);
     };
   }
-  const remBtn=$('pulsoScheduleReminderBtn');
-  if(remBtn){
-    remBtn.onclick=()=>exportIcsReminder();
-  }
 
-  const circSvg=$('circadianSplineSvg');
-  if(circSvg){
-    const hourlyRisk=new Array(24).fill(0).map((_,h)=>{
-      let base=18;
-      if(h>=20 && h<=23)base=54+(h===21||h===22?14:4);
-      else if(h>=14 && h<=17)base=34;
-      else if(h>=8 && h<=11)base=16;
-      const realSpikes=S.spikes.filter(s=>s.h===h).length*16 + S.trigLogs.filter(t=>t.h===h).length*20;
-      return Math.min(92,base+realSpikes);
-    });
-    const hourlyClarity=hourlyRisk.map((rk,h)=>{
-      let cl=98-rk*0.6;
-      if(h>=8 && h<=12)cl=Math.min(94,cl+12);
-      return Math.max(22,Math.round(cl));
-    });
+  /* Gráfica y rituales en el desplegable avanzado (sin variables rotas) */
+  const withAfter=S.trigLogs.filter(t=>typeof t.pre==='number' && typeof t.after==='number');
+  const hasData=withAfter.length>=3;
+  const avgPre=hasData?(withAfter.reduce((a,t)=>a+t.pre,0)/withAfter.length):0;
+  const avgPost=hasData?(withAfter.reduce((a,t)=>a+t.after,0)/withAfter.length):0;
+  const pctRelief=hasData?Math.max(0,Math.min(100,Math.round((Math.max(0,avgPre-avgPost)/Math.max(0.1,avgPre))*100))):0;
+  const todayLog=getTodayClueLog();
+  const nutArr=Array.isArray(todayLog.nutrition)?todayLog.nutrition:(todayLog.nutrition?[todayLog.nutrition]:[]);
+  const watVal=todayLog.water||'';
+  const hasUltra=nutArr.some(x=>x.includes('Ultraprocesados')||x.includes('azúcar'));
+  const lowWater=watVal.includes('Poca agua');
 
-    let maxH=21,maxVal=0;
-    hourlyRisk.forEach((v,h)=>{if(v>maxVal){maxVal=v;maxH=h}});
-    if($('pulsoPeakHourBadge'))$('pulsoPeakHourBadge').textContent='Pausa sugerida: '+p2(maxH)+':00 h';
-    if($('pulsoPeakLegend'))$('pulsoPeakLegend').textContent='Hora de soltar: '+p2(maxH)+':00 h';
-    if($('pulsoNowLegend'))$('pulsoNowLegend').textContent='Tu claridad ahora ('+p2(new Date().getHours())+':00 h)';
-
-    const W=440,H=140,padX=14,padY=18;
-    const ptRisk=(h)=>[padX+(h/23)*(W-padX*2), H-padY-(hourlyRisk[h]/100)*(H-padY*2)];
-    const ptClar=(h)=>[padX+(h/23)*(W-padX*2), H-padY-(hourlyClarity[h]/100)*(H-padY*2)];
-
-    const buildSmoothPath=pts=>{
-      let d='M '+pts[0][0].toFixed(1)+','+pts[0][1].toFixed(1);
-      for(let i=0;i<pts.length-1;i++){
-        const p0=pts[i],p1=pts[i+1];
-        const mx=(p0[0]+p1[0])/2;
-        d+=' C '+mx.toFixed(1)+','+p0[1].toFixed(1)+' '+mx.toFixed(1)+','+p1[1].toFixed(1)+' '+p1[0].toFixed(1)+','+p1[1].toFixed(1);
-      }
-      return d;
-    };
-    const rPts=Array.from({length:24},(_,h)=>ptRisk(h));
-    const cPts=Array.from({length:24},(_,h)=>ptClar(h));
-    const rPath=buildSmoothPath(rPts);
-    const cPath=buildSmoothPath(cPts);
-    const cArea=cPath+' L '+cPts[23][0].toFixed(1)+','+(H-padY)+' L '+cPts[0][0].toFixed(1)+','+(H-padY)+' Z';
-    const [pkX,pkY]=ptRisk(maxH);
-    const nowH=new Date().getHours();
-    const [nwX,nwY]=ptClar(nowH);
-
-    circSvg.innerHTML=
-      '<defs>'+
-        '<linearGradient id="calmFlowGrad" x1="0" y1="0" x2="0" y2="1">'+
-          '<stop offset="0%" stop-color="#8DAE93" stop-opacity="0.26"/>'+
-          '<stop offset="100%" stop-color="#8DAE93" stop-opacity="0.0"/>'+
-        '</linearGradient>'+
-      '</defs>'+
-      '<line x1="'+padX+'" y1="42" x2="'+(W-padX)+'" y2="42" stroke="var(--rule)" opacity="0.6"/>'+
-      '<line x1="'+padX+'" y1="82" x2="'+(W-padX)+'" y2="82" stroke="var(--rule)" opacity="0.6"/>'+
-      '<line x1="'+padX+'" y1="'+(H-padY)+'" x2="'+(W-padX)+'" y2="'+(H-padY)+'" stroke="var(--rule)"/>'+
-      '<path d="'+cArea+'" fill="url(#calmFlowGrad)"/>'+
-      '<path d="'+rPath+'" fill="none" stroke="#D99B88" stroke-width="2" stroke-linecap="round" opacity="0.85"/>'+
-      '<path d="'+cPath+'" fill="none" stroke="var(--ok)" stroke-width="2.5" stroke-linecap="round"/>'+
-      '<circle cx="'+pkX.toFixed(1)+'" cy="'+pkY.toFixed(1)+'" r="4.5" fill="#D99B88" stroke="#fff" stroke-width="1.5"/>'+
-      '<circle cx="'+nwX.toFixed(1)+'" cy="'+nwY.toFixed(1)+'" r="5" fill="var(--ok)" stroke="#fff" stroke-width="1.5"/>';
-  }
-
-  /* 3. El efecto de tus pausas (Antes vs. Después en #deltaReliefSvg con cápsulas suaves) */
   const deltaSvg=$('deltaReliefSvg');
-  if($('pulsoDeltaBadge'))$('pulsoDeltaBadge').textContent=hasData?(pctRelief+'% más calma'):'Respira en Costa';
+  if($('pulsoDeltaBadge'))$('pulsoDeltaBadge').textContent=hasData?(pctRelief+'% más calma'):'Respira en Calma';
   if(deltaSvg){
     const samples=withAfter.length>=2?withAfter.slice(0,5).reverse():[
       {emo:'Tarde',pre:7,after:2,hora:'18:40'},
@@ -7588,7 +7615,6 @@ function renderPulsoCommandCenter(){
       bars;
   }
 
-  /* 4. Rituales que te hacen bien (Tarjetas suaves e intuitivas) */
   const mat=$('pulsoCorrelationMatrix');
   if(mat){
     const b=computeClueBayesian();
@@ -7638,8 +7664,8 @@ function renderPulsoCommandCenter(){
       '<div class="cmd-cell">'+
         '<small>Momento de soltar</small>'+
         '<b>'+esc(topEmo)+'</b>'+
-        '<p>Cuando notes <b>'+esc(topCtx.toLowerCase())+'</b>, regálate 2 minutos de aire en Costa.</p>'+
-        '<button type="button" class="cmd-action-btn" data-pact="sos">Ir a respirar a Costa →</button>'+
+        '<p>Cuando notes <b>'+esc(topCtx.toLowerCase())+'</b>, regálate 2 minutos de aire en Calma.</p>'+
+        '<button type="button" class="cmd-action-btn" data-pact="sos">Ir a respirar a Calma →</button>'+
       '</div>';
 
     mat.querySelectorAll('[data-pact]').forEach(btn=>{
@@ -7648,18 +7674,14 @@ function renderPulsoCommandCenter(){
         if(act==='food'){
           openClueCatId='nutrition';
           switchMainView('v-today');
-          switchTodaySub('sub-journal');
           renderClueTrackList();
           const el=$('clueTrackList');if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
         }else if(act==='sleep'){
           S.bmode='478';save();
-          document.querySelectorAll('#bmode button[data-m]').forEach(x=>x.classList.toggle('on',x.dataset.m==='478'));
-          updateBreathHint();
           switchMainView('v-breathe');
-          setTimeout(()=>{if(!br.on)$('bb').click()},220);
+          setTimeout(()=>{if(!br.on && $('bb'))$('bb').click()},220);
         }else if(act==='bio'){
           switchMainView('v-today');
-          switchTodaySub('sub-journal');
         }else if(act==='sos'){
           switchMainView('v-breathe');
         }
@@ -9785,7 +9807,7 @@ function renderMalePanel(){
 
 if($('maleGoalToggle'))$('maleGoalToggle').onclick=()=>{
   const sheet=$('maleGoalSheet');if(!sheet)return;
-  if(!sheet.hidden){sheet.hidden=true;sheet.style.display='none';return}
+  if(!sheet.hidden){sheet.hidden=true;return}
   sheet.innerHTML='';
   sheet.style.display='grid';
   sheet.style.gridTemplateColumns='1fr 1fr';
@@ -9799,7 +9821,7 @@ if($('maleGoalToggle'))$('maleGoalToggle').onclick=()=>{
     btn.type='button';btn.className='chip'+((S.maleGoal||'focus')===gId?' on':'');
     btn.style.cssText='width:100%;min-height:34px;font-size:11.5px;white-space:nowrap';
     btn.textContent=gLbl;
-    btn.onclick=()=>{S.maleGoal=gId;sheet.hidden=true;sheet.style.display='none';save();renderMalePanel()};
+    btn.onclick=()=>{S.maleGoal=gId;sheet.hidden=true;save();renderMalePanel()};
     sheet.appendChild(btn);
   });
   sheet.hidden=false;
@@ -10229,7 +10251,6 @@ function updateMoodCounter(){
   if($('moodCounterLbl'))$('moodCounterLbl').textContent='Elige hasta 3 ('+count+'/3)';
   if($('moodCountLbl'))$('moodCountLbl').textContent='('+count+'/3)';
   updateMoodFlipMap();
-  renderTodayReading();
 }
 if($('moodFlipToBackBtn'))$('moodFlipToBackBtn').onclick=()=>{if($('moodFlipInner'))$('moodFlipInner').classList.add('flipped');};
 if($('moodFlipToFrontBtn'))$('moodFlipToFrontBtn').onclick=()=>{if($('moodFlipInner'))$('moodFlipInner').classList.remove('flipped');};
@@ -10575,7 +10596,59 @@ function formatPublicDate(dstr){
    (localStorage), sin importar quién sea el usuario activo. Así el
    perfil público del dueño (13061998) se muestra aunque la app esté
    como invitado. El alias viejo 'sebas' apunta al dueño. */
-
+const WAVY_SHOWCASE_AUTHORS={
+  'sofi.editorial':{
+    me:{username:'sofi.editorial',name:'Sofía Navarro',av:'sol',bio:'Ensayos sobre atención, silencio y vida sin prisa.'},
+    notes:[
+      {
+        id:'ed-1',
+        d:'2026-11-15',
+        tema:'Atención',
+        public:true,
+        blank:true,
+        estado:'Cuando todo es posible, nada se siente significativo',
+        texto:'Durante siglos, el valor de una conversación, de una obra o de una decisión estuvo protegido por la fricción del tiempo. Esperar una carta durante semanas, caminar veinte minutos para ver a alguien sin saber exactamente qué diría o sostener el silencio de una tarde entera obligaba a la psique a digerir lo que sentía. La demora no era un defecto técnico del mundo antiguo: era el recipiente mismo donde las experiencias adquirían densidad, peso y memoria.\n\nHoy, la promesa de la disponibilidad total ha borrado el proceso transformador. Si puedes generar cualquier imagen en tres segundos, reemplazar cualquier vínculo incómodo con un deslizamiento o anestesiar cualquier duda abriendo otra pestaña, el deseo pierde su gravedad específica. Lo que no cuesta tiempo, incertidumbre ni presencia tampoco deja huella en quien lo atraviesa. Terminamos rodeados de estímulos infinitos pero extrañamente hambrientos de algo que sí importe.\n\n## El espejismo de la eficiencia emocional\n\nNos convencimos de que ahorrar tiempo equivale a vivir mejor, pero la vida interior no obedece a la lógica de la productividad industrial. Un árbol no crece más rápido porque le grites ni una pérdida duele menos porque la racionalices en un hilo de tres puntos. Cuando eliminamos la espera, eliminamos también la maduración.\n\nLa atención verdadera es una forma rara de generosidad. No consiste en mirar algo durante dos segundos mientras piensas en tu siguiente respuesta; consiste en suspender tu prisa el tiempo suficiente para que la realidad del otro —o la tuya propia— pueda revelarse sin que intentes controlarla.\n\n## La anestesia de la pantalla siempre encendida\n\nCada vez que sientes una punzada mínima de aburrimiento, soledad o insuficiencia, el bolsillo ofrece una salida inmediata. Esa salida parece inofensiva porque dura apenas unos minutos, pero repetida treinta veces al día entrena al sistema nervioso para no tolerar ningún espacio vacío. Y sin espacio vacío no existe la introspección ni la creatividad genuina.\n\nUn hábito sano no nace de una epifanía instantánea; nace de volver al mismo punto incómodo sin huir hacia la pantalla. En ese sentido, detenerte cuatro segundos para inhalar y seis para soltar el aire antes de responder a un impulso es un acto silenciosamente subversivo: le devuelve al cuerpo el derecho a tardar.\n\n## Recuperar la fricción voluntaria\n\nElegir leer un ensayo completo sin saltar de pestaña, escribir tres párrafos honestos sin pensar en cuántos aplausos recibirán o sostener una caminata sin audífonos una vez a la semana son pequeñas restauraciones de la fricción. No te hacen más rápido ni más eficiente. Te devuelven la capacidad de sentir que lo que haces te pertenece de verdad.'
+      },
+      {
+        id:'ed-2',
+        d:'2026-11-11',
+        tema:'Psique',
+        public:true,
+        blank:true,
+        estado:'Tu culpa no te purifica (ni es una virtud)',
+        texto:'Existe una trampa silenciosa en la forma en que muchas personas cargan sus errores: confunden el castigo interno prolongado con una forma de nobleza moral. Creen, casi sin formularlo en voz alta, que si siguen sintiéndose mal el tiempo suficiente, de algún modo compensan lo que hicieron, lo que dijeron o lo que dejaron pasar.\n\nPero la culpa estancada no repara nada; al contrario, suele funcionar como una coartada elegante para no cambiar. Mientras sigues mirándote en el espejo del remordimiento, el centro de gravedad sigues siendo tú —tu imagen herida, tu necesidad de absolución—, no la vida concreta que quieres construir hacia adelante ni el cuidado real hacia quienes te rodean.\n\n## La sombra y la ilusión de pureza\n\nTodo lo que reprimimos por considerarlo indigno no desaparece: se hunde y desde ahí gobierna nuestras reacciones bajo disfraces morales. Cuando alguien se flagela durante meses por un tropiezo pasado, muchas veces está intentando demostrar ante un tribunal invisible que en el fondo es una buena persona. Esa actuación consume la energía exacta que haría falta para pedir perdón con sencillez o modificar un hábito.\n\n## De la rumiación a la responsabilidad tranquila\n\nLa responsabilidad adulta tiene una textura completamente distinta a la culpa. Es sobria, breve y orientada al presente. Reconoce el hecho sin adornos, asume la consecuencia sin teatro y pregunta qué paso concreto sigue hoy. No necesita dramatizar el pasado para demostrar sensibilidad.\n\nSoltar la culpa tampoco equivale a volverse indiferente o cínico. Al contrario: solo quien deja de pagar dos veces por la misma deuda emocional tiene las manos libres para sostener su calma diaria, reparar lo reparable y caminar con ligereza.'
+      }
+    ]
+  },
+  'valeria.sol':{
+    me:{username:'valeria.sol',name:'Valeria Mendoza',av:'alba',bio:'Vínculos, silencio y vida interior.'},
+    notes:[
+      {
+        id:'val-1',
+        d:'2026-11-14',
+        tema:'Vínculos',
+        public:true,
+        blank:true,
+        estado:'La intimidad de no volver a hablar (y elegir irse queriendo)',
+        texto:'La cultura romántica nos enseñó que el amor verdadero siempre insiste y que marcharse solo ocurre cuando el afecto se agota o cuando alguien comete una traición imperdonable. Sin embargo, una de las experiencias más adultas —y más silenciosas— consiste en querer genuinamente a alguien y aun así elegir retirarse.\n\nNo todas las historias terminan por falta de cariño; muchas terminan por incompatibilidad de ritmo, por agotamiento emocional o porque permanecer significaría ir traicionando poco a poco tu propia paz. En esos casos, el no-contacto no nace del rencor ni del orgullo herido: nace de una lucidez serena que prefiere proteger lo que fue bueno antes de verlo pudrirse en discusiones repetidas.\n\n## ¿Por qué actuamos como si hubiera todo el mañana?\n\nA menudo damos por sentado que las personas que nos importan seguirán disponibles indefinidamente mientras resolvemos nuestras dudas o postergamos nuestras decisiones. Actuamos como si siempre hubiera otra tarde para pedir disculpas, otra llamada pendiente para decir lo que realmente sentíamos. Hasta que un día el silencio se vuelve definitivo y revela todo lo que dejamos en borrador.\n\n## La persona en la que no dejas de pensar\n\nCuando alguien ocupa tu mente durante semanas después de haberse ido, rara vez se trata únicamente de esa persona: casi siempre es una lección suspendida sobre tu propio valor. Si sostienes esos primeros minutos de urgencia sin ceder al impulso de escribir, descubres que la marea baja sola y queda una claridad tranquila.'
+      }
+    ]
+  },
+  'mateo.mar':{
+    me:{username:'mateo.mar',name:'Mateo Ríos',av:'litografia',bio:'Hábitos invisibles y cine contemplativo.'},
+    notes:[
+      {
+        id:'mat-1',
+        d:'2026-11-09',
+        tema:'Memoria',
+        public:true,
+        blank:true,
+        estado:'Lo que te vuelves, dejas de notarlo',
+        texto:'Los cambios más profundos casi nunca llegan anunciados por una crisis espectacular. Ocurren por repetición diminuta, día tras día, hasta que una mañana descubres que aquello que antes te sorprendía —la tensión en los hombros al despertar, el cinismo automático ante una buena noticia, el reflejo inmediato de mirar el teléfono cada tres minutos— se convirtió en tu paisaje normal.\n\nLo que te vuelves, dejas de notarlo. Ese fenómeno explica por qué tantas personas viven agotadas sin saber exactamente en qué momento perdieron su ligereza. Cuando un hábito se vuelve invisible, deja de parecer una elección y empieza a sentirse como tu personalidad definitiva.\n\n## El cine lento y la recuperación de la mirada\n\nPiensa en esas escenas donde la cámara permanece fija durante cuarenta segundos después de que los personajes salen de la habitación. Al principio sientes impaciencia. Luego algo en la respiración se afloja y empiezas a ver la luz cambiando en la ventana. Construir un hábito contemplativo funciona igual: cada pequeño regreso a tu centro cambia lentamente aquello en lo que te conviertes.'
+      }
+    ]
+  }
+};
 function toggleFollowAuthor(uname){
   if(!S.followingAuthors)S.followingAuthors=[];
   const idx=S.followingAuthors.indexOf(uname);
@@ -10583,75 +10656,13 @@ function toggleFollowAuthor(uname){
   else S.followingAuthors.push(uname);
   save(false);
 }
-/* ---------- LECTURAS (lecturas.json · Wavy Editorial) ---------- */
-let lecturasCache=null,lecturasLoading=null;
-function loadLecturas(){
-  if(lecturasCache)return Promise.resolve(lecturasCache);
-  if(lecturasLoading)return lecturasLoading;
-  lecturasLoading=fetch('./lecturas.json').then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}).then(d=>{lecturasCache=Array.isArray(d)?d:[];return lecturasCache}).catch(()=>{lecturasCache=[];lecturasLoading=null;return lecturasCache});
-  return lecturasLoading;
-}
-function essayByMood(mood){
-  if(!lecturasCache||!mood)return null;
-  return lecturasCache.find(e=>e.mood===mood)||null;
-}
-function lecturaCard(n){
-  const card=document.createElement('article');
-  card.className='med-card';
-  card.innerHTML=
-    '<div class="med-author-row">'+
-      '<span class="med-author-name">Wavy Editorial</span>'+
-      '<span class="med-dot">·</span>'+
-      '<span class="med-date">'+esc(formatPublicDate(n.date||'2026-11-16'))+'</span>'+
-    '</div>'+
-    '<h3 class="med-title">'+esc(n.title)+'</h3>'+
-    '<p class="med-excerpt">'+esc(n.excerpt||'')+'</p>'+
-    '<div class="med-foot" style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:nowrap">'+
-      '<span class="med-pill" style="white-space:nowrap">'+esc(n.mood||n.topic||'')+' · '+(n.readMinutes||4)+' min</span>'+
-      '<span style="font-size:11.5px;color:var(--muted);white-space:nowrap">Leer →</span>'+
-    '</div>';
-  card.onclick=()=>openLecturaReader(n);
-  return card;
-}
-function openLecturaReader(n){
-  if(!n||!$('lecturaReader'))return;
-  const back=$('lecturaReaderBack');
-  if(back)back.onclick=closeLecturaReader;
-  if($('lecturaReaderTitle'))$('lecturaReaderTitle').textContent=n.title||'Lectura';
-  if($('lecturaReaderMeta'))$('lecturaReaderMeta').textContent='Wavy Editorial · '+(n.readMinutes||4)+' min · '+(n.mood||n.topic||'');
-  const body=$('lecturaReaderBody');
-  if(body){
-    const paras=Array.isArray(n.paragraphs)?n.paragraphs:[];
-    body.innerHTML=paras.length?paras.map(p=>String(p).startsWith('## ')?'<h2>'+esc(String(p).slice(3))+'</h2>':'<p>'+esc(String(p))+'</p>').join(''):'<p>'+esc(n.excerpt||'')+'</p>';
-  }
-  $('lecturaReader').hidden=false;
-  $('lecturaReader').scrollTop=0;
-}
-function closeLecturaReader(){if($('lecturaReader'))$('lecturaReader').hidden=true;}
-function renderTodayReading(){
-  const card=$('todayReadingCard');if(!card)return;
-  let mood='';
-  const sel=[...document.querySelectorAll('.mo.on:not(.plus-btn)')].map(x=>x.dataset.n).filter(Boolean);
-  if(sel.length)mood=sel[0];
-  if(!mood){
-    const tn=(S.notes||[]).find(n=>n&&n.d===today());
-    if(tn&&Array.isArray(tn.moodNames)&&tn.moodNames.length)mood=tn.moodNames[0];
-  }
-  if(!mood){
-    const last=(S.notes||[]).find(n=>n&&Array.isArray(n.moodNames)&&n.moodNames.length);
-    if(last)mood=last.moodNames[0];
-  }
-  if(!mood){card.hidden=true;return}
-  const show=(essay)=>{
-    if(!essay){card.hidden=true;return}
-    if($('todayReadingMood'))$('todayReadingMood').textContent=mood;
-    const body=$('todayReadingBody');
-    if(body){body.innerHTML='';body.appendChild(lecturaCard(essay));}
-    card.hidden=false;
-  };
-  if(lecturasCache){show(essayByMood(mood));return}
-  loadLecturas().then(()=>show(essayByMood(mood)));
-}
+const LECTURA_TEMAS={
+  'Atención':['Enfoque','Claridad','Presencia','Tiempo','Quietud'],
+  'Psique':['Ira','Vacío','Ambivalencia','Impulso','Inquietud','Sensibilidad','Agotamiento','Autoestima','Energía'],
+  'Vínculos':['Ternura','Compasión','Vulnerabilidad','Desconexión','Nostalgia'],
+  'Memoria':['Plenitud','Gratitud','Alivio','Asombro','Descanso','Cuerpo en paz']
+};
+let showAllLecturasInShowcase=false;
 function renderDiaryShowcase(){
   const box=$('diaryShowcaseList');if(!box)return;
   box.innerHTML='<p style="font-size:12.5px;color:var(--muted);padding:6px 2px">Cargando lecturas…</p>';
@@ -10662,11 +10673,32 @@ function renderDiaryShowcase(){
       return;
     }
     box.innerHTML='';
-    items.forEach(n=>box.appendChild(lecturaCard(n)));
+    const R=computeClarityReading();
+    let listToShow=items;
+    if(!showAllLecturasInShowcase && !R.empty){
+      const topics=[...R.stay,...R.lift].slice(0,4);
+      const seen=new Set();
+      const curated=topics.map(t=>essayByMood(t)).filter(e=>{if(!e||seen.has(e.id))return false;seen.add(e.id);return true;});
+      if(curated.length)listToShow=curated;
+    }else if(!showAllLecturasInShowcase){
+      listToShow=items.slice(0,4);
+    }
+    listToShow.forEach(n=>box.appendChild(lecturaCard(n)));
+    if(items.length>listToShow.length){
+      const tog=document.createElement('button');
+      tog.type='button';tog.className='btn ghost';tog.style.cssText='width:100%;margin-top:12px';
+      tog.textContent='Explorar todas las lecturas ('+items.length+')';
+      tog.onclick=()=>{showAllLecturasInShowcase=true;renderDiaryShowcase();};
+      box.appendChild(tog);
+    }else if(showAllLecturasInShowcase){
+      const tog=document.createElement('button');
+      tog.type='button';tog.className='btn ghost';tog.style.cssText='width:100%;margin-top:12px';
+      tog.textContent='Ver solo mis 4 lecturas de hoy';
+      tog.onclick=()=>{showAllLecturasInShowcase=false;renderDiaryShowcase();};
+      box.appendChild(tog);
+    }
   });
 }
-
-const LECTURA_TEMAS={'Atención':['Enfoque','Claridad','Presencia','Tiempo','Quietud'],'Psique':['Ira','Vacío','Ambivalencia','Impulso','Inquietud','Sensibilidad','Agotamiento','Autoestima','Energía'],'Vínculos':['Ternura','Compasión','Vulnerabilidad','Desconexión','Nostalgia'],'Memoria':['Plenitud','Gratitud','Alivio','Asombro','Descanso','Cuerpo en paz']};
 function renderDiaryTopics(){
   const chips=$('diaryTopicChips'),list=$('diaryTopicsList');
   if(!chips||!list)return;
@@ -10684,14 +10716,13 @@ function renderDiaryTopics(){
   list.style.cssText='display:block';
   list.innerHTML='<p style="font-size:12.5px;color:var(--muted);padding:6px 2px">Cargando lecturas…</p>';
   loadLecturas().then(items=>{
-    if(!items.length){list.innerHTML='<p style="font-size:12.5px;color:var(--muted);padding:6px 2px">Las lecturas no cargaron todavía.</p>';return}
+    if(!items.length){list.innerHTML='<p style="font-size:12.5px;color:var(--muted);padding:6px 2px">Las lecturas no cargaron todavía.</p>';return;}
     const filtrados=activeDiaryTopic==='Todos'?items:items.filter(n=>LECTURA_TEMAS[activeDiaryTopic]&&LECTURA_TEMAS[activeDiaryTopic].includes(n.mood||n.topic));
     list.innerHTML='';
-    if(!filtrados.length){list.innerHTML='<p style="font-size:12.5px;color:var(--muted);padding:6px 2px">Nada en este tema por ahora.</p>';return}
+    if(!filtrados.length){list.innerHTML='<p style="font-size:12.5px;color:var(--muted);padding:6px 2px">Nada en este tema por ahora.</p>';return;}
     filtrados.forEach(n=>list.appendChild(lecturaCard(n)));
   });
 }
-
 if($('diarySubTabs')){
   $('diarySubTabs').addEventListener('click',e=>{
     const b=e.target.closest('[data-dsub]');if(!b)return;
@@ -10715,6 +10746,7 @@ if($('diarySubTabs')){
 function publicUserState(username){
   const u=String(username||'').toLowerCase();
   if(!u)return null;
+  if(WAVY_SHOWCASE_AUTHORS[u])return WAVY_SHOWCASE_AUTHORS[u];
   const keys=(u===OWNER_USER||u==='sebas')?['wavy_v18_'+OWNER_USER,'wavy_v18_sebas']:['wavy_v18_'+u];
   for(const k of keys){
     try{
@@ -10959,7 +10991,6 @@ function submitJournalEntry(){
   updateMoodCounter();
   document.querySelectorAll('#ffuerza .chip.on,#ffuerzaExtra .chip.on,#fcuerpo .chip.on,#fcuerpoExtra .chip.on,#fsl .chip.on,#fslExtra .chip.on,#fsoc .chip.on,#fsocExtra .chip.on').forEach(x=>x.classList.remove('on'));
   bioState={ciclo:'',fuerza:'',cuerpo:'',sl:'',soc:''};
-  renderTodayReading();
 }
 $('na').onclick=submitJournalEntry;
 $('ni').addEventListener('keydown',e=>{if(e.key==='Enter' && !e.shiftKey){e.preventDefault();submitJournalEntry()}});
@@ -12194,32 +12225,19 @@ if($('sunTrailerBtn')){
   };
 }
 
-if($('sunDesignBtn')){
-  $('sunDesignBtn').onclick=()=>{
-    const bar=$('pebVesselBar');if(!bar)return;
-    if(!bar.hidden){bar.hidden=true;$('sunDesignBtn').classList.remove('on');return}
-    renderPebVesselBar();renderPebVesselArt();
-    bar.hidden=false;
-    $('sunDesignBtn').classList.add('on');
-  };
-}
-
 if($('pebVesselBar')){
   $('pebVesselBar').addEventListener('click',e=>{
     const b=e.target.closest('.peb-vessel-btn');if(!b)return;
     const vk=b.dataset.vessel;
     const cfg=PEB_VESSELS[vk];
     if(cfg && cfg.pro && !isPro()){
-      const proNames=Object.values(PEB_VESSELS).filter(c=>c.mode===S.bioMode&&c.pro).map(c=>c.title).join(' y ');
-      openPaywall('Desbloquea tus soles exclusivos ('+proNames+') con Wavy Pro.');
+      openPaywall('Desbloquea las llamas exclusivas (Lavanda Solar, Oro Rosa, Cobalto Celestial y Aurora Carmesí) con Wavy Pro.');
       return;
     }
     S.pebVessel=vk;
     save();
     renderPebVesselArt();
     flameView();
-    const bar=$('pebVesselBar');if(bar)bar.hidden=true;
-    const db=$('sunDesignBtn');if(db)db.classList.remove('on');
   });
 }
 
@@ -12540,7 +12558,6 @@ const HELP_GUIDES={
     items:[
       ['Evolución de 5% a 100%','En el principio es solo una chispa en la oscuridad (5%). Cada 10% agrega nuevos rasgos visibles hasta culminar en la fiesta del 100%.'],
       ['Trailer «Evolución · 30s»','Toca el botón de cristal en la parte inferior de tu sol para ver en 30 segundos cómo se transforma hasta el 100% y vuelve a tu porcentaje real.'],
-      ['Elegir diseño','Toca el segundo botón de cristal bajo tu sol para ver tu diseño actual y los dos diseños Pro de tu género.'],
       ['Prácticas breves y soles','Elige entre 6 soles por género y suma luz completando respiraciones, check-ins diarios o escritos.']
     ]
   },
