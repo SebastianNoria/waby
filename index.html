@@ -755,6 +755,14 @@ body.co-sync-screen #coFirefliesOverlay{opacity:1}
 #lecturaReaderTitle{font-family:var(--serif);font-size:28px;font-weight:600;line-height:1.2;margin:0 0 6px}
 #lecturaReaderBody p{font-family:var(--serif);font-size:17px;line-height:1.65;margin:0 0 16px}
 #lecturaReaderBody h2{font-family:var(--serif);font-size:22px;font-weight:600;margin:26px 0 10px;line-height:1.25}
+#lecturaReaderBody,.wavy-echo{user-select:none;-webkit-user-select:none}
+.lectura-p{cursor:pointer;border-radius:8px;padding:4px 6px;margin:0 -6px 14px !important;transition:background .18s ease}
+.lectura-p.hl{background:rgba(242,206,118,0.34)}
+.sun-pillars-bar{margin-top:12px;text-align:left}
+.sun-pillars-hd{display:flex;justify-content:space-between;align-items:baseline;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:8px}
+.sun-pillars-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.sun-pillar-btn{border:1px solid var(--rule);background:transparent;color:var(--muted);border-radius:999px;min-height:32px;padding:4px 4px;font-size:10.5px;font-family:var(--sans);font-weight:600;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;transition:all .18s ease}
+.sun-pillar-btn.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 
 .sl{margin-top:14px;padding-top:4px;border-top:none}
 .sl label{display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:600}
@@ -2632,6 +2640,16 @@ summary::-webkit-details-marker{display:none}
         </div>
       </div>
 
+      <div class="sl" id="habitHonestyBox" style="margin-top:4px;margin-bottom:16px">
+        <label><span>¿Cómo estuviste hoy con tu propósito?</span><span id="habitHonestyStateLbl" style="color:var(--ok);font-weight:600"></span></label>
+        <div class="chips" id="habitHonestyChips" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+          <button type="button" class="chip" data-hh="fluyo" style="min-height:38px;padding:6px 6px;font-size:12px">Fluyó</button>
+          <button type="button" class="chip" data-hh="costo" style="min-height:38px;padding:6px 6px;font-size:12px">Costó, seguí</button>
+          <button type="button" class="chip" data-hh="nopude" style="min-height:38px;padding:6px 6px;font-size:12px">Hoy no pude</button>
+        </div>
+        <p id="habitHonestyMsg" hidden style="font-family:var(--serif);font-style:italic;font-size:13.5px;color:var(--muted);line-height:1.45;margin-top:8px"></p>
+      </div>
+
       <div class="read">
         <div class="big"><span id="pct">0.0</span><small>%</small></div>
         <div class="sub"><strong>Día <span id="days">0</span> / 90</strong></div>
@@ -3009,7 +3027,15 @@ summary::-webkit-details-marker{display:none}
             <svg id="sunTrailerIco" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;display:block" aria-hidden="true"><polygon points="7 5 19 12 7 19 7 5"/></svg>
           </button>
         </div>
-        <div class="peb-actions">
+        <div id="pebVesselBar" class="peb-vessel-sheet" hidden></div>
+        <div class="sun-pillars-bar" id="sunPillarsBar">
+          <div class="sun-pillars-hd">
+            <span id="sunPillarsTitle">Tu práctica de hoy · 0/5</span>
+            <span id="sunShieldBadge" style="color:var(--gold);text-transform:none;letter-spacing:0"></span>
+          </div>
+          <div class="sun-pillars-grid" id="sunPillarsGrid"></div>
+        </div>
+        <div class="peb-actions" hidden>
           <button class="btn" id="pb">Avivar sol</button>
           <button class="btn soft" id="wd">Enviar luz</button>
         </div>
@@ -4591,6 +4617,11 @@ function createDefaultStateForUser(uAlias){
     modules:{cycle:false,training:false},
     breathSessions:[],
     loss:[],
+    dailyPillars:{date:today(),done:{care:false,habit:false,breath:false,note:false,reflect:false}},
+    habitChecks:{},
+    highlights:{},
+    sunShieldDate:'',
+    sunShieldBy:'',
     qDate:today(),
     quests:{},
     vis:[today()],
@@ -6138,18 +6169,17 @@ $('repeatOnbBtn').onclick=()=>{
 function isPebeteroMaintained(){
   return S.vis.includes(today());
 }
-function markVerifiedPractice(msg){
+function markVerifiedPractice(msg,pillarKey){
   const already=isPebeteroMaintained();
-  if(!already){
-    S.vis.push(today());
-    addFuel(24);
+  if(!already)S.vis.push(today());
+  if(pillarKey)markPillarDone(pillarKey,msg||'');
+  else{
+    save();
+    syncPebeteroRing();
+    renderStoriesBar();
+    renderCircleFeed();
+    flameView();
   }
-  save();
-  syncPebeteroRing();
-  renderStoriesBar();
-  renderCircleFeed();
-  flameView();
-  if(!already && msg)toast(msg+' · Llama encendida en verde','ok');
 }
 
 function renderStoriesBar(){
@@ -6508,6 +6538,7 @@ $('postEchoBtn').onclick=async()=>{
   if($('echoInput'))$('echoInput').blur();
   selectedEchoVibe='';
   document.querySelectorAll('#echoVibeChips .chip').forEach(c=>c.classList.remove('on'));
+  markPillarDone('note','Nota publicada en tu Sol');
   save(true);renderCircleFeed();
   toast('Nota publicada y sincronizada con tu círculo','ok');
 };
@@ -7291,21 +7322,103 @@ function essayByMood(mood){
   if(!lecturasCache||!mood)return null;
   return lecturasCache.find(e=>e.mood===mood||e.topic===mood)||null;
 }
+let activeReadingTimer=0,activeReadingSession=null;
+function closeLecturaReader(){
+  if(activeReadingTimer){clearInterval(activeReadingTimer);activeReadingTimer=0;}
+  activeReadingSession=null;
+  if($('lecturaReader'))$('lecturaReader').hidden=true;
+}
+function checkNaturalReadingCredit(){
+  const rs=activeReadingSession;
+  if(!rs || rs.credited)return;
+  const elapsedSec=(Date.now()-rs.startMs)/1000;
+  const hasHl=Boolean(S.highlights && Array.isArray(S.highlights[rs.essay.id]) && S.highlights[rs.essay.id].length>0);
+  if((elapsedSec>=45 && rs.maxScroll>=0.75) || (elapsedSec>=20 && hasHl)){
+    rs.credited=true;
+    markPillarDone('reflect','Lectura sumada a tu Sol');
+    if(activeReadingTimer){clearInterval(activeReadingTimer);activeReadingTimer=0;}
+  }
+}
 function openLecturaReader(n){
   if(!n||!$('lecturaReader'))return;
+  const reader=$('lecturaReader');
+  if(!S.highlights||typeof S.highlights!=='object')S.highlights={};
+  const eid=n.id||n.title||'essay';
+  if(!Array.isArray(S.highlights[eid]))S.highlights[eid]=[];
+
   const back=$('lecturaReaderBack');
-  if(back)back.onclick=()=>{if($('lecturaReader'))$('lecturaReader').hidden=true;};
+  if(back)back.onclick=closeLecturaReader;
   if($('lecturaReaderTitle'))$('lecturaReaderTitle').textContent=n.title||'Lectura';
   if($('lecturaReaderMeta'))$('lecturaReaderMeta').textContent='Wavy Editorial · '+(n.readMinutes||4)+' min · '+(n.mood||n.topic||'');
+
   const body=$('lecturaReaderBody');
   if(body){
+    body.oncopy=e=>e.preventDefault();
+    body.oncontextmenu=e=>e.preventDefault();
     const paras=Array.isArray(n.paragraphs)?n.paragraphs:[];
-    body.innerHTML=paras.length
-      ?paras.map(p=>String(p).startsWith('## ')?'<h2>'+esc(String(p).slice(3))+'</h2>':'<p>'+esc(String(p))+'</p>').join('')
-      :'<p>'+esc(n.excerpt||'')+'</p>';
+    const saved=S.highlights[eid];
+    if(!paras.length){
+      body.innerHTML='<p class="lectura-p">'+esc(n.excerpt||'')+'</p>';
+    }else{
+      body.innerHTML=paras.map((p,idx)=>{
+        const s=String(p);
+        if(s.startsWith('## '))return '<h2>'+esc(s.slice(3))+'</h2>';
+        const isHl=saved.includes(idx);
+        return '<p class="lectura-p'+(isHl?' hl':'')+'" data-pidx="'+idx+'">'+esc(s)+'</p>';
+      }).join('');
+    }
+    body.querySelectorAll('.lectura-p').forEach(pEl=>{
+      pEl.onclick=()=>{
+        const idx=Number(pEl.dataset.pidx);
+        const arr=S.highlights[eid];
+        const pos=arr.indexOf(idx);
+        if(pos>=0){arr.splice(pos,1);pEl.classList.remove('hl');}
+        else{arr.push(idx);pEl.classList.add('hl');}
+        save(false);
+        checkNaturalReadingCredit();
+      };
+    });
   }
-  $('lecturaReader').hidden=false;
-  $('lecturaReader').scrollTop=0;
+
+  const shareBtn=$('lecturaShareNoteBtn');
+  if(shareBtn){
+    shareBtn.onclick=()=>{
+      const arr=S.highlights[eid]||[];
+      const paras=Array.isArray(n.paragraphs)?n.paragraphs:[];
+      let quote='';
+      if(arr.length){
+        const idx=arr[arr.length-1];
+        if(paras[idx])quote=String(paras[idx]);
+      }
+      if(!quote)quote=n.excerpt||'';
+      if(quote.length>145)quote=quote.slice(0,142).replace(/\s+\S*$/,'')+'…';
+      const draft='“'+quote+'” — '+(n.title||'Wavy Editorial');
+      closeLecturaReader();
+      switchMainView('v-circle');
+      if(typeof switchCircleTab==='function')switchCircleTab('feed');
+      const fBtn=$('feedCurtainBtn'),fDr=$('feedCurtainDrawer');
+      if(fDr && !fDr.classList.contains('open') && fBtn)fBtn.click();
+      if($('echoInput')){
+        $('echoInput').value=draft.slice(0,200);
+        if(typeof autogrowEchoInput==='function')autogrowEchoInput();
+        $('echoInput').focus();
+      }
+    };
+  }
+
+  activeReadingSession={essay:n,startMs:Date.now(),maxScroll:0,credited:false};
+  reader.onscroll=()=>{
+    if(!activeReadingSession)return;
+    const maxS=Math.max(1,reader.scrollHeight-reader.clientHeight);
+    const pct=Math.min(1,reader.scrollTop/maxS);
+    if(pct>activeReadingSession.maxScroll)activeReadingSession.maxScroll=pct;
+    checkNaturalReadingCredit();
+  };
+  if(activeReadingTimer)clearInterval(activeReadingTimer);
+  activeReadingTimer=setInterval(checkNaturalReadingCredit,2000);
+
+  reader.hidden=false;
+  reader.scrollTop=0;
 }
 function lecturaCard(n){
   const card=document.createElement('article');
@@ -8833,7 +8946,7 @@ function endBreath(done){
   if(done || hadCycles){
     WavyAudio.cuePhase('close');
     const v=Math.round(target*100);$('rs').value=v;$('rv').textContent=v+'%';
-    markVerifiedPractice('Sesión de respiración completada');
+    markVerifiedPractice('Sesión de respiración completada','breath');
     $('bt').textContent='Sesión completada. Tu llama ha quedado encendida en verde hoy.';
     vib([20,110,20]);
     if(wasCoBreath){
@@ -10983,6 +11096,7 @@ function submitJournalEntry(){
       return shortCount<=120;
     });
   }
+  markPillarDone('care','Bienestar registrado en tu Sol');
   markVerifiedPractice('Entrada guardada en tu Diario');
   if(v)toast(a.e+': '+a.t,'ok');
   nshow=4;save();notes();stats();
@@ -10998,12 +11112,113 @@ $('ni').addEventListener('keydown',e=>{if(e.key==='Enter' && !e.shiftKey){e.prev
 /* =========================================================
    MI LLAMA (MÍNIMO 5% · NUNCA SE APAGA) + MOTOR CANVAS VIVA
    ========================================================= */
+const PILLAR_VAL=95/450; // 5 pilares/día * 90 días = +95% (5% -> 100%)
+const SUN_PILLARS=[
+  {key:'care',label:'Bienestar',go:()=>{switchMainView('v-today');const t=document.querySelector('#todaySubTabs [data-sub="sub-journal"]');if(t)t.click();}},
+  {key:'habit',label:'Hábito',go:()=>{switchMainView('v-today');const t=document.querySelector('#todaySubTabs [data-sub="sub-habit"]');if(t)t.click();}},
+  {key:'breath',label:'Calma',go:()=>{switchMainView('v-breathe');const t=document.querySelector('#coastSubTabs [data-csub="coast-sea"]');if(t)t.click();}},
+  {key:'note',label:'Notas',go:()=>{switchMainView('v-circle');if(typeof switchCircleTab==='function')switchCircleTab('feed');}},
+  {key:'reflect',label:'Leer/Escr.',go:()=>{switchMainView('v-circle');if(typeof switchCircleTab==='function')switchCircleTab('diary');}}
+];
+function ensureDailyPillars(){
+  const td=today();
+  if(!S.dailyPillars||typeof S.dailyPillars!=='object'){
+    S.dailyPillars={date:td,done:{care:false,habit:false,breath:false,note:false,reflect:false}};
+    return;
+  }
+  if(S.dailyPillars.date && S.dailyPillars.date!==td){
+    const prevDone=Object.values(S.dailyPillars.done||{}).filter(Boolean).length;
+    const prevShield=(S.sunShieldDate===S.dailyPillars.date);
+    const d1=parseIso(S.dailyPillars.date),d2=parseIso(td);
+    const gap=Math.max(1,Math.round((d2-d1)/864e5));
+    const curV=(S.fuel && typeof S.fuel.v==='number')?S.fuel.v:5;
+    let penalty=0;
+    if(prevDone===0 && !prevShield)penalty+=0.5;
+    if(gap>1)penalty+=(gap-1)*0.5;
+    if(penalty>0){
+      S.fuel={v:Math.max(5,curV-penalty),t:Date.now()};
+    }
+    S.dailyPillars={date:td,done:{care:false,habit:false,breath:false,note:false,reflect:false}};
+  }else if(!S.dailyPillars.done){
+    S.dailyPillars.done={care:false,habit:false,breath:false,note:false,reflect:false};
+  }
+}
 const fuel=()=>{
-  const f=S.fuel||{v:65,t:Date.now()};
-  const rate=isPebeteroMaintained()?0.8:2.4;
-  return Math.max(5,Math.min(100,f.v-(Date.now()-f.t)/36e5*rate));
+  ensureDailyPillars();
+  const f=S.fuel||{v:5,t:Date.now()};
+  return Math.max(5,Math.min(100,typeof f.v==='number'?f.v:5));
 };
-function addFuel(n){S.fuel={v:Math.min(100,fuel()+n),t:Date.now()};save();flameView()}
+function addFuel(n){
+  const cur=fuel();
+  S.fuel={v:Math.max(5,Math.min(100,cur+n)),t:Date.now()};
+  save();flameView();
+}
+function markPillarDone(key,toastMsg){
+  ensureDailyPillars();
+  if(!S.dailyPillars.done[key]){
+    S.dailyPillars.done[key]=true;
+    if(!S.vis.includes(today()))S.vis.push(today());
+    addFuel(PILLAR_VAL);
+    syncPebeteroRing();
+    renderStoriesBar();
+    renderCircleFeed();
+    if(toastMsg)toast(toastMsg,'ok');
+  }else{
+    renderSunPillarsBar();
+  }
+}
+function renderSunPillarsBar(){
+  ensureDailyPillars();
+  const grid=$('sunPillarsGrid'),title=$('sunPillarsTitle'),sh=$('sunShieldBadge');
+  if(!grid)return;
+  const doneMap=S.dailyPillars.done||{};
+  const count=SUN_PILLARS.filter(p=>doneMap[p.key]).length;
+  if(title)title.textContent='Tu práctica de hoy · '+count+'/5';
+  if(sh){
+    sh.textContent=(S.sunShieldDate===today())?('Sostenido'+(S.sunShieldBy?' por '+S.sunShieldBy:'')):'';
+  }
+  grid.innerHTML='';
+  SUN_PILLARS.forEach(p=>{
+    const isDone=!!doneMap[p.key];
+    const b=document.createElement('button');
+    b.type='button';
+    b.className='sun-pillar-btn'+(isDone?' on':'');
+    b.textContent=(isDone?'✓ ':'')+p.label;
+    b.onclick=()=>{if(!isDone && p.go)p.go();};
+    grid.appendChild(b);
+  });
+}
+function renderHabitHonestyCheck(){
+  const box=$('habitHonestyChips'),lbl=$('habitHonestyStateLbl'),msg=$('habitHonestyMsg');
+  if(!box)return;
+  if(!S.habitChecks||typeof S.habitChecks!=='object')S.habitChecks={};
+  const cur=S.habitChecks[today()]||'';
+  box.querySelectorAll('[data-hh]').forEach(btn=>{
+    const val=btn.dataset.hh;
+    btn.classList.toggle('on',cur===val);
+    btn.onclick=()=>{
+      S.habitChecks[today()]=val;
+      markPillarDone('habit','Propósito registrado en tu Sol');
+      save();
+      renderHabitHonestyCheck();
+    };
+  });
+  if(lbl)lbl.textContent=cur?'Registrado hoy':'';
+  if(msg){
+    if(cur==='nopude'){
+      msg.hidden=false;
+      msg.textContent='Gracias por tu honestidad. Un tropiezo o una pausa no borra lo caminado ni frena tu Sol.';
+    }else if(cur==='costo'){
+      msg.hidden=false;
+      msg.textContent='Atravesar la resistencia también cuenta. Tu Sol crece contigo hoy.';
+    }else if(cur==='fluyo'){
+      msg.hidden=false;
+      msg.textContent='Hoy fluyó con serenidad. Un paso más en tu camino.';
+    }else{
+      msg.hidden=true;
+    }
+  }
+}
 const PEB_LEGACY_MAP={fuente:'cuarzo',musa:'lavanda',nido:'ororosa',piedra:'ambar',horizonte:'cobalto',brasa:'aurora'};
 const PEB_VESSELS={
   cuarzo:{
@@ -12298,9 +12513,12 @@ function flameView(){
 
   const decayEl=$('pebDecayCountdown');
   if(decayEl){
-    decayEl.classList.toggle('risk',v<35);
-    decayEl.textContent=isPebeteroMaintained()?'-0.8% / h':'-2% / h';
+    ensureDailyPillars();
+    const dCountToday=Object.values((S.dailyPillars&&S.dailyPillars.done)||{}).filter(Boolean).length;
+    decayEl.classList.toggle('risk',dCountToday===0 && S.sunShieldDate!==today());
+    decayEl.textContent=(S.sunShieldDate===today())?'Escudo activo':('Hoy '+dCountToday+'/5');
   }
+  renderSunPillarsBar();
   const dCount=S.days||1;
   const dLabel=dCount===1?'1 día':(dCount+' días');
   const evoEl=$('pebEvolutionBadge');
@@ -12371,7 +12589,7 @@ document.querySelectorAll('.q').forEach(q=>{
         if(badge)badge.textContent='✓ Completada';
         WavyAudio.playBowl([528,792],2.0,0.12);
         vib([20,40,20]);
-        markVerifiedPractice('Práctica de 60 segundos completada');
+        markVerifiedPractice('Práctica de 60 segundos completada','breath');
       }
     },1000);
   };
@@ -12723,14 +12941,16 @@ $('extSecondaryAction').onclick=()=>{
 };
 $('buyVigilBtn').onclick=()=>{
   if(!currentExtUser)return;
-  currentExtUser.flame=100;
+  if(!isPro()){
+    openPaywall('Sostener el Sol de tus vínculos con una Vigilia de Oro es parte de Wavy Pro.');
+    return;
+  }
   currentExtUser.pact=(currentExtUser.pact||7)+1;
-  $('extFlamePct').textContent='100%';
   $('extVigilBox').hidden=true;
-  addPulse('out','Encendiste una Vela de Vigilia por @'+currentExtUser.username);
-  broadcastLiveEvent('gesture',{target:currentExtUser.username,kind:'vigil_gift',message:'Encendí una Vela de Vigilia para acompañar tu calma.'});
+  addPulse('out','Sostuviste el Sol de @'+currentExtUser.username+' con una Vigilia de Oro');
+  broadcastLiveEvent('gesture',{target:currentExtUser.username,kind:'vigil_gift',message:'Sostuve tu Sol hoy para que no decaiga.'});
   renderHomeCoRegulation();
-  toast('Vela de Vigilia encendida por @'+currentExtUser.username,'ok');
+  toast('Vigilia de Oro enviada a @'+currentExtUser.username,'ok');
 };
 
 function toggleFollow(uname){
@@ -13423,6 +13643,8 @@ function renderAll(){
   renderSealsCarousel();
   clock();
   flameView();
+  renderSunPillarsBar();
+  renderHabitHonestyCheck();
   stats();
   syncModulesUI();
   renderAdaptiveAdvice();
@@ -13660,6 +13882,7 @@ if($('saveBlankSheetBtn')){
       });
     }
     editingBlankId=null;
+    markPillarDone('reflect','Escrito sumado a tu Sol');
     markVerifiedPractice('Entrada de diario libre registrada');
     save();notes();renderDiaryList();renderClinicalReport();
     if($('blankSheetModal'))$('blankSheetModal').hidden=true;
@@ -13729,10 +13952,14 @@ initOnboarding();
 </script>
   <!-- LECTOR DE ENSAYOS (Lecturas, Temas y Claridad) -->
   <div id="lecturaReader" hidden>
-    <button type="button" class="btn ghost" id="lecturaReaderBack" style="margin-bottom:18px">← Volver</button>
+    <div style="max-width:600px;margin:0 auto 18px;display:flex;justify-content:space-between;align-items:center;gap:10px">
+      <button type="button" class="btn ghost" id="lecturaReaderBack" style="min-height:36px;padding:6px 14px">← Volver</button>
+      <button type="button" class="btn" id="lecturaShareNoteBtn" style="min-height:36px;padding:6px 14px;font-size:11px">Compartir en Notas</button>
+    </div>
     <div class="lectura-reader-inner">
       <div class="lectura-reader-meta" id="lecturaReaderMeta"></div>
       <h1 id="lecturaReaderTitle"></h1>
+      <p style="font-size:11.5px;color:var(--muted);margin:0 0 18px">Toca cualquier párrafo para subrayarlo y compartirlo en Notas.</p>
       <div id="lecturaReaderBody"></div>
     </div>
   </div>
