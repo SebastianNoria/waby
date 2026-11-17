@@ -264,7 +264,7 @@ body{
   100%{background-position:-35% 0}
 }
 .masthead h1{
-  font-family:var(--serif);font-weight:500;font-size:clamp(35px,8.8vw,40px);line-height:1;letter-spacing:-.015em;margin:0;
+  font-family:var(--serif);font-weight:500;font-size:clamp(35px,8.8vw,40px);line-height:1.24;padding-bottom:.08em;letter-spacing:-.015em;margin:0;
   position:relative;display:inline-block;
   background:linear-gradient(110deg, var(--ink) 0%, var(--ink) 40%, #fffdf6 50%, var(--ink) 60%, var(--ink) 100%);
   background-size:260% 100%;
@@ -449,7 +449,15 @@ h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,7vw,36px);line-
 :root[data-finish="minimal"] .mo.on i,
 :root[data-finish="minimal"] #loss .chip.on i,
 :root[data-finish="minimal"] .bento-card.active i,
-:root[data-finish="minimal"] .bento-card.has i{color:var(--paper) !important}
+:root[data-finish="minimal"] .bento-card.has i,
+:root[data-finish="minimal"] .habit-item.on span,
+:root[data-finish="minimal"] .mo.on span,
+:root[data-finish="minimal"] #loss .chip.on span,
+:root[data-finish="minimal"] .bento-card.active span.bento-lbl,
+:root[data-finish="minimal"] .bento-card.has span.bento-lbl{color:var(--paper) !important}
+:root[data-finish="minimal"] #loss .chip i,
+:root[data-finish="minimal"] #loss .chip svg{color:var(--ink) !important;stroke:currentColor}
+:root[data-finish="minimal"] #loss .chip.on svg{color:var(--paper) !important;stroke:currentColor}
 /* Cuadrícula 3x3 Hábitos */
 .habit-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:16px}
 .habit-item{
@@ -2117,7 +2125,7 @@ summary::-webkit-details-marker{display:none}
   animation:wavyStrokeDraw .95s .35s cubic-bezier(.22,1,.36,1) forwards;
 }
 .wavy-splash-word{
-  font-family:var(--serif);font-size:62px;font-weight:500;letter-spacing:-.025em;line-height:1;
+  font-family:var(--serif);font-size:62px;font-weight:500;letter-spacing:-.025em;line-height:1.26;padding-bottom:.12em;
   background:linear-gradient(110deg, var(--ink) 0%, var(--ink) 38%, #d6c5ab 50%, var(--ink) 62%, var(--ink) 100%);
   background-size:240% 100%;
   -webkit-background-clip:text;background-clip:text;color:transparent;
@@ -2543,7 +2551,7 @@ summary::-webkit-details-marker{display:none}
 
     <!-- SUB-PANEL 1A: HÁBITO Y BATERÍA + FLUJO SOS -->
     <section class="panel card habits-hidden habits-collapsed" id="sub-habit">
-      <div class="sl" style="margin-top:0;margin-bottom:14px">
+      <div class="sl" style="margin-top:0;margin-bottom:26px;padding-bottom:18px;border-bottom:1px solid var(--rule)">
         <label><span>Mi razón de hoy</span></label>
         <div class="chips" id="loss"></div>
       </div>
@@ -2950,9 +2958,8 @@ summary::-webkit-details-marker{display:none}
           <canvas id="flameCanvas" width="700" height="860" aria-label="Tu sol vivo"></canvas>
           <div class="sun-stage-pct" id="sunStagePct">65%</div>
           <div class="sun-stage-decay" id="pebDecayCountdown">-2%</div>
-          <button type="button" id="sunTrailerBtn" aria-label="Ver evolución completa del sol en 30 segundos" title="Ver evolución 5% → 100% (30 s)" style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:4;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.42);background:rgba(255,255,255,0.20);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#FFF8EE;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.16);transition:transform .18s ease,background .2s ease">
-            <svg id="sunTrailerIco" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"/></svg>
-            <span id="sunTrailerTxt">Evolución · 30s</span>
+          <button type="button" class="coast-fs-toggle" id="sunTrailerBtn" aria-label="Ver evolución completa del sol en 30 segundos" title="Ver evolución 5% → 100% (30 s)" style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:4;width:38px;height:38px;border-radius:50%;padding:0">
+            <svg id="sunTrailerIco" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;display:block" aria-hidden="true"><polygon points="7 5 19 12 7 19 7 5"/></svg>
           </button>
         </div>
         <div class="peb-actions">
@@ -4522,7 +4529,7 @@ function createDefaultStateForUser(uAlias){
     following:['sofia','camila','valeria','renata','lucia','mariana'],
     customUsers:[],
     arousal:0.10,
-    fuel:{v:50,t:Date.now()},
+    fuel:{v:5,t:Date.now()},
     clearedCount:0,
     skyClearedBy:'',
     openSync:false,
@@ -10987,11 +10994,13 @@ function drawLivingFlame(ts){
     ctx.rotate(rot);
     ctx.globalAlpha=sunVis;
 
-    /* 5%→50%: u1, u2 y u3 completan toda la animación previa en 50%; 50%→100%: u100 + fiesta única en 99%→100% */
-    const u1=Math.min(1,u50/0.3684);
-    const u2=Math.max(0,Math.min(1,(u50-0.3684)/0.3684));
-    const u3=Math.max(0,(u50-0.7368)/0.2632);
-    const u100=Math.max(0,(u-0.4737)/0.5263);
+    /* 9 transformaciones progresivas cada 10% (5%→95%), transformación 96%→99% (m96) y fiesta exclusiva al 100% (fiesta) */
+    const u1=Math.min(1,u/0.3158);
+    const u2=Math.max(0,Math.min(1,(u-0.3158)/0.3158));
+    const u3=Math.max(0,Math.min(1,(u-0.6316)/0.2105));
+    const u100=Math.max(0,Math.min(1,(u-0.5263)/0.4211));
+    const m9=Math.max(0,Math.min(1,(p*100-85)/10));
+    const m96=Math.max(0,Math.min(1,(p*100-95)/4));
     const fiesta=(p>=0.995)?Math.min(1,(p-0.995)/0.005):0;
     const ebu=Math.max(0,Math.min(1,(u1-0.15)/0.85));
     const ecstasy=Math.max(0,(u1-0.72)/0.28);
@@ -11920,6 +11929,44 @@ function drawLivingFlame(ts){
       }
     }
 
+    /* Transformación 9 (85%→95%: corona exterior fiel al medio) + Transformación 96%→99% (antesala del 100%) */
+    if(m9>0.05){
+      const isGouache=(shape==='flat_vermilion'||shape==='summer_gouache'||shape==='aurea_gouache');
+      const mCount=isGouache?16:32;
+      for(let i=0;i<mCount;i++){
+        const a=((i+0.25)*Math.PI*2)/mCount;
+        const rIn=baseR*(1.82+0.15*m9);
+        const rOut=baseR*(2.15+0.55*m9+0.18*m96*Math.sin(t*2.6+i));
+        ctx.save();ctx.rotate(a);ctx.globalAlpha=sunVis*0.72*m9;
+        if(isGouache){
+          ctx.fillStyle=(i%2===0)?pal.ray2:pal.disc;
+          const bw=baseR*0.065*m9;
+          ctx.beginPath();ctx.moveTo(rIn,-bw);ctx.lineTo(rOut,0);ctx.lineTo(rIn,bw);ctx.closePath();ctx.fill();
+        }else{
+          ctx.strokeStyle=(i%2===0)?pal.ray2:pal.disc;
+          ctx.lineWidth=Math.max(1.0,baseR*0.014);ctx.lineCap='round';
+          ctx.beginPath();ctx.moveTo(rIn,0);ctx.lineTo(rOut,0);ctx.stroke();
+        }
+        ctx.restore();
+      }
+    }
+    if(m96>0.05){
+      const preTotal=24;
+      for(let k=0;k<preTotal;k++){
+        const life=((t*0.65+pebHash(k*4.7))%1);
+        const fade=Math.sin(life*Math.PI);
+        if(fade<0.05)continue;
+        const ka=pebHash(k*8.1)*Math.PI*2;
+        const kd=baseR*(1.95+life*1.35);
+        const ks=baseR*(0.036+0.030*pebHash(k*2.9))*m96;
+        ctx.save();ctx.translate(Math.cos(ka)*kd,Math.sin(ka)*kd);
+        ctx.globalAlpha=sunVis*fade*0.86*m96;
+        ctx.fillStyle=(k%2===0)?pal.disc:pal.ray2;
+        ctx.beginPath();ctx.arc(0,0,ks,0,Math.PI*2);ctx.fill();
+        ctx.restore();
+      }
+    }
+
     ctx.restore();
   }
 
@@ -11937,8 +11984,7 @@ function stopSunTrailer(){
   sunTrailerOn=false;
   if(sunTrailerTimer){clearInterval(sunTrailerTimer);sunTrailerTimer=0;}
   devFlameOverridePct=null;
-  if($('sunTrailerTxt'))$('sunTrailerTxt').textContent='Evolución · 30s';
-  if($('sunTrailerIco'))$('sunTrailerIco').innerHTML='<polygon points="6 4 20 12 6 20 6 4"/>';
+  if($('sunTrailerIco'))$('sunTrailerIco').innerHTML='<polygon points="7 5 19 12 7 19 7 5"/>';
 }
 if($('sunTrailerBtn')){
   $('sunTrailerBtn').onclick=()=>{
@@ -11947,7 +11993,6 @@ if($('sunTrailerBtn')){
     const tStart=performance.now();
     const DUR=30000;
     devFlameOverridePct=5;flamePctSmooth=5;
-    if($('sunTrailerTxt'))$('sunTrailerTxt').textContent='Detener';
     if($('sunTrailerIco'))$('sunTrailerIco').innerHTML='<rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/>';
     startFlameAnim();
     sunTrailerTimer=setInterval(()=>{
