@@ -938,7 +938,44 @@ body.coast-fullscreen > #seab .coast-fs-dock{bottom:max(18px, env(safe-area-inse
 .mode-link{background:none;border:none;padding:4px 0;font-family:var(--serif);font-style:normal;font-size:14px;color:var(--crimson);cursor:pointer}
 .mode-sheet{display:flex;flex-wrap:wrap;gap:6px;margin:-2px 0 10px;animation:fadeUp .2s ease}
 .mode-sheet[hidden]{display:none}
+.mode-sheet[hidden]{display:none !important}
 .cycle-card{
+  background:var(--wash);border:1px solid var(--rule);border-radius:18px;
+  padding:16px;margin-bottom:10px;
+}
+.cycle-hero{
+  display:flex;align-items:center;gap:14px;margin-bottom:14px;
+}
+.cycle-ring{
+  position:relative;width:62px;height:62px;flex-shrink:0;
+  border-radius:50%;background:var(--paper);border:1px solid var(--rule);
+  display:grid;place-items:center;
+}
+.cycle-ring svg{display:none !important}
+.cycle-ring .ctr{
+  position:static;transform:none;text-align:center;line-height:1.1;
+}
+.cycle-ring .ctr small{
+  display:block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;
+}
+.cycle-ring .ctr b{
+  font-family:var(--serif);font-size:20px;font-weight:500;color:var(--ink);
+}
+.cycle-hero-txt small{
+  display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:3px;
+}
+.cycle-hero-txt strong{
+  display:block;font-family:var(--serif);font-size:19px;font-weight:500;color:var(--ink);line-height:1.2;margin-bottom:3px;
+}
+.cycle-hero-txt p{
+  font-size:12.5px;color:var(--muted);line-height:1.45;margin:0;
+}
+.cycle-actions{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;
+}
+.cycle-actions .btn{
+  border-radius:999px;min-height:36px;padding:6px 12px;font-size:11.5px;
+}
   background:transparent;border:none;border-bottom:1px solid var(--rule);border-radius:0;
   padding:12px 2px 16px;margin-bottom:12px;
   box-shadow:none;
@@ -2637,7 +2674,7 @@ summary::-webkit-details-marker{display:none}
 
       <div class="bio-sec" style="margin-top:8px;padding-top:10px;border-top:none">
         <div class="bio-sec-hd">
-          <span>Emociones de hoy</span>
+          <span>Emociones de hoy <span id="moodCountLbl" style="font-weight:500;opacity:.7">(0/3)</span></span>
           <button type="button" class="bento-dim-toggle" id="moodMaticesToggleBtn">Ver más ▾</button>
         </div>
         <div class="mood-flip-wrap" id="moodFlipWrap">
@@ -2760,7 +2797,7 @@ summary::-webkit-details-marker{display:none}
               <div class="ctr"><small id="maleRingLbl">Hoy</small><b id="maleRingVal">0/3</b></div>
             </div>
             <div class="cycle-hero-txt">
-              <small id="malePhaseEyebrow">Energía por hora</small>
+              <small id="malePhaseEyebrow">Ritmo del día</small>
               <strong id="maleTestoPhase">—</strong>
               <p id="maleTestoHint">—</p>
             </div>
@@ -2999,7 +3036,7 @@ summary::-webkit-details-marker{display:none}
     <div class="tabs" role="tablist">
       <button type="button" class="tab on" id="circleTabFeedBtn" role="tab" aria-selected="true">Notas</button>
       <button type="button" class="tab" id="circleTabDiaryBtn" role="tab" aria-selected="false">Escritos</button>
-      <button type="button" class="tab" id="circleTabFriendsBtn" role="tab" aria-selected="false">Vínculos</button>
+      <button type="button" class="tab" id="circleTabFriendsBtn" role="tab" aria-selected="false">Personas</button>
     </div>
     <div id="circleFeedPane">
     <span id="p2pPeerIdLabel" hidden></span>
@@ -3092,14 +3129,13 @@ summary::-webkit-details-marker{display:none}
         <div id="diaryList"></div>
       </div>
       <div id="diaryProfileWrap" class="bio-sec" style="margin-top:0;padding-bottom:8px" hidden>
-        <div class="bio-sec-hd">
-          <span>Wavy Journal · Público</span>
-          <button type="button" id="shareProfileBtn" title="Abrir y compartir tu Wavy Journal" style="display:inline-flex;align-items:center;gap:5px;min-height:28px;padding:3px 10px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font-family:var(--serif);font-style:italic;font-size:12px;cursor:pointer">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/></svg>
+        <div id="diaryPublicProfilePreview"></div>
+        <div style="display:flex;justify-content:center;margin-top:18px">
+          <button type="button" id="shareProfileBtn" title="Abrir y compartir tu Wavy Journal" style="display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:6px 18px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font-family:var(--serif);font-style:italic;font-size:13px;cursor:pointer">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/></svg>
             <span>Compartir</span>
           </button>
         </div>
-        <div id="diaryPublicProfilePreview"></div>
       </div>
       <div id="diaryShowcaseWrap" class="bio-sec" style="margin-top:0;padding-bottom:8px" hidden>
         <div class="bio-sec-hd"><span>Lecturas · Wavy Editorial</span><span style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">Selección editorial</span></div>
@@ -3896,9 +3932,9 @@ summary::-webkit-details-marker{display:none}
 <nav class="bnav" id="bnav" aria-label="Navegación principal">
   <div class="bnav-inner" role="tablist">
     <button class="bnav-btn on" data-v="v-today" role="tab" aria-selected="true">
-      <!-- Símbolo de Autor 1: Brote Botánico de Dos Hojas (Estar y Bienestar Diario) -->
+      <!-- Símbolo de Autor 1: Brote Botánico de Dos Hojas (Cuidado Diario) -->
       <svg viewBox="0 0 24 24"><path d="M12 20V9"/><path d="M12 14c-4.5 0-7.5-3-7.5-7.5 4.5 0 7.5 3 7.5 7.5Z"/><path d="M12 11c4-0.5 6.8-3.2 6.8-7.2-4 0.5-6.8 3.2-6.8 7.2Z"/><path d="M8.5 20h7"/></svg>
-      <span>Estar</span>
+      <span>Cuidado</span>
     </button>
     <button class="bnav-btn" data-v="v-breathe" role="tab" aria-selected="false">
       <!-- Símbolo de Autor 2: Sol/Luna Naciente sobre el Horizonte en Calma -->
@@ -3906,9 +3942,9 @@ summary::-webkit-details-marker{display:none}
       <span>Calma</span>
     </button>
     <button class="bnav-btn" data-v="v-circle" role="tab" aria-selected="false">
-      <!-- Símbolo de Autor 3: Onda de Sintonía Compartida (Afecto y Resonancia) -->
+      <!-- Símbolo de Autor 3: Onda de Sintonía Compartida (Compañía) -->
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.6"/><path d="M7.2 15a5.8 5.8 0 1 1 9.6 0"/><path d="M4.2 17.6a9.4 9.4 0 1 1 15.6 0"/></svg>
-      <span>Afecto</span>
+      <span>Compañía</span>
     </button>
     <button class="bnav-btn" data-v="v-clinic" role="tab" aria-selected="false">
       <!-- Símbolo de Autor 4: Brújula Minimalista (Claridad y Rumbo) -->
@@ -9551,8 +9587,7 @@ function renderMalePanel(){
 
   const mGoals={
     focus:'Enfoque y calma ▾',
-    hypertrophy:'Fuerza y control ▾',
-    recovery:'Descanso activo ▾'
+    hypertrophy:'Fuerza y control ▾'
   };
   if($('maleGoalToggle'))$('maleGoalToggle').textContent=mGoals[S.maleGoal||'focus']||mGoals.focus;
 
@@ -9607,17 +9642,21 @@ function renderMalePanel(){
   renderClueTrackList();
 }
 
-$('maleGoalToggle').onclick=()=>{
+if($('maleGoalToggle'))$('maleGoalToggle').onclick=()=>{
   const sheet=$('maleGoalSheet');if(!sheet)return;
   if(!sheet.hidden){sheet.hidden=true;return}
   sheet.innerHTML='';
+  sheet.style.display='grid';
+  sheet.style.gridTemplateColumns='1fr 1fr';
+  sheet.style.gap='8px';
+  sheet.style.marginBottom='10px';
   [
-    ['focus','Concentración y calma mental'],
-    ['hypertrophy','Ganar fuerza y control físico'],
-    ['recovery','Descanso y recuperación activa']
+    ['focus','Enfoque y calma'],
+    ['hypertrophy','Fuerza y control']
   ].forEach(([gId,gLbl])=>{
     const btn=document.createElement('button');
     btn.type='button';btn.className='chip'+((S.maleGoal||'focus')===gId?' on':'');
+    btn.style.cssText='width:100%;min-height:34px;font-size:11.5px;white-space:nowrap';
     btn.textContent=gLbl;
     btn.onclick=()=>{S.maleGoal=gId;sheet.hidden=true;save();renderMalePanel()};
     sheet.appendChild(btn);
@@ -10047,6 +10086,7 @@ if($('shareMoodMapBtn'))$('shareMoodMapBtn').onclick=()=>{
 function updateMoodCounter(){
   const count=document.querySelectorAll('.mo.on:not(.plus-btn)').length;
   if($('moodCounterLbl'))$('moodCounterLbl').textContent='Elige hasta 3 ('+count+'/3)';
+  if($('moodCountLbl'))$('moodCountLbl').textContent='('+count+'/3)';
   updateMoodFlipMap();
 }
 if($('moodFlipToBackBtn'))$('moodFlipToBackBtn').onclick=()=>{if($('moodFlipInner'))$('moodFlipInner').classList.add('flipped');};
@@ -12337,66 +12377,67 @@ if($('mastheadPubProfileBtn'))$('mastheadPubProfileBtn').onclick=()=>{
 })();
 const HELP_GUIDES={
   'v-today:habit':{
-    eyebrow:'Hoy · Mi hábito',
+    eyebrow:'Cuidado · Mi hábito',
     title:'Tu práctica diaria',
     items:[
-      ['Mi hábito por construir','Elige o agrega el hábito que estás regulando o construyendo hoy. Usa el ícono del ojo si quieres ocultarlo en público.'],
-      ['Barra 90 días y reloj','Muestra tu avance diario hacia tus hitos (7, 14, 21, 30, 45, 60, 75, 90 días) y el tiempo restante de tu día.'],
+      ['Mi razón de hoy','Ancla tu propósito tocando una o más cápsulas de cuidado en la parte superior para recordar por qué eliges cuidarte hoy.'],
+      ['Mi hábito por construir','Elige o agrega el hábito que estás regulando o construyendo hoy, sigue tu barra de 90 días y usa el ícono del ojo si quieres ocultarlo en público.'],
       ['Frases guía (desliza ← / →)','Desliza la tarjeta de frase para leer líneas de Estoicismo, Budismo, Feminismo, Literatura o Grandes personas según tu perfil.'],
-      ['Mi razón de cuidado hoy','Ancla tu propósito tocando una o más cápsulas de cuidado y usa «Mi hábito está en riesgo · Acompañarme» si necesitas una pausa guiada.']
+      ['Acompañamiento en riesgo','Si sientes que tu hábito está en riesgo, toca «Mi hábito está en riesgo · Acompañarme» para abrir una pausa guiada inmediata.']
     ]
   },
   'v-today:journal':{
-    eyebrow:'Hoy · Bienestar',
-    title:'Emociones y hábitos',
+    eyebrow:'Cuidado · Bienestar',
+    title:'Emociones, cuerpo y ritmo',
     items:[
       ['Calendario semanal','Cada letra muestra la primera emoción registrada ese día para ver tu semana de un vistazo.'],
-      ['Emociones de hoy (hasta 3)','Elige entre las 3 emociones base o toca «Más» para abrir los 16 matices extra. Con 3 elegidas puedes voltear tu mapa cromático.'],
-      ['Hábitos de cuidado (Cuerpo, Mente, Vínculo)','Toca cualquier tarjeta para registrar cómo va tu día en esa área. Solo se expande una sección «Ver más» a la vez.'],
-      ['Check-in del día','Al final de la página puedes escribir una nota breve opcional y guardar tu registro diario.']
+      ['Emociones de hoy (0/3)','Elige hasta 3 emociones entre las base o toca «Ver más» para abrir matices extra. Con 3 elegidas puedes voltear tu mapa cromático.'],
+      ['Hábitos de cuidado (Cuerpo, Mente, Vínculo)','Toca cualquier tarjeta en la cuadrícula de 3 por fila para abrir sus opciones justo debajo y registrar cómo va tu día.'],
+      ['Ritmo, fuerza y calma / Ciclo','Registra tu enfoque u objetivo en 2 opciones limpias, ajusta tu ritmo actual o ciclo y guarda una nota breve opcional al final.']
     ]
   },
   'v-today:constancy':{
-    eyebrow:'Hoy · Mi constancia',
-    title:'Tu llama viva',
+    eyebrow:'Calma · Constancia',
+    title:'Tu sol vivo',
     items:[
-      ['Selector de llama','Elige el estilo visual de tu llama (1 libre y 2 Pro por género) que refleja tu constancia diaria.'],
-      ['Porcentaje vivo (5% a 100%)','Tu llama nunca baja de 5%. Sube cuando completas prácticas de respiración en Costa, check-in diario o escritos.'],
-      ['Vínculos y racha','Al encender tu día mantienes abierta la sintonía con tu círculo y sumas días reales de cuidado.']
+      ['Evolución de 5% a 100%','En el principio es solo una chispa en la oscuridad (5%). Cada 10% agrega nuevos rasgos visibles hasta culminar en la fiesta del 100%.'],
+      ['Trailer «Evolución · 30s»','Toca el botón de cristal en la parte inferior de tu sol para ver en 30 segundos cómo se transforma hasta el 100% y vuelve a tu porcentaje real.'],
+      ['Prácticas breves y soles','Elige entre 6 soles por género y suma luz completando respiraciones, check-ins diarios o escritos.']
     ]
   },
   'v-breathe':{
-    eyebrow:'Guía de Costa',
-    title:'Respira con el mar',
+    eyebrow:'Calma · Regulación',
+    title:'Respira con la costa',
     items:[
-      ['El mar y la marea','Los colores y el movimiento del océano responden en vivo a tu nivel de tensión y a la hora del día.'],
+      ['El mar y la marea','La costa, la espuma y las luciérnagas responden en vivo a tu respiración y a la hora del día.'],
       ['Controles inferiores','Desde abajo puedes iniciar o pausar, alternar Automático/Táctil, elegir sonido (Olas, Ruido rosa, Ruido blanco o Cuencos), ritmo (4·6, 4·4, 4·7·8) y duración.'],
       ['Pausa, salir (×) y pantalla completa','En pausa sigues viendo el círculo respirar; toca × para terminar la sesión o el botón superior derecho para pantalla completa.']
     ]
   },
   'v-circle:feed':{
-    eyebrow:'Círculo · Notas',
+    eyebrow:'Compañía · Notas',
     title:'Presencia compartida',
     items:[
-      ['Notas de tu círculo','Lee pensamientos breves de tus vínculos. Si aún no cumples una práctica hoy, las notas se difuminan hasta que enciendas tu día.'],
-      ['Reacciones minimalistas','Toca o pasa el dedo sobre los 3 símbolos debajo de cada nota para acompañar, celebrar o sentir con esa persona.'],
-      ['Publicar una nota','Usa la cortina desplegable superior para compartir cómo te sientes, agregar gemas o vincular una canción.']
+      ['Notas de tu círculo','Lee pensamientos breves de las personas con las que compartes camino. Si aún no cumples una práctica hoy, se difuminan hasta que enciendas tu día.'],
+      ['Reacciones minimalistas','Toca los 3 símbolos debajo de cada nota para acompañar, celebrar o sentir con esa persona.'],
+      ['Publicar una nota','Despliega la flecha superior para escribir cómo te sientes, agregar una emoción o vincular una canción sin que el menú se cierre al elegir música.']
     ]
   },
   'v-circle:diary':{
-    eyebrow:'Círculo · Escritos',
-    title:'Mis escritos y Escaparate',
+    eyebrow:'Compañía · Escritos',
+    title:'Journal, Perfil, Lecturas y Temas',
     items:[
-      ['Mis escritos y Escaparate','Alterna entre tus propios ensayos y lecturas curadas de otros autores en Wavy Journal.'],
-      ['Escribir y compartir','Despliega «Escribir un artículo» para redactar en hoja en blanco o toca Wavy Journal para abrir tu página editorial estilo Medium.']
+      ['Journal y Perfil','Escribe ensayos en privado o activa «Público» para mostrarlos en tu Perfil editorial y compartirlo con el botón Compartir.'],
+      ['Desplegable central (+)','Toca la flecha central debajo de Escritos para abrir la hoja en blanco y redactar un nuevo artículo.'],
+      ['Lecturas y Temas','Explora ensayos editoriales curados en Lecturas o descubre otros autores por tema en Temas.']
     ]
   },
   'v-circle:friends':{
-    eyebrow:'Círculo · Vínculos',
+    eyebrow:'Compañía · Personas',
     title:'Tus vínculos cercanos',
     items:[
       ['Tarjetas de sintonía','Visualiza en filas de dos a las personas de tu círculo junto con su estado actual en tiempo real.'],
-      ['Invitar o buscar amigo','Toca «+ Invitar o buscar amigo» debajo de las tarjetas para sumar nuevas personas de confianza.']
+      ['Invitar o buscar persona','Toca «+ Invitar o buscar amigo» debajo de las tarjetas para sumar nuevas personas de confianza.']
     ]
   },
   'v-pubconfig':{
@@ -12409,10 +12450,10 @@ const HELP_GUIDES={
     ]
   },
   'v-clinic':{
-    eyebrow:'Guía de Pulso',
+    eyebrow:'Claridad',
     title:'Tu progreso real',
     items:[
-      ['Tu energía de hoy','Resume tu equilibrio entre descanso, pausas en Costa y registros recientes.'],
+      ['Tu energía de hoy','Resume tu equilibrio entre descanso, pausas en Calma y registros recientes.'],
       ['Flujo del día y gráficas','Identifica en qué horarios aparece más tensión o calma para anticipar pausas preventivas.'],
       ['Exportar reporte','Genera un resumen limpio de tus registros para ti o para compartir en terapia.']
     ]
@@ -12426,6 +12467,8 @@ if($('mastheadHelpBtn'))$('mastheadHelpBtn').onclick=()=>{
     const sub=document.querySelector('#v-today .tab.on');
     const ds=sub&&sub.dataset.sub?sub.dataset.sub:'sub-habit';
     key=(ds==='sub-journal')?'v-today:journal':(ds==='sub-flame')?'v-today:constancy':'v-today:habit';
+  }else if(pid==='v-breathe'){
+    key=($('sub-flame')&&$('sub-flame').classList.contains('on'))?'v-today:constancy':'v-breathe';
   }else if(pid==='v-circle'){
     if($('circleTabDiaryBtn')&&$('circleTabDiaryBtn').classList.contains('on'))key='v-circle:diary';
     else if($('circleTabFriendsBtn')&&$('circleTabFriendsBtn').classList.contains('on'))key='v-circle:friends';
