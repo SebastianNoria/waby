@@ -3066,18 +3066,14 @@ summary::-webkit-details-marker{display:none}
     </div>
     <div id="circleDiaryPane" hidden>
       <div class="curtain-shell" id="diaryCurtainShell" style="margin-bottom:6px">
-        <div id="diarySubTabs" role="tablist" aria-label="Secciones de Escritos" style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:6px;margin-bottom:6px">
-          <div style="display:flex;align-items:center;justify-content:flex-end;gap:4px">
-            <button type="button" class="chip on" data-dsub="journal" role="tab" aria-selected="true" style="min-height:28px;padding:3px 9px;font-size:11px;white-space:nowrap">Journal</button>
-            <button type="button" class="chip" data-dsub="profile" role="tab" aria-selected="false" style="min-height:28px;padding:3px 9px;font-size:11px;white-space:nowrap">Perfil</button>
-          </div>
+        <div id="diarySubTabs" role="tablist" aria-label="Secciones de Escritos" style="display:flex;align-items:center;justify-content:space-between;width:100%;gap:4px;margin-bottom:6px">
+          <button type="button" class="chip on" data-dsub="journal" role="tab" aria-selected="true" style="min-height:28px;padding:3px 10px;font-size:11px;white-space:nowrap">Journal</button>
+          <button type="button" class="chip" data-dsub="profile" role="tab" aria-selected="false" style="min-height:28px;padding:3px 10px;font-size:11px;white-space:nowrap">Perfil</button>
           <button type="button" class="curtain-toggle-btn" id="diaryCurtainBtn" aria-expanded="false" aria-label="Abrir cuadro para escribir artículo" style="flex-shrink:0;margin:0">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
           </button>
-          <div style="display:flex;align-items:center;justify-content:flex-start;gap:4px">
-            <button type="button" class="chip" data-dsub="showcase" role="tab" aria-selected="false" style="min-height:28px;padding:3px 9px;font-size:11px;white-space:nowrap">Escaparate</button>
-            <button type="button" class="chip" data-dsub="topics" role="tab" aria-selected="false" style="min-height:28px;padding:3px 9px;font-size:11px;white-space:nowrap">Temas</button>
-          </div>
+          <button type="button" class="chip" data-dsub="showcase" role="tab" aria-selected="false" style="min-height:28px;padding:3px 10px;font-size:11px;white-space:nowrap">Lecturas</button>
+          <button type="button" class="chip" data-dsub="topics" role="tab" aria-selected="false" style="min-height:28px;padding:3px 10px;font-size:11px;white-space:nowrap">Temas</button>
         </div>
         <div class="curtain-drawer" id="diaryCurtainDrawer">
           <div class="circle-composer">
@@ -3106,7 +3102,7 @@ summary::-webkit-details-marker{display:none}
         <div id="diaryPublicProfilePreview"></div>
       </div>
       <div id="diaryShowcaseWrap" class="bio-sec" style="margin-top:0;padding-bottom:8px" hidden>
-        <div class="bio-sec-hd"><span>Escaparate · Wavy Editorial</span><span style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">Selección algorítmica</span></div>
+        <div class="bio-sec-hd"><span>Lecturas · Wavy Editorial</span><span style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">Selección editorial</span></div>
         <div id="diaryShowcaseList"></div>
       </div>
       <div id="diaryTopicsWrap" class="bio-sec" style="margin-top:0;padding-bottom:8px" hidden>
@@ -3467,6 +3463,19 @@ summary::-webkit-details-marker{display:none}
     </div>
     <button class="btn ghost" id="previewMyPublicBtn" style="width:100%;margin-bottom:10px">Ver mi perfil público</button>
 
+    <div style="margin:14px 0 10px">
+      <div class="bio-sec-hd" style="margin-bottom:8px"><span>Modo personal</span><span>Sol y seguimiento</span></div>
+      <div class="chips" id="bioTrackMode" style="margin-bottom:12px">
+        <button type="button" class="chip" data-bm="female">Mujer</button>
+        <button type="button" class="chip on" data-bm="male">Hombre</button>
+      </div>
+      <div class="bio-sec-hd" style="margin-bottom:8px"><span>Módulos en Bienestar</span><span>Visibles</span></div>
+      <div class="chips" id="profModulesChips">
+        <button type="button" class="chip" data-mod="cycle">Ciclo</button>
+        <button type="button" class="chip on" data-mod="training">Calistenia</button>
+      </div>
+    </div>
+
     <button class="btn" id="saveProfileBtn" style="width:100%;margin-top:6px">Guardar cambios de perfil</button>
 
     <div style="margin-top:22px;padding-top:14px;border-top:1px solid var(--rule)">
@@ -3538,7 +3547,8 @@ summary::-webkit-details-marker{display:none}
             <div id="obError" role="alert" style="color:var(--crimson,#9E4738);font-size:11px;min-height:16px;margin-top:4px;"></div>
           </div>
 
-          <div class="cover-field" hidden>
+          <div class="cover-field">
+            <label><span>Tu modo</span><span>Mujer u Hombre</span></label>
             <div class="chips" id="obBioChoice">
               <button type="button" class="chip" data-obm="female">Mujer</button>
               <button type="button" class="chip on" data-obm="male">Hombre</button>
@@ -5418,7 +5428,7 @@ function switchMainView(vid){
   if(vid==='v-today'){}
   if(vid==='v-circle'){renderHomeCoRegulation();renderCircleFriends();updateCircleComposerYield()}
   if(vid==='v-clinic'){stats();hours(true);renderClinicalReport()}
-  if(vid==='v-profile'){syncProWifiSwitchUI();syncDevModeUI();}
+  if(vid==='v-profile'){syncProWifiSwitchUI();syncDevModeUI();syncModulesUI();document.querySelectorAll('#bioTrackMode .chip').forEach(c=>c.classList.toggle('on',c.dataset.bm===S.bioMode));}
   if(vid==='v-pubconfig'){syncProfileForm();renderSealsCarousel()}
 }
 function syncDevModeUI(){
@@ -9208,14 +9218,11 @@ function renderClueTrackList(){
     }else{
       drawer.hidden=false;
       drawer.style.gridColumn='1 / -1';
+      drawer.style.borderTop='none';
+      drawer.style.borderBottom='none';
       const cur=log[activeCat.id];
       const arr=Array.isArray(cur)?cur:(cur?[cur]:[]);
-      drawer.innerHTML=
-        '<div class="bento-drawer-hd">'+
-          '<strong>'+esc(activeCat.name)+' · <span style="font-weight:400;color:var(--muted);font-size:12.5px">'+esc(activeCat.sub)+'</span></strong>'+
-          '<button type="button" class="chip" id="closeBentoDrawerBtn" style="min-height:28px;padding:3px 10px;font-size:11px">Listo</button>'+
-        '</div>'+
-        '<div id="bentoDrawerChips"></div>';
+      drawer.innerHTML='<div id="bentoDrawerChips"></div>';
       const activeCard=list.querySelector('.bento-card.active');
       const activeRow=activeCard?activeCard.closest('.bento-row-3col'):null;
       const activeGroup=activeCard?activeCard.closest('.bento-dim-group'):null;
@@ -9756,7 +9763,7 @@ $('caliCalPrev').onclick=()=>{caliCalViewDate=new Date(caliCalViewDate.getFullYe
 $('caliCalNext').onclick=()=>{caliCalViewDate=new Date(caliCalViewDate.getFullYear(),caliCalViewDate.getMonth()+1,1);renderCaliCalendar()};
 
 function syncModulesUI(){
-  if(!S.modules||typeof S.modules!=='object')S.modules={cycle:false,training:false};
+  if(!S.modules||typeof S.modules!=='object')S.modules={cycle:S.bioMode==='female',training:S.bioMode==='male'};
   if($('femaleBioBlock'))$('femaleBioBlock').hidden=!S.modules.cycle;
   if($('maleBioBlock'))$('maleBioBlock').hidden=!S.modules.training;
   document.querySelectorAll('#bioModulesChips .chip,#profModulesChips .chip').forEach(c=>{
@@ -9776,6 +9783,9 @@ if($('clearLearnedBtn'))$('clearLearnedBtn').onclick=()=>{S.breathSessions=[];sa
 
 function applyBioTrackMode(mode){
   S.bioMode=(mode==='male')?'male':'female';
+  if(!S.modules||typeof S.modules!=='object')S.modules={cycle:false,training:false};
+  S.modules.cycle=(S.bioMode==='female');
+  S.modules.training=(S.bioMode==='male');
   document.querySelectorAll('#bioTrackMode .chip').forEach(c=>c.classList.toggle('on',c.dataset.bm===S.bioMode));
   syncModulesUI();
   const bioTab=document.querySelector('#todaySubTabs .tab[data-sub="sub-journal"]');
