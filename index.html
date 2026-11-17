@@ -758,8 +758,12 @@ body.co-sync-screen #coFirefliesOverlay{opacity:1}
 #lecturaReaderBody,.wavy-echo{user-select:none;-webkit-user-select:none}
 .lectura-p{cursor:pointer;border-radius:8px;padding:4px 6px;margin:0 -6px 14px !important;transition:background .18s ease}
 .lectura-p.hl{background:rgba(242,206,118,0.34)}
-.sun-pillars-bar{margin-top:12px;text-align:left}
-.sun-pillars-hd{display:flex;justify-content:space-between;align-items:baseline;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:8px}
+.sun-pillars-bar{margin-top:18px;padding-top:10px;border-top:none;text-align:left}
+.sun-pillars-hd{display:flex;justify-content:space-between;align-items:baseline;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:8px}
+.sun-pillars-hd b{font-family:var(--serif);font-size:18px;font-weight:500;color:var(--ink);letter-spacing:0;text-transform:none}
+.sun-pillars-track{position:relative;height:6px;border-radius:999px;background:rgba(128,128,128,0.16);overflow:hidden;margin:2px 0 8px}
+.sun-pillars-fill{height:100%;width:0%;border-radius:999px;background:var(--ink);transition:width .35s cubic-bezier(.2,.8,.2,1)}
+.sun-pillars-ticks{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:10px}
 .sun-pillars-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
 .sun-pillar-btn{border:1px solid var(--rule);background:transparent;color:var(--muted);border-radius:999px;min-height:32px;padding:4px 4px;font-size:10.5px;font-family:var(--sans);font-weight:600;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;transition:all .18s ease}
 .sun-pillar-btn.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
@@ -839,19 +843,38 @@ input[type=range]{width:100%;accent-color:var(--crimson);cursor:pointer;min-heig
 }
 .sea-fs-btn:hover{background:rgba(15,23,36,0.58);transform:scale(1.06)}
 .sea-fs-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-html:has(body.coast-fullscreen),body.coast-fullscreen{overflow:hidden !important;background:#000 !important;margin:0 !important;padding:0 !important;width:100vw !important;height:100dvh !important}
+html:has(body.coast-fullscreen),body.coast-fullscreen{overflow:hidden !important;background:var(--fs-bg,#122238) !important;margin:0 !important;padding:0 !important;width:100vw !important;height:100dvh !important}
 body.coast-fullscreen > *:not(#seab){display:none !important}
 body.coast-fullscreen > #seab{
   display:block !important;
   position:fixed !important;inset:0 !important;
   z-index:9999 !important;border-radius:0 !important;margin:0 !important;padding:0 !important;
   width:100vw !important;height:100dvh !important;max-width:none !important;max-height:none !important;
-  border:none !important;box-shadow:none !important;
+  border:none !important;box-shadow:none !important;background:var(--fs-bg,#122238) !important;
 }
 body.coast-fullscreen > #seab #sea,
 body.coast-fullscreen > #seab #breathLayer{width:100% !important;height:100% !important;display:block}
 body.coast-fullscreen > #seab .sea-fs-btn{top:max(12px, env(safe-area-inset-top, 12px));right:max(12px, env(safe-area-inset-right, 12px))}
 body.coast-fullscreen > #seab .gauge{left:max(16px, env(safe-area-inset-left, 16px));top:max(14px, env(safe-area-inset-top, 14px))}
+html:has(body.sun-fullscreen),body.sun-fullscreen{overflow:hidden !important;background:var(--sun-fs-bg,#1A0F0A) !important;margin:0 !important;padding:0 !important;width:100vw !important;height:100dvh !important}
+body.sun-fullscreen > *:not(#flameStage){display:none !important}
+body.sun-fullscreen > #flameStage{
+  display:block !important;
+  position:fixed !important;inset:0 !important;
+  z-index:9999 !important;border-radius:0 !important;margin:0 !important;padding:0 !important;
+  width:100vw !important;height:100dvh !important;max-width:none !important;max-height:none !important;
+  border:none !important;box-shadow:none !important;background:var(--sun-fs-bg,#1A0F0A) !important;
+}
+body.sun-fullscreen > #flameStage #flameCanvas{width:100% !important;height:100% !important;display:block}
+body.sun-fullscreen > #flameStage .sea-fs-btn{top:max(12px, env(safe-area-inset-top, 12px));right:max(12px, env(safe-area-inset-right, 12px))}
+body.sun-fullscreen > #flameStage .sun-stage-pct{left:max(16px, env(safe-area-inset-left, 16px));top:max(14px, env(safe-area-inset-top, 14px))}
+body.sun-fullscreen > #flameStage .coast-fs-dock{bottom:max(18px, env(safe-area-inset-bottom, 18px));left:50%;transform:translateX(-50%)}
+.sun-design-panel{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.34);background:linear-gradient(135deg,rgba(20,24,32,0.48),rgba(20,24,32,0.28));backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);box-shadow:0 8px 24px rgba(0,0,0,0.22)}
+.sun-design-pill{border:1px solid rgba(255,255,255,0.26);background:rgba(255,255,255,0.08);color:#fff;border-radius:999px;min-height:30px;padding:4px 11px;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .16s ease}
+.sun-design-pill.on{background:rgba(255,255,255,0.92);color:#1C1917;border-color:rgba(255,255,255,0.95)}
+.sun-design-pill .sun-pro-tag{font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.82;padding:1px 5px;border-radius:999px;border:1px solid currentColor}
+.sun-dream-fade{transition:opacity .7s ease, filter .7s ease}
+.sun-dream-fade.fading{opacity:0.22;filter:blur(8px)}
 .coast-fs-dock{
   display:flex;position:absolute;bottom:12px;left:50%;transform:translateX(-50%);
   z-index:20;flex-direction:column-reverse;align-items:center;gap:8px;width:max-content;max-width:calc(100% - 20px);
@@ -1636,7 +1659,7 @@ body.public-view .pub-view.on{display:block}
   text-shadow:0 1px 14px rgba(0,0,0,0.42);pointer-events:none;
 }
 .sun-stage-decay{
-  position:absolute;right:14px;top:14px;z-index:4;
+  position:absolute;right:54px;top:14px;z-index:4;
   padding:6px 12px;border-radius:999px;
   background:rgba(15,23,36,0.34);
   backdrop-filter:blur(10px) saturate(140%);
@@ -2606,12 +2629,12 @@ summary::-webkit-details-marker{display:none}
 
     <!-- SUB-PANEL 1A: HÁBITO Y BATERÍA + FLUJO SOS -->
     <section class="panel card habits-hidden habits-collapsed" id="sub-habit">
-      <div class="sl" style="margin-top:0;margin-bottom:26px;padding-bottom:8px">
-        <label><span>Mi razón de hoy</span></label>
+      <div class="sl" style="margin-top:0;margin-bottom:22px;padding-top:0;padding-bottom:6px">
+        <label style="margin-bottom:10px"><span>¿Por qué te cuidas hoy?</span></label>
         <div class="chips" id="loss"></div>
       </div>
 
-      <div class="hd">
+      <div class="hd" style="margin-bottom:10px">
         <span>Mi hábito por construir <button type="button" class="arrow-q" id="habitExpandBtn" aria-label="Expandir o contraer hábitos" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button> <button type="button" class="eye-q" id="habitEyeBtn" aria-label="Mostrar u ocultar hábitos" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.8"/><path d="M4 20L20 4"/></svg></button> <button type="button" class="help-q" data-help="helpHabit" aria-label="Ayuda sobre hábitos">?</button></span>
         <span id="proStatusBadge" hidden></span>
       </div>
@@ -2628,20 +2651,15 @@ summary::-webkit-details-marker{display:none}
         </div>
       </div>
 
-      <div class="first-day-guide" id="firstDayGuide" hidden>
-        <div class="first-day-guide-hd">
-          <span>Empieza en 1 minuto</span>
-          <button type="button" class="first-day-guide-close" id="dismissGuideBtn" aria-label="Ocultar guía">Entendido ×</button>
-        </div>
-        <div class="first-day-steps">
-          <button type="button" class="first-day-step" id="guideStep1"><small>1 · Elige</small><b>Qué regulas hoy</b></button>
-          <button type="button" class="first-day-step" id="guideStep2"><small>2 · Respira</small><b>2 min en Costa</b></button>
-          <button type="button" class="first-day-step" id="guideStep3"><small>3 · Registra</small><b>Cómo te sientes</b></button>
-        </div>
+      <div class="read" style="margin-top:8px">
+        <div class="big"><span id="pct">0.0</span><small>%</small></div>
+        <div class="sub"><strong>Día <span id="days">0</span> / 90</strong></div>
       </div>
+      <div class="bar"><div class="fill" id="fill"></div></div>
+      <div class="marks" id="marks"></div>
 
-      <div class="sl" id="habitHonestyBox" style="margin-top:4px;margin-bottom:16px">
-        <label><span>¿Cómo estuviste hoy con tu propósito?</span><span id="habitHonestyStateLbl" style="color:var(--ok);font-weight:600"></span></label>
+      <div class="sl" id="habitHonestyBox" style="margin-top:14px;margin-bottom:16px">
+        <label style="margin-bottom:10px"><span>¿Cómo estuviste hoy con tu propósito?</span><span id="habitHonestyStateLbl" style="color:var(--ok);font-weight:600"></span></label>
         <div class="chips" id="habitHonestyChips" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
           <button type="button" class="chip" data-hh="fluyo" style="min-height:38px;padding:6px 6px;font-size:12px">Fluyó</button>
           <button type="button" class="chip" data-hh="costo" style="min-height:38px;padding:6px 6px;font-size:12px">Costó, seguí</button>
@@ -2649,13 +2667,6 @@ summary::-webkit-details-marker{display:none}
         </div>
         <p id="habitHonestyMsg" hidden style="font-family:var(--serif);font-style:italic;font-size:13.5px;color:var(--muted);line-height:1.45;margin-top:8px"></p>
       </div>
-
-      <div class="read">
-        <div class="big"><span id="pct">0.0</span><small>%</small></div>
-        <div class="sub"><strong>Día <span id="days">0</span> / 90</strong></div>
-      </div>
-      <div class="bar"><div class="fill" id="fill"></div></div>
-      <div class="marks" id="marks"></div>
       <div class="clock" id="dayClockBox"><b id="cd">--:--:--</b><span>Falta hoy</span><i id="cdb"></i></div>
       <div class="sig" id="sigbox">
         <div class="m"><span id="sm"></span><span id="sback" style="color:var(--muted)"></span></div>
@@ -3016,34 +3027,42 @@ summary::-webkit-details-marker{display:none}
       </div>
     </section>
 
-    <!-- SUB-PANEL 2B: CONSTANCIA (TU SOL VIVO Y PRÁCTICAS VERIFICADAS) -->
+    <!-- SUB-PANEL 2B: CONSTANCIA (TU SOL VIVO Y PRÁCTICA DIARIA) -->
     <section class="panel card" id="sub-flame">
       <div class="pd" id="pd">
-        <div class="flame-stage" id="flameStage">
+        <div class="flame-stage sun-dream-fade" id="flameStage">
           <canvas id="flameCanvas" width="700" height="860" aria-label="Tu sol vivo"></canvas>
           <div class="sun-stage-pct" id="sunStagePct">65%</div>
-          <div class="sun-stage-decay" id="pebDecayCountdown">-2%</div>
-          <button type="button" class="coast-fs-toggle" id="sunTrailerBtn" aria-label="Ver evolución completa del sol en 30 segundos" title="Ver evolución 5% → 100% (30 s)" style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:4;width:38px;height:38px;border-radius:50%;padding:0">
-            <svg id="sunTrailerIco" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;display:block" aria-hidden="true"><polygon points="7 5 19 12 7 19 7 5"/></svg>
+          <div class="sun-stage-decay" id="pebDecayCountdown">-0.5%</div>
+          <button type="button" class="sea-fs-btn" id="sunFsBtn" aria-label="Pantalla completa del sol" title="Pantalla completa">
+            <svg class="w-ico sm" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
           </button>
+          <div class="coast-fs-dock" id="sunGlassDock">
+            <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:nowrap">
+              <button type="button" class="coast-fs-toggle" id="sunTrailerBtn" aria-label="Ver evolución completa del sol" title="Ver evolución 5% → 100%">
+                <svg id="sunTrailerIco" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;display:block" aria-hidden="true"><polygon points="7 5 19 12 7 19 7 5"/></svg>
+              </button>
+              <button type="button" class="coast-fs-toggle" id="sunDesignBtn" aria-expanded="false" aria-label="Elegir diseño de Sol" title="Diseño del sol">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M2.5 12H5M19 12h2.5M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+              </button>
+            </div>
+            <div class="sun-design-panel" id="sunDesignPanel" hidden></div>
+          </div>
         </div>
-        <div id="pebVesselBar" class="peb-vessel-sheet" hidden></div>
         <div class="sun-pillars-bar" id="sunPillarsBar">
           <div class="sun-pillars-hd">
-            <span id="sunPillarsTitle">Tu práctica de hoy · 0/5</span>
-            <span id="sunShieldBadge" style="color:var(--gold);text-transform:none;letter-spacing:0"></span>
+            <span>Tu práctica de hoy <em id="sunShieldBadge" style="font-style:normal;color:var(--gold);text-transform:none;letter-spacing:0;margin-left:6px"></em></span>
+            <b id="sunPillarsVal">0/5</b>
           </div>
+          <div class="sun-pillars-track" aria-hidden="true"><div class="sun-pillars-fill" id="sunPillarsFill"></div></div>
+          <div class="sun-pillars-ticks"><span>0/5 Inicio</span><span>3/5 Constante</span><span>5/5 Sol pleno</span></div>
           <div class="sun-pillars-grid" id="sunPillarsGrid"></div>
-        </div>
-        <div class="peb-actions" hidden>
-          <button class="btn" id="pb">Avivar sol</button>
-          <button class="btn soft" id="wd">Enviar luz</button>
         </div>
       </div>
 
       <div id="devFlameBar" hidden style="margin:10px 0 16px;padding:10px 12px;border:1px dashed var(--rule);border-radius:16px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600">
-          <span>Vista desarrollador · 6 llamas</span>
+          <span>Vista desarrollador · 6 soles</span>
           <span id="devFlamePctLbl" style="color:var(--ink)">65%</span>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
@@ -3054,11 +3073,6 @@ summary::-webkit-details-marker{display:none}
         </div>
         <div id="devFlameGrid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px"></div>
       </div>
-
-      <div class="hd" style="margin-top:8px"><span>Prácticas breves con cronómetro (60 s)</span><span>Encienden tu llama</span></div>
-      <button class="q" data-q="g"><div><strong>Arraigo corporal (Grounding)</strong><small>Pies firmes en el piso, rodillas suaves y respiración abdominal durante 60 s.</small></div><span id="qBadge_g">Iniciar 60s</span></button>
-      <button class="q" data-q="c"><div><strong>Cambio térmico consciente</strong><small>Agua fresca en rostro o muñecas durante 60 s para bajar la reactividad.</small></div><span id="qBadge_c">Iniciar 60s</span></button>
-      <button class="q" data-q="p"><div><strong>Pausa de presencia sin pantalla</strong><small>Mirar por la ventana o cerrar los ojos 60 s sin estímulos digitales.</small></div><span id="qBadge_p">Iniciar 60s</span></button>
     </section>
   </div>
 
@@ -3214,11 +3228,10 @@ summary::-webkit-details-marker{display:none}
           <span class="cmd-state-pill" id="pulsoScoreState">En sintonía</span>
         </div>
         <div>
-          <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ok);font-weight:600">Tu lectura de hoy</div>
-          <h3 id="pulsoHeadline" style="font-family:var(--serif);font-size:21px;font-weight:500;line-height:1.2;margin:4px 0 6px">Tu mente y tu cuerpo están en armonía hoy</h3>
-          <p id="pulsoSubline" style="font-size:12.5px;color:var(--muted);line-height:1.45">Refleja tus emociones y lo que registraste en Cuerpo, Mente y Vínculo hoy.</p>
+          <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ok);font-weight:600">Pulso de claridad</div>
+          <h3 id="pulsoHeadline" style="font-family:var(--serif);font-size:21px;font-weight:500;line-height:1.2;margin:4px 0 10px">Tu mapa en tiempo real</h3>
           <div class="cmd-kpis">
-            <div class="cmd-kpi"><small>Emoción de hoy</small><b id="cs1">—</b></div>
+            <div class="cmd-kpi"><small>Emoción</small><b id="cs1">—</b></div>
             <div class="cmd-kpi"><small>Cuerpo</small><b id="cs3">—</b></div>
             <div class="cmd-kpi"><small>Mente</small><b id="cs2">—</b></div>
             <div class="cmd-kpi"><small>Vínculo</small><b id="pulsoBestWindow">—</b></div>
@@ -3227,25 +3240,45 @@ summary::-webkit-details-marker{display:none}
         </div>
       </div>
 
-      <!-- LECTURAS PARA HOY (4 ENSAYOS: 2 DE ACOMPAÑAMIENTO + 2 DE CAMBIO DE ESTADO) -->
-      <div id="clarityReadingBox" style="margin-top:14px">
-        <div class="bio-sec-hd"><span>Lecturas para hoy</span><span style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0">Wavy Editorial</span></div>
-        <div id="clarityEssayList"></div>
-        <p id="clarityEssayHint" style="font-size:12.5px;color:var(--muted);line-height:1.45;margin-top:8px" hidden></p>
-      </div>
-
-      <!-- NOTA PERSONAL DE EQUILIBRIO -->
-      <div style="margin-top:14px;padding:14px 0 16px;background:transparent;border:none;border-bottom:1px solid var(--rule);border-radius:0;box-shadow:none">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-          <span style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ok);font-weight:600">Tu nota de equilibrio</span>
-          <button type="button" class="btn ghost" id="magicSummaryBtn" style="min-height:34px;padding:5px 12px;font-size:11px;border-radius:20px">Copiar nota</button>
+      <!-- GRÁFICA 1: EQUILIBRIO CUERPO · MENTE · VÍNCULO -->
+      <div class="cmd-chart-box" style="margin-top:14px">
+        <div class="cmd-chart-hd">
+          <div>
+            <strong>Equilibrio Cuerpo · Mente · Vínculo</strong>
+            <p style="font-size:12px;color:var(--muted);margin-top:2px">Comparativa visual de tus tres dimensiones</p>
+          </div>
+          <span id="clarityDimsBadge">Hoy</span>
         </div>
-        <p id="magicSummaryTxt" style="font-family:var(--serif);font-size:16.5px;line-height:1.55;color:var(--ink)"></p>
+        <svg class="cmd-svg" id="clarityDimsChart" viewBox="0 0 440 138" preserveAspectRatio="none" role="img" aria-label="Equilibrio de Cuerpo, Mente y Vínculo"></svg>
       </div>
 
-      <!-- SECCIÓN EXPANDIBLE: EFECTO DE PAUSAS, RITUALES, CAMINO DE 90 DÍAS Y REPORTE -->
+      <!-- GRÁFICA 2: MAPA EMOCIONAL RECIENTE -->
+      <div class="cmd-chart-box" style="margin-top:14px">
+        <div class="cmd-chart-hd">
+          <div>
+            <strong>Mapa emocional reciente</strong>
+            <p style="font-size:12px;color:var(--muted);margin-top:2px">Emociones más presentes en tus registros</p>
+          </div>
+          <span id="clarityMoodsBadge">Últimos días</span>
+        </div>
+        <svg class="cmd-svg" id="clarityMoodsChart" viewBox="0 0 440 138" preserveAspectRatio="none" role="img" aria-label="Frecuencia de emociones"></svg>
+      </div>
+
+      <!-- GRÁFICA 3: CORRELACIONES REALES -->
+      <div class="cmd-chart-box" style="margin-top:14px">
+        <div class="cmd-chart-hd">
+          <div>
+            <strong>Correlaciones reales</strong>
+            <p style="font-size:12px;color:var(--muted);margin-top:2px">Lo que más mueve tu calma y tu energía</p>
+          </div>
+          <span id="clarityHabitBadge">Constancia</span>
+        </div>
+        <div id="clarityCorrGrid" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:8px"></div>
+      </div>
+
+      <!-- SECCIÓN EXPANDIBLE: EFECTO DE PAUSAS, CAMINO DE 90 DÍAS Y REPORTE PDF -->
       <details style="margin-top:14px">
-        <summary><span>Más gráficas, rituales y reporte PDF</span><span style="white-space:nowrap;flex-shrink:0">Abrir ▾</span></summary>
+        <summary><span>Pausas, camino de 90 días y reporte PDF</span><span style="white-space:nowrap;flex-shrink:0">Abrir ▾</span></summary>
         <div style="margin-top:14px">
           <!-- GRÁFICA 2: EL EFECTO DE TUS PAUSAS -->
           <div class="cmd-chart-box">
@@ -3858,22 +3891,15 @@ summary::-webkit-details-marker{display:none}
           </div>
         </div>
       </div>
-      <div class="ext-mini-peb">
-        <small style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)">Pebetero</small>
-        <svg viewBox="0 0 120 150" aria-hidden="true">
-          <circle cx="60" cy="72" r="48" fill="#F6CFB2" opacity=".35"/>
-          <path d="M30 103 C30 124 41 137 60 137 C79 137 90 124 90 103 Z" fill="#E9DFD2" stroke="#BFAE9A" stroke-opacity=".5" stroke-width="1"/>
-          <ellipse cx="60" cy="103" rx="30" ry="5.2" fill="#F4ECE2"/>
-          <ellipse cx="60" cy="103" rx="25.5" ry="3.6" fill="#FBF6EF"/>
-          <g id="extMiniFlame" style="transform-origin:60px 97px">
-            <path class="f1" d="M60 97 C44 93 44 72 60 42 C76 72 76 93 60 97Z" fill="#EDB396"/>
-            <path class="f2" d="M60 97 C50 94 50 78 60 56 C70 78 70 94 60 97Z" fill="#F8D7BC"/>
-            <path class="f3" d="M60 97 C55 95 55 87 60 74 C65 87 65 95 60 97Z" fill="#FFF8EE"/>
-          </g>
-        </svg>
+      <div class="ext-mini-peb" id="extMiniSunCard" style="background:linear-gradient(155deg,#26130E,#472017);color:#FBF6EF;border-color:rgba(255,255,255,0.12)">
+        <small style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(251,246,239,0.72)">Sol vivo</small>
+        <div style="width:76px;height:76px;border-radius:50%;display:grid;place-items:center;position:relative;margin:8px 0">
+          <div id="extMiniSunHalo" style="position:absolute;inset:-8px;border-radius:50%;background:radial-gradient(circle,rgba(243,195,112,0.52) 0%,rgba(243,195,112,0) 70%)"></div>
+          <div id="extMiniSunDisc" style="width:46px;height:46px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#FFF7DF,#E69A3A 72%,#C85A28);box-shadow:0 0 24px rgba(243,195,112,0.55);transition:transform .4s ease"></div>
+        </div>
         <div style="text-align:center">
-          <b id="extFlamePct" style="font-family:var(--serif);font-size:19px">78%</b>
-          <small id="extFlameState" style="display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.85">Encendido</small>
+          <b id="extFlamePct" style="font-family:var(--serif);font-size:19px;color:#FFF8EE">78%</b>
+          <small id="extFlameState" style="display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(251,246,239,0.78)">Constante</small>
         </div>
       </div>
     </div>
@@ -3886,8 +3912,8 @@ summary::-webkit-details-marker{display:none}
 
     <div class="rep" id="extVigilBox" hidden style="margin-bottom:12px;border-color:var(--gold)">
       <div>
-        <span><b>Vela de Vigilia (Wavy Pro)</b> · Proteger nuestro pacto hoy</span>
-        <button class="btn gold" id="buyVigilBtn" style="min-height:36px;padding:6px 12px;font-size:11px">Encender Vigilia</button>
+        <span><b>Sostener su Sol (Wavy Pro)</b> · Congela su descenso hoy</span>
+        <button class="btn gold" id="buyVigilBtn" style="min-height:36px;padding:6px 12px;font-size:11px">Sostener Sol</button>
       </div>
     </div>
 
@@ -3895,7 +3921,7 @@ summary::-webkit-details-marker{display:none}
     <div class="rep" id="extClinBox" hidden style="margin-bottom:12px"></div>
 
     <div class="row" style="grid-template-columns:1fr 1fr;margin-bottom:8px" id="extActionRow">
-      <button class="btn" id="extPrimaryAction">Avivar su pebetero</button>
+      <button class="btn" id="extPrimaryAction">Sostener su sol</button>
       <button class="btn ghost" id="extSecondaryAction">Despejar su cielo</button>
     </div>
     <button class="btn gold" id="extCoBreathBtn" style="width:100%;margin-bottom:8px">
@@ -7669,13 +7695,93 @@ function renderPulsoCommandCenter(){
   }
   if($('pulsoScoreVal'))$('pulsoScoreVal').textContent=R.score===null?'—':R.score;
   if($('pulsoScoreState'))$('pulsoScoreState').textContent=R.state;
-  if($('pulsoHeadline'))$('pulsoHeadline').textContent=R.title;
-  if($('pulsoSubline'))$('pulsoSubline').textContent=R.body;
+  if($('pulsoHeadline'))$('pulsoHeadline').textContent='Tu mapa en tiempo real';
   if($('cs1'))$('cs1').textContent=R.moodWord;
   if($('cs3'))$('cs3').textContent=R.bodyWord;
   if($('cs2'))$('cs2').textContent=R.mindWord;
   if($('pulsoBestWindow'))$('pulsoBestWindow').textContent=R.bondWord;
-  renderClarityEssays();
+
+  /* GRÁFICA 1: EQUILIBRIO CUERPO · MENTE · VÍNCULO */
+  const dimsSvg=$('clarityDimsChart');
+  if(dimsSvg){
+    const dScores=[
+      {label:'Cuerpo',val:R.bodyScore!=null?R.bodyScore:68,col:'#7A9A82',word:R.bodyWord||'—'},
+      {label:'Mente',val:R.mindScore!=null?R.mindScore:64,col:'#5F87A8',word:R.mindWord||'—'},
+      {label:'Vínculo',val:R.bondScore!=null?R.bondScore:72,col:'#C4826E',word:R.bondWord||'—'}
+    ];
+    if($('clarityDimsBadge'))$('clarityDimsBadge').textContent=R.score!==null?(R.score+' pts'):'Base';
+    const W=440,H=138,leftPad=76,barMax=270;
+    let out='';
+    dScores.forEach((d,i)=>{
+      const y=22+i*38;
+      const pct=Math.max(8,Math.min(100,Math.round(d.val)));
+      const bw=Math.round((pct/100)*barMax);
+      out+=
+        '<text x="12" y="'+(y+14)+'" font-size="12" font-weight="600" fill="var(--ink)">'+d.label+'</text>'+
+        '<rect x="'+leftPad+'" y="'+y+'" width="'+barMax+'" height="18" rx="9" fill="rgba(128,128,128,0.12)"/>'+
+        '<rect x="'+leftPad+'" y="'+y+'" width="'+bw+'" height="18" rx="9" fill="'+d.col+'"/>'+
+        '<text x="'+(leftPad+barMax+10)+'" y="'+(y+13)+'" font-size="11.5" font-weight="600" fill="var(--muted)">'+pct+'%</text>';
+    });
+    dimsSvg.innerHTML=out;
+  }
+
+  /* GRÁFICA 2: MAPA EMOCIONAL RECIENTE */
+  const moodsSvg=$('clarityMoodsChart');
+  if(moodsSvg){
+    const counts={};
+    (S.notes||[]).slice(0,30).forEach(n=>{
+      const arr=Array.isArray(n.moods)&&n.moods.length?n.moods:(n.estado?[n.estado]:[]);
+      arr.forEach(m=>{if(m)counts[m]=(counts[m]||0)+1;});
+    });
+    let topMoods=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    if(!topMoods.length){
+      topMoods=[['Quietud',3],['Calma',2],['Enfoque',2],['Gratitud',1]];
+    }
+    if($('clarityMoodsBadge'))$('clarityMoodsBadge').textContent=(S.notes&&S.notes.length)?(Math.min(30,S.notes.length)+' reg.'):'Inicio';
+    const maxC=Math.max(1,...topMoods.map(x=>x[1]));
+    const W=440,baseY=108,maxH=66,slotW=(W-36)/topMoods.length;
+    const cols=['#D68C59','#7A9A82','#5F87A8','#B8869C','#C2A068'];
+    let mOut='<line x1="18" y1="'+baseY+'" x2="'+(W-18)+'" y2="'+baseY+'" stroke="var(--rule)"/>';
+    topMoods.forEach(([name,cnt],i)=>{
+      const cx=18+slotW*i+slotW*0.5;
+      const bh=Math.max(16,Math.round((cnt/maxC)*maxH));
+      mOut+=
+        '<rect x="'+(cx-14).toFixed(1)+'" y="'+(baseY-bh)+'" width="28" height="'+bh+'" rx="8" fill="'+cols[i%cols.length]+'" opacity="0.88"/>'+
+        '<text x="'+cx.toFixed(1)+'" y="'+(baseY-bh-6)+'" font-size="11.5" font-weight="600" text-anchor="middle" fill="var(--ink)">'+cnt+'</text>'+
+        '<text x="'+cx.toFixed(1)+'" y="'+(baseY+17)+'" font-size="11" text-anchor="middle" fill="var(--muted)">'+esc(name.slice(0,10))+'</text>';
+    });
+    moodsSvg.innerHTML=mOut;
+  }
+
+  /* GRÁFICA 3: CORRELACIONES REALES */
+  const corrGrid=$('clarityCorrGrid');
+  if(corrGrid){
+    const checks=S.habitChecks||{};
+    const vals=Object.values(checks);
+    const fluyo=vals.filter(v=>v==='fluyo').length;
+    const costo=vals.filter(v=>v==='costo').length;
+    const totalChk=vals.length;
+    const sustainRate=totalChk?Math.round(((fluyo+costo)/totalChk)*100):0;
+    const solPct=Math.round(fuel());
+    const pausesCnt=(S.trigLogs||[]).length;
+    const tl=getTodayClueLog();
+    const sleepStr=tl.sleep||'Sin registrar';
+    const waterStr=tl.water||'Sin registrar';
+    if($('clarityHabitBadge'))$('clarityHabitBadge').textContent=solPct+'% Sol';
+    const cards=[
+      {k:'Constancia honesta',v:totalChk?(sustainRate+'%'):'Día '+(S.days||1),sub:totalChk?(fluyo+' fluyó · '+costo+' siguió'):'Registra tu propósito en Hábito'},
+      {k:'Sueño hoy',v:sleepStr.replace('Menos de ','<'),sub:'Base directa de claridad mental'},
+      {k:'Hidratación',v:waterStr,sub:'Impacto en energía de tarde'},
+      {k:'Pausas en Costa',v:pausesCnt+' pausas',sub:'Regulación acumulada del mes'}
+    ];
+    corrGrid.innerHTML=cards.map(c=>
+      '<div style="padding:10px 12px;border:1px solid var(--rule);border-radius:14px;background:rgba(255,255,255,0.45)">'+
+        '<small style="display:block;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600">'+esc(c.k)+'</small>'+
+        '<b style="display:block;font-family:var(--serif);font-size:18px;font-weight:500;color:var(--ink);margin:3px 0 2px">'+esc(c.v)+'</b>'+
+        '<span style="display:block;font-size:11.5px;color:var(--muted);line-height:1.3">'+esc(c.sub)+'</span>'+
+      '</div>'
+    ).join('');
+  }
 
   const heroBtn=$('pulsoHeroActionBtn');
   if(heroBtn){
@@ -8549,8 +8655,13 @@ function renderOceanCanvas(ctx,w,h,a,ts,dt,isMainCanvas){
     ribbonStorm=[236,238,244];
   }
 
+  const topCol=rgb(mix(skyTopCalm,skyTopStorm,a));
+  if(isMainCanvas && document.documentElement.dataset.fsBg!==topCol){
+    document.documentElement.dataset.fsBg=topCol;
+    document.documentElement.style.setProperty('--fs-bg',topCol);
+  }
   const skyGrad=ctx.createLinearGradient(0,0,0,hz);
-  skyGrad.addColorStop(0,rgb(mix(skyTopCalm,skyTopStorm,a)));
+  skyGrad.addColorStop(0,topCol);
   skyGrad.addColorStop(0.55,rgb(mix(skyMidCalm,skyMidStorm,a)));
   skyGrad.addColorStop(1,rgb(mix(skyHzCalm,skyHzStorm,a)));
   ctx.fillStyle=skyGrad;
@@ -11118,7 +11229,7 @@ const SUN_PILLARS=[
   {key:'habit',label:'Hábito',go:()=>{switchMainView('v-today');const t=document.querySelector('#todaySubTabs [data-sub="sub-habit"]');if(t)t.click();}},
   {key:'breath',label:'Calma',go:()=>{switchMainView('v-breathe');const t=document.querySelector('#coastSubTabs [data-csub="coast-sea"]');if(t)t.click();}},
   {key:'note',label:'Notas',go:()=>{switchMainView('v-circle');if(typeof switchCircleTab==='function')switchCircleTab('feed');}},
-  {key:'reflect',label:'Leer/Escr.',go:()=>{switchMainView('v-circle');if(typeof switchCircleTab==='function')switchCircleTab('diary');}}
+  {key:'reflect',label:'Reflexión',go:()=>{switchMainView('v-circle');if(typeof switchCircleTab==='function')switchCircleTab('diary');}}
 ];
 function ensureDailyPillars(){
   const td=today();
@@ -11169,11 +11280,12 @@ function markPillarDone(key,toastMsg){
 }
 function renderSunPillarsBar(){
   ensureDailyPillars();
-  const grid=$('sunPillarsGrid'),title=$('sunPillarsTitle'),sh=$('sunShieldBadge');
+  const grid=$('sunPillarsGrid'),val=$('sunPillarsVal'),fill=$('sunPillarsFill'),sh=$('sunShieldBadge');
   if(!grid)return;
   const doneMap=S.dailyPillars.done||{};
   const count=SUN_PILLARS.filter(p=>doneMap[p.key]).length;
-  if(title)title.textContent='Tu práctica de hoy · '+count+'/5';
+  if(val)val.textContent=count+'/5';
+  if(fill)fill.style.width=Math.round((count/5)*100)+'%';
   if(sh){
     sh.textContent=(S.sunShieldDate===today())?('Sostenido'+(S.sunShieldBy?' por '+S.sunShieldBy:'')):'';
   }
@@ -11262,7 +11374,7 @@ const PEB_VESSELS={
 function pebDefaultVessel(){return S.bioMode==='female'?'cuarzo':'ambar';}
 let pebBarMode='';
 function renderPebVesselBar(){
-  const bar=$('pebVesselBar');if(!bar)return;
+  const bar=$('sunDesignPanel');if(!bar)return;
   const mode=S.bioMode==='female'?'female':'male';
   if(pebBarMode===mode && bar.children.length)return;
   pebBarMode=mode;
@@ -11270,8 +11382,8 @@ function renderPebVesselBar(){
   Object.entries(PEB_VESSELS).forEach(([k,cfg])=>{
     if(cfg.mode!==mode)return;
     const b=document.createElement('button');
-    b.type='button';b.className='peb-vessel-btn';b.dataset.vessel=k;
-    b.innerHTML='<i class="v-gem" aria-hidden="true"></i><span>'+esc(cfg.short)+'</span>'+(cfg.pro?'<em class="v-pro">Pro</em>':'');
+    b.type='button';b.className='sun-design-pill';b.dataset.vessel=k;
+    b.innerHTML='<span>'+esc(cfg.title)+'</span>'+(cfg.pro?'<em class="sun-pro-tag">Pro</em>':'');
     bar.appendChild(b);
   });
 }
@@ -11290,8 +11402,9 @@ function renderPebVesselArt(){
   activeFlameMotion=cfg.motion||PEB_VESSELS.ambar.motion;
   renderPebVesselBar();
   if($('pd'))$('pd').style.setProperty('--relic',cfg.relic||'#D68232');
+  document.documentElement.style.setProperty('--sun-fs-bg',(cfg.pal&&cfg.pal.bg)||'#1A0F0A');
   if($('pebVesselTitle'))$('pebVesselTitle').textContent=cfg.title;
-  document.querySelectorAll('#pebVesselBar .peb-vessel-btn').forEach(b=>{
+  document.querySelectorAll('#sunDesignPanel .sun-design-pill').forEach(b=>{
     b.classList.toggle('on',b.dataset.vessel===vKey);
   });
   document.querySelectorAll('#devFlameGrid [data-dev-flame]').forEach(b=>{
@@ -12411,9 +12524,13 @@ function startFlameAnim(){
 
 /* Trailer de 30 segundos (5% → 100%) desde botón liquid glass */
 let sunTrailerTimer=0,sunTrailerOn=false;
+let sunHoldTimeout=0,sunFadeTimeout=0;
 function stopSunTrailer(){
   sunTrailerOn=false;
   if(sunTrailerTimer){clearInterval(sunTrailerTimer);sunTrailerTimer=0;}
+  if(sunHoldTimeout){clearTimeout(sunHoldTimeout);sunHoldTimeout=0;}
+  if(sunFadeTimeout){clearTimeout(sunFadeTimeout);sunFadeTimeout=0;}
+  const stg=$('flameStage');if(stg)stg.classList.remove('fading');
   devFlameOverridePct=null;
   if($('sunTrailerIco'))$('sunTrailerIco').innerHTML='<polygon points="7 5 19 12 7 19 7 5"/>';
 }
@@ -12422,38 +12539,96 @@ if($('sunTrailerBtn')){
     if(sunTrailerOn){stopSunTrailer();return;}
     sunTrailerOn=true;
     const tStart=performance.now();
-    const DUR=30000;
+    const DUR=12000;
     devFlameOverridePct=5;flamePctSmooth=5;
     if($('sunTrailerIco'))$('sunTrailerIco').innerHTML='<rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/>';
     startFlameAnim();
     sunTrailerTimer=setInterval(()=>{
       if(!sunTrailerOn){stopSunTrailer();return;}
       const el=performance.now()-tStart;
-      const frac=Math.min(1,el/DUR);
-      const pct=5+95*frac;
-      devFlameOverridePct=pct;
-      if(frac>=1){
+      const raw=Math.min(1,el/DUR);
+      /* Curva progresiva acelerada (ease-in) para generar ritmo ascendente */
+      const frac=Math.pow(raw,1.75);
+      devFlameOverridePct=5+95*frac;
+      if(raw>=1){
         clearInterval(sunTrailerTimer);sunTrailerTimer=0;
-        setTimeout(()=>stopSunTrailer(),1800);
+        devFlameOverridePct=100;
+        sunHoldTimeout=setTimeout(()=>{
+          if(!sunTrailerOn)return;
+          const stg=$('flameStage');
+          if(stg)stg.classList.add('fading');
+          sunFadeTimeout=setTimeout(()=>{
+            devFlameOverridePct=null;
+            flamePctSmooth=fuel();
+            if(stg)stg.classList.remove('fading');
+            stopSunTrailer();
+            flameView();
+          },720);
+        },3000);
       }
-    },50);
+    },32);
   };
 }
 
-if($('pebVesselBar')){
-  $('pebVesselBar').addEventListener('click',e=>{
-    const b=e.target.closest('.peb-vessel-btn');if(!b)return;
+if($('sunDesignBtn') && $('sunDesignPanel')){
+  $('sunDesignBtn').onclick=ev=>{
+    ev.stopPropagation();
+    const p=$('sunDesignPanel');
+    const willOpen=p.hidden;
+    p.hidden=!willOpen;
+    $('sunDesignBtn').classList.toggle('on',willOpen);
+    $('sunDesignBtn').setAttribute('aria-expanded',String(willOpen));
+  };
+  $('sunDesignPanel').addEventListener('click',e=>{
+    const b=e.target.closest('.sun-design-pill');if(!b)return;
+    e.stopPropagation();
     const vk=b.dataset.vessel;
     const cfg=PEB_VESSELS[vk];
     if(cfg && cfg.pro && !isPro()){
-      openPaywall('Desbloquea las llamas exclusivas (Lavanda Solar, Oro Rosa, Cobalto Celestial y Aurora Carmesí) con Wavy Pro.');
+      openPaywall('Desbloquea los soles exclusivos ('+cfg.title+') con Wavy Pro.');
       return;
     }
     S.pebVessel=vk;
     save();
     renderPebVesselArt();
     flameView();
+    $('sunDesignPanel').hidden=true;
+    $('sunDesignBtn').classList.remove('on');
+    $('sunDesignBtn').setAttribute('aria-expanded','false');
   });
+}
+
+if($('sunFsBtn')){
+  let sunOrigParent=null,sunOrigNext=null;
+  $('sunFsBtn').onclick=()=>{
+    const stg=$('flameStage');
+    const on=!document.body.classList.contains('sun-fullscreen');
+    if(on && stg){
+      sunOrigParent=stg.parentNode;
+      sunOrigNext=stg.nextSibling;
+      document.body.appendChild(stg);
+    }else if(!on && stg && sunOrigParent){
+      if(sunOrigNext && sunOrigNext.parentNode===sunOrigParent){
+        sunOrigParent.insertBefore(stg,sunOrigNext);
+      }else{
+        sunOrigParent.appendChild(stg);
+      }
+    }
+    document.body.classList.toggle('sun-fullscreen',on);
+    if(!on && $('sunDesignPanel'))$('sunDesignPanel').hidden=true;
+    const btn=$('sunFsBtn');
+    btn.setAttribute('aria-label',on?'Salir de pantalla completa':'Pantalla completa del sol');
+    btn.innerHTML=on
+      ?'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M10 14l-7 7"/></svg>'
+      :'<svg class="w-ico sm" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
+    if(on){
+      const el=document.documentElement;
+      if(el.requestFullscreen){el.requestFullscreen().catch(()=>{});}
+    }else{
+      if(document.fullscreenElement&&document.exitFullscreen){document.exitFullscreen().catch(()=>{});}
+    }
+    requestAnimationFrame(()=>{flameView();setTimeout(flameView,80);});
+  };
 }
 
 function initDevFlameBar(){
@@ -12532,10 +12707,9 @@ function flameView(){
       :'Si tu llama baja al mínimo, se pausa tu constancia. Cumple 1 práctica hoy para avivarla.';
   }
   const cd=Math.max(0,18e5-(Date.now()-(S.tend||0)));
-  $('pb').disabled=cd>0;
-  $('pb').textContent=cd>0?'Cuidada · '+Math.ceil(cd/6e4)+'m':(kept?'Avivar llama':'Hacer práctica →');
+  if($('pb')){$('pb').disabled=cd>0;$('pb').textContent=cd>0?'Cuidada · '+Math.ceil(cd/6e4)+'m':(kept?'Avivar llama':'Hacer práctica →');}
   const wdCd=Math.max(0,15000-(Date.now()-(S.lastKindle||0)));
-  $('wd').disabled=(wdCd>0 || !S.following.length);
+  if($('wd'))$('wd').disabled=(wdCd>0 || !S.following.length);
   if($('as'))$('as').textContent='Vínculos · '+S.following.length;
 }
 function flare(){const l=$('pd');if(!l)return;l.classList.remove('flare');void l.getBoundingClientRect();l.classList.add('flare');setTimeout(()=>l.classList.remove('flare'),1200)}
@@ -12546,18 +12720,18 @@ function pulses(){
 }
 function addPulse(dir,from){S.pulses.unshift({ts:Date.now(),from,dir});if(S.pulses.length>30)S.pulses.pop();save();pulses()}
 
-$('pb').onclick=()=>{
+if($('pb')){$('pb').onclick=()=>{
   if(!isPebeteroMaintained()){
-    toast('Realiza 1 minuto de respiración o inicia una práctica de 60 s abajo para encender tu llama','er');
+    toast('Realiza 1 minuto de respiración en Calma','er');
     switchMainView('v-breathe');
     return;
   }
   S.tend=Date.now();
   addFuel(15);
   flare();
-  addPulse('out','Avivaste tu pebetero');
-  toast('Tu llama brilla con más fuerza (+15%)','ok');
-};
+  addPulse('out','Sostuviste tu sol');
+  toast('Tu sol brilla con más fuerza (+15%)','ok');
+};}
 
 const activeQuestTimers={};
 document.querySelectorAll('.q').forEach(q=>{
@@ -12595,16 +12769,16 @@ document.querySelectorAll('.q').forEach(q=>{
   };
 });
 
-$('wd').onclick=()=>{
-  if(!S.following.length){toast('Agrega primero un vínculo en la pestaña Círculo','er');return}
+if($('wd')){$('wd').onclick=()=>{
+  if(!S.following.length){toast('Agrega primero un vínculo en la pestaña Compañía','er');return}
   S.lastKindle=Date.now();
   addFuel(10);flare();
   const targetName='@'+S.following[0];
-  addPulse('out','Enviaste calor al pebetero de '+targetName);
-  toast('Enviaste calor a '+targetName,'ok');
+  addPulse('out','Enviaste luz al sol de '+targetName);
+  toast('Enviaste luz a '+targetName,'ok');
   flameView();
   setTimeout(flameView,15100);
-};
+};}
 
 /* =========================================================
    PERFIL EXTERNO Y ACCESIBILIDAD DE MODALES CON TECLA ESCAPE
@@ -12664,8 +12838,15 @@ function openExternalProfile(uname){
   $('extSeaLabel').textContent=showSea?(seaVal>=75?'Tormenta':seaVal>=55?'Marea alta':seaVal>20?'Brisa suave':'Paz etérea'):'Reservado';
   $('extSeaPct').textContent=showSea?(seaVal+'%'):'—';
   $('extFlamePct').textContent=u.flame+'%';
-  $('extFlameState').textContent=u.flame<35?'Llama baja':'Encendido';
-  $('extMiniFlame').style.transform='scale('+(0.25+(u.flame/100)*0.85).toFixed(2)+')';
+  $('extFlameState').textContent=u.flame<35?'Chispa baja':(u.flame>=80?'Sol pleno':'Constante');
+  const sunDisc=$('extMiniSunDisc'),sunHalo=$('extMiniSunHalo');
+  if(sunDisc){
+    const sc=(0.55+(u.flame/100)*0.65).toFixed(2);
+    sunDisc.style.transform='scale('+sc+')';
+  }
+  if(sunHalo){
+    sunHalo.style.opacity=(0.35+(u.flame/100)*0.65).toFixed(2);
+  }
 
   $('extPact').textContent=showStreak?((u.pact||u.days)+' días'):'—';
   $('extSyncNum').textContent=u.syncs||S.following.length;
@@ -12926,12 +13107,22 @@ document.addEventListener('keydown',e=>{
 
 $('extPrimaryAction').onclick=()=>{
   if(!currentExtUser||currentExtUser.isMe)return;
-  strikFriendPebetero(currentExtUser);
+  if(!isPro()){
+    openPaywall('Sostener el Sol de tus vínculos para protegerlo hoy es parte de Wavy Pro.');
+    return;
+  }
+  currentExtUser.pact=(currentExtUser.pact||7)+1;
   $('extFlamePct').textContent=currentExtUser.flame+'%';
-  $('extFlameState').textContent='Encendido';
-  $('extMiniFlame').style.transform='scale('+(0.25+(currentExtUser.flame/100)*0.85).toFixed(2)+')';
+  $('extFlameState').textContent='Sostenido';
+  if($('extMiniSunDisc')){
+    $('extMiniSunDisc').style.transform='scale('+(0.55+(currentExtUser.flame/100)*0.65).toFixed(2)+')';
+  }
   $('extPact').textContent=currentExtUser.pact+' días';
-  $('extVigilBox').hidden=(currentExtUser.flame>=35);
+  $('extVigilBox').hidden=true;
+  addPulse('out','Sostuviste el Sol de @'+currentExtUser.username);
+  broadcastLiveEvent('gesture',{target:currentExtUser.username,kind:'vigil_gift',message:'Sostuve tu Sol hoy para que no decaiga.'});
+  renderHomeCoRegulation();
+  toast('Sostuviste el Sol de @'+currentExtUser.username,'ok');
 };
 $('extSecondaryAction').onclick=()=>{
   if(!currentExtUser||currentExtUser.isMe)return;
@@ -13093,11 +13284,11 @@ function renderClinicalReport(){
     '<div><span>Movimiento / Fuerza:</span><b>'+esc(lastFuerza)+'</b></div>';
 }
 
-$('magicSummaryBtn').onclick=()=>{
+if($('magicSummaryBtn')){$('magicSummaryBtn').onclick=()=>{
   renderClinicalReport();
   try{navigator.clipboard.writeText(buildMagicSummaryText()).then(()=>toast('Síntesis copiada al portapapeles para tu sesión','ok'))}
   catch(e){toast('Síntesis actualizada','ok')}
-};
+};}
 
 $('applyCode').onclick=()=>{
   const raw=$('therCode').value.trim().toUpperCase().replace(/\s+/g,'');
