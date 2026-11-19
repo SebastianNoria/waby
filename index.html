@@ -4317,6 +4317,152 @@ const WavyAudio=(()=>{
   return{unlockNow,startOcean,modulateOcean,stopOcean,cuePhase,playBowl,setSoundMode,getSoundMode};
 })();
 
+/* Guía de voz armónica $0: MP3 neuronales (Dalia femenina / Jorge masculina) con pantalla apagada + MediaSession + respaldo Web Speech */
+const WavyVoice=(()=>{
+  let cachedVoice=null,unlocked=false,voiceAudio=null,bgTicker=null;
+  const VOICE_PREFS=['paulina','mónica','monica','dalia','jorge','sabina','elena','siri','google español','natural'];
+
+  function getVoiceMode(){
+    if(typeof S==='undefined')return 'f';
+    if(S.voiceOn===false || S.voiceGender==='off')return 'off';
+    if(S.voiceGender==='f' || S.voiceGender==='m')return S.voiceGender;
+    return (S.gender==='female')?'f':'m';
+  }
+
+  function ensureVoiceAudio(){
+    if(voiceAudio)return voiceAudio;
+    const a=document.createElement('audio');
+    a.setAttribute('playsinline','');
+    a.setAttribute('webkit-playsinline','');
+    a.preload='auto';
+    a.volume=0.92;
+    voiceAudio=a;
+    return a;
+  }
+
+  function setMediaSession(title,subtitle,onPlay,onPause){
+    try{
+      if('mediaSession' in navigator){
+        navigator.mediaSession.metadata=new MediaMetadata({
+          title:title||'Respiración guiada',
+          artist:subtitle||'Wavy · Calma',
+          album:'Wavy',
+          artwork:[
+            {src:'icon-192.png',sizes:'192x192',type:'image/png'},
+            {src:'icon-512.png',sizes:'512x512',type:'image/png'}
+          ]
+        });
+        navigator.mediaSession.playbackState='playing';
+        if(onPlay)navigator.mediaSession.setActionHandler('play',onPlay);
+        if(onPause)navigator.mediaSession.setActionHandler('pause',onPause);
+      }
+    }catch(e){}
+  }
+
+  function pickVoice(){
+    if(!('speechSynthesis' in window))return null;
+    const voices=window.speechSynthesis.getVoices()||[];
+    if(!voices.length)return null;
+    const esVoices=voices.filter(v=>(v.lang||'').toLowerCase().startsWith('es'));
+    if(!esVoices.length)return null;
+    for(const pref of VOICE_PREFS){
+      const hit=esVoices.find(v=>(v.name||'').toLowerCase().includes(pref));
+      if(hit){cachedVoice=hit;return hit;}
+    }
+    const mx=esVoices.find(v=>(v.lang||'').toLowerCase().includes('mx'))||esVoices[0];
+    cachedVoice=mx;
+    return mx;
+  }
+
+  if('speechSynthesis' in window){
+    try{
+      pickVoice();
+      window.speechSynthesis.onvoiceschanged=()=>{pickVoice();};
+    }catch(e){}
+  }
+
+  function unlock(){
+    const a=ensureVoiceAudio();
+    if(!unlocked){
+      unlocked=true;
+      try{
+        /* Desbloquea el elemento <audio> en iOS Safari dentro del gesto de usuario */
+        a.muted=true;
+        a.src='audio/voice/'+(getVoiceMode()==='m'?'m':'f')+'/inhala.mp3';
+        const p=a.play();
+        if(p&&p.then)p.then(()=>{a.pause();a.currentTime=0;a.muted=false;}).catch(()=>{a.muted=false;});
+        else{a.pause();a.currentTime=0;a.muted=false;}
+      }catch(e){a.muted=false;}
+      if('speechSynthesis' in window){
+        try{
+          const u=new SpeechSynthesisUtterance('');
+          u.volume=0;
+          window.speechSynthesis.speak(u);
+        }catch(e){}
+      }
+    }
+  }
+
+  function stop(){
+    if(voiceAudio){
+      try{voiceAudio.onended=null;voiceAudio.onerror=null;voiceAudio.pause();voiceAudio.currentTime=0;}catch(e){}
+    }
+    if('speechSynthesis' in window){
+      try{window.speechSynthesis.cancel();}catch(e){}
+    }
+    try{if('mediaSession' in navigator)navigator.mediaSession.playbackState='paused';}catch(e){}
+  }
+
+  function startBgTicker(fn){
+    stopBgTicker();
+    bgTicker=setInterval(()=>{
+      if(document.hidden && typeof fn==='function')fn();
+    },250);
+  }
+  function stopBgTicker(){
+    if(bgTicker){clearInterval(bgTicker);bgTicker=null;}
+  }
+
+  function speak(text,opts={}){
+    const mode=getVoiceMode();
+    if(mode==='off')return;
+    const clipKey=opts.clipKey||'';
+    const onDone=typeof opts.onDone==='function'?opts.onDone:null;
+    const speakTTS=()=>{
+      if(!text || !('speechSynthesis' in window)){if(onDone)onDone();return;}
+      try{
+        window.speechSynthesis.cancel();
+        const u=new SpeechSynthesisUtterance(text);
+        const v=cachedVoice||pickVoice();
+        if(v)u.voice=v;
+        u.lang=(v&&v.lang)||'es-MX';
+        u.rate=typeof opts.rate==='number'?opts.rate:0.86;
+        u.pitch=typeof opts.pitch==='number'?opts.pitch:0.94;
+        u.volume=typeof opts.volume==='number'?opts.volume:0.86;
+        if(onDone)u.onend=onDone;
+        window.speechSynthesis.speak(u);
+      }catch(e){if(onDone)onDone();}
+    };
+    if(clipKey){
+      try{
+        const a=ensureVoiceAudio();
+        a.onended=null;a.onerror=null;
+        a.muted=false;
+        a.volume=typeof opts.volume==='number'?opts.volume:0.92;
+        a.src='audio/voice/'+mode+'/'+clipKey+'.mp3';
+        if(onDone)a.onended=()=>{a.onended=null;onDone();};
+        a.onerror=()=>{a.onerror=null;speakTTS();};
+        const p=a.play();
+        if(p&&p.catch)p.catch(()=>speakTTS());
+        return;
+      }catch(e){}
+    }
+    speakTTS();
+  }
+
+  return{unlock,speak,stop,pickVoice,getVoiceMode,setMediaSession,startBgTicker,stopBgTicker};
+})();
+
 const AVATARS=[
   {id:'swan',name:'Cisne',svg:'<svg viewBox="0 0 60 60"><rect width="60" height="60" fill="#EBE4D8"/><path d="M18 42 C18 32 34 32 42 38 C38 44 22 45 18 42 Z" fill="#FFFDF9" stroke="#2C3539" stroke-width="1.2"/><path d="M36 36 C40 24 38 15 32 15 C28 15 28 20 30 22" fill="none" stroke="#2C3539" stroke-width="1.4" stroke-linecap="round"/><path d="M10 46 Q30 49 50 46" fill="none" stroke="#8C9A9E" stroke-width="1"/></svg>'},
   {id:'deer',name:'Ciervo',svg:'<svg viewBox="0 0 60 60"><rect width="60" height="60" fill="#E6DEC8"/><ellipse cx="30" cy="36" rx="9" ry="11" fill="#C29B77"/><path d="M22 29 L16 24 M38 29 L44 24" stroke="#C29B77" stroke-width="3" stroke-linecap="round"/><path d="M25 26 C22 18 17 15 15 12 M22 19 L26 15 M35 26 C38 18 43 15 45 12 M38 19 L34 15" fill="none" stroke="#4A3B32" stroke-width="1.3" stroke-linecap="round"/><circle cx="26" cy="34" r="1.2" fill="#2C221E"/><circle cx="34" cy="34" r="1.2" fill="#2C221E"/><ellipse cx="30" cy="42" rx="2" ry="1.5" fill="#4A3B32"/></svg>'},
@@ -4491,11 +4637,15 @@ const SEAL_PALETTES=[
 
 /* Patrones respiratorios con lenguaje no médico */
 const BREATH_PATTERNS=[
-  {id:'4-6',label:'4 · 6',name:'Calma serena (Estándar)',desc:'Inhala 4 s · Exhala 6 s (Ayuda a desacelerar el ritmo de forma gradual)',in:4,hold:0,out:6,double:false,vip:false},
-  {id:'stanford',label:'Suspiro 2·1·6',name:'Doble inhalación + exhalación larga',desc:'Doble inhalación nasal (3 s) + exhalación larga (6 s) ideal en momentos de impulso',in:3,hold:0,out:6,double:true,vip:false},
-  {id:'box',label:'4 · 4 · 4',name:'Respiración cuadrada (Enfoque)',desc:'Inhala 4 s · Sostén 4 s · Exhala 4 s (Favorece la atención centrada)',in:4,hold:4,out:4,double:false,vip:false},
-  {id:'4-7-8',label:'4 · 7 · 8',name:'Pausa nocturna profunda',desc:'Inhala 4 s · Sostén 7 s · Exhala 8 s (Ideal antes de dormir o en alta tensión)',in:4,hold:7,out:8,double:false,vip:true},
-  {id:'custom',label:'Propio',name:'Ritmo personalizado',desc:'Configura tus propios segundos de inhalación, pausa y exhalación',in:4,hold:2,out:6,double:false,vip:true}
+  {id:'4-6',label:'4 · 6',short:'Calma 4·6',name:'Calma serena (Estándar)',desc:'Inhala 4 s · Exhala 6 s (Ayuda a desacelerar el ritmo de forma gradual)',in:4,hold:0,out:6,holdOut:0,double:false,vip:false},
+  {id:'impulse',label:'Freno 4·2·8',short:'Freno 4·2·8',name:'Corte de impulso · Ansiedad',desc:'Inhala 4 s · Pausa 2 s · Exhala 8 s · Vacío 2 s (Frena impulso compulsivo, obsesión y ansiedad)',in:4,hold:2,out:8,holdOut:2,double:false,vip:false},
+  {id:'wimhof',label:'Wim Hof',short:'Wim Hof',name:'Método Wim Hof (3 rondas)',desc:'30 respiraciones profundas · Retención en vacío (60/90/120 s) · Recuperación 15 s',in:1.8,hold:0,out:1.5,holdOut:0,double:false,wimhof:true,vip:false},
+  {id:'wake',label:'Amanecer 2·1',short:'Amanecer 2·1',name:'Activación matutina (Despertar)',desc:'2 rondas · 25 respiraciones firmes (1.6 s / 0.8 s) + 10 s sostén lleno (Enciende el cuerpo al despertar)',in:1.6,hold:0,out:0.8,holdOut:0,double:false,wake:true,vip:false},
+  {id:'sleep',label:'Sueño 4·8',short:'Sueño 4·8',name:'Sueño profundo (Descenso 4·8·3)',desc:'Inhala 4 s · Exhala 8 s · Silencio 3 s (4 resp/min: baja pulsaciones y desvanece la voz al min 1 para dormir)',in:4,hold:0,out:8,holdOut:3,double:false,sleep:true,vip:false},
+  {id:'stanford',label:'Suspiro 2·1·6',short:'Suspiro',name:'Doble inhalación + exhalación larga',desc:'Doble inhalación nasal (3 s) + exhalación larga (6 s) ideal en momentos de impulso',in:3,hold:0,out:6,holdOut:0,double:true,vip:false},
+  {id:'box',label:'4 · 4 · 4',short:'Cuadrada',name:'Respiración cuadrada (Enfoque)',desc:'Inhala 4 s · Sostén 4 s · Exhala 4 s (Favorece la atención centrada)',in:4,hold:4,out:4,holdOut:0,double:false,vip:false},
+  {id:'4-7-8',label:'4 · 7 · 8',short:'4·7·8',name:'Pausa nocturna profunda',desc:'Inhala 4 s · Sostén 7 s · Exhala 8 s (Ideal antes de dormir o en alta tensión)',in:4,hold:7,out:8,holdOut:0,double:false,vip:true},
+  {id:'custom',label:'Propio',short:'Propio',name:'Ritmo personalizado',desc:'Configura tus propios segundos de inhalación, pausa y exhalación',in:4,hold:2,out:6,holdOut:0,double:false,vip:true}
 ];
 
 function createDefaultStateForUser(uAlias){
@@ -7381,7 +7531,73 @@ function openLecturaReader(n){
   const back=$('lecturaReaderBack');
   if(back)back.onclick=closeLecturaReader;
   if($('lecturaReaderTitle'))$('lecturaReaderTitle').textContent=n.title||'Lectura';
-  if($('lecturaReaderMeta'))$('lecturaReaderMeta').textContent='Wavy Editorial · '+(n.readMinutes||4)+' min · '+(n.mood||n.topic||'');
+  if($('lecturaReaderMeta'))$('lecturaReaderMeta').textContent=(n.author||'Wavy Editorial')+' · '+(n.readMinutes||4)+' min · '+(n.mood||n.topic||'');
+
+  /* Reproductor de audio narrado (funciona con pantalla apagada + MediaSession) */
+  const aBar=$('lecturaAudioBar'),aBtn=$('lecturaAudioBtn'),aStatus=$('lecturaAudioStatus'),aTime=$('lecturaAudioTime'),aFill=$('lecturaAudioFill'),aTrack=$('lecturaAudioTrack');
+  if(!window._wavyLecturaAudio){
+    const au=document.createElement('audio');
+    au.setAttribute('playsinline','');
+    au.setAttribute('webkit-playsinline','');
+    au.preload='metadata';
+    window._wavyLecturaAudio=au;
+  }
+  const la=window._wavyLecturaAudio;
+  const playIco='<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="7 5 19 12 7 19 7 5"/></svg>';
+  const pauseIco='<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>';
+  const fmtSec=s=>{s=Math.max(0,Math.floor(s||0));const m=Math.floor(s/60),r=s%60;return m+':'+(r<10?'0':'')+r;};
+  if(aBar){
+    if(n.audioUrl){
+      aBar.hidden=false;
+      const sameSrc=(la.dataset.lecturaId===eid);
+      if(!sameSrc){
+        try{la.pause();}catch(e){}
+        la.src=n.audioUrl;
+        la.dataset.lecturaId=eid;
+      }
+      const syncAudioUI=()=>{
+        if(!aBtn)return;
+        const playing=(!la.paused && !la.ended);
+        aBtn.innerHTML=playing?pauseIco:playIco;
+        if(aStatus)aStatus.textContent=playing?'Escuchando · Pantalla apagada':'Escuchar · Pantalla apagada';
+        const dur=isFinite(la.duration)?la.duration:0;
+        const cur=la.currentTime||0;
+        if(aTime)aTime.textContent=dur?(fmtSec(cur)+' / '+fmtSec(dur)):fmtSec(cur);
+        if(aFill)aFill.style.width=(dur?Math.min(100,(cur/dur)*100):0).toFixed(1)+'%';
+      };
+      la.ontimeupdate=syncAudioUI;
+      la.onloadedmetadata=syncAudioUI;
+      la.onplay=()=>{
+        syncAudioUI();
+        WavyVoice.setMediaSession(n.title||'Lectura',n.author||'Wavy Editorial',()=>la.play(),()=>la.pause());
+      };
+      la.onpause=syncAudioUI;
+      la.onended=()=>{syncAudioUI();markPillarDone('reflect','Audio de lectura completado');};
+      if(aBtn){
+        aBtn.onclick=()=>{
+          if(la.paused){
+            WavyVoice.stop();
+            const p=la.play();
+            if(p&&p.catch)p.catch(()=>toast('Toca de nuevo para iniciar el audio','warn'));
+          }else{
+            la.pause();
+          }
+        };
+      }
+      if(aTrack){
+        aTrack.onclick=ev=>{
+          if(!isFinite(la.duration)||!la.duration)return;
+          const rect=aTrack.getBoundingClientRect();
+          const ratio=Math.max(0,Math.min(1,(ev.clientX-rect.left)/rect.width));
+          la.currentTime=ratio*la.duration;
+          syncAudioUI();
+        };
+      }
+      syncAudioUI();
+    }else{
+      aBar.hidden=true;
+    }
+  }
 
   const body=$('lecturaReaderBody'),hlMenu=$('lecturaHlMenu');
   if(!S.highlightsHtml||typeof S.highlightsHtml!=='object')S.highlightsHtml={};
@@ -8387,15 +8603,23 @@ if($('coastFsMenuToggle') && $('coastFsPanel')){
     coastOpenMenu=kind;
     p.innerHTML='';
     if(kind==='pat'){
-      const pats=[['4-6','Calma 4·6'],['4-4-4-4','Cuadrada 4·4'],['4-7-8','Profunda 4·7·8']];
-      pats.forEach(([id,lbl])=>{
+      const pro=(typeof isPro==='function')?isPro():false;
+      const curPat=(typeof S!=='undefined' && S.patId)?S.patId:'4-6';
+      BREATH_PATTERNS.filter(pt=>pt.id!=='custom').forEach(pt=>{
+        const locked=!!(pt.vip && !pro);
         const b=document.createElement('button');
-        b.type='button';b.className='coast-fs-pill'+(typeof S!=='undefined'&&S.pat===id?' on':'');
-        b.textContent=lbl;
+        b.type='button';b.className='coast-fs-pill'+(curPat===pt.id?' on':'');
+        b.textContent=(pt.short||pt.label)+(locked?' · PRO':'');
         b.onclick=ev=>{
           ev.stopPropagation();
-          if(typeof S!=='undefined'){S.pat=id;if(typeof save==='function')save();}
-          if(typeof renderPat==='function')renderPat();
+          if(locked){
+            if(typeof openPaywall==='function')openPaywall('Desbloquea el ritmo «'+pt.name+'» con Wavy Pro.');
+            p.hidden=true;coastOpenMenu='';
+            return;
+          }
+          if(typeof S!=='undefined'){S.patId=pt.id;if(typeof save==='function')save();}
+          if(typeof renderPatternsMenu==='function')renderPatternsMenu();
+          if(typeof toast==='function')toast('Ritmo '+pt.label+' activado','ok');
           p.hidden=true;coastOpenMenu='';
         };
         p.appendChild(b);
@@ -8415,6 +8639,20 @@ if($('coastFsMenuToggle') && $('coastFsPanel')){
         p.appendChild(b);
       });
     }else if(kind==='dur'){
+      const cdOn=!!(typeof S!=='undefined' && S.breathCountdown10);
+      const cb=document.createElement('button');
+      cb.type='button';cb.className='coast-fs-pill'+(cdOn?' on':'');
+      cb.textContent=cdOn?'Inicio 10 s · Sí':'Inicio 10 s';
+      cb.onclick=ev=>{
+        ev.stopPropagation();
+        if(typeof S!=='undefined'){
+          S.breathCountdown10=!S.breathCountdown10;
+          if(typeof save==='function')save(false);
+          if(typeof toast==='function')toast(S.breathCountdown10?'Temporizador de 10 s activado: bloquea tu pantalla al iniciar':'Inicio inmediato sin cuenta previa','ok');
+        }
+        p.hidden=true;coastOpenMenu='';
+      };
+      p.appendChild(cb);
       [2,5,10].forEach(min=>{
         const cur=(typeof S!=='undefined'&&S.breathMin)?Number(S.breathMin):5;
         const b=document.createElement('button');
@@ -8451,6 +8689,30 @@ if($('coastFsMenuToggle') && $('coastFsPanel')){
       p.appendChild(b);
     }else if(kind==='sound'){
       const curSound=(typeof WavyAudio!=='undefined'&&WavyAudio.getSoundMode)?WavyAudio.getSoundMode():'ocean';
+      const vMode=(typeof WavyVoice!=='undefined'&&WavyVoice.getVoiceMode)?WavyVoice.getVoiceMode():'f';
+      [['f','Voz cálida (F)'],['m','Voz serena (M)'],['off','Sin voz']].forEach(([vm,vlbl])=>{
+        const vb=document.createElement('button');
+        vb.type='button';vb.className='coast-fs-pill'+(vMode===vm?' on':'');
+        vb.textContent=vlbl;
+        vb.onclick=ev=>{
+          ev.stopPropagation();
+          if(typeof S!=='undefined'){
+            S.voiceGender=vm;
+            S.voiceOn=(vm!=='off');
+            if(typeof save==='function')save(false);
+            if(vm!=='off'){
+              WavyVoice.unlock();
+              WavyVoice.speak('Estoy aquí contigo. Respira a tu ritmo.',{clipKey:'voz_on'});
+              if(typeof toast==='function')toast(vm==='f'?'Voz cálida femenina activada':'Voz serena masculina activada','ok');
+            }else{
+              WavyVoice.stop();
+              if(typeof toast==='function')toast('Voz guía silenciada','ok');
+            }
+          }
+          p.hidden=true;coastOpenMenu='';
+        };
+        p.appendChild(vb);
+      });
       [['ocean','Olas'],['pink','Ruido rosa'],['white','Ruido blanco'],['bowls','Cuencos'],['off','Silencio']].forEach(([sm,lbl])=>{
         const isActive=(sm==='off' ? !(typeof S!=='undefined'&&S.audioOn) : (typeof S!=='undefined'&&S.audioOn && curSound===sm));
         const b=document.createElement('button');
@@ -8491,7 +8753,7 @@ if($('coastFsMenuToggle') && $('coastFsPanel')){
       if(typeof br!=='undefined' && br.on){
         br.paused=!br.paused;
         br.lastWall=Date.now();
-        if(br.paused)WavyAudio.stopOcean();
+        if(br.paused){WavyAudio.stopOcean();WavyVoice.stop();}
         else WavyAudio.startOcean();
         $('coastFsBreathBtn').innerHTML=br.paused?playSvg:pauseSvg;
         $('coastFsBreathBtn').classList.toggle('on',!br.paused);
@@ -8547,7 +8809,8 @@ $('sosgo').onclick=()=>{
   pendingSosIndex=0;
   if(S.trigLogs.length>60)S.trigLogs.pop();
 
-  if(selSosEmo==='Ansiedad' || selSosEmo==='Aburrimiento')S.patId='stanford';
+  if(selSosEmo==='Ansiedad')S.patId='impulse';
+  else if(selSosEmo==='Aburrimiento')S.patId='stanford';
   else if(selSosEmo==='Enojo' || selSosEmo==='Estrés')S.patId='box';
   else S.patId='4-6';
 
@@ -9145,7 +9408,7 @@ function renderBreathOverlay(ctx,w,h,dt,ts){
 
   const al=Math.max(br.alpha,bothSync?1:0);
   const tSec=(ts||performance.now())/1000;
-  const cx0=w*0.5,cy0=h*0.50;
+  const cx0=w*0.5,cy0=h*0.43;
   const baseDim=Math.min(w,h);
   const minR=Math.min(68,baseDim*0.12),maxR=Math.min(132,baseDim*0.23);
   const smoothP=0.5-0.5*Math.cos(Math.PI*br.p);
@@ -9215,14 +9478,57 @@ function renderBreathOverlay(ctx,w,h,dt,ts){
   ctx.textAlign='center';
   ctx.fillStyle='rgba(35,31,29,'+(0.92*al).toFixed(3)+')';
   ctx.font='500 22px "EB Garamond",Georgia,serif';
-  const centerWord=br.ph==='in'?'Inhala':(br.ph==='hold'?'Sostén':'Exhala');
+  let centerWord=br.ph==='in'?'Inhala':(br.ph==='hold'?'Sostén':(br.ph==='holdOut'?'Pausa':'Exhala'));
+  if(br.ph==='countdown'){
+    centerWord='En '+Math.max(1,Math.ceil(10-(br.el||0)))+' s';
+  }else if(pat.wimhof){
+    if(br.ph==='wh_in')centerWord='Inhala · '+(br.whBreath||1)+'/30';
+    else if(br.ph==='wh_out')centerWord='Suelta · '+(br.whBreath||1)+'/30';
+    else if(br.ph==='wh_hold'){
+      const secHold=Math.floor(br.el||0);
+      const mm=Math.floor(secHold/60),ss=secHold%60;
+      centerWord=mm+':'+(ss<10?'0':'')+ss;
+    }else if(br.ph==='wh_rec_in')centerWord='Inhala profundo';
+    else if(br.ph==='wh_rec_hold')centerWord='Sostén · '+Math.max(0,Math.ceil(15-(br.el||0)))+'s';
+    else if(br.ph==='wh_rec_out')centerWord='Suelta suave';
+  }else if(pat.wake){
+    if(br.ph==='wk_in')centerWord='Inhala · '+(br.wkBreath||1)+'/25';
+    else if(br.ph==='wk_out')centerWord='Suelta · '+(br.wkBreath||1)+'/25';
+    else if(br.ph==='wk_hold')centerWord='Sostén · '+Math.max(0,Math.ceil(10-(br.el||0)))+'s';
+    else if(br.ph==='wk_rec_out')centerWord='Suelta';
+  }
   ctx.fillText(centerWord,cx0,cy0+7);
 
   ctx.fillStyle='rgba(255,253,250,'+(0.98*al).toFixed(3)+')';
   ctx.font='italic 19px "EB Garamond",Georgia,serif';
   let lbl='';
-  if(bothSync){
+  if(br.ph==='countdown'){
+    lbl='Deja el teléfono a un lado · Puedes bloquear tu pantalla';
+  }else if(bothSync){
     lbl='Inhalando juntos en sintonía · Presencia compartida';
+  }else if(pat.wimhof){
+    const rLbl='Ronda '+(br.whRound||1)+'/3';
+    if(br.ph==='wh_in'||br.ph==='wh_out'){
+      lbl=rLbl+' · 30 respiraciones profundas con ritmo';
+    }else if(br.ph==='wh_hold'){
+      const goal=br.whHoldTarget||60;
+      lbl=br.whCueText||(rLbl+' · Retención en vacío (meta '+goal+' s)');
+    }else if(br.ph==='wh_rec_in'){
+      lbl=rLbl+' · Llena tus pulmones por completo';
+    }else if(br.ph==='wh_rec_hold'){
+      lbl=rLbl+' · Sostén el aire 15 s y siente la energía';
+    }else{
+      lbl=rLbl+' · Suelta el aire y descansa';
+    }
+  }else if(pat.wake){
+    const rLbl='Ronda '+(br.wkRound||1)+'/2';
+    if(br.ph==='wk_in'||br.ph==='wk_out'){
+      lbl=rLbl+' · Inhalación firme por nariz, suelta corto';
+    }else if(br.ph==='wk_hold'){
+      lbl=rLbl+' · Sostén lleno 10 s · Activa tu energía matutina';
+    }else{
+      lbl=rLbl+' · Mente despierta, cuerpo encendido';
+    }
   }else if(br.ph==='in'){
     if(S.bmode==='touch' && !br.down){
       lbl='Mantén tu dedo sobre el círculo para inhalar';
@@ -9231,10 +9537,30 @@ function renderBreathOverlay(ctx,w,h,dt,ts){
     }
   }else if(br.ph==='hold'){
     lbl='Sostén el aire en calma · '+pat.hold+' s';
+  }else if(br.ph==='holdOut'){
+    lbl=pat.sleep?('Silencio suave · '+pat.holdOut+' s (suelta el cuerpo)'):('Pausa en vacío · '+pat.holdOut+' s (frena el impulso)');
   }else{
     lbl=(S.bmode==='touch' && br.down)?'Suelta el dedo para exhalar':'Exhala despacio · '+pat.out+' s';
   }
-  ctx.fillText(lbl,cx0,cy0+ringTotalR+34);
+  const maxW=Math.max(220,w-44);
+  const subY=Math.min(h-96,cy0+ringTotalR+28);
+  if(ctx.measureText(lbl).width>maxW){
+    const words=lbl.split(' ');
+    let l1='',l2='';
+    for(const wd of words){
+      if(!l2 && ctx.measureText((l1?l1+' ':'')+wd).width<=maxW)l1=(l1?l1+' ':'')+wd;
+      else l2=(l2?l2+' ':'')+wd;
+    }
+    ctx.fillText(l1,cx0,subY-6);
+    if(l2)ctx.fillText(l2,cx0,subY+14);
+  }else{
+    ctx.fillText(lbl,cx0,subY);
+  }
+  if(pat.wimhof && br.ph==='wh_hold' && (br.el||0)>=5){
+    ctx.fillStyle='rgba(255,253,250,'+(0.72*al).toFixed(3)+')';
+    ctx.font='400 12px "DM Sans",system-ui,sans-serif';
+    ctx.fillText('Toca la pantalla si necesitas inhalar antes',cx0,Math.min(h-74,subY+30));
+  }
 }
 
 const vib=n=>{try{navigator.vibrate && navigator.vibrate(n)}catch(e){}};
@@ -9275,6 +9601,8 @@ function endBreath(done){
   broadcastLiveEvent('cobreath_touch',{inhaling:false,active:coBreath.active});
   setBreathingFocus(false);
   WavyAudio.stopOcean();
+  WavyVoice.stop();
+  WavyVoice.stopBgTicker();
   if($('bbTxt'))$('bbTxt').textContent='Comenzar respiración';
   if(done || hadCycles){
     WavyAudio.cuePhase('close');
@@ -9290,6 +9618,50 @@ function endBreath(done){
   }else updateBreathHint();
 }
 
+const WIMHOF_HOLD_CUES={
+  10:'Suelta los hombros. Aquí empieza el silencio.',
+  20:'Aguanta. Siente tu cuerpo firme, tiene más fuerza de la que crees.',
+  30:'Mente controla cuerpo. Quédate aquí.',
+  40:'Si resistes este instante, resistes cualquier impulso.',
+  50:'Sé valiente. Tu voluntad es más grande que la urgencia.',
+  60:'Esta es la redención que buscas. Sostén un poco más.',
+  70:'Con esto tu cabeza descansa. Hoy podrás dormir en paz.',
+  80:'Lo estás logrando. Nada allá afuera tiene poder sobre ti.',
+  90:'Fuerza serena. Cada segundo aquí te devuelve el control.',
+  100:'Tu cuerpo aguanta. Siente la paz del dominio propio.'
+};
+const WIMHOF_HOLD_LAST10='Ya falta muy poco. Aguanta diez segundos más, lo tienes.';
+const WIMHOF_HOLD_TARGETS=[60,90,120];
+const WIMHOF_ROUND_WORDS=['uno','dos','tres'];
+
+function triggerWimHofRecovery(){
+  br.el=0;br.ph='wh_rec_in';br.whCueText='';
+  WavyAudio.cuePhase('in');
+  WavyVoice.speak('Inhala profundo ahora y sostén quince segundos. Siente tu fuerza.',{clipKey:'wh_rec_in',rate:0.88});
+  vib(25);
+}
+
+function beginActiveBreathPhase(pat){
+  br.el=0;br.p=0;br.phaseProg=0;
+  if(pat.wimhof){
+    br.ph='wh_in';br.whRound=1;br.whBreath=1;br.whHoldTarget=60;br.whLastCueSec=0;br.whCueText='';br.whRecCue5=false;
+    WavyAudio.cuePhase('in');
+    WavyVoice.speak('Ronda uno. Treinta respiraciones profundas. Vamos juntos. Inhala.',{clipKey:'wh_r1'});
+  }else if(pat.wake){
+    br.ph='wk_in';br.wkRound=1;br.wkBreath=1;
+    WavyAudio.cuePhase('in');
+    WavyVoice.speak('Enciende el cuerpo. Veinticinco respiraciones firmes por la nariz. Vamos.',{clipKey:'wake_start'});
+  }else if(pat.sleep){
+    br.ph='in';
+    WavyAudio.cuePhase('in');
+    WavyVoice.speak('Suelta tu cuerpo sobre la almohada. Ya no hay nada que resolver hoy. Inhala suave.',{clipKey:'sleep_start'});
+  }else{
+    br.ph='in';
+    WavyAudio.cuePhase('in');
+    WavyVoice.speak('Inhala suave.',{clipKey:'inhala'});
+  }
+}
+
 function stepBreath(dt){
   if(!br.on)return;
   if(br.paused){br.lastWall=Date.now();return;}
@@ -9300,6 +9672,180 @@ function stepBreath(dt){
   const pat=activePattern();
   const isTouch=(S.bmode==='touch');
 
+  /* Cuenta previa de 10 s (funciona con pantalla apagada) */
+  if(br.ph==='countdown'){
+    br.el+=wallDt;
+    br.phaseProg=Math.min(1,br.el/10);
+    br.p=0.18+0.08*Math.sin(br.el*1.8);
+    if(br.el>=10){
+      beginActiveBreathPhase(pat);
+    }
+    return;
+  }
+
+  /* Protocolo Amanecer 2·1 (Activación matutina: 2 rondas x 25 respiraciones firmes + 10 s sostén lleno) */
+  if(pat.wake){
+    br.el+=wallDt;
+    br.elapsedTotal+=wallDt;
+    if(br.ph==='wk_in'){
+      br.phaseProg=Math.min(1,br.el/pat.in);
+      br.p=br.phaseProg;
+      if(br.el>=pat.in){
+        br.el=0;br.ph='wk_out';
+        WavyAudio.cuePhase('out');
+        if((br.wkBreath||1)<=2)WavyVoice.speak('Suelta.',{clipKey:'suelta'});
+      }
+    }else if(br.ph==='wk_out'){
+      br.phaseProg=Math.min(1,br.el/pat.out);
+      br.p=1-br.phaseProg;
+      if(br.el>=pat.out){
+        br.el=0;
+        if((br.wkBreath||1)>=25){
+          br.ph='wk_hold';
+          WavyAudio.cuePhase('hold');
+          WavyVoice.speak('Inhala al máximo y sostén diez segundos. Siente cómo despierta tu mente.',{clipKey:'wake_hold'});
+          vib(22);
+        }else{
+          br.wkBreath=(br.wkBreath||1)+1;
+          br.ph='wk_in';
+          WavyAudio.cuePhase('in');
+          if(br.wkBreath===2)WavyVoice.speak('Inhala suave.',{clipKey:'inhala'});
+          else if(br.wkBreath===10)WavyVoice.speak('Diez. Mantén ese fuego.',{clipKey:'wh_b10'});
+          else if(br.wkBreath===20)WavyVoice.speak('Veinte. Diez más, no sueltes el ritmo.',{clipKey:'wh_b20'});
+        }
+      }
+    }else if(br.ph==='wk_hold'){
+      br.phaseProg=Math.min(1,br.el/10.0);
+      br.p=1;
+      if(br.el>=10.0){
+        br.el=0;br.ph='wk_rec_out';
+        WavyAudio.cuePhase('out');
+        WavyVoice.speak('Suelta. Mente despierta, el día es tuyo.',{clipKey:'wake_done'});
+        vib(20);
+      }
+    }else if(br.ph==='wk_rec_out'){
+      br.phaseProg=Math.min(1,br.el/3.0);
+      br.p=1-br.phaseProg;
+      if(br.el>=3.0){
+        if((br.wkRound||1)>=2){
+          endBreath(true);
+          return;
+        }
+        br.wkRound=2;br.wkBreath=1;br.el=0;br.ph='wk_in';
+        WavyAudio.cuePhase('in');
+        WavyVoice.speak('Segunda ronda. Más energía, despierta cada célula.',{clipKey:'wake_r2'});
+      }
+    }
+    return;
+  }
+
+  /* Protocolo Wim Hof (3 rondas: 30 respiraciones -> retención guerrero c/10s -> recuperación 15s) */
+  if(pat.wimhof){
+    br.el+=wallDt;
+    br.elapsedTotal+=wallDt;
+    if(br.ph==='wh_in'){
+      br.phaseProg=Math.min(1,br.el/pat.in);
+      br.p=br.phaseProg;
+      if(br.el>=pat.in){
+        br.el=0;br.ph='wh_out';
+        WavyAudio.cuePhase('out');
+        if(br.whBreath<=3 || br.whBreath===28 || br.whBreath===29){
+          WavyVoice.speak('Suelta.',{clipKey:'suelta',rate:0.96});
+        }else if(br.whBreath===30){
+          WavyVoice.speak('Suelta todo el aire y sostén en vacío. Yo estoy contigo.',{clipKey:'wh_hold_start',rate:0.88});
+        }
+      }
+    }else if(br.ph==='wh_out'){
+      br.phaseProg=Math.min(1,br.el/pat.out);
+      br.p=1-br.phaseProg;
+      if(br.el>=pat.out){
+        br.el=0;
+        if((br.whBreath||1)>=30){
+          br.ph='wh_hold';
+          br.whHoldTarget=WIMHOF_HOLD_TARGETS[(br.whRound||1)-1]||60;
+          br.whLastCueSec=0;
+          br.whCueText='Ronda '+(br.whRound||1)+'/3 · Retención en vacío ('+br.whHoldTarget+' s)';
+          WavyAudio.cuePhase('hold');
+          vib(20);
+        }else{
+          br.whBreath=(br.whBreath||1)+1;
+          br.ph='wh_in';
+          WavyAudio.cuePhase('in');
+          if(br.whBreath===2 || br.whBreath===3 || br.whBreath===28 || br.whBreath===29){
+            WavyVoice.speak('Inhala suave.',{clipKey:'inhala',rate:0.96});
+          }else if(br.whBreath===10){
+            WavyVoice.speak('Diez. Mantén ese fuego.',{clipKey:'wh_b10',rate:0.94});
+          }else if(br.whBreath===20){
+            WavyVoice.speak('Veinte. Diez más, no sueltes el ritmo.',{clipKey:'wh_b20',rate:0.94});
+          }else if(br.whBreath===30){
+            WavyVoice.speak('Última profunda. Llénate por completo.',{clipKey:'wh_b30',rate:0.92});
+          }
+        }
+      }
+    }else if(br.ph==='wh_hold'){
+      const goal=br.whHoldTarget||60;
+      br.phaseProg=Math.min(1,br.el/goal);
+      br.p=0.14+0.04*Math.sin(br.el*1.5);
+      const sec10=Math.floor(br.el/10)*10;
+      if(sec10>=10 && sec10>(br.whLastCueSec||0) && sec10<goal){
+        br.whLastCueSec=sec10;
+        const isLast10=(goal-sec10===10);
+        const phrase=isLast10?WIMHOF_HOLD_LAST10:(WIMHOF_HOLD_CUES[sec10]||'Aguanta. Tú llevas el control.');
+        const ck=isLast10?'wh_last10':('wh_'+sec10);
+        br.whCueText=phrase;
+        WavyAudio.cuePhase('hold');
+        WavyVoice.speak(phrase,{clipKey:ck,rate:0.86});
+        vib(12);
+      }
+      if(br.el>=goal){
+        triggerWimHofRecovery();
+      }
+    }else if(br.ph==='wh_rec_in'){
+      br.phaseProg=Math.min(1,br.el/3.0);
+      br.p=br.phaseProg;
+      if(br.el>=3.0){
+        br.el=0;br.ph='wh_rec_hold';br.whRecCue5=false;
+        WavyAudio.cuePhase('hold');
+      }
+    }else if(br.ph==='wh_rec_hold'){
+      br.phaseProg=Math.min(1,br.el/15.0);
+      br.p=1;
+      if(br.el>=10 && !br.whRecCue5){
+        br.whRecCue5=true;
+        WavyVoice.speak('Cinco segundos más. Sostén.',{clipKey:'wh_5s',rate:0.88});
+      }
+      if(br.el>=15.0){
+        br.el=0;br.ph='wh_rec_out';
+        WavyAudio.cuePhase('out');
+        WavyVoice.speak('Suelta suave y descansa. Bien hecho.',{clipKey:'wh_rec_out',rate:0.86});
+        vib(22);
+      }
+    }else if(br.ph==='wh_rec_out'){
+      br.phaseProg=Math.min(1,br.el/3.2);
+      br.p=1-br.phaseProg;
+      if(br.el>=3.2){
+        if((br.whRound||1)>=3){
+          endBreath(true);
+          return;
+        }
+        br.whRound=(br.whRound||1)+1;
+        br.whBreath=1;
+        br.el=0;
+        br.ph='wh_in';
+        br.whCueText='';
+        WavyAudio.cuePhase('in');
+        const rw=WIMHOF_ROUND_WORDS[(br.whRound||1)-1]||String(br.whRound);
+        WavyVoice.speak('Ronda '+rw+'. Más hondo, más firme. Inhala.',{clipKey:'wh_r'+br.whRound,rate:0.88});
+        if(br.elapsedTotal>=20 && !isPebeteroMaintained()){
+          markVerifiedPractice('Ciclos de respiración completados');
+        }
+      }
+    }
+    const fl=Math.min(br.a0,0.08);
+    target=br.a0-(br.a0-fl)*Math.min(1,br.elapsedTotal/420);
+    return;
+  }
+
   if(br.ph==='in'){
     if(!isTouch||br.down){
       br.el+=wallDt;
@@ -9307,12 +9853,16 @@ function stepBreath(dt){
       if(pat.double && !br.doubleCued && (br.el/pat.in)>=0.65){
         br.doubleCued=true;
         WavyAudio.cuePhase('double');
+        WavyVoice.speak('Un poco más',{clipKey:'doble',rate:0.95});
         vib(12);
       }
       if(br.el>=pat.in){
         br.el=0;br.doubleCued=false;
         br.ph=pat.hold>0?'hold':'out';
         WavyAudio.cuePhase(br.ph);
+        if(!(pat.sleep && br.elapsedTotal>=60)){
+          WavyVoice.speak(br.ph==='hold'?'Sostén':'Exhala',{clipKey:br.ph==='hold'?'sosten':'exhala'});
+        }
         vib(br.ph==='hold'?15:25);
       }
     }else{
@@ -9328,6 +9878,7 @@ function stepBreath(dt){
     if(br.el>=pat.hold){
       br.el=0;br.ph='out';
       WavyAudio.cuePhase('out');
+      if(!(pat.sleep && br.elapsedTotal>=60))WavyVoice.speak('Exhala',{clipKey:'exhala'});
       vib(28);
     }
   }else if(br.ph==='out'){
@@ -9335,16 +9886,39 @@ function stepBreath(dt){
       br.el+=wallDt;
       br.elapsedTotal+=wallDt;
       if(br.el>=pat.out){
-        br.el=0;br.ph='in';
-        WavyAudio.cuePhase('in');
-        vib(15);
-        if(br.elapsedTotal>=20 && !isPebeteroMaintained()){
-          markVerifiedPractice('Ciclos de respiración completados');
+        br.el=0;
+        if(pat.holdOut>0){
+          br.ph='holdOut';
+          WavyAudio.cuePhase('hold');
+          if(!(pat.sleep && br.elapsedTotal>=60))WavyVoice.speak('Pausa',{clipKey:'pausa'});
+          vib(12);
+        }else{
+          br.ph='in';
+          WavyAudio.cuePhase('in');
+          if(!(pat.sleep && br.elapsedTotal>=60))WavyVoice.speak('Inhala',{clipKey:'inhala'});
+          vib(15);
+          if(br.elapsedTotal>=20 && !isPebeteroMaintained()){
+            markVerifiedPractice('Ciclos de respiración completados');
+          }
         }
       }
     }
     br.phaseProg=Math.min(1,br.el/pat.out);
     br.p=1-br.phaseProg;
+  }else if(br.ph==='holdOut'){
+    br.el+=wallDt;
+    br.elapsedTotal+=wallDt;
+    br.phaseProg=Math.min(1,br.el/(pat.holdOut||2));
+    br.p=0;
+    if(br.el>=(pat.holdOut||2)){
+      br.el=0;br.ph='in';
+      WavyAudio.cuePhase('in');
+      if(!(pat.sleep && br.elapsedTotal>=60))WavyVoice.speak('Inhala',{clipKey:'inhala'});
+      vib(15);
+      if(br.elapsedTotal>=20 && !isPebeteroMaintained()){
+        markVerifiedPractice('Ciclos de respiración completados');
+      }
+    }
   }
 
   const fl=Math.min(br.a0,0.08);
@@ -9352,26 +9926,41 @@ function stepBreath(dt){
   if(br.elapsedTotal>=TOTAL_SEC)endBreath(true);
 }
 
-$('bb').addEventListener('pointerdown',()=>{WavyAudio.unlockNow()});
+$('bb').addEventListener('pointerdown',()=>{WavyAudio.unlockNow();WavyVoice.unlock();});
 $('bb').onclick=()=>{
   WavyAudio.unlockNow();
+  WavyVoice.unlock();
   if($('bbDurMenu'))$('bbDurMenu').hidden=true;
   if(br.on){endBreath(false);return}
   window.scrollTo(0,0);
   const now=Date.now();
-  br={on:true,paused:false,ph:'in',el:0,p:0,phaseProg:0,elapsedTotal:0,sessionStartWall:now,lastWall:now,doubleCued:false,a0:target,alpha:br.alpha||0,down:false};
+  const pat=activePattern();
+  const useCountdown=!!(typeof S!=='undefined' && S.breathCountdown10);
+  br={on:true,paused:false,ph:useCountdown?'countdown':(pat.wimhof?'wh_in':(pat.wake?'wk_in':'in')),whRound:1,whBreath:1,whHoldTarget:60,whLastCueSec:0,whCueText:'',whRecCue5:false,wkRound:1,wkBreath:1,el:0,p:0,phaseProg:0,elapsedTotal:0,sessionStartWall:now,lastWall:now,doubleCued:false,a0:target,alpha:br.alpha||0,down:false};
   if($('coastFsBreathBtn')){
     $('coastFsBreathBtn').innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
     $('coastFsBreathBtn').classList.add('on');
   }
   setBreathingFocus(true);
   WavyAudio.startOcean();
-  WavyAudio.cuePhase('in');
+  WavyVoice.setMediaSession(pat.name||pat.label,'Wavy · Calma',()=>{if(br.on && br.paused && $('coastFsBreathBtn'))$('coastFsBreathBtn').click();},()=>{if(br.on && !br.paused && $('coastFsBreathBtn'))$('coastFsBreathBtn').click();});
+  WavyVoice.startBgTicker(()=>stepBreath(0.25));
+  if(useCountdown){
+    WavyVoice.speak('Deja el teléfono a un lado y acomoda tu cuerpo. Se acerca el momento de tu recarga de energía. Respira hondo, en tres, dos, uno.',{clipKey:'countdown_10s'});
+  }else{
+    beginActiveBreathPhase(pat);
+  }
   vib(15);
   if($('bbTxt'))$('bbTxt').textContent='Pausar sesión';
-  $('bt').textContent=S.bmode==='auto'
-    ?'Inhala y exhala al ritmo del círculo.'
-    :'Mantén presionado el centro mientras inhalas.';
+  $('bt').textContent=useCountdown
+    ?'Tienes 10 segundos para acomodarte y bloquear tu pantalla.'
+    :(pat.wimhof
+      ?'Wim Hof · 30 respiraciones profundas, luego retención en vacío.'
+      :(pat.wake
+        ?'Amanecer 2·1 · 25 respiraciones firmes para despertar el cuerpo.'
+        :(S.bmode==='auto'
+          ?'Inhala y exhala al ritmo del círculo.'
+          :'Mantén presionado el centro mientras inhalas.')));
 };
 $('bbFinishEarly').onclick=()=>endBreath(false);
 /* Duración de la respiración: 2, 5 o 10 min (lo que la ciencia respalda
@@ -9451,9 +10040,14 @@ const sb=$('seab');
    activa, mantener presionado inhala (modo Táctil / co-respiración). El
    desplazamiento vertical siempre pertenece a la página. */
 sb.addEventListener('pointerdown',e=>{
-  if(e.target.closest('.pattern-pill'))return;
+  if(e.target.closest('.pattern-pill,.coast-fs-dock,.coast-fs-panel,.sea-fs-btn'))return;
   if(!br.on)return;
   WavyAudio.unlockNow();
+  WavyVoice.unlock();
+  if(br.ph==='wh_hold' && (br.el||0)>=5){
+    triggerWimHofRecovery();
+    return;
+  }
   br.down=true;
   coBreath.myInhaling=true;
   syncCoBreathVisualState();
@@ -11101,7 +11695,9 @@ const LECTURA_TEMAS={
   'Atención':['Enfoque','Claridad','Presencia','Tiempo','Quietud'],
   'Psique':['Ira','Vacío','Ambivalencia','Impulso','Inquietud','Sensibilidad','Agotamiento','Autoestima','Energía'],
   'Vínculos':['Ternura','Compasión','Vulnerabilidad','Desconexión','Nostalgia'],
-  'Memoria':['Plenitud','Gratitud','Alivio','Asombro','Descanso','Cuerpo en paz']
+  'Memoria':['Plenitud','Gratitud','Alivio','Asombro','Descanso','Cuerpo en paz'],
+  'Religión':['Religión'],
+  'Sabiduría China':['Sabiduría China']
 };
 let currentShowcaseIds=[];
 function pickRecommendedLecturas(items,excludeIds=[]){
@@ -11152,7 +11748,7 @@ function renderDiaryShowcase(rotateNew=false){
 function renderDiaryTopics(){
   const chips=$('diaryTopicChips'),list=$('diaryTopicsList');
   if(!chips||!list)return;
-  const temas=['Todos','Atención','Psique','Vínculos','Memoria'];
+  const temas=['Todos','Atención','Psique','Vínculos','Memoria','Religión','Sabiduría China'];
   chips.innerHTML='';
   temas.forEach(t=>{
     const b=document.createElement('button');
@@ -14388,6 +14984,20 @@ initOnboarding();
     <div class="lectura-reader-inner">
       <div class="lectura-reader-meta" id="lecturaReaderMeta" style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ok);font-weight:600;margin-bottom:6px"></div>
       <h1 id="lecturaReaderTitle"></h1>
+      <div id="lecturaAudioBar" hidden style="margin:12px 0 6px;padding:10px 14px;border-radius:16px;background:rgba(128,128,128,0.08);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);display:flex;align-items:center;gap:12px">
+        <button type="button" id="lecturaAudioBtn" aria-label="Escuchar lectura" style="width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--ink);color:var(--paper);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="7 5 19 12 7 19 7 5"/></svg>
+        </button>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:5px">
+            <span id="lecturaAudioStatus" style="font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Escuchar narración · Pantalla apagada</span>
+            <span id="lecturaAudioTime" style="font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;flex-shrink:0">0:00</span>
+          </div>
+          <div id="lecturaAudioTrack" style="height:4px;border-radius:999px;background:var(--line);overflow:hidden;cursor:pointer">
+            <div id="lecturaAudioFill" style="height:100%;width:0%;background:var(--ok);border-radius:999px;transition:width .2s linear"></div>
+          </div>
+        </div>
+      </div>
       <div id="lecturaReaderBody" style="margin-top:16px"></div>
     </div>
     <div id="lecturaHlMenu" class="lectura-hl-menu" hidden></div>
