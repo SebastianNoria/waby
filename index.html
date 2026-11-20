@@ -2575,7 +2575,7 @@ summary::-webkit-details-marker{display:none}
     </button>
     <div class="masthead-left" id="mastheadProfileTrigger" role="button" tabindex="0" aria-label="Abrir mi perfil y ajustes">
       <h1>Wavy</h1>
-      <div class="tagline">Donde tu calma se encuentra con los tuyos <span style="font-size:9px;letter-spacing:.12em;opacity:.5;margin-left:4px">V1.01NM</span></div>
+      <div class="tagline">Donde tu calma se encuentra con los tuyos <span style="font-size:9px;letter-spacing:.12em;opacity:.5;margin-left:4px">V1.02NM</span></div>
     </div>
     <div class="masthead-actions-right">
       <button type="button" class="masthead-menu-btn" id="mastheadPubProfileBtn" aria-label="Mi perfil público (Yo)" title="Yo">
@@ -3616,7 +3616,7 @@ summary::-webkit-details-marker{display:none}
         <button type="button" class="btn ghost" id="onbFinishDirectBtn" style="width:100%">Entrar directamente a Wavy</button>
       </div>
       <!-- Versión de la app -->
-      <div class="cover-version">V1.01NM</div>
+      <div class="cover-version">V1.02NM</div>
     </div>
   </div>
 </div>
@@ -4138,6 +4138,63 @@ const WavyAudio=(()=>{
     return c;
   }
 
+  let extraNodes=[],fxLoop=null;
+  let sharedPinkBuf=null,sharedBrownBuf=null,sharedWhiteBuf=null;
+
+  function ensureNoiseBuffers(c){
+    const sr=c.sampleRate,len=Math.floor(sr*4.0);
+    if(sharedPinkBuf && sharedPinkBuf.sampleRate===sr)return;
+    sharedPinkBuf=c.createBuffer(1,len,sr);
+    sharedBrownBuf=c.createBuffer(1,len,sr);
+    sharedWhiteBuf=c.createBuffer(1,len,sr);
+    const pOut=sharedPinkBuf.getChannelData(0);
+    const bOut=sharedBrownBuf.getChannelData(0);
+    const wOut=sharedWhiteBuf.getChannelData(0);
+    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0,brn=0;
+    for(let i=0;i<len;i++){
+      const w=Math.random()*2-1;
+      wOut[i]=w*0.18;
+      b0=0.99886*b0+w*0.0555179;
+      b1=0.99332*b1+w*0.0750759;
+      b2=0.96900*b2+w*0.1538520;
+      b3=0.86650*b3+w*0.3104856;
+      b4=0.55000*b4+w*0.5329522;
+      b5=-0.7616*b5-w*0.0168980;
+      pOut[i]=(b0+b1+b2+b3+b4+b5+b6+w*0.5362)*0.048;
+      b6=w*0.115926;
+      brn=(brn+0.02*w)/1.02;
+      bOut[i]=brn*0.24;
+    }
+  }
+
+  function playSoftCrackle(c){
+    try{
+      const now=c.currentTime,len=Math.floor(c.sampleRate*0.035);
+      const buf=c.createBuffer(1,len,c.sampleRate),d=buf.getChannelData(0);
+      for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.exp(-i/(len*0.22));
+      const src=c.createBufferSource();src.buffer=buf;
+      const bp=c.createBiquadFilter();bp.type='bandpass';bp.frequency.value=1400+Math.random()*1600;bp.Q.value=2.0;
+      const g=c.createGain();g.gain.value=0.05+Math.random()*0.07;
+      src.connect(bp);bp.connect(g);g.connect(c.destination);
+      src.start(now);src.stop(now+0.04);
+    }catch(e){}
+  }
+
+  function playDistantThunder(c){
+    try{
+      ensureNoiseBuffers(c);
+      const now=c.currentTime,dur=3.8;
+      const src=c.createBufferSource();src.buffer=sharedBrownBuf;src.loop=true;
+      const lp=c.createBiquadFilter();lp.type='lowpass';lp.frequency.setValueAtTime(92,now);lp.frequency.exponentialRampToValueAtTime(42,now+dur);
+      const g=c.createGain();
+      g.gain.setValueAtTime(0.0001,now);
+      g.gain.linearRampToValueAtTime(0.32,now+0.6);
+      g.gain.exponentialRampToValueAtTime(0.0001,now+dur);
+      src.connect(lp);lp.connect(g);g.connect(c.destination);
+      src.start(now);src.stop(now+dur+0.05);
+    }catch(e){}
+  }
+
   function startOcean(){
     if(!S.audioOn)return;
     const c=unlockNow();if(!c)return;
@@ -4148,125 +4205,139 @@ const WavyAudio=(()=>{
     if(stopTimer){clearTimeout(stopTimer);stopTimer=null}
     if(running)return;
 
-    const durSec=6;
-    const bufSize=c.sampleRate*durSec;
-    const oceanBuf=c.createBuffer(1,bufSize,c.sampleRate);
-    const out=oceanBuf.getChannelData(0);
-    /* Mezcla adaptable según sonido elegido: olas, ruido rosa, ruido blanco o cuencos */
-    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0,brown=0;
-    for(let i=0;i<bufSize;i++){
-      const w=Math.random()*2-1;
-      b0=0.99886*b0+w*0.0555179;
-      b1=0.99332*b1+w*0.0750759;
-      b2=0.96900*b2+w*0.1538520;
-      b3=0.86650*b3+w*0.3104856;
-      b4=0.55000*b4+w*0.5329522;
-      b5=-0.7616*b5-w*0.0168980;
-      const pink=(b0+b1+b2+b3+b4+b5+b6+w*0.5362)*0.045;
-      b6=w*0.115926;
-      brown=(brown+0.02*w)/1.02;
-      const brownNorm=brown*0.18;
-      if(soundMode==='white')out[i]=w*0.09;
-      else if(soundMode==='pink')out[i]=pink*0.88;
-      else if(soundMode==='bowls')out[i]=pink*0.18;
-      else out[i]=pink*0.65+brownNorm*0.35;
+    ensureNoiseBuffers(c);
+    const now=c.currentTime;
+    extraNodes=[];
+
+    /* Catálogo de los 10 paisajes sonoros universales (sin ruido blanco áspero) */
+    if(soundMode==='drone'){
+      /* Drone armónico 432 Hz estilo Tony Anderson / Endel */
+      oceanGain=c.createGain();
+      oceanGain.gain.setValueAtTime(0.0001,now);
+      oceanGain.gain.linearRampToValueAtTime(0.24,now+1.6);
+      oceanFilter=c.createBiquadFilter();
+      oceanFilter.type='lowpass';oceanFilter.frequency.setValueAtTime(420,now);
+      oceanFilter.connect(oceanGain);oceanGain.connect(c.destination);
+      [[108,0.45],[162,0.28],[216,0.18],[324,0.09]].forEach(([freq,amp])=>{
+        const osc=c.createOscillator(),og=c.createGain();
+        osc.type='sine';osc.frequency.setValueAtTime(freq,now);
+        og.gain.setValueAtTime(amp,now);
+        osc.connect(og);og.connect(oceanFilter);osc.start(now);
+        extraNodes.push(osc);
+      });
+    }else{
+      oceanSource=c.createBufferSource();
+      oceanSource.loop=true;
+      oceanFilter=c.createBiquadFilter();
+      oceanGain=c.createGain();
+      let baseGain=0.34;
+
+      if(soundMode==='brown'){
+        oceanSource.buffer=sharedBrownBuf;
+        oceanFilter.type='lowpass';oceanFilter.frequency.setValueAtTime(240,now);oceanFilter.Q.value=0.7;
+        baseGain=0.46;
+      }else if(soundMode==='pink'){
+        oceanSource.buffer=sharedPinkBuf;
+        oceanFilter.type='lowpass';oceanFilter.frequency.setValueAtTime(880,now);oceanFilter.Q.value=0.7;
+        baseGain=0.34;
+      }else if(soundMode==='rain'||soundMode==='thunder'){
+        oceanSource.buffer=sharedPinkBuf;
+        oceanFilter.type='bandpass';oceanFilter.frequency.setValueAtTime(1250,now);oceanFilter.Q.value=0.55;
+        baseGain=0.32;
+        /* Capa grave suave de lluvia cayendo */
+        const sub=c.createBufferSource();sub.buffer=sharedBrownBuf;sub.loop=true;
+        const slp=c.createBiquadFilter();slp.type='lowpass';slp.frequency.setValueAtTime(320,now);
+        const sg=c.createGain();sg.gain.setValueAtTime(0.18,now);
+        sub.connect(slp);slp.connect(sg);sg.connect(c.destination);sub.start(now);
+        extraNodes.push(sub);
+      }else if(soundMode==='forest'){
+        oceanSource.buffer=sharedPinkBuf;
+        oceanFilter.type='bandpass';oceanFilter.frequency.setValueAtTime(420,now);oceanFilter.Q.value=1.2;
+        baseGain=0.30;
+      }else if(soundMode==='fire'){
+        oceanSource.buffer=sharedBrownBuf;
+        oceanFilter.type='lowpass';oceanFilter.frequency.setValueAtTime(175,now);oceanFilter.Q.value=0.9;
+        baseGain=0.42;
+      }else if(soundMode==='stream'){
+        oceanSource.buffer=sharedPinkBuf;
+        oceanFilter.type='bandpass';oceanFilter.frequency.setValueAtTime(920,now);oceanFilter.Q.value=0.95;
+        baseGain=0.28;
+      }else if(soundMode==='bowls'){
+        oceanSource.buffer=sharedPinkBuf;
+        oceanFilter.type='lowpass';oceanFilter.frequency.setValueAtTime(360,now);oceanFilter.Q.value=0.7;
+        baseGain=0.14;
+      }else{
+        /* Olas del mar (default) */
+        oceanSource.buffer=sharedPinkBuf;
+        oceanFilter.type='lowpass';oceanFilter.frequency.setValueAtTime(340,now);oceanFilter.Q.value=1.05;
+        baseGain=0.36;
+      }
+
+      oceanGain.gain.setValueAtTime(0.0001,now);
+      oceanGain.gain.linearRampToValueAtTime(baseGain,now+0.9);
+      oceanSource.connect(oceanFilter);
+      oceanFilter.connect(oceanGain);
+      oceanGain.connect(c.destination);
+      oceanSource.start(now);
     }
-
-    oceanSource=c.createBufferSource();
-    oceanSource.buffer=oceanBuf;
-    oceanSource.loop=true;
-
-    oceanFilter=c.createBiquadFilter();
-    oceanFilter.type='lowpass';
-    oceanFilter.Q.value=1.15;
-    oceanFilter.frequency.setValueAtTime(soundMode==='white'?2200:(soundMode==='pink'?950:340),c.currentTime);
-
-    oceanGain=c.createGain();
-    oceanGain.gain.setValueAtTime(0.001,c.currentTime);
-    oceanGain.gain.exponentialRampToValueAtTime(0.42,c.currentTime+0.8);
-
-    oceanSource.connect(oceanFilter);
-    oceanFilter.connect(oceanGain);
-    oceanGain.connect(c.destination);
-    oceanSource.start(0);
-
-    /* Generador de lluvia suave (Ruido Blanco + Bandpass a 1800 Hz, activo cuando marea > 60%) */
-    const rainBuf=c.createBuffer(1,c.sampleRate*4,c.sampleRate);
-    const rOut=rainBuf.getChannelData(0);
-    for(let i=0;i<rOut.length;i++){
-      rOut[i]=(Math.random()*2-1)*0.16;
-    }
-    rainSource=c.createBufferSource();
-    rainSource.buffer=rainBuf;
-    rainSource.loop=true;
-
-    rainFilter=c.createBiquadFilter();
-    rainFilter.type='bandpass';
-    rainFilter.frequency.setValueAtTime(1800,c.currentTime);
-    rainFilter.Q.setValueAtTime(0.85,c.currentTime);
-
-    rainGain=c.createGain();
-    const initRain=arousal>0.60?Math.min(0.28,((arousal-0.60)/0.40)*0.26):0.0001;
-    rainGain.gain.setValueAtTime(Math.max(0.0001,initRain),c.currentTime);
-
-    rainSource.connect(rainFilter);
-    rainFilter.connect(rainGain);
-    rainGain.connect(c.destination);
-    rainSource.start(0);
 
     running=true;
     if(bowlLoop){clearInterval(bowlLoop);bowlLoop=null;}
+    if(fxLoop){clearInterval(fxLoop);fxLoop=null;}
     if(soundMode==='bowls'){
-      playBowl([432,648],3.2,0.22);
-      bowlLoop=setInterval(()=>{if(running && S.audioOn && soundMode==='bowls')playBowl([432,528,648],3.4,0.20);},4200);
+      playBowl([432,648],3.8,0.18);
+      bowlLoop=setInterval(()=>{if(running && S.audioOn && soundMode==='bowls')playBowl([432,528,648],4.2,0.16);},5400);
+    }else if(soundMode==='fire'){
+      fxLoop=setInterval(()=>{if(running && S.audioOn && soundMode==='fire' && Math.random()<0.65)playSoftCrackle(c);},420);
+    }else if(soundMode==='thunder'){
+      setTimeout(()=>{if(running && S.audioOn && soundMode==='thunder')playDistantThunder(c);},2600);
+      fxLoop=setInterval(()=>{if(running && S.audioOn && soundMode==='thunder')playDistantThunder(c);},14000);
     }
   }
 
   function modulateOcean(aVal,ts){
     if(!running||!oceanFilter||!ctx)return;
     const now=ctx.currentTime;
-    if(soundMode==='white'||soundMode==='pink'){
-      oceanFilter.frequency.setTargetAtTime(soundMode==='white'?2200:950,now,0.12);
-      if(oceanGain)oceanGain.gain.setTargetAtTime(0.32,now,0.14);
-      return;
-    }
-    /* Modulación orgánica entre 220 Hz y 950 Hz según el romper de cada ola */
-    const waveCrest=0.5+0.5*Math.sin(ts/1750)+0.22*Math.sin(ts/820);
-    const clampedCrest=Math.max(0,Math.min(1,waveCrest));
-    const targetFreq=220+clampedCrest*(430+aVal*300);
-    oceanFilter.frequency.setTargetAtTime(Math.min(950,Math.max(220,targetFreq)),now,0.10);
-
-    if(oceanGain){
-      const swellGain=soundMode==='bowls'?0.14:(0.26+clampedCrest*0.24+aVal*0.10);
-      oceanGain.gain.setTargetAtTime(swellGain,now,0.14);
-    }
-    if(rainGain){
-      const rainTarget=aVal>0.60?Math.max(0.002,((aVal-0.60)/0.40)*0.26):0.0001;
-      rainGain.gain.setTargetAtTime(rainTarget,now,0.18);
+    if(soundMode==='ocean'){
+      const crest=0.5+0.5*Math.sin(ts/1950)+0.18*Math.sin(ts/910);
+      const cl=Math.max(0,Math.min(1,crest));
+      oceanFilter.frequency.setTargetAtTime(210+cl*(380+aVal*220),now,0.12);
+      if(oceanGain)oceanGain.gain.setTargetAtTime(0.22+cl*0.20,now,0.15);
+    }else if(soundMode==='forest'){
+      const gust=0.5+0.5*Math.sin(ts/2800)+0.25*Math.sin(ts/1300);
+      oceanFilter.frequency.setTargetAtTime(280+Math.max(0,Math.min(1,gust))*420,now,0.18);
+      if(oceanGain)oceanGain.gain.setTargetAtTime(0.20+Math.max(0,Math.min(1,gust))*0.16,now,0.20);
+    }else if(soundMode==='stream'){
+      const rip=0.5+0.5*Math.sin(ts/420)+0.3*Math.sin(ts/710);
+      oceanFilter.frequency.setTargetAtTime(780+Math.max(0,Math.min(1,rip))*480,now,0.08);
+    }else if(soundMode==='drone'){
+      const sw=0.5+0.5*Math.sin(ts/3200);
+      oceanFilter.frequency.setTargetAtTime(320+sw*190,now,0.25);
+      if(oceanGain)oceanGain.gain.setTargetAtTime(0.18+sw*0.09,now,0.25);
     }
   }
 
   function stopOcean(){
     if(bowlLoop){clearInterval(bowlLoop);bowlLoop=null;}
+    if(fxLoop){clearInterval(fxLoop);fxLoop=null;}
     if(keepAliveEl && !keepAliveEl.paused){try{keepAliveEl.pause()}catch(e){}}
     if(!running||!ctx)return;
     const srcToStop=oceanSource;
-    const rainToStop=rainSource;
+    const extrasToStop=extraNodes.slice();
     running=false;
     oceanSource=null;
-    rainSource=null;
+    extraNodes=[];
     try{
-      if(oceanGain)oceanGain.gain.setTargetAtTime(0.0001,ctx.currentTime,0.20);
-      if(rainGain)rainGain.gain.setTargetAtTime(0.0001,ctx.currentTime,0.20);
+      if(oceanGain)oceanGain.gain.setTargetAtTime(0.0001,ctx.currentTime,0.18);
       stopTimer=setTimeout(()=>{
         try{if(srcToStop){srcToStop.stop();srcToStop.disconnect()}}catch(e){}
-        try{if(rainToStop){rainToStop.stop();rainToStop.disconnect()}}catch(e){}
+        extrasToStop.forEach(n=>{try{n.stop();n.disconnect()}catch(e){}});
         stopTimer=null;
-      },280);
+      },260);
     }catch(e){}
   }
 
-  function playBowl(freqs,dur=2.8,vol=0.22){
+  function playBowl(freqs,dur=2.8,vol=0.20){
     if(!S.audioOn)return;
     const c=unlockNow();if(!c)return;
     const now=c.currentTime;
@@ -4280,13 +4351,13 @@ const WavyAudio=(()=>{
       subOsc.frequency.setValueAtTime(f*2,now);
 
       const subGain=c.createGain();
-      subGain.gain.setValueAtTime(0.18,now);
+      subGain.gain.setValueAtTime(0.14,now);
       subOsc.connect(subGain);
       subGain.connect(g);
 
       const peak=vol/(idx*0.65+1);
       g.gain.setValueAtTime(0.0001,now);
-      g.gain.linearRampToValueAtTime(peak,now+0.05);
+      g.gain.linearRampToValueAtTime(peak,now+0.06);
       g.gain.exponentialRampToValueAtTime(0.0001,now+dur);
 
       osc.connect(g);
@@ -4296,74 +4367,59 @@ const WavyAudio=(()=>{
     });
   }
 
-  let breathNoiseBuf=null,activeBreathSrc=null;
-  function getBreathNoiseBuf(c){
-    if(breathNoiseBuf && breathNoiseBuf.sampleRate===c.sampleRate)return breathNoiseBuf;
-    const len=Math.floor(c.sampleRate*2.0);
-    const buf=c.createBuffer(1,len,c.sampleRate);
-    const data=buf.getChannelData(0);
-    let b0=0,b1=0,b2=0,b3=0,b4=0;
-    for(let i=0;i<len;i++){
-      const w=Math.random()*2-1;
-      b0=0.997*b0+w*0.045;
-      b1=0.985*b1+w*0.080;
-      b2=0.950*b2+w*0.140;
-      b3=0.840*b3+w*0.210;
-      b4=0.600*b4+w*0.180;
-      data[i]=(b0+b1+b2+b3+b4)*0.32;
-    }
-    breathNoiseBuf=buf;
-    return buf;
-  }
-
+  /* Guía tonal inequívoca con ojos cerrados: SUBE al inhalar (220->330 Hz) · BAJA al exhalar (330->196 Hz) */
+  let activeBreathNodes=[];
   function playBreathSound(dir,durSec){
     if(!S.audioOn)return;
     const c=unlockNow();if(!c)return;
     const d=Math.max(0.5,Math.min(12,Number(durSec)||2.0));
     const now=c.currentTime;
     try{
-      if(activeBreathSrc){
-        try{activeBreathSrc.stop();activeBreathSrc.disconnect();}catch(e){}
-        activeBreathSrc=null;
-      }
-      const src=c.createBufferSource();
-      src.buffer=getBreathNoiseBuf(c);
-      src.loop=true;
+      activeBreathNodes.forEach(n=>{try{n.stop();n.disconnect();}catch(e){}});
+      activeBreathNodes=[];
 
-      const bp=c.createBiquadFilter();
-      bp.type='bandpass';
-      bp.Q.setValueAtTime(dir==='in'?1.35:1.15,now);
-      if(dir==='in'){
-        bp.frequency.setValueAtTime(220,now);
-        bp.frequency.exponentialRampToValueAtTime(660,now+d*0.85);
-      }else{
-        bp.frequency.setValueAtTime(560,now);
-        bp.frequency.exponentialRampToValueAtTime(175,now+d*0.90);
-      }
+      const fStart=(dir==='in')?220:330;
+      const fEnd=(dir==='in')?330:196;
 
-      const g=c.createGain();
-      const peak=dir==='in'?0.34:0.28;
-      g.gain.setValueAtTime(0.0001,now);
-      g.gain.linearRampToValueAtTime(peak,now+d*0.32);
-      g.gain.setValueAtTime(peak*0.88,now+d*0.62);
-      g.gain.exponentialRampToValueAtTime(0.0001,now+d);
+      /* Voz armónica principal (senoidal cálida + octava suave tipo flauta de cristal) */
+      const osc1=c.createOscillator();
+      const osc2=c.createOscillator();
+      osc1.type='sine';
+      osc2.type='triangle';
+      osc1.frequency.setValueAtTime(fStart,now);
+      osc1.frequency.exponentialRampToValueAtTime(fEnd,now+d*0.92);
+      osc2.frequency.setValueAtTime(fStart*2,now);
+      osc2.frequency.exponentialRampToValueAtTime(fEnd*2,now+d*0.92);
 
-      src.connect(bp);
-      bp.connect(g);
-      g.connect(c.destination);
-      src.start(now);
-      src.stop(now+d+0.05);
-      activeBreathSrc=src;
-      src.onended=()=>{if(activeBreathSrc===src)activeBreathSrc=null;};
+      const lp=c.createBiquadFilter();
+      lp.type='lowpass';
+      lp.frequency.setValueAtTime(dir==='in'?950:720,now);
+
+      const g1=c.createGain(),g2=c.createGain(),master=c.createGain();
+      g1.gain.value=1.0;
+      g2.gain.value=0.14;
+      const peak=(dir==='in')?0.16:0.13;
+      master.gain.setValueAtTime(0.0001,now);
+      master.gain.linearRampToValueAtTime(peak,now+Math.min(0.45,d*0.25));
+      master.gain.setValueAtTime(peak*0.85,now+d*0.70);
+      master.gain.exponentialRampToValueAtTime(0.0001,now+d);
+
+      osc1.connect(g1);g1.connect(lp);
+      osc2.connect(g2);g2.connect(lp);
+      lp.connect(master);master.connect(c.destination);
+
+      osc1.start(now);osc2.start(now);
+      osc1.stop(now+d+0.05);osc2.stop(now+d+0.05);
+      activeBreathNodes=[osc1,osc2];
     }catch(e){}
   }
 
   function cuePhase(ph){
-    if(ph==='in')playBowl([432,648],2.6,0.16);
-    else if(ph==='double')playBowl([864],1.1,0.15);
-    else if(ph==='hold')playBowl([528,648],2.2,0.16);
-    else if(ph==='out')playBowl([528,432],3.0,0.15);
-    else if(ph==='close')playBowl([432,528,648,864],4.2,0.22);
+    if(ph==='in')playBowl([330,440],1.6,0.12);
+    else if(ph==='double')playBowl([660],0.9,0.12);
+    else if(ph==='hold')playBowl([528],1.5,0.13);
+    else if(ph==='out')playBowl([264,196],1.8,0.12);
+    else if(ph==='close')playBowl([432,528,648,864],4.2,0.20);
   }
 
   /* Desbloqueo global al primer toque en el documento */
@@ -4450,7 +4506,7 @@ const WavyVoice=(()=>{
       try{
         /* Desbloquea el elemento <audio> en iOS Safari dentro del gesto de usuario */
         a.muted=true;
-        a.src='audio/voice/'+(getVoiceMode()==='m'?'m':'f')+'/voz_on.mp3?v=35';
+        a.src='audio/voice/'+(getVoiceMode()==='m'?'m':'f')+'/voz_on.mp3?v=36';
         const p=a.play();
         if(p&&p.then)p.then(()=>{a.pause();a.currentTime=0;a.muted=false;}).catch(()=>{a.muted=false;});
         else{a.pause();a.currentTime=0;a.muted=false;}
@@ -4511,7 +4567,7 @@ const WavyVoice=(()=>{
         a.onended=null;a.onerror=null;
         a.muted=false;
         a.volume=typeof opts.volume==='number'?opts.volume:0.92;
-        a.src='audio/voice/'+mode+'/'+clipKey+'.mp3?v=35';
+        a.src='audio/voice/'+mode+'/'+clipKey+'.mp3?v=36';
         if(onDone)a.onended=()=>{a.onended=null;onDone();};
         a.onerror=()=>{a.onerror=null;speakTTS();};
         const p=a.play();
@@ -7556,7 +7612,7 @@ let lecturasCache=null,lecturasLoading=null;
 function loadLecturas(){
   if(lecturasCache)return Promise.resolve(lecturasCache);
   if(lecturasLoading)return lecturasLoading;
-  lecturasLoading=fetch('./lecturas.json?v=35',{cache:'no-store'})
+  lecturasLoading=fetch('./lecturas.json?v=36',{cache:'no-store'})
     .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
     .then(d=>{lecturasCache=Array.isArray(d)?d:[];return lecturasCache;})
     .catch(()=>{lecturasCache=[];lecturasLoading=null;return lecturasCache;});
@@ -7617,7 +7673,7 @@ function openLecturaReader(n){
       const sameSrc=(la.dataset.lecturaId===eid);
       if(!sameSrc){
         try{la.pause();}catch(e){}
-        la.src=n.audioUrl+(n.audioUrl.includes('?')?'&':'?')+'v=35';
+        la.src=n.audioUrl+(n.audioUrl.includes('?')?'&':'?')+'v=36';
         la.dataset.lecturaId=eid;
       }
       const syncAudioUI=()=>{
@@ -8778,7 +8834,7 @@ if($('coastFsMenuToggle') && $('coastFsPanel')){
         };
         p.appendChild(vb);
       });
-      [['ocean','Olas'],['pink','Ruido rosa'],['white','Ruido blanco'],['bowls','Cuencos'],['off','Silencio']].forEach(([sm,lbl])=>{
+      [['ocean','Olas'],['rain','Lluvia'],['brown','Marrón'],['pink','Rosa'],['forest','Bosque'],['fire','Fuego'],['bowls','Cuencos'],['thunder','Tormenta'],['stream','Arroyo'],['drone','Drone 432'],['off','Silencio']].forEach(([sm,lbl])=>{
         const isActive=(sm==='off' ? !(typeof S!=='undefined'&&S.audioOn) : (typeof S!=='undefined'&&S.audioOn && curSound===sm));
         const b=document.createElement('button');
         b.type='button';b.className='coast-fs-pill'+(isActive?' on':'');
@@ -9717,18 +9773,18 @@ function endBreath(done){
 }
 
 const WIMHOF_HOLD_CUES={
-  10:'Suelta los hombros. Aquí empieza el silencio.',
-  20:'Aguanta. Siente tu cuerpo firme, tiene más fuerza de la que crees.',
-  30:'Mente controla cuerpo. Quédate aquí.',
-  40:'Si resistes este instante, resistes cualquier impulso.',
-  50:'Sé valiente. Tu voluntad es más grande que la urgencia.',
-  60:'Esta es la redención que buscas. Sostén un poco más.',
-  70:'Con esto tu cabeza descansa. Hoy podrás dormir en paz.',
-  80:'Lo estás logrando. Nada allá afuera tiene poder sobre ti.',
-  90:'Fuerza serena. Cada segundo aquí te devuelve el control.',
-  100:'Tu cuerpo aguanta. Siente la paz del dominio propio.'
+  10:'Afloja la mandíbula. El ruido del mundo acaba de quedarse afuera.',
+  20:'No corras hacia el aire. Descubre cuánto espacio cabe dentro de tu quietud.',
+  30:'Tu cuerpo pide alivio rápido; tu carácter elige quedarse un segundo más.',
+  40:'Aquí se entrena el freno que luego te salva cuando llega la tentación.',
+  50:'Escucha ese silencio en el pecho. Es la señal de que vuelves a gobernarte.',
+  60:'Has cruzado el muro del miedo. Quédate en esta paz firme.',
+  70:'Suelta la guardia del día entero. Esta noche el descanso será tuyo.',
+  80:'Pocas personas soportan estar a solas sin huir. Tú lo estás haciendo ahora.',
+  90:'Ni prisa, ni urgencia, ni cadenas. Solo tu voluntad intacta.',
+  100:'Lo más difícil ya quedó atrás. Siente la claridad que nace de resistir.'
 };
-const WIMHOF_HOLD_LAST10='Ya falta muy poco. Aguanta diez segundos más, lo tienes.';
+const WIMHOF_HOLD_LAST10='Diez segundos para volver a la luz. Sostén con honor, ya casi llegas.';
 const WIMHOF_HOLD_TARGETS=[60,90,120];
 const WIMHOF_ROUND_WORDS=['uno','dos','tres'];
 
@@ -15034,11 +15090,11 @@ if($('scToggleBtn')){
    PWA SERVICE WORKER REGISTRATION & OFFLINE ARCHITECTURE
    ========================================================= */
 if('caches' in window){
-  caches.keys().then(ks=>ks.filter(k=>k!=='wavy-cache-wavy-v35').forEach(k=>caches.delete(k))).catch(()=>{});
+  caches.keys().then(ks=>ks.filter(k=>k!=='wavy-cache-wavy-v36').forEach(k=>caches.delete(k))).catch(()=>{});
 }
 if('serviceWorker' in navigator && (window.location.protocol==='https:' || window.location.hostname==='localhost' || window.location.hostname==='127.0.0.1')){
   window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('./sw.js?v=35').then(r=>{try{r.update()}catch(e){}}).catch(()=>{});
+    navigator.serviceWorker.register('./sw.js?v=36').then(r=>{try{r.update()}catch(e){}}).catch(()=>{});
   });
 }
 
