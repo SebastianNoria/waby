@@ -2575,7 +2575,7 @@ summary::-webkit-details-marker{display:none}
     </button>
     <div class="masthead-left" id="mastheadProfileTrigger" role="button" tabindex="0" aria-label="Abrir mi perfil y ajustes">
       <h1>Wavy</h1>
-      <div class="tagline">Donde tu calma se encuentra con los tuyos <span style="font-size:9px;letter-spacing:.12em;opacity:.5;margin-left:4px">V1.02NM</span></div>
+      <div class="tagline">Donde tu calma se encuentra con los tuyos <span style="font-size:9px;letter-spacing:.12em;opacity:.5;margin-left:4px">V1.03NM</span></div>
     </div>
     <div class="masthead-actions-right">
       <button type="button" class="masthead-menu-btn" id="mastheadPubProfileBtn" aria-label="Mi perfil público (Yo)" title="Yo">
@@ -3616,7 +3616,7 @@ summary::-webkit-details-marker{display:none}
         <button type="button" class="btn ghost" id="onbFinishDirectBtn" style="width:100%">Entrar directamente a Wavy</button>
       </div>
       <!-- Versión de la app -->
-      <div class="cover-version">V1.02NM</div>
+      <div class="cover-version">V1.03NM</div>
     </div>
   </div>
 </div>
@@ -4440,11 +4440,15 @@ const WavyVoice=(()=>{
   let cachedVoice=null,unlocked=false,voiceAudio=null,bgTicker=null;
   const VOICE_PREFS=['paulina','mónica','monica','dalia','jorge','sabina','elena','siri','google español','natural'];
 
+  const DEV_SEBAS_CLIPS=new Set(['countdown_10s','impulse_start','sleep_start','wh_r1','wh_40','wh_last10']);
+
   function getVoiceMode(){
-    if(typeof S==='undefined')return 'f';
+    if(typeof S==='undefined')return 'dany';
     if(S.voiceOn===false || S.voiceGender==='off')return 'off';
-    if(S.voiceGender==='f' || S.voiceGender==='m')return S.voiceGender;
-    return (S.gender==='female')?'f':'m';
+    if(['dany','marcela','adriel','juanpa'].includes(S.voiceGender))return S.voiceGender;
+    if(S.voiceGender==='f')return 'dany';
+    if(S.voiceGender==='m')return 'adriel';
+    return (S.gender==='female')?'dany':'adriel';
   }
 
   function ensureVoiceAudio(){
@@ -4506,7 +4510,7 @@ const WavyVoice=(()=>{
       try{
         /* Desbloquea el elemento <audio> en iOS Safari dentro del gesto de usuario */
         a.muted=true;
-        a.src='audio/voice/'+(getVoiceMode()==='m'?'m':'f')+'/voz_on.mp3?v=36';
+        a.src='audio/voice/'+(getVoiceMode()==='off'?'dany':getVoiceMode())+'/voz_on.mp3?v=37';
         const p=a.play();
         if(p&&p.then)p.then(()=>{a.pause();a.currentTime=0;a.muted=false;}).catch(()=>{a.muted=false;});
         else{a.pause();a.currentTime=0;a.muted=false;}
@@ -4566,8 +4570,10 @@ const WavyVoice=(()=>{
         const a=ensureVoiceAudio();
         a.onended=null;a.onerror=null;
         a.muted=false;
-        a.volume=typeof opts.volume==='number'?opts.volume:0.92;
-        a.src='audio/voice/'+mode+'/'+clipKey+'.mp3?v=36';
+        a.volume=typeof opts.volume==='number'?opts.volume:0.94;
+        const useDevSebas=(typeof S!=='undefined' && S.devUnlocked && DEV_SEBAS_CLIPS.has(clipKey));
+        const finalKey=useDevSebas?('dev_'+clipKey):clipKey;
+        a.src='audio/voice/'+mode+'/'+finalKey+'.mp3?v=37';
         if(onDone)a.onended=()=>{a.onended=null;onDone();};
         a.onerror=()=>{a.onerror=null;speakTTS();};
         const p=a.play();
@@ -7612,7 +7618,7 @@ let lecturasCache=null,lecturasLoading=null;
 function loadLecturas(){
   if(lecturasCache)return Promise.resolve(lecturasCache);
   if(lecturasLoading)return lecturasLoading;
-  lecturasLoading=fetch('./lecturas.json?v=36',{cache:'no-store'})
+  lecturasLoading=fetch('./lecturas.json?v=37',{cache:'no-store'})
     .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
     .then(d=>{lecturasCache=Array.isArray(d)?d:[];return lecturasCache;})
     .catch(()=>{lecturasCache=[];lecturasLoading=null;return lecturasCache;});
@@ -7673,7 +7679,7 @@ function openLecturaReader(n){
       const sameSrc=(la.dataset.lecturaId===eid);
       if(!sameSrc){
         try{la.pause();}catch(e){}
-        la.src=n.audioUrl+(n.audioUrl.includes('?')?'&':'?')+'v=36';
+        la.src=n.audioUrl+(n.audioUrl.includes('?')?'&':'?')+'v=37';
         la.dataset.lecturaId=eid;
       }
       const syncAudioUI=()=>{
@@ -8810,8 +8816,8 @@ if($('coastFsMenuToggle') && $('coastFsPanel')){
       p.appendChild(b);
     }else if(kind==='sound'){
       const curSound=(typeof WavyAudio!=='undefined'&&WavyAudio.getSoundMode)?WavyAudio.getSoundMode():'ocean';
-      const vMode=(typeof WavyVoice!=='undefined'&&WavyVoice.getVoiceMode)?WavyVoice.getVoiceMode():'f';
-      [['f','Voz cálida (F)'],['m','Voz serena (M)'],['off','Sin voz']].forEach(([vm,vlbl])=>{
+      const vMode=(typeof WavyVoice!=='undefined'&&WavyVoice.getVoiceMode)?WavyVoice.getVoiceMode():'dany';
+      [['dany','Dany (F)'],['marcela','Marcela (F)'],['adriel','Adriel (M)'],['juanpa','Juanpa (M)'],['off','Sin voz']].forEach(([vm,vlbl])=>{
         const vb=document.createElement('button');
         vb.type='button';vb.className='coast-fs-pill'+(vMode===vm?' on':'');
         vb.textContent=vlbl;
@@ -8823,8 +8829,8 @@ if($('coastFsMenuToggle') && $('coastFsPanel')){
             if(typeof save==='function')save(false);
             if(vm!=='off'){
               WavyVoice.unlock();
-              WavyVoice.speak('Estoy aquí contigo. Respira a tu ritmo.',{clipKey:'voz_on'});
-              if(typeof toast==='function')toast(vm==='f'?'Voz cálida femenina activada':'Voz serena masculina activada','ok');
+              WavyVoice.speak('Aquí estoy contigo. Respira a tu ritmo.',{clipKey:'voz_on'});
+              if(typeof toast==='function')toast('Voz '+vlbl+' activada','ok');
             }else{
               WavyVoice.stop();
               if(typeof toast==='function')toast('Voz guía silenciada','ok');
@@ -15090,11 +15096,11 @@ if($('scToggleBtn')){
    PWA SERVICE WORKER REGISTRATION & OFFLINE ARCHITECTURE
    ========================================================= */
 if('caches' in window){
-  caches.keys().then(ks=>ks.filter(k=>k!=='wavy-cache-wavy-v36').forEach(k=>caches.delete(k))).catch(()=>{});
+  caches.keys().then(ks=>ks.filter(k=>k!=='wavy-cache-wavy-v37').forEach(k=>caches.delete(k))).catch(()=>{});
 }
 if('serviceWorker' in navigator && (window.location.protocol==='https:' || window.location.hostname==='localhost' || window.location.hostname==='127.0.0.1')){
   window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('./sw.js?v=36').then(r=>{try{r.update()}catch(e){}}).catch(()=>{});
+    navigator.serviceWorker.register('./sw.js?v=37').then(r=>{try{r.update()}catch(e){}}).catch(()=>{});
   });
 }
 

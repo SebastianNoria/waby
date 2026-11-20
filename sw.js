@@ -1,5 +1,5 @@
 /* Wavy Service Worker - Network-First for App, JSON & Audio (never traps stale versions) */
-const VERSION = 'wavy-v36';
+const VERSION = 'wavy-v37';
 const CACHE_NAME = 'wavy-cache-' + VERSION;
 const ASSETS_TO_CACHE = [
   './',
